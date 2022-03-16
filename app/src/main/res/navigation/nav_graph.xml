@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/OAuth2Fragment">
+    <fragment
+        android:id="@+id/OAuth2Fragment"
+        android:name="com.example.snapshotsforreddit.ui.auth.OAuth2Fragment"
+        android:label="OAuth2Fragment" >
+        <action
+            android:id="@+id/action_OAuth2Fragment_to_frontPageFragment"
+            app:destination="@id/frontPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/frontPageFragment"
+        android:name="com.example.snapshotsforreddit.ui.redditpage.FrontPageFragment"
+        android:label="FrontPageFragment" >
+        <action
+            android:id="@+id/action_frontPageFragment_to_OAuth2Fragment"
+            app:destination="@id/OAuth2Fragment"
+            app:popUpTo="@id/OAuth2Fragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>
