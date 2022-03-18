@@ -8,11 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.snapshotsforreddit.databinding.PostItemBinding
 import com.example.snapshotsforreddit.network.responses.ChildrenData
 
-class FrontPageAdapter : ListAdapter<ChildrenData, FrontPageAdapter.FrontPageViewHolder>(DiffCallback) {
+class FrontPageAdapter(val clickListener: FrontPageListener) : ListAdapter<ChildrenData, FrontPageAdapter.FrontPageViewHolder>(DiffCallback) {
 
     class FrontPageViewHolder(private var binding: PostItemBinding): RecyclerView.ViewHolder(binding.root)  {
-        fun bind(itemName: ChildrenData) {
+        fun bind(clickListener: FrontPageListener, itemName: ChildrenData) {
             binding.postItem = itemName
+            binding.clickListener = clickListener
             binding.executePendingBindings()
         }
     }
@@ -41,6 +42,9 @@ class FrontPageAdapter : ListAdapter<ChildrenData, FrontPageAdapter.FrontPageVie
 
     override fun onBindViewHolder(holder: FrontPageAdapter.FrontPageViewHolder, position: Int) {
         val postItem = getItem(position)
-        holder.bind(postItem)
+        holder.bind(clickListener, postItem)
     }
+}
+class FrontPageListener(val clickListener: (postItem: ChildrenData) -> Unit) {
+    fun onclick(postItem: ChildrenData) = clickListener(postItem)
 }

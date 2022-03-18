@@ -43,7 +43,7 @@ class RedditViewModel: ViewModel() {
         )
     }
 
-
+    //put these into datastore and split the sharedviewmodel into seperate viewmodels for different fragments
     companion object {
         //store access_token here
         //var access_token = ""
@@ -105,8 +105,13 @@ class RedditViewModel: ViewModel() {
 
     }
 
+    private fun saveTokens(accessToken: String?, refreshToken: String?) {
 
-    //REMEMBER TO USE ASYNC
+    }
+
+
+
+    //if accesstoken doesn't work, refresh it with the refresh token or make user reauthenticate
     fun getPosts(accessToken: String?, token_type: String?) {
         viewModelScope.launch {
             try {
@@ -151,6 +156,7 @@ class RedditViewModel: ViewModel() {
         }
 
     }
+
 
 
     private var code: String? = null

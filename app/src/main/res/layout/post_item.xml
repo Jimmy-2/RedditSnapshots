@@ -7,6 +7,9 @@
         <variable
             name="postItem"
             type="com.example.snapshotsforreddit.network.responses.ChildrenData" />
+        <variable
+            name="clickListener"
+            type="com.example.snapshotsforreddit.adapter.FrontPageListener" />
 
     </data>
 
@@ -16,8 +19,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="10dp"
+        android:onClick="@{() -> clickListener.onclick(postItem)}"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="5dp"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -39,12 +43,14 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:scaleType="fitCenter"
+                app:imageUrl="@{postItem.thumbnail}"
+                android:adjustViewBounds="true"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-
-
                 app:layout_constraintTop_toBottomOf="@+id/listIdView"
                 tools:srcCompat="@tools:sample/avatars" />
 

@@ -11,6 +11,9 @@
         <action
             android:id="@+id/action_OAuth2Fragment_to_frontPageFragment"
             app:destination="@id/frontPageFragment" />
+        <action
+            android:id="@+id/action_OAuth2Fragment_to_savedPostsFragment"
+            app:destination="@id/savedPostsFragment" />
     </fragment>
     <fragment
         android:id="@+id/frontPageFragment"
@@ -20,6 +23,30 @@
             android:id="@+id/action_frontPageFragment_to_OAuth2Fragment"
             app:destination="@id/OAuth2Fragment"
             app:popUpTo="@id/OAuth2Fragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_frontPageFragment_to_postDetailFragment"
+            app:destination="@id/postDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/savedPostsFragment"
+        android:name="com.example.snapshotsforreddit.ui.savedposts.SavedPostsFragment"
+        android:label="fragment_saved_posts"
+        tools:layout="@layout/fragment_saved_posts" >
+        <action
+            android:id="@+id/action_savedPostsFragment_to_OAuth2Fragment"
+            app:destination="@id/OAuth2Fragment"
+            app:popUpTo="@id/OAuth2Fragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/postDetailFragment"
+        android:name="com.example.snapshotsforreddit.ui.post.PostDetailFragment"
+        android:label="PostDetailFragment" >
+        <action
+            android:id="@+id/action_postDetailFragment_to_frontPageFragment"
+            app:destination="@id/frontPageFragment"
+            app:popUpTo="@id/frontPageFragment"
             app:popUpToInclusive="true" />
     </fragment>
 </navigation>

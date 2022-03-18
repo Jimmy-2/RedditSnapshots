@@ -3,11 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/drawable-v24/ic_broken_image.xml" value="0.1435" />
+        <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1435" />
+        <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/drawable-v24/loading_img.xml" value="0.1435" />
+        <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/drawable/ic_downloading.xml" value="0.1" />
+        <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/drawable/ic_error.xml" value="0.1" />
+        <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1435" />
         <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/layout/activity_main.xml" value="0.35260416666666666" />
         <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/layout/fragment_front_page.xml" value="0.15104166666666666" />
         <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/layout/fragment_main_reddit_page.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/layout/fragment_o_auth2.xml" value="0.15104166666666666" />
-        <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/layout/post_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/layout/fragment_post_detail.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/layout/fragment_saved_posts.xml" value="0.24895833333333334" />
+        <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/layout/post_item.xml" value="0.33" />
       </map>
     </option>
   </component>

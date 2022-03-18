@@ -11,6 +11,7 @@ import com.squareup.moshi.JsonClass
 
 data class ChildrenData(
     val subreddit: String?,
+    val selftext: String?,
     val author_fullname: String?,
     val saved: Boolean,
     val title: String?,
@@ -38,6 +39,7 @@ data class ChildrenData (
 
     @Json(name = "num_comments") val num_comments: Int?,
 
-
+    //use preview for higher res. and if thumbnail == "" or "self", display text instead
+    @Json(name = "thumbnail") val thumbnail: String?
     )
 
