@@ -36,7 +36,7 @@ interface RedditApiService {
     ): Call<TokenResponse>
 
     //use moreChildren endpoint to get more posts after the last one
-    @GET("/?limit=100")
+    @GET("/r/popular")
     fun getListPost(
         @Header("Authorization") Authorization: String?,
         @Header("User-Agent") User_Agent: String?

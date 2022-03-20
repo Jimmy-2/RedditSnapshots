@@ -16,13 +16,21 @@ fun bindRecyclerView(recyclerView: RecyclerView, data: List<ChildrenData>?) {
 }
 
 
-@BindingAdapter("imageUrl")
-fun bindImage(imgView: ImageView, imgUrl: String?) {
-    imgUrl?.let {
-        val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
-        imgView.load(imgUri) {
-            placeholder(R.drawable.ic_downloading)
-            error(R.drawable.ic_error)
+
+@BindingAdapter("imageUrl", "textPost")
+fun bindImage(imgView: ImageView, imageUrl: String?, textPost: Boolean?) {
+    imageUrl?.let {
+        val removePart = "amp;"
+        val imgUri = imageUrl.replace(removePart,"").toUri().buildUpon().scheme("https").build()
+        if(textPost == false) {
+            imgView.load(imgUri) {
+                placeholder(R.drawable.ic_downloading)
+                error(R.drawable.ic_error)
+            }
+
+        }else {
+            imgView.setImageResource(0);
         }
+
     }
 }

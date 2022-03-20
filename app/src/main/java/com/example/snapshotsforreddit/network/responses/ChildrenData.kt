@@ -18,6 +18,7 @@ data class ChildrenData(
     val name: String?,
     val score: Int?,
     val thumbnail: String?,
+    val is_self: Boolean,
     val subreddit_id: String?,
     val id: String?,
     val author: String?,
@@ -31,15 +32,24 @@ data class ChildrenData(
  */
 @JsonClass(generateAdapter = true)
 data class ChildrenData (
-    @Json(name = "title") val title: String?,
+    val title: String?,
 
-    @Json(name = "permalink") val permalink: String?,
+    @Json(name = "selftext") val selfText: String?,
 
-    @Json(name = "score") val score: Int?,
+    @Json(name = "permalink") val permaLink: String?,
 
-    @Json(name = "num_comments") val num_comments: Int?,
+    val score: Int?,
+
+    @Json(name = "num_comments") val numComments: Int?,
+
+
+    //if true, the post is a text post
+    @Json(name = "is_self") val isSelf: Boolean?,
+
+    //This object contains the high res images/thumbnails
+    val preview: ImagePreview?,
 
     //use preview for higher res. and if thumbnail == "" or "self", display text instead
-    @Json(name = "thumbnail") val thumbnail: String?
+    val thumbnail: String?
     )
 

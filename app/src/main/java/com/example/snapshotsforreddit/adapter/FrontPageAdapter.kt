@@ -19,12 +19,12 @@ class FrontPageAdapter(val clickListener: FrontPageListener) : ListAdapter<Child
     }
     companion object DiffCallback : DiffUtil.ItemCallback<ChildrenData>() {
         override fun areItemsTheSame(oldItem: ChildrenData, newItem: ChildrenData): Boolean {
-            return oldItem.permalink == newItem.permalink
+            return oldItem.permaLink == newItem.permaLink
         }
 
         //check visually displayed
         override fun areContentsTheSame(oldItem: ChildrenData, newItem: ChildrenData): Boolean {
-            return oldItem.title == newItem.title && oldItem.num_comments == newItem.num_comments && oldItem.score == newItem.score
+            return oldItem.title == newItem.title && oldItem.numComments == newItem.numComments && oldItem.score == newItem.score
         }
     }
     override fun onCreateViewHolder(
