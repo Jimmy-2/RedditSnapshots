@@ -29,7 +29,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/titleView"
+                android:id="@+id/postitem_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center|left"
@@ -37,12 +37,13 @@
                 android:text="@{postItem.title}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="1" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/postitem_image"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
@@ -54,13 +55,13 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/titleView"
+                app:layout_constraintTop_toBottomOf="@+id/postitem_title"
                 app:layout_constraintVertical_bias="0.0"
                 app:textPost="@{postItem.isSelf}"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/postitem_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{Integer.toString(postItem.score)}"
@@ -70,7 +71,7 @@
                 tools:text="4000" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/postitem_numcomments"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -91,7 +92,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView" />
+                app:layout_constraintTop_toBottomOf="@+id/postitem_image" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

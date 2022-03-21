@@ -1,19 +1,27 @@
 package com.example.snapshotsforreddit
 
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.snapshotsforreddit.adapter.FrontPageAdapter
+import com.example.snapshotsforreddit.adapter.DownloadedPostsAdapter
+import com.example.snapshotsforreddit.database.Post
 import com.example.snapshotsforreddit.network.responses.ChildrenData
 
 @BindingAdapter("listData")
-fun bindRecyclerView(recyclerView: RecyclerView, data: List<ChildrenData>?) {
+fun bindFrontPage(recyclerView: RecyclerView, data: List<ChildrenData>?) {
     val adapter = recyclerView.adapter as FrontPageAdapter
     adapter.submitList(data)
 }
+
+@BindingAdapter("SavedData")
+fun bindSavedPosts(recyclerView: RecyclerView, data: List<Post>?) {
+    val adapter = recyclerView.adapter as DownloadedPostsAdapter
+    adapter.submitList(data)
+}
+
 
 
 

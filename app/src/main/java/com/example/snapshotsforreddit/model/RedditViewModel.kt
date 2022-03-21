@@ -43,7 +43,7 @@ class RedditViewModel: ViewModel() {
         )
     }
 
-    //put these into datastore and split the sharedviewmodel into seperate viewmodels for different fragments
+    //put these into datastore and split the sharedviewmodel into separate viewmodels for different fragments
     companion object {
         //store access_token here
         //var access_token = ""
@@ -115,7 +115,7 @@ class RedditViewModel: ViewModel() {
     fun getPosts(accessToken: String?, token_type: String?) {
         viewModelScope.launch {
             try {
-                val request = RedditApi.retrofitServiceOAuth.getListPost(
+                val request = RedditApi.retrofitServiceOAuth.getListOfPosts(
                     "$token_type $accessToken",
                     "snapshots-for-reddit"
                 )

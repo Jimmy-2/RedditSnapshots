@@ -2,6 +2,7 @@ package com.example.snapshotsforreddit.ui.post
 
 import android.content.ClipData
 import androidx.lifecycle.*
+import androidx.navigation.fragment.navArgs
 import com.example.snapshotsforreddit.database.Post
 import com.example.snapshotsforreddit.database.PostDao
 import com.example.snapshotsforreddit.network.responses.ChildrenData
@@ -11,17 +12,34 @@ import kotlinx.coroutines.launch
 //dao
 class PostDetailViewModel(private val postDao: PostDao) : ViewModel() {
 
-    //pass the link from the list adapter
-    private val _postLink = MutableLiveData<List<String>>()
-    val postLink: LiveData<List<String>> = _postLink
+    //when a user saves or upvotes a post, post to the api. and then get the result back from json.
+    //do not refresh entire post
 
-    val allItems: LiveData<List<Post>> = postDao.getSavedPosts().asLiveData()
 
+    private val _postLink = MutableLiveData<String>()
+    val postLink: LiveData<String> = _postLink
+
+
+    fun retrievePostLink(link: String?) {
+        _postLink.value = link!!
+    }
+
+
+
+    //add new post to database
+    fun addNewPost() {
+        val newPost = getNewPostEntry("test title", "Testing.com")
+        insertPost(newPost)
+
+    }
+
+    //Launching a new coroutine to add post to database in an asynchronous way
     private fun insertPost(post: Post) {
         viewModelScope.launch {
             postDao.insert(post)
         }
     }
+
 
     private fun getNewPostEntry(title: String, link: String): Post {
         return Post(
@@ -30,11 +48,7 @@ class PostDetailViewModel(private val postDao: PostDao) : ViewModel() {
         )
     }
 
-    fun addNewPost() {
-        val newPost = getNewPostEntry("test title", "Testing.com")
-        insertPost(newPost)
-        println("HELLO")
-    }
+
 
 
 
@@ -43,7 +57,13 @@ class PostDetailViewModel(private val postDao: PostDao) : ViewModel() {
         //get current post link from adapter
     }
 
-    val hello = "HELLO"
+
+
+
+
+
+
+
 
 
 

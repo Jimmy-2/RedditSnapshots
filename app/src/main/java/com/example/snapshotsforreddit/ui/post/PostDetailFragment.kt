@@ -8,12 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.navArgs
 import com.example.snapshotsforreddit.SavedPostsApplication
 import com.example.snapshotsforreddit.database.Post
 import com.example.snapshotsforreddit.databinding.FragmentPostDetailBinding
 
 
 class PostDetailFragment: Fragment() {
+    private val navigationArgs: PostDetailFragmentArgs by navArgs()
 
 
     private val localViewModel: PostDetailViewModel by activityViewModels {
@@ -48,12 +50,13 @@ class PostDetailFragment: Fragment() {
             addNewItem()
         }
          */
+        val link = navigationArgs.postLink
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             viewModel = localViewModel
 
         }
-
+        localViewModel.retrievePostLink(link)
     }
     override fun onDestroyView() {
         super.onDestroyView()

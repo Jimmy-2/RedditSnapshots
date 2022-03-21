@@ -62,6 +62,10 @@ class OAuth2Fragment : Fragment() {
         findNavController().navigate(R.id.action_OAuth2Fragment_to_frontPageFragment)
     }
 
+    fun goToSaved() {
+        findNavController().navigate(R.id.action_OAuth2Fragment_to_savedPostsFragment)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {

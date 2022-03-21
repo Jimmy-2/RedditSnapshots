@@ -26,7 +26,9 @@ class FrontPageFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = sharedViewModel
         binding.postsList.adapter = FrontPageAdapter(FrontPageListener {
-            findNavController().navigate(R.id.action_frontPageFragment_to_postDetailFragment)
+            val action = FrontPageFragmentDirections.actionFrontPageFragmentToPostDetailFragment(it.permaLink!!)
+            this.findNavController().navigate(action)
+            //findNavController().navigate(R.id.action_frontPageFragment_to_postDetailFragment)
 
         })
 

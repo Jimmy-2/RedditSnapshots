@@ -37,7 +37,7 @@ interface RedditApiService {
 
     //use moreChildren endpoint to get more posts after the last one
     @GET("/r/popular")
-    fun getListPost(
+    fun getListOfPosts(
         @Header("Authorization") Authorization: String?,
         @Header("User-Agent") User_Agent: String?
     ): Call<RedditJsonResponse>
@@ -45,6 +45,14 @@ interface RedditApiService {
     //testing method for test_url
     @GET("/")
     fun getListPost2(): Call<RedditJsonResponse>
+
+
+    @GET("/")
+    fun getThreadPost(
+        @Header("Authorization") Authorization: String?,
+        @Header("User-Agent") User_Agent: String?,
+        @Field("permalink") permalink: String?
+    ): Call<RedditJsonResponse>
 
 }
 

@@ -1,6 +1,5 @@
-package com.example.snapshotsforreddit.network.responses
+package com.example.snapshotsforreddit.network.responses.thumbnail
 
-import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 
