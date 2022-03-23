@@ -7,28 +7,38 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.adapter.FrontPageAdapter
 import com.example.snapshotsforreddit.adapter.FrontPageListener
+import com.example.snapshotsforreddit.data.UserPreferences
 import com.example.snapshotsforreddit.databinding.FragmentFrontPageBinding
-import com.example.snapshotsforreddit.model.RedditViewModel
-import com.example.snapshotsforreddit.network.responses.ChildrenData
+
 
 
 class FrontPageFragment : Fragment() {
-    private val sharedViewModel: RedditViewModel by activityViewModels()
+    private lateinit var userPreferences: UserPreferences
+    private val viewModel: FrontPageViewModel by activityViewModels(){
+        FrontPageViewModelFactory(userPreferences)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        //Initialize UserPreferences
+        userPreferences = UserPreferences(requireContext())
+
         val binding = FragmentFrontPageBinding.inflate(inflater)
         binding.lifecycleOwner = this
-        binding.viewModel = sharedViewModel
+        binding.viewModel = viewModel
         binding.postsList.adapter = FrontPageAdapter(FrontPageListener {
             val action = FrontPageFragmentDirections.actionFrontPageFragmentToPostDetailFragment(it.permaLink!!)
             this.findNavController().navigate(action)
             //findNavController().navigate(R.id.action_frontPageFragment_to_postDetailFragment)
+
+        })
+
+        viewModel.userPreferencesFlow.observe(viewLifecycleOwner, { value ->
+            viewModel.getPosts(value, "bearer")
 
         })
 

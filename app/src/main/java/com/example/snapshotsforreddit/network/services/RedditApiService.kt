@@ -25,8 +25,8 @@ private val retrofitGetToken = Retrofit.Builder().addConverterFactory(MoshiConve
 private val retrofitOAuth = Retrofit.Builder().addConverterFactory(MoshiConverterFactory.create(moshi)).baseUrl(OAUTH_URL).build()
 
 interface RedditApiService {
-    @POST("/api/v1/access_token")
     @FormUrlEncoded
+    @POST("/api/v1/access_token")
     fun getToken(
         @Header("User-Agent") User_Agent: String?,
         @Header("Authorization") Authorization: String?,
@@ -41,10 +41,6 @@ interface RedditApiService {
         @Header("Authorization") Authorization: String?,
         @Header("User-Agent") User_Agent: String?
     ): Call<RedditJsonResponse>
-
-    //testing method for test_url
-    @GET("/")
-    fun getListPost2(): Call<RedditJsonResponse>
 
 
     @GET("/")

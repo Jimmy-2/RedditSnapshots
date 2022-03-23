@@ -66,14 +66,19 @@ dependencies {
     //Kotlin coroutines
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
+    //Preferences datastore
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
 
     //Room
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
 
-    // Coil
+    //Coil
     implementation "io.coil-kt:coil:1.1.1"
+
+
+
 
 
 }

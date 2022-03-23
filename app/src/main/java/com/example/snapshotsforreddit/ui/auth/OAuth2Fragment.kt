@@ -5,20 +5,26 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.snapshotsforreddit.R
+import com.example.snapshotsforreddit.data.UserPreferences
 import com.example.snapshotsforreddit.databinding.FragmentOAuth2Binding
-import com.example.snapshotsforreddit.model.RedditViewModel
+import com.example.snapshotsforreddit.model.AuthViewModel
+import com.example.snapshotsforreddit.model.AuthViewModelFactory
 
 
 class OAuth2Fragment : Fragment() {
 
-    private val viewModel: RedditViewModel by activityViewModels()
+    private lateinit var userPreferences: UserPreferences
+
+    private val viewModel: AuthViewModel by activityViewModels {
+        AuthViewModelFactory(userPreferences)
+    }
 
     private var _binding: FragmentOAuth2Binding? = null
     private val binding get() = _binding!!
@@ -27,6 +33,9 @@ class OAuth2Fragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        //Initialize UserPreferences
+        userPreferences = UserPreferences(requireContext())
+
         _binding = FragmentOAuth2Binding.inflate(inflater)
         binding.viewModel = viewModel
 
@@ -51,6 +60,11 @@ class OAuth2Fragment : Fragment() {
             } else {
                 val state = uri.getQueryParameter("state")
                 if (state == viewModel.state) {
+                    /*
+                    lifecycleScope.launch {
+                        userPreferences.saveAccessTokenToDataStore("HELLO")
+                    }
+                     */
                     viewModel.setCode(uri.getQueryParameter("code"))
                     //goToFrontPage()
                 }
@@ -73,6 +87,11 @@ class OAuth2Fragment : Fragment() {
             viewModel = viewModel
             authFragment = this@OAuth2Fragment
         }
+        viewModel.userPreferencesFlow.observe(viewLifecycleOwner, { value ->
+            println("HELLOssss $value")
+
+        })
+
     }
 
 }

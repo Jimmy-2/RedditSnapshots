@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.snapshotsforreddit.model.RedditViewModel" />
+            type="com.example.snapshotsforreddit.ui.redditpage.FrontPageViewModel" />
 
     </data>
 
