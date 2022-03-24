@@ -3,7 +3,7 @@ package com.example.snapshotsforreddit.network.responses
 
 data class Data(
     val after: String?,
-    val dist: String?,
+    val dist: Int?,
     val modhash: String?,
     val geo_filter: String?,
     val children: List<ChildrenObject>

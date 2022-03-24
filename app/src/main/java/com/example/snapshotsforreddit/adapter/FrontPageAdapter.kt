@@ -19,28 +19,31 @@ class FrontPageAdapter(val clickListener: FrontPageListener) : ListAdapter<Child
     }
     companion object DiffCallback : DiffUtil.ItemCallback<ChildrenData>() {
         override fun areItemsTheSame(oldItem: ChildrenData, newItem: ChildrenData): Boolean {
-            return oldItem.permaLink == newItem.permaLink
+            return oldItem == newItem
         }
 
         //check visually displayed
         override fun areContentsTheSame(oldItem: ChildrenData, newItem: ChildrenData): Boolean {
-            return oldItem.title == newItem.title && oldItem.numComments == newItem.numComments && oldItem.score == newItem.score
+            return oldItem.toString().equals(newItem.toString())
         }
     }
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): FrontPageAdapter.FrontPageViewHolder {
-        return FrontPageViewHolder(
-            PostItemBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
+    ): FrontPageViewHolder {
+        return FrontPageViewHolder(PostItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 
-    override fun onBindViewHolder(holder: FrontPageAdapter.FrontPageViewHolder, position: Int) {
+    //since items do not have an id, we will have to override these functions so that recyclerview does not duplicate images when scrolling
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
+    override fun onBindViewHolder(holder: FrontPageViewHolder, position: Int) {
         val postItem = getItem(position)
         holder.bind(clickListener, postItem)
     }

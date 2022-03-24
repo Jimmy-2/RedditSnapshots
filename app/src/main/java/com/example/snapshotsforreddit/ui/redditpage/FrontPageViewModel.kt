@@ -18,12 +18,13 @@ class FrontPageViewModel(private val userPreferences: UserPreferences): ViewMode
     private val _postItems = MutableLiveData<List<ChildrenData>>()
     val postItems: LiveData<List<ChildrenData>> = _postItems
 
+    private val _accessToken = MutableLiveData<String>()
+    val accessToken: LiveData<String> = _accessToken
 
 
 
     //if accesstoken doesn't work, refresh it with the refresh token or make user reauthenticate
     fun getPosts(accessToken: String?, token_type: String?) {
-        println("HELLO Frontpage ${userPreferencesFlow.value}")
         viewModelScope.launch {
             try {
                 val request = RedditApi.retrofitServiceOAuth.getListOfPosts(
@@ -68,7 +69,9 @@ class FrontPageViewModel(private val userPreferences: UserPreferences): ViewMode
 
     }
 
-
+    fun setAccessToken(accessToken: String?) {
+        _accessToken.value = accessToken!!
+    }
 }
 
 class FrontPageViewModelFactory(private val userPreferences: UserPreferences) : ViewModelProvider.Factory {

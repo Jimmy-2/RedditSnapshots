@@ -12,8 +12,8 @@
             android:id="@+id/action_OAuth2Fragment_to_frontPageFragment"
             app:destination="@id/frontPageFragment" />
         <action
-            android:id="@+id/action_OAuth2Fragment_to_savedPostsFragment"
-            app:destination="@id/savedPostsFragment" />
+            android:id="@+id/action_OAuth2Fragment_to_downloadedPostsFragment"
+            app:destination="@id/downloadedPostsFragment" />
     </fragment>
     <fragment
         android:id="@+id/frontPageFragment"
@@ -29,17 +29,17 @@
             app:destination="@id/postDetailFragment" />
     </fragment>
     <fragment
-        android:id="@+id/savedPostsFragment"
+        android:id="@+id/downloadedPostsFragment"
         android:name="com.example.snapshotsforreddit.ui.downloadedposts.DownloadedPostsFragment"
-        android:label="fragment_saved_posts"
+        android:label="fragment_downloaded_posts"
         tools:layout="@layout/fragment_downloaded_posts" >
         <action
-            android:id="@+id/action_savedPostsFragment_to_OAuth2Fragment"
+            android:id="@+id/action_downloadedPostsFragment_to_OAuth2Fragment"
             app:destination="@id/OAuth2Fragment"
             app:popUpTo="@id/OAuth2Fragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_savedPostsFragment_to_postDetailFragment"
+            android:id="@+id/action_downloadedPostsFragment_to_postDetailFragment"
             app:destination="@id/postDetailFragment" />
     </fragment>
     <fragment
@@ -47,7 +47,10 @@
         android:name="com.example.snapshotsforreddit.ui.post.PostDetailFragment"
         android:label="PostDetailFragment" >
         <argument
-            android:name="post_link"
+            android:name="post_subreddit"
+            app:argType="string" />
+        <argument
+            android:name="post_id"
             app:argType="string" />
         <action
             android:id="@+id/action_postDetailFragment_to_frontPageFragment"

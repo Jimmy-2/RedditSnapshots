@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.snapshotsforreddit.SavedPostsApplication
+import com.example.snapshotsforreddit.BaseApplication
 import com.example.snapshotsforreddit.adapter.DownloadedPostsAdapter
 import com.example.snapshotsforreddit.databinding.FragmentDownloadedPostsBinding
 
@@ -16,9 +16,9 @@ import com.example.snapshotsforreddit.databinding.FragmentDownloadedPostsBinding
 
 //will create a bottom tab navigation that seperates saved posts fragment from the fragments that require api usage
 class DownloadedPostsFragment : Fragment() {
-    private val viewModel: SavedPostsViewModel by activityViewModels {
-        SavedPostsViewModelFactory(
-            (activity?.application as SavedPostsApplication).database.postDao()
+    private val viewModel: DownloadedPostsViewModel by activityViewModels {
+        DownloadedPostsViewModelFactory(
+            (activity?.application as BaseApplication).database.postDao()
         )
     }
     private var _binding: FragmentDownloadedPostsBinding? = null
@@ -38,13 +38,13 @@ class DownloadedPostsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = DownloadedPostsAdapter {
-            val action = DownloadedPostsFragmentDirections.actionSavedPostsFragmentToPostDetailFragment(it.permalink)
+            val action = DownloadedPostsFragmentDirections.actionDownloadedPostsFragmentToPostDetailFragment(it.permalink, "HELLO")
             this.findNavController().navigate(action)
         }
 
 
-        binding.savedList.layoutManager = LinearLayoutManager(this.context)
-        binding.savedList.adapter = adapter
+        binding.downloadedList.layoutManager = LinearLayoutManager(this.context)
+        binding.downloadedList.adapter = adapter
 
 
         // Attach an observer on the allItems list to update the UI automatically when the data

@@ -27,22 +27,29 @@ class FrontPageFragment : Fragment() {
         //Initialize UserPreferences
         userPreferences = UserPreferences(requireContext())
 
-        val binding = FragmentFrontPageBinding.inflate(inflater)
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
-        binding.postsList.adapter = FrontPageAdapter(FrontPageListener {
-            val action = FrontPageFragmentDirections.actionFrontPageFragmentToPostDetailFragment(it.permaLink!!)
-            this.findNavController().navigate(action)
-            //findNavController().navigate(R.id.action_frontPageFragment_to_postDetailFragment)
-
-        })
-
         viewModel.userPreferencesFlow.observe(viewLifecycleOwner, { value ->
             viewModel.getPosts(value, "bearer")
 
         })
 
+
+
+        val binding = FragmentFrontPageBinding.inflate(inflater)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+        binding.postsList.adapter = FrontPageAdapter(FrontPageListener {
+            val action = FrontPageFragmentDirections.actionFrontPageFragmentToPostDetailFragment(it.subreddit!!,it.id!!)
+            this.findNavController().navigate(action)
+            //findNavController().navigate(R.id.action_frontPageFragment_to_postDetailFragment)
+
+        })
+
         //viewModel.getPosts()
         return binding.root
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
     }
 }

@@ -62,32 +62,40 @@ class AuthViewModel(private val userPreferences: UserPreferences): ViewModel() {
             authString.toByteArray(),
             Base64.NO_WRAP
         )
-        val request = RedditApi.retrofitServiceToken.getToken("Testing","Basic $encodedAuthString", "authorization_code", code,
-            REDIRECT_URI
-        )
-        request.enqueue(object : retrofit2.Callback<TokenResponse> {
-            override fun onResponse(
-                request: Call<TokenResponse>,
-                response: Response<TokenResponse>
-            ) {
-                val responseParse: TokenResponse? = response.body()
-                Log.i("MainFragment", "Authentication response: ${responseParse.toString()}")
-                val accessToken = responseParse?.access_token
-                val refreshToken = responseParse?.refresh_token
-                val token_type = responseParse?.token_type
-                if (accessToken != null) {
-                    Log.i("MainFragment", "access token: $accessToken")
-                    Log.i("MainFragment", "refresh token: $refreshToken")
-                    _buttonText.value = accessToken!!
-                    saveCode(accessToken)
-                } else {
-                    println("Error: no access token")
-                }
-            }
-            override fun onFailure(request: Call<TokenResponse>, t: Throwable) {
+        viewModelScope.launch {
+            try {
+                val request = RedditApi.retrofitServiceToken.getToken("Testing","Basic $encodedAuthString", "authorization_code", code,
+                    REDIRECT_URI
+                )
+                request.enqueue(object : retrofit2.Callback<TokenResponse> {
+                    override fun onResponse(
+                        request: Call<TokenResponse>,
+                        response: Response<TokenResponse>
+                    ) {
+                        val responseParse: TokenResponse? = response.body()
+                        Log.i("MainFragment", "Authentication response: ${responseParse.toString()}")
+                        val accessToken = responseParse?.access_token
+                        val refreshToken = responseParse?.refresh_token
+                        val token_type = responseParse?.token_type
+                        if (accessToken != null) {
+                            Log.i("MainFragment", "access token: $accessToken")
+                            Log.i("MainFragment", "refresh token: $refreshToken")
+                            _buttonText.value = accessToken!!
+                            saveCode(accessToken)
+                        } else {
+                            println("Error: no access token")
+                        }
+                    }
+                    override fun onFailure(request: Call<TokenResponse>, t: Throwable) {
+
+                    }
+                })
+            }catch (e: Exception) {
 
             }
-        })
+
+        }
+
     }
     private var code: String? = null
     fun setCode(code: String?) {

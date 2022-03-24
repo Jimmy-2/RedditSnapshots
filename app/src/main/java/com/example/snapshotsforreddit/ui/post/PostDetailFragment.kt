@@ -9,25 +9,26 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
-import com.example.snapshotsforreddit.SavedPostsApplication
+import com.example.snapshotsforreddit.BaseApplication
+import com.example.snapshotsforreddit.data.UserPreferences
 import com.example.snapshotsforreddit.database.Post
 import com.example.snapshotsforreddit.databinding.FragmentPostDetailBinding
 
 
 class PostDetailFragment: Fragment() {
     private val navigationArgs: PostDetailFragmentArgs by navArgs()
+    private lateinit var userPreferences: UserPreferences
 
-
-    private val localViewModel: PostDetailViewModel by activityViewModels {
+    private val viewModel: PostDetailViewModel by activityViewModels {
         PostDetailViewModelFactory(
-            (activity?.application as SavedPostsApplication).database
-                .postDao()
+            (activity?.application as BaseApplication).database
+                .postDao(), userPreferences
         )
     }
     lateinit var post: Post
 
     private fun addNewItem() {
-        localViewModel.addNewPost()
+        viewModel.addNewPost()
     }
 
 
@@ -38,10 +39,18 @@ class PostDetailFragment: Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        userPreferences = UserPreferences(requireContext())
+
+        viewModel.userPreferencesFlow.observe(viewLifecycleOwner, { value ->
+            viewModel.getPostDetail(value, "bearer")
+
+        })
+
         _binding = FragmentPostDetailBinding.inflate(inflater)
         // Inflate the layout for this fragment
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         /*
@@ -50,13 +59,14 @@ class PostDetailFragment: Fragment() {
             addNewItem()
         }
          */
-        val link = navigationArgs.postLink
+        val subreddit = navigationArgs.postSubreddit
+        val id = navigationArgs.postId
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
-            viewModel = localViewModel
+            viewModel = viewModel
 
         }
-        localViewModel.retrievePostLink(link)
+        viewModel.retrievePostLink(subreddit, id)
     }
     override fun onDestroyView() {
         super.onDestroyView()

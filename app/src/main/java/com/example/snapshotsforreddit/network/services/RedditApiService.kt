@@ -24,6 +24,10 @@ private val retrofitGetToken = Retrofit.Builder().addConverterFactory(MoshiConve
 
 private val retrofitOAuth = Retrofit.Builder().addConverterFactory(MoshiConverterFactory.create(moshi)).baseUrl(OAUTH_URL).build()
 
+private val retrofitTest = Retrofit.Builder().addConverterFactory(MoshiConverterFactory.create(moshi)).baseUrl(TEST_URL).build()
+
+
+
 interface RedditApiService {
     @FormUrlEncoded
     @POST("/api/v1/access_token")
@@ -42,13 +46,25 @@ interface RedditApiService {
         @Header("User-Agent") User_Agent: String?
     ): Call<RedditJsonResponse>
 
+    @GET("/r/popular")
+    fun getListOfPostsTest(): Call<RedditJsonResponse>
 
-    @GET("/")
-    fun getThreadPost(
+
+
+    @GET("/r/{subreddit}/comments/{id}/")
+    fun getPostDetails(
         @Header("Authorization") Authorization: String?,
         @Header("User-Agent") User_Agent: String?,
-        @Field("permalink") permalink: String?
-    ): Call<RedditJsonResponse>
+        @Path("subreddit") permalink: String?,
+        @Path("id") id: String?
+    ): Call<List<RedditJsonResponse>>
+    //post detail will contain a list of redditjsonresponses of size 2
+
+    @GET("/r/{subreddit}/comments/{id}/")
+    fun getPostDetailsTest(
+        @Path("subreddit") permalink: String?,
+        @Path("id") id: String?
+    ): Call<List<RedditJsonResponse>>
 
 }
 
@@ -61,6 +77,10 @@ object RedditApi {
 
     val retrofitServiceOAuth: RedditApiService by lazy {
         retrofitOAuth.create()
+    }
+
+    val retrofitServiceTest: RedditApiService by lazy {
+        retrofitTest.create()
     }
 
 

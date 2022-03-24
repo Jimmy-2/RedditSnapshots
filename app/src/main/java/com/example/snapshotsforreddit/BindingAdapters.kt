@@ -17,7 +17,7 @@ fun bindFrontPage(recyclerView: RecyclerView, data: List<ChildrenData>?) {
 }
 
 @BindingAdapter("SavedData")
-fun bindSavedPosts(recyclerView: RecyclerView, data: List<Post>?) {
+fun bindDownloadedPosts(recyclerView: RecyclerView, data: List<Post>?) {
     val adapter = recyclerView.adapter as DownloadedPostsAdapter
     adapter.submitList(data)
 }
@@ -27,18 +27,21 @@ fun bindSavedPosts(recyclerView: RecyclerView, data: List<Post>?) {
 
 @BindingAdapter("imageUrl", "textPost")
 fun bindImage(imgView: ImageView, imageUrl: String?, textPost: Boolean?) {
-    imageUrl?.let {
-        val removePart = "amp;"
-        val imgUri = imageUrl.replace(removePart,"").toUri().buildUpon().scheme("https").build()
-        if(textPost == false) {
+    if(textPost == true) {
+        imgView.setImageResource(0);
+    }else {
+        imageUrl?.let {
+            val removePart = "amp;"
+            val imgUri = imageUrl.replace(removePart,"").toUri().buildUpon().scheme("https").build()
             imgView.load(imgUri) {
                 placeholder(R.drawable.ic_downloading)
                 error(R.drawable.ic_error)
             }
 
-        }else {
-            imgView.setImageResource(0);
-        }
 
+
+        }
     }
+
 }
+

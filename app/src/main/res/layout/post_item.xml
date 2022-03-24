@@ -66,8 +66,8 @@
                 android:layout_height="wrap_content"
                 android:text="@{Integer.toString(postItem.score)}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                app:layout_constraintTop_toBottomOf="@+id/postText"
-                tools:layout_editor_absoluteX="35dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/postitem_text"
                 tools:text="4000" />
 
             <TextView
@@ -78,17 +78,16 @@
                 android:text="@{Integer.toString(postItem.numComments)}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/postText"
+                app:layout_constraintTop_toBottomOf="@+id/postitem_text"
                 tools:text="300" />
 
             <TextView
-                android:id="@+id/postText"
+                android:id="@+id/postitem_text"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:maxLines="3"
                 android:padding="8dp"
                 android:text="@{postItem.selfText}"
-                android:visibility="gone"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

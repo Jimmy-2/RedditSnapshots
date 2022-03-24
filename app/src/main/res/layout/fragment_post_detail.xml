@@ -24,7 +24,7 @@
             android:padding="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="@{viewModel.postLink}"
+            android:text="@{viewModel.postInformation.title}"
             tools:text="REDDIT POST TITLE"/>
 
         <Button
@@ -41,8 +41,14 @@
 
         <ImageView
             android:id="@+id/post_image"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:scaleType="fitCenter"
+            app:imageUrl="@{viewModel.postInformation.preview.images[0].source.url}"
+            app:textPost="@{viewModel.postInformation.isSelf}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
@@ -52,8 +58,10 @@
         <TextView
             android:id="@+id/post_text"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
+            android:layout_height="0dp"
+            android:padding="8dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:text="@{viewModel.postInformation.selfText}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/post_image" />

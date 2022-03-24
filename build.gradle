@@ -4,6 +4,9 @@ buildscript {
     ext {
         nav_version = '2.4.1'
         room_version = '2.4.2'
+        ext.hilt_version = '2.40.5'
+        compose_version = '1.1.0'
+
     }
     repositories {
         google()
@@ -12,6 +15,9 @@ buildscript {
 
     dependencies {
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
+
+        //Hilt for di
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
     }
 }
 

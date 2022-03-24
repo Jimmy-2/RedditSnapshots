@@ -31,8 +31,13 @@ data class ChildrenData(
 
 
  */
+//can reuse for post detail information
 @JsonClass(generateAdapter = true)
 data class ChildrenData (
+    val subreddit: String?,
+
+    val id: String?,
+
     val title: String?,
 
     @Json(name = "selftext") val selfText: String?,

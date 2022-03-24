@@ -1,45 +1,60 @@
 package com.example.snapshotsforreddit.ui.post
 
 import android.content.ClipData
+import android.util.Log
 import androidx.lifecycle.*
 import androidx.navigation.fragment.navArgs
+import com.example.snapshotsforreddit.data.UserPreferences
 import com.example.snapshotsforreddit.database.Post
 import com.example.snapshotsforreddit.database.PostDao
 import com.example.snapshotsforreddit.network.responses.ChildrenData
+import com.example.snapshotsforreddit.network.responses.ChildrenObject
+import com.example.snapshotsforreddit.network.responses.RedditJsonResponse
+import com.example.snapshotsforreddit.network.services.RedditApi
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Response
 
 //allow user to save a post to database
 //dao
-class PostDetailViewModel(private val postDao: PostDao) : ViewModel() {
+class PostDetailViewModel(private val postDao: PostDao, private val userPreferences: UserPreferences) : ViewModel() {
 
     //when a user saves or upvotes a post, post to the api. and then get the result back from json.
     //do not refresh entire post
 
+    var userPreferencesFlow = userPreferences.readTokensFromDataStore.asLiveData()
 
-    private val _postLink = MutableLiveData<String>()
-    val postLink: LiveData<String> = _postLink
+    private val _postSubreddit = MutableLiveData<String>()
+    val postSubreddit : LiveData<String> = _postSubreddit
+    private val _postId = MutableLiveData<String>()
+    val postId : LiveData<String> = _postId
 
+    private val _postDetails = MutableLiveData<List<RedditJsonResponse>>()
+    val postDetails: LiveData<List<RedditJsonResponse>> = _postDetails
 
-    fun retrievePostLink(link: String?) {
-        _postLink.value = link!!
+    private val _postInformation = MutableLiveData<ChildrenData>()
+    val postInformation: LiveData<ChildrenData> = _postInformation
+
+    private val _postComments = MutableLiveData<ChildrenData>()
+    val postComments : LiveData<ChildrenData> = _postComments
+
+    fun retrievePostLink(subreddit: String?, id: String?) {
+        _postSubreddit.value = subreddit!!
+        _postId.value = id!!
     }
-
-
 
     //add new post to database
     fun addNewPost() {
-        val newPost = getNewPostEntry("test title", "Testing.com")
+        val newPost = getNewPostEntry("test title", postSubreddit.value!!)
         insertPost(newPost)
 
     }
-
     //Launching a new coroutine to add post to database in an asynchronous way
     private fun insertPost(post: Post) {
         viewModelScope.launch {
             postDao.insert(post)
         }
     }
-
 
     private fun getNewPostEntry(title: String, link: String): Post {
         return Post(
@@ -48,6 +63,51 @@ class PostDetailViewModel(private val postDao: PostDao) : ViewModel() {
         )
     }
 
+    fun getPostDetail(accessToken: String?, token_type: String?) {
+
+        viewModelScope.launch {
+            try {
+                //unfortunately we cannot just pass in a permalink as the "/" in the link gets formatted to become "%2F"
+                //val requestTest = RedditApi.retrofitServiceTest.getPostDetailsTest(_postLink.value.toString())
+
+                val request = RedditApi.retrofitServiceOAuth.getPostDetails(
+                    "$token_type $accessToken",
+                    "snapshots-for-reddit",
+                    _postSubreddit.value, _postId.value
+                )
+                val requestTest = RedditApi.retrofitServiceTest.getPostDetailsTest(_postSubreddit.value, _postId.value)
+
+
+                requestTest.enqueue(object : retrofit2.Callback<List<RedditJsonResponse>> {
+                    override fun onResponse(
+                        call: Call<List<RedditJsonResponse>>,
+                        response: Response<List<RedditJsonResponse>>
+                    ) {
+                        Log.i("FrontPageFragment", response.raw().toString())
+                        //A list of redditjsonresponses of size 2
+                        //the 2nd redditjsonresponse of the list will contain all the comments of the post
+                        val postDetailsParse: List<RedditJsonResponse>? = response.body()
+                        val postDetailItem1: RedditJsonResponse = postDetailsParse!![0]
+
+                        val data = postDetailItem1!!.data
+
+                        if (data != null && data.dist == 1) {
+                            //size will be 1 at index 0
+                            _postInformation.value = data.children[0].childrenData!!
+                            println("HELLO# ${_postInformation.value!!.title}")
+                        } else {
+                            Log.e("FrontPageFragment", "ERROR at getPosts")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<List<RedditJsonResponse>>, t: Throwable) {
+                    }
+                })
+            } catch (e: Exception) {
+            }
+        }
+
+    }
 
 
 
@@ -68,11 +128,11 @@ class PostDetailViewModel(private val postDao: PostDao) : ViewModel() {
 
 
 }
-class PostDetailViewModelFactory(private val postDao: PostDao) : ViewModelProvider.Factory {
+class PostDetailViewModelFactory(private val postDao: PostDao, private val userPreferences: UserPreferences) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(PostDetailViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return PostDetailViewModel(postDao) as T
+            return PostDetailViewModel(postDao, userPreferences) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
