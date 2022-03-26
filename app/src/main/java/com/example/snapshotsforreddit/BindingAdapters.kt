@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.snapshotsforreddit.adapter.FrontPageAdapter
 import com.example.snapshotsforreddit.adapter.DownloadedPostsAdapter
-import com.example.snapshotsforreddit.database.Post
+import com.example.snapshotsforreddit.data.room.Post
 import com.example.snapshotsforreddit.network.responses.ChildrenData
 
 @BindingAdapter("listData")

@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.database
+package com.example.snapshotsforreddit.data.room
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo
@@ -14,15 +14,21 @@ data class Post(
 
     @ColumnInfo(name = "title")
     val title: String,
+
+    val subreddit: String,
+
     @ColumnInfo(name = "permalink")
     val permalink: String,
 
     val important: Boolean = false,
 
-    val added: Long = System.currentTimeMillis(),
+
 
     //list of comment objects
 
+
+
+    val added: Long = System.currentTimeMillis(),
 
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0

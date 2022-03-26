@@ -1,54 +1,67 @@
 package com.example.snapshotsforreddit.data
 
+import android.content.Context
 import android.util.Log
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.emptyPreferences
-import androidx.datastore.preferences.core.stringPreferencesKey
-import kotlinx.coroutines.flow.Flow
+import androidx.datastore.preferences.core.*
+import androidx.datastore.preferences.preferencesDataStore
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException
+import javax.inject.Inject
+import javax.inject.Singleton
 
+data class Tokens(val accessToken: String, val refreshToken: String)
 
-class TokensRepository(private val dataStore: DataStore<Preferences>) {
+private val Context.dataStore by preferencesDataStore("tokens_datastore")
+
+@Singleton
+class TokensRepository @Inject constructor (@ApplicationContext context: Context) {
     private val TAG: String = "TokensRepository"
 
-    private val ACCESS_TOKEN = stringPreferencesKey("access_token")
+    private val TokensDataStore = context.dataStore
 
-    private val REFRESH_TOKEN = stringPreferencesKey("refresh_token")
-
-    //read from datastore to obtain token values_values
-    val readTokensFromDataStore: Flow<String> = dataStore.data
+    //read from datastore to obtain token values
+    val tokensFlow = TokensDataStore.data
         //error handling
         .catch { exception ->
             if (exception is IOException) {
                 //exception.printStackTrace()
-                Log.e(TAG, "Error reading preferences.", exception)
+                Log.e(TAG, "Error reading token values.", exception)
                 emit(emptyPreferences())
             } else {
                 throw exception
             }
         }
         .map { preferences ->
-            //TODO: create some logic for accessing the token on the first run before authenticating and when a token expires
-            preferences[ACCESS_TOKEN] ?: ""
-
-        }//TODO: add logic to read and retrieve refresh token
+            val accessToken = preferences[TokenKeys.ACCESS_TOKEN] ?: ""
+            val refreshToken = preferences[TokenKeys.REFRESH_TOKEN] ?: ""
+            Tokens(accessToken,refreshToken)
+        }
 
 
 
     //transactionally updates the data
-    suspend fun saveAccessTokenToDataStore(accessToken: String) {
+    suspend fun updateAccessToken(accessToken: String) {
         //store new access token string value
         //write to datastore
-        dataStore.edit { preferences ->
-            preferences[ACCESS_TOKEN] = accessToken
+        TokensDataStore.edit { preferences ->
+            preferences[TokenKeys.ACCESS_TOKEN] = accessToken
         }
     }
 
+    suspend fun updateRefreshToken(refreshToken: String) {
+        //store new refresh token string value
+        //write to datastore
+        TokensDataStore.edit { preferences ->
+            preferences[TokenKeys.REFRESH_TOKEN] = refreshToken
+        }
+    }
 
+    private object TokenKeys {
+        val ACCESS_TOKEN = stringPreferencesKey("access_token")
+        val REFRESH_TOKEN = stringPreferencesKey("refresh_token")
+    }
 
 
 }

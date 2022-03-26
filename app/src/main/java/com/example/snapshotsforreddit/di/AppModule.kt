@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.example.snapshotsforreddit.BaseApplication
-import com.example.snapshotsforreddit.database.PostRoomDatabase
+import com.example.snapshotsforreddit.data.room.PostRoomDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -52,7 +52,7 @@ object AppModule {
             }
      */
 
-    //create the actual task dao object we need to make database operation
+    //create the actual post dao object we need to make database operation
     @Provides
     @Singleton
     fun providePostDao(db: PostRoomDatabase) = db.postDao()

@@ -15,7 +15,7 @@ import java.io.IOException
 
 private val Context.dataStore by preferencesDataStore("data_store")
 
-//repository for tokens
+//TODO DELETE THIS CLASS AND REPLACE WITH TOKENSREPOSITORY
 class TokensDatastore(private val context: Context) {
 
     private val TAG: String = "TokensDatastore"
@@ -31,7 +31,6 @@ class TokensDatastore(private val context: Context) {
             }
         }
         .map { preferences ->
-        // On the first run of the app, we will use LinearLayoutManager by default
         preferences[ACCESS_TOKEN] ?: ""
     }
 

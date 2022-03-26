@@ -26,4 +26,10 @@
         </menu>
 
     </item>
+
+    <item
+        android:id="@+id/action_compact"
+        android:checkable="true"
+        android:title="Compact View"
+        app:showAsAction="never"/>
 </menu>

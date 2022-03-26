@@ -6,7 +6,7 @@
 
         <variable
             name="downloadedPostItem"
-            type="com.example.snapshotsforreddit.database.Post" />
+            type="com.example.snapshotsforreddit.data.room.Post" />
 
 
     </data>

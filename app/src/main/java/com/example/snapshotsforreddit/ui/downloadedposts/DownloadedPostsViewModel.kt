@@ -1,12 +1,12 @@
 package com.example.snapshotsforreddit.ui.downloadedposts
 
 import androidx.lifecycle.*
-import com.example.snapshotsforreddit.database.Post
-import com.example.snapshotsforreddit.database.PostDao
+import com.example.snapshotsforreddit.data.room.Post
+import com.example.snapshotsforreddit.data.room.PostDao
 import kotlinx.coroutines.launch
 
 class DownloadedPostsViewModel(private val postDao: PostDao) : ViewModel() {
-    val allItems: LiveData<List<Post>> = postDao.getDownloadedPosts().asLiveData()
+    //val allItems: LiveData<List<Post>> = postDao.getDownloadedPosts().asLiveData()
 
     //using coroutines to delete an entry from database asynchronously
     fun deleteItem(item: Post) {

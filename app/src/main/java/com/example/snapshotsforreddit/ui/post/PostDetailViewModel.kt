@@ -3,8 +3,8 @@ package com.example.snapshotsforreddit.ui.post
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.snapshotsforreddit.data.TokensDatastore
-import com.example.snapshotsforreddit.database.Post
-import com.example.snapshotsforreddit.database.PostDao
+import com.example.snapshotsforreddit.data.room.Post
+import com.example.snapshotsforreddit.data.room.PostDao
 import com.example.snapshotsforreddit.network.responses.ChildrenData
 import com.example.snapshotsforreddit.network.responses.RedditJsonResponse
 import com.example.snapshotsforreddit.network.services.RedditApi
@@ -64,7 +64,7 @@ class PostDetailViewModel(private val postDao: PostDao, private val tokensDatast
     //add new post to database
     fun addNewPost() {
         println("ADDED")
-        val newPost = getNewPostEntry("test title", "DSSSSSSSS")
+        val newPost = getNewPostEntry("test title", "DSSSSSSSS", "dsa")
         insertPost(newPost)
 
     }
@@ -75,10 +75,11 @@ class PostDetailViewModel(private val postDao: PostDao, private val tokensDatast
         }
     }
 
-    private fun getNewPostEntry(title: String, link: String): Post {
+    private fun getNewPostEntry(title: String, link: String, subreddit: String): Post {
         return Post(
             title = title,
-            permalink = link
+            permalink = link,
+            subreddit = subreddit
         )
     }
 

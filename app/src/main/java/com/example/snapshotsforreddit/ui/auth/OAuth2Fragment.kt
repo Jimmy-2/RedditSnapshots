@@ -16,8 +16,9 @@ import com.example.snapshotsforreddit.data.TokensDatastore
 import com.example.snapshotsforreddit.databinding.FragmentOAuth2Binding
 import com.example.snapshotsforreddit.model.AuthViewModel
 import com.example.snapshotsforreddit.model.AuthViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class OAuth2Fragment : Fragment() {
 
     private lateinit var tokensDatastore: TokensDatastore

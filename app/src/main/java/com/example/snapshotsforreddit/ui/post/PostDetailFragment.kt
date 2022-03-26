@@ -9,7 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import com.example.snapshotsforreddit.BaseApplication
 import com.example.snapshotsforreddit.data.TokensDatastore
-import com.example.snapshotsforreddit.database.Post
+import com.example.snapshotsforreddit.data.room.Post
 import com.example.snapshotsforreddit.databinding.FragmentPostDetailBinding
 
 

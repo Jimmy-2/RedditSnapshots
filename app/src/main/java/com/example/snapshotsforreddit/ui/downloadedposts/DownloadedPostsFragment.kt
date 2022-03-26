@@ -49,11 +49,11 @@ class DownloadedPostsFragment : Fragment() {
 
         // Attach an observer on the allItems list to update the UI automatically when the data
         // changes.
-        viewModel.allItems.observe(this.viewLifecycleOwner) { items ->
-            items.let {
-                adapter.submitList(it)
-            }
-        }
+        //viewModel.allItems.observe(this.viewLifecycleOwner) { items ->
+            //items.let {
+                //adapter.submitList(it)
+            //}
+        //}
 
 
     }

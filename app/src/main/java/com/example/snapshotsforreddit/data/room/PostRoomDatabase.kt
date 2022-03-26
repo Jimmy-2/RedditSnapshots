@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.database
+package com.example.snapshotsforreddit.data.room
 
 import android.content.Context
 import androidx.room.Database
@@ -8,7 +8,6 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.snapshotsforreddit.di.ApplicationScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import okhttp3.internal.concurrent.Task
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -36,11 +35,11 @@ abstract class PostRoomDatabase : RoomDatabase() {
             //we also have to scope the coroutine so it knows when to stop,
             //we need to create a coroutine scope that runs as long as the app is running
             applicationScope.launch {
-                dao.insert(Post("HELLO WHAT IS UP1","dsa"))
-                dao.insert(Post("HELLO WHAT IS UP2","dsa"))
-                dao.insert(Post("HELLO WHAT IS UP3","dsa"))
-                dao.insert(Post("HELLO WHAT IS UP4","dsa"))
-                dao.insert(Post("HELLO WHAT IS UP5","dsa"))
+                dao.insert(Post("HELLO WHAT IS UP1","zzz", "sad"))
+                dao.insert(Post("HELLO WHAT IS UP2","y", "ds"))
+                dao.insert(Post("zLLO WHAT IS UP3","x", "ds", true))
+                dao.insert(Post("HELLO WHAT IS UP4","f", "ds"))
+                dao.insert(Post("HELLO WHAT IS UP5","a", "sdaa"))
             }
 
         }

@@ -1,7 +1,7 @@
 package com.example.snapshotsforreddit
 
 import android.app.Application
-import com.example.snapshotsforreddit.database.PostRoomDatabase
+import com.example.snapshotsforreddit.data.room.PostRoomDatabase
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
