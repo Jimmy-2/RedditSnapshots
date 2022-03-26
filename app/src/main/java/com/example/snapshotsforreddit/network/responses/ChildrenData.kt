@@ -1,8 +1,10 @@
 package com.example.snapshotsforreddit.network.responses
 
+import android.os.Parcelable
 import com.example.snapshotsforreddit.network.responses.thumbnail.ImagePreview
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import kotlinx.android.parcel.Parcelize
 
 //Contains everything relevant to a single post.
 //Will not be using a majority of the keys in the json.
@@ -31,7 +33,8 @@ data class ChildrenData(
 
 
  */
-//can reuse for post detail information
+//Parcelize so that we can pass this object through safe args.
+@Parcelize
 @JsonClass(generateAdapter = true)
 data class ChildrenData (
     val subreddit: String?,
@@ -53,9 +56,10 @@ data class ChildrenData (
     @Json(name = "is_self") val isSelf: Boolean?,
 
     //This object contains the high res images/thumbnails
+
     val preview: ImagePreview?,
 
     //use preview for higher res. and if thumbnail == "" or "self", display text instead
     val thumbnail: String?
-    )
+    ) : Parcelable
 

@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.snapshotsforreddit.R
-import com.example.snapshotsforreddit.data.UserPreferences
+import com.example.snapshotsforreddit.data.TokensDatastore
 import com.example.snapshotsforreddit.databinding.FragmentOAuth2Binding
 import com.example.snapshotsforreddit.model.AuthViewModel
 import com.example.snapshotsforreddit.model.AuthViewModelFactory
@@ -20,10 +20,10 @@ import com.example.snapshotsforreddit.model.AuthViewModelFactory
 
 class OAuth2Fragment : Fragment() {
 
-    private lateinit var userPreferences: UserPreferences
+    private lateinit var tokensDatastore: TokensDatastore
 
     private val viewModel: AuthViewModel by activityViewModels {
-        AuthViewModelFactory(userPreferences)
+        AuthViewModelFactory(tokensDatastore)
     }
 
     private var _binding: FragmentOAuth2Binding? = null
@@ -33,8 +33,8 @@ class OAuth2Fragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //Initialize UserPreferences
-        userPreferences = UserPreferences(requireContext())
+        //Initialize tokensDatastore
+        tokensDatastore = TokensDatastore(requireContext())
 
         _binding = FragmentOAuth2Binding.inflate(inflater)
         binding.viewModel = viewModel
@@ -62,7 +62,7 @@ class OAuth2Fragment : Fragment() {
                 if (state == viewModel.state) {
                     /*
                     lifecycleScope.launch {
-                        userPreferences.saveAccessTokenToDataStore("HELLO")
+                        tokensDatastore.saveAccessTokenToDataStore("HELLO")
                     }
                      */
                     viewModel.setCode(uri.getQueryParameter("code"))
@@ -77,17 +77,17 @@ class OAuth2Fragment : Fragment() {
     }
 
     fun goToSaved() {
-        findNavController().navigate(R.id.action_OAuth2Fragment_to_downloadedPostsFragment)
+        findNavController().navigate(R.id.action_OAuth2Fragment_to_downloadedPostsTestFragment)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
-            viewModel = viewModel
+            //viewModel = viewModel
             authFragment = this@OAuth2Fragment
         }
-        viewModel.userPreferencesFlow.observe(viewLifecycleOwner, { value ->
+        viewModel.tokensDatastoreFlow.observe(viewLifecycleOwner, { value ->
             println("HELLOssss $value")
 
         })

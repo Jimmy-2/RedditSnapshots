@@ -9,25 +9,25 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.snapshotsforreddit.adapter.FrontPageAdapter
 import com.example.snapshotsforreddit.adapter.FrontPageListener
-import com.example.snapshotsforreddit.data.UserPreferences
+import com.example.snapshotsforreddit.data.TokensDatastore
 import com.example.snapshotsforreddit.databinding.FragmentFrontPageBinding
 
 
 
 class FrontPageFragment : Fragment() {
-    private lateinit var userPreferences: UserPreferences
+    private lateinit var tokensDatastore: TokensDatastore
     private val viewModel: FrontPageViewModel by activityViewModels(){
-        FrontPageViewModelFactory(userPreferences)
+        FrontPageViewModelFactory(tokensDatastore)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        //Initialize UserPreferences
-        userPreferences = UserPreferences(requireContext())
+        //Initialize tokensDatastore
+        tokensDatastore = TokensDatastore(requireContext())
 
-        viewModel.userPreferencesFlow.observe(viewLifecycleOwner, { value ->
+        viewModel.tokensDataStoreFlow.observe(viewLifecycleOwner, { value ->
             viewModel.getPosts(value, "bearer")
 
         })
@@ -35,10 +35,13 @@ class FrontPageFragment : Fragment() {
 
 
         val binding = FragmentFrontPageBinding.inflate(inflater)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
         binding.postsList.adapter = FrontPageAdapter(FrontPageListener {
-            val action = FrontPageFragmentDirections.actionFrontPageFragmentToPostDetailFragment(it.subreddit!!,it.id!!)
+            val action = FrontPageFragmentDirections.actionFrontPageFragmentToPostDetailFragment(
+                //just pass the object over
+               it!!
+            )
             this.findNavController().navigate(action)
             //findNavController().navigate(R.id.action_frontPageFragment_to_postDetailFragment)
 

@@ -38,8 +38,8 @@ class DownloadedPostsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = DownloadedPostsAdapter {
-            val action = DownloadedPostsFragmentDirections.actionDownloadedPostsFragmentToPostDetailFragment(it.permalink, "HELLO")
-            this.findNavController().navigate(action)
+           // val action = DownloadedPostsFragmentDirections.actionDownloadedPostsFragmentToPostDetailFragment(it.permalink, "HELLO", "ss", "s", 4,4)
+            //this.findNavController().navigate(action)
         }
 
 

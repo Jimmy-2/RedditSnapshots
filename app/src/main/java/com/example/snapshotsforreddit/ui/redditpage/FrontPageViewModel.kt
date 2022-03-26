@@ -2,7 +2,7 @@ package com.example.snapshotsforreddit.ui.redditpage
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.snapshotsforreddit.data.UserPreferences
+import com.example.snapshotsforreddit.data.TokensDatastore
 import com.example.snapshotsforreddit.network.responses.ChildrenData
 import com.example.snapshotsforreddit.network.responses.ChildrenObject
 import com.example.snapshotsforreddit.network.responses.RedditJsonResponse
@@ -11,9 +11,9 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Response
 
-class FrontPageViewModel(private val userPreferences: UserPreferences): ViewModel() {
+class FrontPageViewModel(private val tokensDatastore: TokensDatastore): ViewModel() {
 
-    var userPreferencesFlow = userPreferences.readTokensFromDataStore.asLiveData()
+    var tokensDataStoreFlow = tokensDatastore.readTokensFromDataStore.asLiveData()
 
     private val _postItems = MutableLiveData<List<ChildrenData>>()
     val postItems: LiveData<List<ChildrenData>> = _postItems
@@ -74,11 +74,11 @@ class FrontPageViewModel(private val userPreferences: UserPreferences): ViewMode
     }
 }
 
-class FrontPageViewModelFactory(private val userPreferences: UserPreferences) : ViewModelProvider.Factory {
+class FrontPageViewModelFactory(private val tokensDatastore: TokensDatastore) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(FrontPageViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return FrontPageViewModel(userPreferences) as T
+            return FrontPageViewModel(tokensDatastore) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_search_downloaded"
+        android:icon="@drawable/ic_search"
+        android:title="Search"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="always|collapseActionView" />
+
+    <item
+        android:icon="@drawable/ic_sort"
+        android:title="Sort"
+        app:showAsAction="always">
+
+        <menu>
+            <item
+                android:id="@+id/action_sort_by_date_added"
+                android:title="Sort by date added"/>
+            <item
+                android:id="@+id/action_sort_by_title"
+                android:title="Sort by title"/>
+            <item
+                android:id="@+id/action_sort_by_subreddit"
+                android:title="Sort by subreddit"/>
+        </menu>
+
+    </item>
+</menu>

@@ -3,7 +3,7 @@ package com.example.snapshotsforreddit.model
 import android.util.Base64
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.snapshotsforreddit.data.UserPreferences
+import com.example.snapshotsforreddit.data.TokensDatastore
 import com.example.snapshotsforreddit.network.responses.TokenResponse
 import com.example.snapshotsforreddit.network.services.RedditApi
 import kotlinx.coroutines.launch
@@ -12,14 +12,14 @@ import retrofit2.Response
 
 
 
-class AuthViewModel(private val userPreferences: UserPreferences): ViewModel() {
+class AuthViewModel(private val tokensDatastore: TokensDatastore): ViewModel() {
 
     fun saveCode(accessToken: String){
         viewModelScope.launch {
-            userPreferences.saveAccessTokenToDataStore(accessToken)
+            tokensDatastore.saveAccessTokenToDataStore(accessToken)
         }
     }
-    var userPreferencesFlow = userPreferences.readTokensFromDataStore.asLiveData()
+    var tokensDatastoreFlow = tokensDatastore.readTokensFromDataStore.asLiveData()
 
     val state = STATE
     //testing
@@ -107,11 +107,11 @@ class AuthViewModel(private val userPreferences: UserPreferences): ViewModel() {
 }
 
 
-class AuthViewModelFactory(private val userPreferences: UserPreferences) : ViewModelProvider.Factory {
+class AuthViewModelFactory(private val tokensDatastore: TokensDatastore) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(AuthViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return AuthViewModel(userPreferences) as T
+            return AuthViewModel(tokensDatastore) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

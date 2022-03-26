@@ -1,4 +1,7 @@
-package com.example.snapshotsforreddit.network.responses
+package com.example.snapshotsforreddit.network.responses.thumbnail
+
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
 /*
     "source": {
@@ -7,8 +10,9 @@ package com.example.snapshotsforreddit.network.responses
         "height": 682
     }
  */
+@Parcelize
 data class SourceObject(
     val url: String?,
     val width: Int?,
     val height: Int?
-)
+): Parcelable

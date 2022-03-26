@@ -15,9 +15,21 @@ import java.io.IOException
 
 private val Context.dataStore by preferencesDataStore("data_store")
 
-class UserPreferences(private val context: Context) {
+//repository for tokens
+class TokensDatastore(private val context: Context) {
+
+    private val TAG: String = "TokensDatastore"
     //retrieve value
     val readTokensFromDataStore: Flow<String> = context.dataStore.data
+        .catch { exception ->
+            if (exception is IOException) {
+                //exception.printStackTrace()
+                Log.e(TAG, "Error reading token preferences.", exception)
+                emit(emptyPreferences())
+            } else {
+                throw exception
+            }
+        }
         .map { preferences ->
         // On the first run of the app, we will use LinearLayoutManager by default
         preferences[ACCESS_TOKEN] ?: ""

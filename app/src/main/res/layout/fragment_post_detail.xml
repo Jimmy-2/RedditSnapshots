@@ -8,9 +8,6 @@
         <variable
             name="viewModel"
             type="com.example.snapshotsforreddit.ui.post.PostDetailViewModel" />
-
-
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:onClick="@{() -> viewModel.addNewPost()}"
-            android:text="Download Post"
+            android:text="@{viewModel.postInformation.title}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"

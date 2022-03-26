@@ -1,14 +1,11 @@
 package com.example.snapshotsforreddit.ui.post
 
-import android.content.ClipData
 import android.util.Log
 import androidx.lifecycle.*
-import androidx.navigation.fragment.navArgs
-import com.example.snapshotsforreddit.data.UserPreferences
+import com.example.snapshotsforreddit.data.TokensDatastore
 import com.example.snapshotsforreddit.database.Post
 import com.example.snapshotsforreddit.database.PostDao
 import com.example.snapshotsforreddit.network.responses.ChildrenData
-import com.example.snapshotsforreddit.network.responses.ChildrenObject
 import com.example.snapshotsforreddit.network.responses.RedditJsonResponse
 import com.example.snapshotsforreddit.network.services.RedditApi
 import kotlinx.coroutines.launch
@@ -17,35 +14,57 @@ import retrofit2.Response
 
 //allow user to save a post to database
 //dao
-class PostDetailViewModel(private val postDao: PostDao, private val userPreferences: UserPreferences) : ViewModel() {
+class PostDetailViewModel(private val postDao: PostDao, private val tokensDatastore: TokensDatastore) : ViewModel() {
 
     //when a user saves or upvotes a post, post to the api. and then get the result back from json.
     //do not refresh entire post
 
-    var userPreferencesFlow = userPreferences.readTokensFromDataStore.asLiveData()
+    var tokensDatastoreFlow = tokensDatastore.readTokensFromDataStore.asLiveData()
 
     private val _postSubreddit = MutableLiveData<String>()
     val postSubreddit : LiveData<String> = _postSubreddit
     private val _postId = MutableLiveData<String>()
     val postId : LiveData<String> = _postId
 
+    //may be better to pass the information from the front page and then just update it if necessary
+
     private val _postDetails = MutableLiveData<List<RedditJsonResponse>>()
     val postDetails: LiveData<List<RedditJsonResponse>> = _postDetails
 
-    private val _postInformation = MutableLiveData<ChildrenData>()
-    val postInformation: LiveData<ChildrenData> = _postInformation
+
+
+    private val _postInformation = MutableLiveData<ChildrenData?>()
+    val postInformation: LiveData<ChildrenData?> = _postInformation
+
+
+    override fun onCleared() {
+        super.onCleared()
+        println("HELLO VM CLEARED")
+    }
+
 
     private val _postComments = MutableLiveData<ChildrenData>()
     val postComments : LiveData<ChildrenData> = _postComments
 
-    fun retrievePostLink(subreddit: String?, id: String?) {
-        _postSubreddit.value = subreddit!!
-        _postId.value = id!!
+    private val _postTitle= MutableLiveData<String>()
+    val postTitle: LiveData<String> = _postTitle
+    private val _postImageUrl= MutableLiveData<String>()
+    val postImageUrl : LiveData<String> = _postImageUrl
+
+    fun retrievePostData(postData: ChildrenData?) {
+        _postInformation.value = postData!!
     }
+
+
+    init {
+
+    }
+
 
     //add new post to database
     fun addNewPost() {
-        val newPost = getNewPostEntry("test title", postSubreddit.value!!)
+        println("ADDED")
+        val newPost = getNewPostEntry("test title", "DSSSSSSSS")
         insertPost(newPost)
 
     }
@@ -94,7 +113,6 @@ class PostDetailViewModel(private val postDao: PostDao, private val userPreferen
                         if (data != null && data.dist == 1) {
                             //size will be 1 at index 0
                             _postInformation.value = data.children[0].childrenData!!
-                            println("HELLO# ${_postInformation.value!!.title}")
                         } else {
                             Log.e("FrontPageFragment", "ERROR at getPosts")
                         }
@@ -109,12 +127,8 @@ class PostDetailViewModel(private val postDao: PostDao, private val userPreferen
 
     }
 
-
-
-
-
-    init {
-        //get current post link from adapter
+    fun resetView() {
+        _postInformation.value = null
     }
 
 
@@ -127,12 +141,14 @@ class PostDetailViewModel(private val postDao: PostDao, private val userPreferen
 
 
 
+
+
 }
-class PostDetailViewModelFactory(private val postDao: PostDao, private val userPreferences: UserPreferences) : ViewModelProvider.Factory {
+class PostDetailViewModelFactory(private val postDao: PostDao, private val tokensDatastore: TokensDatastore) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(PostDetailViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return PostDetailViewModel(postDao, userPreferences) as T
+            return PostDetailViewModel(postDao, tokensDatastore) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface PostDao {
     //use @Query annotation for specific functionalities
-    @Query("SELECT * from post ORDER BY link ASC")
+    @Query("SELECT * FROM post_database")
     fun getDownloadedPosts(): Flow<List<Post>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
