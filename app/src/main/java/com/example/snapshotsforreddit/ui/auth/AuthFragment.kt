@@ -1,6 +1,5 @@
 package com.example.snapshotsforreddit.ui.auth
 
-import android.content.ContentValues
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -10,16 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
-import com.example.snapshotsforreddit.R
-import com.example.snapshotsforreddit.data.TokensDatastore
-import com.example.snapshotsforreddit.databinding.FragmentOAuth2Binding
+import com.example.snapshotsforreddit.data.Repository.TokensDatastore
+import com.example.snapshotsforreddit.databinding.FragmentAuthBinding
 import com.example.snapshotsforreddit.model.AuthViewModel
 import com.example.snapshotsforreddit.model.AuthViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class OAuth2Fragment : Fragment() {
+class AuthFragment : Fragment() {
 
     private lateinit var tokensDatastore: TokensDatastore
 
@@ -27,7 +24,7 @@ class OAuth2Fragment : Fragment() {
         AuthViewModelFactory(tokensDatastore)
     }
 
-    private var _binding: FragmentOAuth2Binding? = null
+    private var _binding: FragmentAuthBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -37,7 +34,7 @@ class OAuth2Fragment : Fragment() {
         //Initialize tokensDatastore
         tokensDatastore = TokensDatastore(requireContext())
 
-        _binding = FragmentOAuth2Binding.inflate(inflater)
+        _binding = FragmentAuthBinding.inflate(inflater)
         binding.viewModel = viewModel
 
         binding.button.setOnClickListener {
@@ -45,8 +42,6 @@ class OAuth2Fragment : Fragment() {
             val actionView = Intent(Intent.ACTION_VIEW, intent)
             startActivity(actionView)
         }
-        Log.i("MainFragment", "onCreateView called")
-
         return binding.root
     }
 
@@ -54,31 +49,14 @@ class OAuth2Fragment : Fragment() {
         super.onResume()
         Log.i("MainFragment", "onResume called")
         if (requireActivity().intent != null && requireActivity().intent.action == Intent.ACTION_VIEW) {
-            val uri = requireActivity().intent.data
-            if (uri!!.getQueryParameter("error") != null) {
-                val error = uri.getQueryParameter("error")
-                Log.e(ContentValues.TAG, "An error has occurred : $error")
-            } else {
-                val state = uri.getQueryParameter("state")
-                if (state == viewModel.state) {
-                    /*
-                    lifecycleScope.launch {
-                        tokensDatastore.saveAccessTokenToDataStore("HELLO")
-                    }
-                     */
-                    viewModel.setCode(uri.getQueryParameter("code"))
-                    //goToFrontPage()
-                }
-            }
+            val uri: Uri? = requireActivity().intent.data
+            viewModel.checkCode(uri)
+
         }
     }
 
     fun goToFrontPage() {
-        findNavController().navigate(R.id.action_OAuth2Fragment_to_frontPageFragment)
-    }
-
-    fun goToSaved() {
-        findNavController().navigate(R.id.action_OAuth2Fragment_to_downloadedPostsTestFragment)
+        //findNavController().navigate(R.id.action_authFragment_to_frontPageFragment)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -86,7 +64,7 @@ class OAuth2Fragment : Fragment() {
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             //viewModel = viewModel
-            authFragment = this@OAuth2Fragment
+            authFragment = this@AuthFragment
         }
         viewModel.tokensDatastoreFlow.observe(viewLifecycleOwner, { value ->
             println("HELLOssss $value")

@@ -6,7 +6,8 @@ data class Data(
     val dist: Int?,
     val modhash: String?,
     val geo_filter: String?,
-    val children: List<ChildrenObject>
+    val children: List<ChildrenObject>,
+    val before: String?
 )
 
 

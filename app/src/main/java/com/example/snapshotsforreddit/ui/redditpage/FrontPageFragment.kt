@@ -5,20 +5,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
+import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.adapter.FrontPageAdapter
 import com.example.snapshotsforreddit.adapter.FrontPageListener
-import com.example.snapshotsforreddit.data.TokensDatastore
+import com.example.snapshotsforreddit.data.Repository.TokensDatastore
 import com.example.snapshotsforreddit.databinding.FragmentFrontPageBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 
-
+@AndroidEntryPoint
 class FrontPageFragment : Fragment() {
     private lateinit var tokensDatastore: TokensDatastore
-    private val viewModel: FrontPageViewModel by activityViewModels(){
-        FrontPageViewModelFactory(tokensDatastore)
-    }
+    private val viewModel: FrontPageViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,11 +28,16 @@ class FrontPageFragment : Fragment() {
         //Initialize tokensDatastore
         tokensDatastore = TokensDatastore(requireContext())
 
-        viewModel.tokensDataStoreFlow.observe(viewLifecycleOwner, { value ->
-            viewModel.getPosts(value, "bearer")
 
-        })
 
+        val options = navOptions {
+            anim {
+                enter = R.anim.slide_in_right
+                exit = R.anim.slide_out_left
+                popEnter = R.anim.slide_in_left
+                popExit = R.anim.slide_out_right
+            }
+        }
 
 
         val binding = FragmentFrontPageBinding.inflate(inflater)
@@ -42,7 +48,7 @@ class FrontPageFragment : Fragment() {
                 //just pass the object over
                it!!
             )
-            this.findNavController().navigate(action)
+            this.findNavController().navigate(action,options)
             //findNavController().navigate(R.id.action_frontPageFragment_to_postDetailFragment)
 
         })
@@ -52,7 +58,7 @@ class FrontPageFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        setHasOptionsMenu(true)
 
     }
 }

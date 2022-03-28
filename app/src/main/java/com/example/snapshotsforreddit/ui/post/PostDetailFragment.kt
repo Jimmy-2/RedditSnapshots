@@ -5,24 +5,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import com.example.snapshotsforreddit.BaseApplication
-import com.example.snapshotsforreddit.data.TokensDatastore
-import com.example.snapshotsforreddit.data.room.Post
+import com.example.snapshotsforreddit.data.Repository.TokensDatastore
+import com.example.snapshotsforreddit.data.Room.Post
 import com.example.snapshotsforreddit.databinding.FragmentPostDetailBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class PostDetailFragment: Fragment() {
     private val navigationArgs: PostDetailFragmentArgs by navArgs()
     private lateinit var tokensDatastore: TokensDatastore
 
-    private val viewModel: PostDetailViewModel by activityViewModels {
-        PostDetailViewModelFactory(
-            (activity?.application as BaseApplication).database
-                .postDao(), tokensDatastore
-        )
-    }
+    private val viewModel: PostDetailViewModel by viewModels()
     lateinit var post: Post
 
 

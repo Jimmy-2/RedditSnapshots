@@ -2,32 +2,33 @@ package com.example.snapshotsforreddit.ui.redditpage
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.snapshotsforreddit.data.TokensDatastore
+import com.example.snapshotsforreddit.data.Repository.AuthDataStoreRepository
 import com.example.snapshotsforreddit.network.responses.ChildrenData
 import com.example.snapshotsforreddit.network.responses.ChildrenObject
 import com.example.snapshotsforreddit.network.responses.RedditJsonResponse
-import com.example.snapshotsforreddit.network.services.RedditApi
+import com.example.snapshotsforreddit.network.services.RedditApiTest
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Response
+import javax.inject.Inject
 
-class FrontPageViewModel(private val tokensDatastore: TokensDatastore): ViewModel() {
+@HiltViewModel
+class FrontPageViewModel@Inject constructor(
+    private val authDataStoreRepository: AuthDataStoreRepository
+) : ViewModel() {
 
-    var tokensDataStoreFlow = tokensDatastore.readTokensFromDataStore.asLiveData()
+    val authFlow = authDataStoreRepository.authFlow.asLiveData()
 
     private val _postItems = MutableLiveData<List<ChildrenData>>()
     val postItems: LiveData<List<ChildrenData>> = _postItems
-
-    private val _accessToken = MutableLiveData<String>()
-    val accessToken: LiveData<String> = _accessToken
-
 
 
     //if accesstoken doesn't work, refresh it with the refresh token or make user reauthenticate
     fun getPosts(accessToken: String?, token_type: String?) {
         viewModelScope.launch {
             try {
-                val request = RedditApi.retrofitServiceOAuth.getListOfPosts(
+                val request = RedditApiTest.retrofitServiceOAuth.getListOfPosts(
                     "$token_type $accessToken",
                     "snapshots-for-reddit"
                 )
@@ -47,8 +48,8 @@ class FrontPageViewModel(private val tokensDatastore: TokensDatastore): ViewMode
                             //TODO("change to lambda after testing")
                             //Elvis operator
                             for (i in 0..children.size - 1) {
-                                if (children[i].childrenData != null) {
-                                    listOfPosts.add(children[i].childrenData!!)
+                                if (children[i].data != null) {
+                                    listOfPosts.add(children[i].data!!)
                                 }
 
                             }
@@ -69,18 +70,5 @@ class FrontPageViewModel(private val tokensDatastore: TokensDatastore): ViewMode
 
     }
 
-    fun setAccessToken(accessToken: String?) {
-        _accessToken.value = accessToken!!
-    }
-}
-
-class FrontPageViewModelFactory(private val tokensDatastore: TokensDatastore) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(FrontPageViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return FrontPageViewModel(tokensDatastore) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
 }
 

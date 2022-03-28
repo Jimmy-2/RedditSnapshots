@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.data
+package com.example.snapshotsforreddit.data.Repository
 
 import android.content.Context
 import android.util.Log
@@ -11,33 +11,36 @@ import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
-data class Tokens(val accessToken: String, val refreshToken: String)
+data class FilterAuth(val accessToken: String, val refreshToken: String, val loginState: Boolean)
 
 private val Context.dataStore by preferencesDataStore("tokens_datastore")
 
 @Singleton
-class TokensRepository @Inject constructor (@ApplicationContext context: Context) {
-    private val TAG: String = "TokensRepository"
+class AuthDataStoreRepository @Inject constructor (@ApplicationContext context: Context) {
+    private val TAG: String = "AuthDataStoreRepository"
 
-    private val TokensDataStore = context.dataStore
+    private val authDataStore = context.dataStore
 
     //read from datastore to obtain token values
-    val tokensFlow = TokensDataStore.data
+    val authFlow = authDataStore.data
         //error handling
         .catch { exception ->
             if (exception is IOException) {
                 //exception.printStackTrace()
-                Log.e(TAG, "Error reading token values.", exception)
+                Log.e(TAG, "Error reading auth values.", exception)
                 emit(emptyPreferences())
             } else {
                 throw exception
             }
         }
         .map { preferences ->
-            val accessToken = preferences[TokenKeys.ACCESS_TOKEN] ?: ""
-            val refreshToken = preferences[TokenKeys.REFRESH_TOKEN] ?: ""
-            Tokens(accessToken,refreshToken)
+            val accessToken = preferences[AuthKeys.ACCESS_TOKEN] ?: ""
+            val refreshToken = preferences[AuthKeys.REFRESH_TOKEN] ?: ""
+            val loginState = preferences[AuthKeys.LOGIN_STATE] ?: false
+            FilterAuth(accessToken,refreshToken,loginState)
         }
+
+
 
 
 
@@ -45,22 +48,34 @@ class TokensRepository @Inject constructor (@ApplicationContext context: Context
     suspend fun updateAccessToken(accessToken: String) {
         //store new access token string value
         //write to datastore
-        TokensDataStore.edit { preferences ->
-            preferences[TokenKeys.ACCESS_TOKEN] = accessToken
+        authDataStore.edit { preferences ->
+            preferences[AuthKeys.ACCESS_TOKEN] = accessToken
         }
     }
 
     suspend fun updateRefreshToken(refreshToken: String) {
         //store new refresh token string value
         //write to datastore
-        TokensDataStore.edit { preferences ->
-            preferences[TokenKeys.REFRESH_TOKEN] = refreshToken
+        authDataStore.edit { preferences ->
+            preferences[AuthKeys.REFRESH_TOKEN] = refreshToken
         }
     }
 
-    private object TokenKeys {
+    suspend fun updateLoginState(loginState: Boolean) {
+        //store new refresh token string value
+        //write to datastore
+        authDataStore.edit { preferences ->
+            preferences[AuthKeys.LOGIN_STATE] = loginState
+        }
+    }
+
+
+
+
+    private object AuthKeys {
         val ACCESS_TOKEN = stringPreferencesKey("access_token")
         val REFRESH_TOKEN = stringPreferencesKey("refresh_token")
+        val LOGIN_STATE = booleanPreferencesKey("login_state")
     }
 
 

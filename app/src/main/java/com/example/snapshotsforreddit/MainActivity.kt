@@ -4,13 +4,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.*
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
     private lateinit var navController: NavController
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,10 +23,21 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
         NavigationUI.setupActionBarWithNavController(this, navController)
 
-        setupActionBarWithNavController(navController)
+        setupBottomNavMenu(navController)
+
+        appBarConfiguration = AppBarConfiguration(
+            setOf(R.id.subscribedSubredditsFragment, R.id.downloadedPostsTestFragment,  R.id.optionsFragment)
+        )
+        setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
+    private fun setupBottomNavMenu(navController: NavController) {
+        val bottomNavigationBar = findViewById<BottomNavigationView>(R.id.bottom_nav_bar)
+        bottomNavigationBar.setupWithNavController(navController)
+    }
+
+
     override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp() || super.onSupportNavigateUp()
+        return navController.navigateUp(appBarConfiguration)
     }
 }

@@ -16,7 +16,7 @@ data class ChildrenObject(
     val kind: String?,
 
     @Json(name = "data")
-    val childrenData: ChildrenData?
+    val data: ChildrenData?
 
 )
 

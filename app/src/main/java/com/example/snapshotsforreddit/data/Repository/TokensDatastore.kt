@@ -1,24 +1,28 @@
-package com.example.snapshotsforreddit.data
+package com.example.snapshotsforreddit.data.Repository
 
 import android.content.Context
 import android.util.Log
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException
+import javax.inject.Inject
+import javax.inject.Singleton
 
 private val Context.dataStore by preferencesDataStore("data_store")
 
-//TODO DELETE THIS CLASS AND REPLACE WITH TOKENSREPOSITORY
-class TokensDatastore(private val context: Context) {
+@Singleton
+class TokensDatastore  @Inject constructor (@ApplicationContext context: Context) {
 
     private val TAG: String = "TokensDatastore"
+
+    private val authDataStore = context.dataStore
+
     //retrieve value
     val readTokensFromDataStore: Flow<String> = context.dataStore.data
         .catch { exception ->
@@ -39,7 +43,7 @@ class TokensDatastore(private val context: Context) {
     suspend fun saveAccessTokenToDataStore(accessToken: String) {
         //store new access token string value
         //write to datastore
-        context.dataStore.edit { preferences ->
+        authDataStore.edit { preferences ->
             preferences[ACCESS_TOKEN] = accessToken
         }
     }

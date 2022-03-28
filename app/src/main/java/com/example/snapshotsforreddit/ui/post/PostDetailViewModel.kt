@@ -2,19 +2,23 @@ package com.example.snapshotsforreddit.ui.post
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.snapshotsforreddit.data.TokensDatastore
-import com.example.snapshotsforreddit.data.room.Post
-import com.example.snapshotsforreddit.data.room.PostDao
+import com.example.snapshotsforreddit.data.Repository.TokensDatastore
+import com.example.snapshotsforreddit.data.Room.Post
+import com.example.snapshotsforreddit.data.Room.PostDao
 import com.example.snapshotsforreddit.network.responses.ChildrenData
 import com.example.snapshotsforreddit.network.responses.RedditJsonResponse
-import com.example.snapshotsforreddit.network.services.RedditApi
+import com.example.snapshotsforreddit.network.services.RedditApiTest
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Response
+import javax.inject.Inject
 
 //allow user to save a post to database
 //dao
-class PostDetailViewModel(private val postDao: PostDao, private val tokensDatastore: TokensDatastore) : ViewModel() {
+
+@HiltViewModel
+class PostDetailViewModel @Inject constructor(private val postDao: PostDao, private val tokensDatastore: TokensDatastore) : ViewModel() {
 
     //when a user saves or upvotes a post, post to the api. and then get the result back from json.
     //do not refresh entire post
@@ -90,12 +94,12 @@ class PostDetailViewModel(private val postDao: PostDao, private val tokensDatast
                 //unfortunately we cannot just pass in a permalink as the "/" in the link gets formatted to become "%2F"
                 //val requestTest = RedditApi.retrofitServiceTest.getPostDetailsTest(_postLink.value.toString())
 
-                val request = RedditApi.retrofitServiceOAuth.getPostDetails(
+                val request = RedditApiTest.retrofitServiceOAuth.getPostDetails(
                     "$token_type $accessToken",
                     "snapshots-for-reddit",
                     _postSubreddit.value, _postId.value
                 )
-                val requestTest = RedditApi.retrofitServiceTest.getPostDetailsTest(_postSubreddit.value, _postId.value)
+                val requestTest = RedditApiTest.retrofitServiceTest.getPostDetailsTest(_postSubreddit.value, _postId.value)
 
 
                 requestTest.enqueue(object : retrofit2.Callback<List<RedditJsonResponse>> {
@@ -113,7 +117,7 @@ class PostDetailViewModel(private val postDao: PostDao, private val tokensDatast
 
                         if (data != null && data.dist == 1) {
                             //size will be 1 at index 0
-                            _postInformation.value = data.children[0].childrenData!!
+                            _postInformation.value = data.children[0].data!!
                         } else {
                             Log.e("FrontPageFragment", "ERROR at getPosts")
                         }
@@ -144,13 +148,4 @@ class PostDetailViewModel(private val postDao: PostDao, private val tokensDatast
 
 
 
-}
-class PostDetailViewModelFactory(private val postDao: PostDao, private val tokensDatastore: TokensDatastore) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(PostDetailViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return PostDetailViewModel(postDao, tokensDatastore) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
 }

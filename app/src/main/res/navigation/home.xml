@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home"
+    app:startDestination="@id/subscribedSubredditsFragment">
+    <fragment
+        android:id="@+id/frontPageFragment"
+        android:name="com.example.snapshotsforreddit.ui.redditpage.FrontPageFragment"
+        android:label="FrontPageFragment"
+        tools:layout="@layout/fragment_front_page">
+        <action
+            android:id="@+id/action_frontPageFragment_to_postDetailFragment"
+            app:destination="@id/postDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/postDetailFragment"
+        android:name="com.example.snapshotsforreddit.ui.post.PostDetailFragment"
+        android:label="PostDetailFragment"
+        tools:layout="@layout/fragment_post_detail">
+        <argument
+            android:name="post_data"
+            app:argType="com.example.snapshotsforreddit.network.responses.ChildrenData" />
+    </fragment>
+    <fragment
+        android:id="@+id/subscribedSubredditsFragment"
+        android:name="com.example.snapshotsforreddit.ui.home.SubscribedSubredditsFragment"
+        android:label="fragment_subscribed_subreddits"
+        tools:layout="@layout/fragment_subscribed_subreddits" >
+        <action
+            android:id="@+id/action_subscribedSubredditsFragment_to_frontPageFragment"
+            app:destination="@id/frontPageFragment" />
+        <action
+            android:id="@+id/action_subscribedSubredditsFragment_to_subredditFragment"
+            app:destination="@id/subredditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/subredditFragment"
+        android:name="com.example.snapshotsforreddit.ui.redditpage.SubredditFragment"
+        android:label="SubredditFragment" >
+        <argument
+            android:name="subredditName"
+            app:argType="string" />
+    </fragment>
+
+</navigation>

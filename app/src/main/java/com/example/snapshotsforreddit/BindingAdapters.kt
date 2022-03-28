@@ -6,8 +6,8 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.snapshotsforreddit.adapter.FrontPageAdapter
-import com.example.snapshotsforreddit.adapter.DownloadedPostsAdapter
-import com.example.snapshotsforreddit.data.room.Post
+
+import com.example.snapshotsforreddit.data.Room.Post
 import com.example.snapshotsforreddit.network.responses.ChildrenData
 
 @BindingAdapter("listData")
@@ -16,11 +16,7 @@ fun bindFrontPage(recyclerView: RecyclerView, data: List<ChildrenData>?) {
     adapter.submitList(data)
 }
 
-@BindingAdapter("SavedData")
-fun bindDownloadedPosts(recyclerView: RecyclerView, data: List<Post>?) {
-    val adapter = recyclerView.adapter as DownloadedPostsAdapter
-    adapter.submitList(data)
-}
+
 
 
 

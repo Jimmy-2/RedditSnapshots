@@ -1,11 +1,13 @@
 package com.example.snapshotsforreddit.model
 
+import android.content.ContentValues
+import android.net.Uri
 import android.util.Base64
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.snapshotsforreddit.data.TokensDatastore
+import com.example.snapshotsforreddit.data.Repository.TokensDatastore
 import com.example.snapshotsforreddit.network.responses.TokenResponse
-import com.example.snapshotsforreddit.network.services.RedditApi
+import com.example.snapshotsforreddit.network.services.RedditApiTest
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Response
@@ -64,7 +66,7 @@ class AuthViewModel(private val tokensDatastore: TokensDatastore): ViewModel() {
         )
         viewModelScope.launch {
             try {
-                val request = RedditApi.retrofitServiceToken.getToken("Testing","Basic $encodedAuthString", "authorization_code", code,
+                val request = RedditApiTest.retrofitServiceToken.getToken("Testing","Basic $encodedAuthString", "authorization_code", code,
                     REDIRECT_URI
                 )
                 request.enqueue(object : retrofit2.Callback<TokenResponse> {
@@ -97,12 +99,24 @@ class AuthViewModel(private val tokensDatastore: TokensDatastore): ViewModel() {
         }
 
     }
-    private var code: String? = null
-    fun setCode(code: String?) {
-        this.code = code
-        if (code != null) {
-            getAccessToken(code)
+
+
+    fun checkCode(uri: Uri?) {
+        if (uri!!.getQueryParameter("error") != null) {
+            val error = uri.getQueryParameter("error")
+            Log.e(ContentValues.TAG, "An error has occurred : $error")
+        } else {
+            val currState = uri.getQueryParameter("state")
+            val currCode = uri.getQueryParameter("code")
+            if (currState == state && currCode != null) {
+
+                getAccessToken(currCode)
+
+            } else {
+
+            }
         }
+
     }
 }
 

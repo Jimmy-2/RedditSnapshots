@@ -5,12 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.snapshotsforreddit.data.room.Post
+import com.example.snapshotsforreddit.data.Room.Post
 
 import com.example.snapshotsforreddit.databinding.DownloadedPostTestItemBinding
 
 
-class DownloadedPostsTestAdapter: ListAdapter<Post, DownloadedPostsTestAdapter.PostsTestViewHolder>(DiffCallback()) {
+class DownloadedPostsTestAdapter(private val listener: OnItemClickListener) : ListAdapter<Post, DownloadedPostsTestAdapter.PostsTestViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostsTestViewHolder {
         //need parent.context for reference to activity/fragment to get layout inflater to inflate the binding layout
@@ -26,8 +26,23 @@ class DownloadedPostsTestAdapter: ListAdapter<Post, DownloadedPostsTestAdapter.P
     }
 
     //instead of using find view by id for everything, we can use viewbinding
-    class PostsTestViewHolder(private val binding: DownloadedPostTestItemBinding) :
+    inner class PostsTestViewHolder(private val binding: DownloadedPostTestItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        //executes when viewholder is instantiated
+        init {
+            binding.apply {
+                root.setOnClickListener {
+                    val position = adapterPosition
+                    //an item that is deleted but still shows in screen due to animations/etc has a positon of -1 or NO_POSITION
+                    if(position != RecyclerView.NO_POSITION) {
+                        val post = getItem(position)
+                        listener.onItemClick(post)
+                    }
+                }
+            }
+        }
+
+
         //put the data into the views in the layout
         //without using databinding
         fun bind(post: Post) {
@@ -36,6 +51,12 @@ class DownloadedPostsTestAdapter: ListAdapter<Post, DownloadedPostsTestAdapter.P
                 postItemTitle.text = post.title
             }
         }
+
+    }
+
+
+    interface OnItemClickListener {
+        fun onItemClick(post: Post)
 
     }
 
