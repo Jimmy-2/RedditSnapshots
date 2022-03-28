@@ -19,14 +19,9 @@ import javax.inject.Singleton
 //scoped to the application. live as long as the app is working
 @Module
 @InstallIn(SingletonComponent::class)
+//refactor/rename to database module
 object AppModule {
-
-
     //life time is as long as app is alive
-
-    fun provideApplication(@ApplicationContext app: Context): BaseApplication {
-        return app as BaseApplication
-    }
 
 
     //we only ever need 1 instance of our dao and database throughout the app

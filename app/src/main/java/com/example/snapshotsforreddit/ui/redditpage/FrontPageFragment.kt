@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
+import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.adapter.FrontPageAdapter
 import com.example.snapshotsforreddit.adapter.FrontPageListener
 import com.example.snapshotsforreddit.data.TokensDatastore
@@ -32,6 +34,14 @@ class FrontPageFragment : Fragment() {
 
         })
 
+        val options = navOptions {
+            anim {
+                enter = R.anim.slide_in_right
+                exit = R.anim.slide_out_left
+                popEnter = R.anim.slide_in_left
+                popExit = R.anim.slide_out_right
+            }
+        }
 
 
         val binding = FragmentFrontPageBinding.inflate(inflater)
@@ -42,7 +52,7 @@ class FrontPageFragment : Fragment() {
                 //just pass the object over
                it!!
             )
-            this.findNavController().navigate(action)
+            this.findNavController().navigate(action,options)
             //findNavController().navigate(R.id.action_frontPageFragment_to_postDetailFragment)
 
         })
@@ -52,7 +62,7 @@ class FrontPageFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        setHasOptionsMenu(true)
 
     }
 }

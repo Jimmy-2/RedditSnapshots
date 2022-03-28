@@ -37,6 +37,11 @@ class DownloadedPostsTestViewModel @Inject constructor(
         //once we run postDao.getDownloadedPosts on the searchQuery and sortOrder, we assign the returned value to postsFlow
     }
 
+
+    //automatically get new data from this flow if any changes occur to database
+    //val downloadedPosts: LiveData<List<Post>> = postDao.getDownloadedPosts().asLiveData()
+    val downloadedPosts: LiveData<List<Post>> = postsFlow.asLiveData()
+
     //with suspend functions, we need coroutines to run them
     fun onSortOrderSelected(sortOrder: SortOrder) = viewModelScope.launch {
         //update the sort order value in datastore on sort button clicked
@@ -48,8 +53,10 @@ class DownloadedPostsTestViewModel @Inject constructor(
         preferencesRepository.updateIsCompactView(isCompactView)
     }
 
-    //automatically get new data from this flow if any changes occur to database
-    //val downloadedPosts: LiveData<List<Post>> = postDao.getDownloadedPosts().asLiveData()
-    val downloadedPosts: LiveData<List<Post>> = postsFlow.asLiveData()
+    fun onPostSelected(post: Post) {
+
+    }
+
+
 }
 

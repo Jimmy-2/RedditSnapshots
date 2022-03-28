@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.data.SortOrder
+import com.example.snapshotsforreddit.data.room.Post
 import com.example.snapshotsforreddit.databinding.FragmentDownloadedPostsTestBinding
 import com.example.snapshotsforreddit.util.onQueryTextChanged
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,7 +23,7 @@ import kotlinx.coroutines.launch
 //literalkly down every single comment and then sort then based on their
 //jsonobjects
 @AndroidEntryPoint
-class DownloadedPostsTestFragment: Fragment(R.layout.fragment_downloaded_posts_test) {
+class DownloadedPostsTestFragment: Fragment(R.layout.fragment_downloaded_posts_test), DownloadedPostsTestAdapter.OnItemClickListener {
     private val viewModel: DownloadedPostsTestViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,7 +36,7 @@ class DownloadedPostsTestFragment: Fragment(R.layout.fragment_downloaded_posts_t
          */
         val binding = FragmentDownloadedPostsTestBinding.bind(view)
 
-        val downloadedPostsTestAdapter = DownloadedPostsTestAdapter()
+        val downloadedPostsTestAdapter = DownloadedPostsTestAdapter(this)
 
         binding.apply {
             recyclerViewPosts.apply {
@@ -57,6 +58,12 @@ class DownloadedPostsTestFragment: Fragment(R.layout.fragment_downloaded_posts_t
 
         setHasOptionsMenu(true)
     }
+
+    //go to details screen on item clicked
+    override fun onItemClick(post: Post) {
+        viewModel.onPostSelected(post)
+    }
+
 
     //inflate/activate options menu
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -106,5 +113,7 @@ class DownloadedPostsTestFragment: Fragment(R.layout.fragment_downloaded_posts_t
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+
 
 }

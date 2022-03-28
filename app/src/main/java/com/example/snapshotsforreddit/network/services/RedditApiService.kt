@@ -2,6 +2,7 @@ package com.example.snapshotsforreddit.network.services
 
 import com.example.snapshotsforreddit.network.responses.RedditJsonResponse
 import com.example.snapshotsforreddit.network.responses.TokenResponse
+import com.example.snapshotsforreddit.network.responses.subscribed.SubscribedJsonResponse
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Call
@@ -65,6 +66,13 @@ interface RedditApiService {
         @Path("subreddit") permalink: String?,
         @Path("id") id: String?
     ): Call<List<RedditJsonResponse>>
+
+
+    @GET("/subreddits/mine/subscriber")
+    fun getSubscribedList(
+        @Header("Authorization") Authorization: String?,
+        @Header("User-Agent") User_Agent: String?
+    ): Call<SubscribedJsonResponse>
 
 }
 
