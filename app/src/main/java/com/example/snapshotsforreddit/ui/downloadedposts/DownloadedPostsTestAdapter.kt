@@ -2,12 +2,14 @@ package com.example.snapshotsforreddit.ui.downloadedposts
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.snapshotsforreddit.data.Room.Post
 
 import com.example.snapshotsforreddit.databinding.DownloadedPostTestItemBinding
+import okhttp3.internal.concurrent.Task
 
 
 class DownloadedPostsTestAdapter(private val listener: OnItemClickListener) : ListAdapter<Post, DownloadedPostsTestAdapter.PostsTestViewHolder>(DiffCallback()) {
