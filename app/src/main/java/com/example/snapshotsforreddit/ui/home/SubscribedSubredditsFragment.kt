@@ -3,41 +3,23 @@ package com.example.snapshotsforreddit.ui.home
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.snapshotsforreddit.R
-import com.example.snapshotsforreddit.databinding.FragmentDownloadedPostsTestBinding
 import com.example.snapshotsforreddit.databinding.FragmentSubscribedSubredditsBinding
-import com.example.snapshotsforreddit.network.responses.subscribed.SubscribedChildrenData
-import com.example.snapshotsforreddit.network.responses.subscribed.SubscribedChildrenObject
-import com.example.snapshotsforreddit.ui.downloadedposts.DownloadedPostsTestAdapter
-import com.example.snapshotsforreddit.ui.downloadedposts.DownloadedPostsTestViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SubscribedSubredditsFragment : Fragment(R.layout.fragment_subscribed_subreddits){
     private val viewModel: SubscribedSubredditsViewModel by viewModels()
+
     private var _binding: FragmentSubscribedSubredditsBinding? = null
     private val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //already inflated in constructor. We could inflate it in oncreateview this way:
-        /*
-        _binding = FragmentDownloadedPostsBinding.inflate(inflater, container, false)
-        return binding.root
-         */
         _binding  = FragmentSubscribedSubredditsBinding.bind(view)
 
         val subscribedSubredditsAdapter = SubTestAdapter()
@@ -46,11 +28,8 @@ class SubscribedSubredditsFragment : Fragment(R.layout.fragment_subscribed_subre
             recyclerViewSubreddits.setHasFixedSize(true)
             recyclerViewSubreddits.adapter = subscribedSubredditsAdapter
 
-
-
-
-
             buttonAuth.setOnClickListener {
+                //browser authentication
                 val intent = Uri.parse(viewModel.authSignInURL.value)
                 val actionView = Intent(Intent.ACTION_VIEW, intent)
                 startActivity(actionView)
@@ -60,29 +39,36 @@ class SubscribedSubredditsFragment : Fragment(R.layout.fragment_subscribed_subre
         }
 
 
-/*
-
- */
         //whenever authFlow is changed (getting new accesstoken/refreshtoken), we will refresh the subscribed subreddits list
         viewModel.authFlow.observe(viewLifecycleOwner) { authFlowValues ->
-            viewModel.changeAT(authFlowValues.accessToken)
-        }
-        /*
+            viewModel.checkIfAccessTokenChanged(authFlowValues.accessToken)
+        }/*
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.changeAT(viewModel.authFlow.first().accessToken)
         }
         */
 
+
+        //whenever the subscribed subreddits list is changed, we will refresh the recyclerview
         viewModel.subreddits.observe(viewLifecycleOwner) {
+            //connect data to adapter
             subscribedSubredditsAdapter.submitData(viewLifecycleOwner.lifecycle, it)
 
         }
+
+
+
+
+
+
+
 
     }
 
 
     override fun onResume() {
         super.onResume()
+        //on successful authentication
         if (requireActivity().intent != null && requireActivity().intent.action == Intent.ACTION_VIEW) {
             val uri: Uri? = requireActivity().intent.data
             viewModel.checkCode(uri)

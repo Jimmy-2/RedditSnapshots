@@ -1,9 +1,28 @@
 package com.example.snapshotsforreddit.data.Repository
 
-import com.example.snapshotsforreddit.network.services.RedditAuthApi
+
+import android.util.Base64
+import com.example.snapshotsforreddit.BuildConfig
+import com.example.snapshotsforreddit.network.services.RedditAuthApiService
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class AuthApiRepository @Inject constructor(private val redditAuthApi: RedditAuthApi) {
+@Singleton
+class AuthApiRepository @Inject constructor(private val redditAuthApiService: RedditAuthApiService) {
+    suspend fun getTokenValues(code: String) = redditAuthApiService.getTokens(USER_AGENT,"Basic $encodedAuthString:",GRANT_TYPE, code, REDIRECT_URI)
 
+    companion object {
+        private val encodedAuthString: String by lazy {
+            Base64.encodeToString(
+                AUTH_STRING.toByteArray(),
+                Base64.NO_WRAP
+            )
+        }
+
+        private const val AUTH_STRING = "${BuildConfig.REDDIT_CLIENT_ID}:"
+        private const val USER_AGENT = BuildConfig.USER_AGENT
+        private const val GRANT_TYPE = "authorization_code"
+        private const val REDIRECT_URI = BuildConfig.AUTH_REDIRECT_URI
+    }
 
 }

@@ -1,3 +1,3 @@
 package com.example.snapshotsforreddit.network.responses.subscribed
 
-data class Username (val name: String)
+data class Username (val name: String?)

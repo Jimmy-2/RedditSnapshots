@@ -25,6 +25,7 @@ android {
         buildConfigField("String", "REDDIT_CLIENT_ID", reddit_client_id)
         buildConfigField("String", "AUTH_STATE", auth_state)
         buildConfigField("String", "AUTH_REDIRECT_URI", auth_redirect_uri)
+        buildConfigField("String", "USER_AGENT", user_agent)
     }
 
     buildTypes {

@@ -94,12 +94,12 @@ class PostDetailViewModel @Inject constructor(private val postDao: PostDao, priv
                 //unfortunately we cannot just pass in a permalink as the "/" in the link gets formatted to become "%2F"
                 //val requestTest = RedditApi.retrofitServiceTest.getPostDetailsTest(_postLink.value.toString())
 
-                val request = RedditApiTest.retrofitServiceOAuth.getPostDetails(
+                val request = RedditApiTest.RETROFIT_SERVICE_TEST_O_AUTH.getPostDetails(
                     "$token_type $accessToken",
                     "snapshots-for-reddit",
                     _postSubreddit.value, _postId.value
                 )
-                val requestTest = RedditApiTest.retrofitServiceTest.getPostDetailsTest(_postSubreddit.value, _postId.value)
+                val requestTest = RedditApiTest.RETROFIT_SERVICE_TEST_TEST.getPostDetailsTest(_postSubreddit.value, _postId.value)
 
 
                 requestTest.enqueue(object : retrofit2.Callback<List<RedditJsonResponse>> {

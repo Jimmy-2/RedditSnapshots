@@ -66,7 +66,7 @@ class AuthViewModel(private val tokensDatastore: TokensDatastore): ViewModel() {
         )
         viewModelScope.launch {
             try {
-                val request = RedditApiTest.retrofitServiceToken.getToken("Testing","Basic $encodedAuthString", "authorization_code", code,
+                val request = RedditApiTest.RETROFIT_SERVICE_TEST_TOKEN.getToken("Testing","Basic $encodedAuthString", "authorization_code", code,
                     REDIRECT_URI
                 )
                 request.enqueue(object : retrofit2.Callback<TokenResponse> {

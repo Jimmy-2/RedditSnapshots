@@ -6,7 +6,7 @@ import junit.framework.Assert.assertNotNull
 import org.junit.Test
 
 class ApiTest {
-    private val api = RedditApiTest.retrofitServiceTest
+    private val api = RedditApiTest.RETROFIT_SERVICE_TEST_TEST
 
     @Test
     fun getFrontPage25Posts() {

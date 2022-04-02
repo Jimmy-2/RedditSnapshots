@@ -1,7 +1,7 @@
 package com.example.snapshotsforreddit.di
 
-import com.example.snapshotsforreddit.network.services.RedditApi
-import com.example.snapshotsforreddit.network.services.RedditAuthApi
+import com.example.snapshotsforreddit.network.services.RedditApiService
+import com.example.snapshotsforreddit.network.services.RedditAuthApiService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -30,18 +30,18 @@ object RetrofitModule {
                 ).build()
             )
         ).baseUrl(
-            RedditAuthApi.BASE_URL
+            RedditAuthApiService.BASE_URL
         ).build()
 
     @Provides
     @Singleton
-    fun provideRedditAuthApi(@Named("Auth") retrofit: Retrofit): RedditAuthApi =
-        retrofit.create(RedditAuthApi::class.java)
+    fun provideRedditAuthApi(@Named("Auth") retrofit: Retrofit): RedditAuthApiService =
+        retrofit.create(RedditAuthApiService::class.java)
 
 
 
 
-
+    //Regular reddit usage
     @Provides
     @Singleton
     @Named("Regular")
@@ -53,13 +53,13 @@ object RetrofitModule {
                 ).build()
             )
         ).baseUrl(
-            RedditApi.OAUTH_URL
+            RedditApiService.OAUTH_URL
         ).build()
 
 
     @Provides
     @Singleton
-    fun provideRedditApi(@Named("Regular") retrofit: Retrofit): RedditApi =
+    fun provideRedditApi(@Named("Regular") retrofit: Retrofit): RedditApiService =
         retrofit.create()
 
 

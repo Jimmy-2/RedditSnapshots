@@ -26,15 +26,17 @@
         <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/layout/fragment_post_detail.xml" value="0.33" />
         <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/layout/fragment_saved_posts.xml" value="0.24895833333333334" />
         <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/layout/fragment_subreddit.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/layout/fragment_subscribed_subreddits.xml" value="0.1" />
+        <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/layout/fragment_subscribed_subreddits.xml" value="0.22" />
         <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/layout/navigation_activity.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/layout/post_item.xml" value="0.1" />
+        <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/layout/post_item.xml" value="0.5" />
         <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/layout/post_item_test.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/layout/saved_post_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/layout/subscribed_subreddits_compact_item.xml" value="0.346875" />
         <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/layout/subscribed_subreddits_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/menu/bottom_nav_bar.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/menu/menu_fragment_downloaded_posts.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/menu/menu_fragment_front_page.xml" value="0.22" />
+        <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/menu/menu_fragment_subscribed_subreddits.xml" value="0.33125" />
       </map>
     </option>
   </component>

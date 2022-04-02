@@ -28,7 +28,7 @@ class FrontPageViewModel@Inject constructor(
     fun getPosts(accessToken: String?, token_type: String?) {
         viewModelScope.launch {
             try {
-                val request = RedditApiTest.retrofitServiceOAuth.getListOfPosts(
+                val request = RedditApiTest.RETROFIT_SERVICE_TEST_O_AUTH.getListOfPosts(
                     "$token_type $accessToken",
                     "snapshots-for-reddit"
                 )

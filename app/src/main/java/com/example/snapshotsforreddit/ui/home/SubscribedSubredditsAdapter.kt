@@ -14,7 +14,7 @@ import com.example.snapshotsforreddit.network.responses.subscribed.SubscribedChi
 import com.example.snapshotsforreddit.network.responses.subscribed.SubscribedChildrenObject
 
 
-class SubscribedSubredditsAdapter (private val listener: OnItemClickListener) : ListAdapter<SubscribedChildrenObject, SubscribedSubredditsAdapter.SubscribedSubredditsViewHolder>(DiffCallback())  {
+class SubscribedSubredditsAdapter () : ListAdapter<SubscribedChildrenObject, SubscribedSubredditsAdapter.SubscribedSubredditsViewHolder>(DiffCallback())  {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -47,16 +47,7 @@ class SubscribedSubredditsAdapter (private val listener: OnItemClickListener) : 
         RecyclerView.ViewHolder(binding.root) {
         //executes when viewholder is instantiated
         init {
-            binding.apply {
-                root.setOnClickListener {
-                    val position = adapterPosition
-                    //an item that is deleted but still shows in screen due to animations/etc has a positon of -1 or NO_POSITION
-                    if(position != RecyclerView.NO_POSITION) {
-                        val subreddit = getItem(position)
-                        listener.onItemClick(subreddit)
-                    }
-                }
-            }
+
         }
 
 
@@ -64,9 +55,6 @@ class SubscribedSubredditsAdapter (private val listener: OnItemClickListener) : 
         //without using databinding
         fun bind(subreddit: SubscribedChildrenObject) {
             //instead of writing binding. for each view, we can just use apply
-            var counter = 0;
-            counter++
-            println(counter)
             binding.apply {
                 titleSubredditItem.text = subreddit.data!!.display_name_prefixed
                 favoriteSubredditItem.isVisible = subreddit.data.user_has_favorited!!
@@ -74,10 +62,7 @@ class SubscribedSubredditsAdapter (private val listener: OnItemClickListener) : 
         }
 
     }
-    interface OnItemClickListener {
-        fun onItemClick(subreddit: SubscribedChildrenObject)
 
-    }
 
 
 }

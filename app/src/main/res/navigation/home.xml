@@ -25,7 +25,7 @@
     <fragment
         android:id="@+id/subscribedSubredditsFragment"
         android:name="com.example.snapshotsforreddit.ui.home.SubscribedSubredditsFragment"
-        android:label="fragment_subscribed_subreddits"
+        android:label="Subreddits"
         tools:layout="@layout/fragment_subscribed_subreddits" >
         <action
             android:id="@+id/action_subscribedSubredditsFragment_to_frontPageFragment"
