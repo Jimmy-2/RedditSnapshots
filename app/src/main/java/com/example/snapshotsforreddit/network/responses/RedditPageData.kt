@@ -1,12 +1,12 @@
 package com.example.snapshotsforreddit.network.responses
 
 
-data class Data(
+data class RedditPageData(
     val after: String?,
     val dist: Int?,
     val modhash: String?,
     val geo_filter: String?,
-    val children: List<ChildrenObject>,
+    val children: List<RedditPageChildrenObject>,
     val before: String?
 )
 

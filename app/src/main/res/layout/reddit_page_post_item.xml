@@ -14,7 +14,7 @@
 
 
         <TextView
-            android:id="@+id/postitem_subreddit"
+            android:id="@+id/textview_post_item_subreddit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
@@ -25,7 +25,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/postitem_title"
+            android:id="@+id/textview_post_item_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center|left"
@@ -34,11 +34,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/postitem_subreddit"
+            app:layout_constraintTop_toBottomOf="@+id/textview_post_item_subreddit"
             tools:text="1" />
 
         <ImageView
-            android:id="@+id/postitem_image"
+            android:id="@+id/imageview_post_item"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
@@ -49,12 +49,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/postitem_title"
+            app:layout_constraintTop_toBottomOf="@+id/textview_post_item_title"
             app:layout_constraintVertical_bias="0.0"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/postitem_text"
+            android:id="@+id/textview_post_item_text"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:maxLines="3"
@@ -63,26 +63,26 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/postitem_image" />
+            app:layout_constraintTop_toBottomOf="@+id/imageview_post_item" />
 
 
         <TextView
-            android:id="@+id/postitem_score"
+            android:id="@+id/textview_post_item_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/postitem_text"
+            app:layout_constraintTop_toBottomOf="@+id/textview_post_item_text"
             tools:text="4000" />
 
         <TextView
-            android:id="@+id/postitem_numcomments"
+            android:id="@+id/textview_post_item_comment_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/postitem_text"
+            app:layout_constraintTop_toBottomOf="@+id/textview_post_item_text"
             tools:text="300" />
 
 

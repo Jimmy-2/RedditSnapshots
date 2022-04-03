@@ -11,7 +11,7 @@ import java.io.IOException
 
 
 
-class SubscribedSubredditsPagingSource(private val redditApiService: RedditApiService, private val accessToken: String?) : PagingSource<String, SubscribedChildrenObject>() {
+class SubscribedPagingSource(private val redditApiService: RedditApiService, private val accessToken: String?) : PagingSource<String, SubscribedChildrenObject>() {
     override fun getRefreshKey(state: PagingState<String, SubscribedChildrenObject>): String? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey

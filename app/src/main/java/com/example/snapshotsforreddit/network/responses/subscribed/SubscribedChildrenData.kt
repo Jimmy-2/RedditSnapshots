@@ -13,5 +13,7 @@ data class SubscribedChildrenData(
     val community_icon: String?,
     val icon_img: String?,
 
+    val subreddit_type: String?,
+
     val user_has_favorited: Boolean?
 )

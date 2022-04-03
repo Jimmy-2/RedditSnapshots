@@ -6,24 +6,24 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.snapshotsforreddit.databinding.PostItemBinding
-import com.example.snapshotsforreddit.network.responses.ChildrenData
+import com.example.snapshotsforreddit.network.responses.RedditPageChildrenData
 
-class FrontPageAdapter(val clickListener: FrontPageListener) : ListAdapter<ChildrenData, FrontPageAdapter.FrontPageViewHolder>(DiffCallback) {
+class FrontPageAdapter(private val clickListener: FrontPageListener) : ListAdapter<RedditPageChildrenData, FrontPageAdapter.FrontPageViewHolder>(DiffCallback) {
 
     class FrontPageViewHolder(private var binding: PostItemBinding): RecyclerView.ViewHolder(binding.root)  {
-        fun bind(clickListener: FrontPageListener, itemName: ChildrenData) {
+        fun bind(clickListener: FrontPageListener, itemName: RedditPageChildrenData) {
             binding.postItem = itemName
             binding.clickListener = clickListener
             binding.executePendingBindings()
         }
     }
-    companion object DiffCallback : DiffUtil.ItemCallback<ChildrenData>() {
-        override fun areItemsTheSame(oldItem: ChildrenData, newItem: ChildrenData): Boolean {
+    companion object DiffCallback : DiffUtil.ItemCallback<RedditPageChildrenData>() {
+        override fun areItemsTheSame(oldItem: RedditPageChildrenData, newItem: RedditPageChildrenData): Boolean {
             return oldItem == newItem
         }
 
         //check visually displayed
-        override fun areContentsTheSame(oldItem: ChildrenData, newItem: ChildrenData): Boolean {
+        override fun areContentsTheSame(oldItem: RedditPageChildrenData, newItem: RedditPageChildrenData): Boolean {
             return oldItem.toString().equals(newItem.toString())
         }
     }
@@ -48,6 +48,6 @@ class FrontPageAdapter(val clickListener: FrontPageListener) : ListAdapter<Child
         holder.bind(clickListener, postItem)
     }
 }
-class FrontPageListener(val clickListener: (postItem: ChildrenData) -> Unit) {
-    fun onclick(postItem: ChildrenData) = clickListener(postItem)
+class FrontPageListener(val clickListener: (postItem: RedditPageChildrenData) -> Unit) {
+    fun onclick(postItem: RedditPageChildrenData) = clickListener(postItem)
 }

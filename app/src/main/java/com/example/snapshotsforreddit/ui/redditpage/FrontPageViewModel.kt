@@ -3,8 +3,8 @@ package com.example.snapshotsforreddit.ui.redditpage
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.snapshotsforreddit.data.Repository.AuthDataStoreRepository
-import com.example.snapshotsforreddit.network.responses.ChildrenData
-import com.example.snapshotsforreddit.network.responses.ChildrenObject
+import com.example.snapshotsforreddit.network.responses.RedditPageChildrenData
+import com.example.snapshotsforreddit.network.responses.RedditPageChildrenObject
 import com.example.snapshotsforreddit.network.responses.RedditJsonResponse
 import com.example.snapshotsforreddit.network.services.RedditApiTest
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,8 +20,8 @@ class FrontPageViewModel@Inject constructor(
 
     val authFlow = authDataStoreRepository.authFlow.asLiveData()
 
-    private val _postItems = MutableLiveData<List<ChildrenData>>()
-    val postItems: LiveData<List<ChildrenData>> = _postItems
+    private val _postItems = MutableLiveData<List<RedditPageChildrenData>>()
+    val postItems: LiveData<List<RedditPageChildrenData>> = _postItems
 
 
     //if accesstoken doesn't work, refresh it with the refresh token or make user reauthenticate
@@ -42,9 +42,9 @@ class FrontPageViewModel@Inject constructor(
                         val frontPageParse: RedditJsonResponse? = response.body()
                         val data = frontPageParse?.data
                         if (data != null) {
-                            val children: List<ChildrenObject> = data.children
+                            val children: List<RedditPageChildrenObject> = data.children
                             //listOfPosts is the jsonobject called data that can be found in children jsonarray
-                            val listOfPosts: MutableList<ChildrenData> = mutableListOf()
+                            val listOfPosts: MutableList<RedditPageChildrenData> = mutableListOf()
                             //TODO("change to lambda after testing")
                             //Elvis operator
                             for (i in 0..children.size - 1) {

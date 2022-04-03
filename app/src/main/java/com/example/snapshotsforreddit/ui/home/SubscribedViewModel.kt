@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SubscribedSubredditsViewModel @Inject constructor(
+class SubscribedViewModel @Inject constructor(
     private val authDataStoreRepository: AuthDataStoreRepository,
     private val authApiRepository: AuthApiRepository,
     private val redditApiRepository: RedditApiRepository
@@ -100,7 +100,7 @@ class SubscribedSubredditsViewModel @Inject constructor(
     val authFlow = authDataStoreRepository.authFlow.asLiveData()
     private val _accessToken = MutableLiveData<String>()
     val subreddits = _accessToken.switchMap { accessT ->
-        redditApiRepository.getSubscribedSubredditsResults(accessT).cachedIn(viewModelScope)
+        redditApiRepository.getSubscribedResults(accessT).cachedIn(viewModelScope)
 
     }
     fun checkIfAccessTokenChanged(accessToken: String) = viewModelScope.launch {
@@ -116,7 +116,7 @@ class SubscribedSubredditsViewModel @Inject constructor(
     private fun getLoggedInUsername(accessToken: String) = viewModelScope.launch {
         try {
             val request = redditApiRepository.getUsername(accessToken).name
-            println(request)
+            println("HELLO $request")
         } catch (e: Exception) {
 
         }

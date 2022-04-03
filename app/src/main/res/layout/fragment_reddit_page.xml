@@ -6,11 +6,11 @@
     android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_subreddit"
+        android:id="@+id/recyclerview_posts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/post_item_test" />
+        tools:listitem="@layout/reddit_page_post_item" />
 
     <ProgressBar
         android:id="@+id/progressbar_subreddit"

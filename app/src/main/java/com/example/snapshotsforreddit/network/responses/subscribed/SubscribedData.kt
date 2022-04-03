@@ -1,6 +1,5 @@
 package com.example.snapshotsforreddit.network.responses.subscribed
 
-import com.example.snapshotsforreddit.network.responses.ChildrenObject
 
 data class SubscribedData (
     val after: String?,

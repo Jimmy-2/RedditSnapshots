@@ -7,11 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.snapshotsforreddit.adapter.FrontPageAdapter
 
-import com.example.snapshotsforreddit.data.Room.Post
-import com.example.snapshotsforreddit.network.responses.ChildrenData
+import com.example.snapshotsforreddit.network.responses.RedditPageChildrenData
 
 @BindingAdapter("listData")
-fun bindFrontPage(recyclerView: RecyclerView, data: List<ChildrenData>?) {
+fun bindFrontPage(recyclerView: RecyclerView, data: List<RedditPageChildrenData>?) {
     val adapter = recyclerView.adapter as FrontPageAdapter
     adapter.submitList(data)
 }

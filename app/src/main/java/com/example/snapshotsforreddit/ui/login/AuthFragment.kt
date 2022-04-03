@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.ui.auth
+package com.example.snapshotsforreddit.ui.login
 
 import android.content.Intent
 import android.net.Uri
@@ -11,8 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.snapshotsforreddit.data.Repository.TokensDatastore
 import com.example.snapshotsforreddit.databinding.FragmentAuthBinding
-import com.example.snapshotsforreddit.model.AuthViewModel
-import com.example.snapshotsforreddit.model.AuthViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

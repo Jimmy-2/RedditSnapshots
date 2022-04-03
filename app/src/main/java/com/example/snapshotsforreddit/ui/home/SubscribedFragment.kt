@@ -6,27 +6,29 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.snapshotsforreddit.R
-import com.example.snapshotsforreddit.databinding.FragmentSubscribedSubredditsBinding
+import com.example.snapshotsforreddit.databinding.FragmentSubscribedBinding
+import com.example.snapshotsforreddit.network.responses.subscribed.SubscribedChildrenObject
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SubscribedSubredditsFragment : Fragment(R.layout.fragment_subscribed_subreddits){
-    private val viewModel: SubscribedSubredditsViewModel by viewModels()
+class SubscribedFragment : Fragment(R.layout.fragment_subscribed), SubscribedAdapter.OnItemClickListener{
+    private val viewModel: SubscribedViewModel by viewModels()
 
-    private var _binding: FragmentSubscribedSubredditsBinding? = null
+    private var _binding: FragmentSubscribedBinding? = null
     private val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        _binding  = FragmentSubscribedSubredditsBinding.bind(view)
+        _binding  = FragmentSubscribedBinding.bind(view)
 
-        val subscribedSubredditsAdapter = SubTestAdapter()
+        val subscribedAdapter = SubscribedAdapter(this)
 
         binding.apply {
             recyclerViewSubreddits.setHasFixedSize(true)
-            recyclerViewSubreddits.adapter = subscribedSubredditsAdapter
+            recyclerViewSubreddits.adapter = subscribedAdapter
 
             buttonAuth.setOnClickListener {
                 //browser authentication
@@ -52,16 +54,9 @@ class SubscribedSubredditsFragment : Fragment(R.layout.fragment_subscribed_subre
         //whenever the subscribed subreddits list is changed, we will refresh the recyclerview
         viewModel.subreddits.observe(viewLifecycleOwner) {
             //connect data to adapter
-            subscribedSubredditsAdapter.submitData(viewLifecycleOwner.lifecycle, it)
+            subscribedAdapter.submitData(viewLifecycleOwner.lifecycle, it)
 
         }
-
-
-
-
-
-
-
 
     }
 
@@ -83,14 +78,28 @@ class SubscribedSubredditsFragment : Fragment(R.layout.fragment_subscribed_subre
         _binding = null
     }
 
+    override fun onItemClick(subreddit: SubscribedChildrenObject) {
+        if(subreddit.data?.display_name_prefixed != null) {
+            val action = if(subreddit.data.subreddit_type == "user") {
+                 SubscribedFragmentDirections.actionSubscribedFragmentToSubredditFragment(
+                    subreddit.data.display_name_prefixed.substring(2), "user"
+                )
+            }else {
+                SubscribedFragmentDirections.actionSubscribedFragmentToSubredditFragment(
+                    subreddit.data.display_name_prefixed.substring(2), "r")
+            }
+            findNavController().navigate(action)
+        }
+
+    }
 
 }
 
 
 /*
 @AndroidEntryPoint
-class SubscribedSubredditsFragment : Fragment(R.layout.fragment_subscribed_subreddits), SubscribedSubredditsAdapter.OnItemClickListener {
-    private val viewModel: SubscribedSubredditsViewModel by viewModels()
+class SubscribedFragment : Fragment(R.layout.fragment_subscribed_subreddits), SubscribedAdapter.OnItemClickListener {
+    private val viewModel: SubscribedViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -102,7 +111,7 @@ class SubscribedSubredditsFragment : Fragment(R.layout.fragment_subscribed_subre
          */
         val binding = FragmentSubscribedSubredditsBinding.bind(view)
 
-        val subscribedSubredditsAdapter = SubscribedSubredditsAdapter(this)
+        val subscribedSubredditsAdapter = SubscribedAdapter(this)
 
         binding.apply {
             recyclerViewSubreddits.apply {

@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.network.responses.thumbnail
+package com.example.snapshotsforreddit.network.responses.postimage
 
 import android.os.Parcelable
 import com.squareup.moshi.JsonClass

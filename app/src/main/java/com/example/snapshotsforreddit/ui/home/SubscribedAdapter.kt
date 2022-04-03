@@ -9,24 +9,24 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.snapshotsforreddit.R
-import com.example.snapshotsforreddit.databinding.SubscribedSubredditsItemBinding
+import com.example.snapshotsforreddit.databinding.SubscribedItemBinding
 import com.example.snapshotsforreddit.network.responses.subscribed.SubscribedChildrenObject
 
-class SubTestAdapter :
-    PagingDataAdapter<SubscribedChildrenObject, SubTestAdapter.SubscribedSubredditsViewHolder>(
+class SubscribedAdapter(private val clickListener: OnItemClickListener) :
+    PagingDataAdapter<SubscribedChildrenObject, SubscribedAdapter.SubscribedViewHolder>(
         SUBREDDIT_COMPARATOR
     ) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): SubscribedSubredditsViewHolder {
-        val binding = SubscribedSubredditsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    ): SubscribedViewHolder {
+        val binding = SubscribedItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-        return SubscribedSubredditsViewHolder(binding)
+        return SubscribedViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: SubscribedSubredditsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SubscribedViewHolder, position: Int) {
         val currentItem = getItem(position)
         if (currentItem != null) {
             holder.bind(currentItem)
@@ -38,8 +38,20 @@ class SubTestAdapter :
         return super.getItemViewType(position)
     }
 
-    class SubscribedSubredditsViewHolder(private val binding: SubscribedSubredditsItemBinding) :
+    inner class SubscribedViewHolder(private val binding: SubscribedItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.root.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val item = getItem(position)
+                    if (item != null) {
+                        clickListener.onItemClick(item)
+                    }
+                }
+            }
+        }
 
         fun bind(subredditObject: SubscribedChildrenObject) {
             val removePart = "amp;"
@@ -61,11 +73,12 @@ class SubTestAdapter :
                     .into(imageSubredditItem)
                 println(iconUrl )
                 println(subredditObject.data!!.display_name_prefixed)
-                titleSubredditItem.text = subredditObject.data!!.display_name_prefixed
+                textviewSubredditItemTitle.text = subredditObject.data!!.display_name_prefixed
                 favoriteSubredditItem.isVisible = subredditObject.data.user_has_favorited!!
             }
         }
     }
+
 
 
     companion object {
@@ -91,6 +104,8 @@ class SubTestAdapter :
     }
 
 
-
+    interface OnItemClickListener {
+        fun onItemClick(subreddit: SubscribedChildrenObject)
+    }
 
 }

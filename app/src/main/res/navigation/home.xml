@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/home"
-    app:startDestination="@id/subscribedSubredditsFragment">
+    app:startDestination="@id/subscribedFragment">
     <fragment
         android:id="@+id/frontPageFragment"
         android:name="com.example.snapshotsforreddit.ui.redditpage.FrontPageFragment"
@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_frontPageFragment_to_postDetailFragment"
             app:destination="@id/postDetailFragment" />
+        <argument
+            android:name="subredditName"
+            app:argType="string"/>
     </fragment>
     <fragment
         android:id="@+id/postDetailFragment"
@@ -20,26 +23,26 @@
         tools:layout="@layout/fragment_post_detail">
         <argument
             android:name="post_data"
-            app:argType="com.example.snapshotsforreddit.network.responses.ChildrenData" />
+            app:argType="com.example.snapshotsforreddit.network.responses.RedditPageChildrenData" />
     </fragment>
     <fragment
-        android:id="@+id/subscribedSubredditsFragment"
-        android:name="com.example.snapshotsforreddit.ui.home.SubscribedSubredditsFragment"
+        android:id="@+id/subscribedFragment"
+        android:name="com.example.snapshotsforreddit.ui.home.SubscribedFragment"
         android:label="Subreddits"
-        tools:layout="@layout/fragment_subscribed_subreddits" >
+        tools:layout="@layout/fragment_subscribed" >
         <action
-            android:id="@+id/action_subscribedSubredditsFragment_to_frontPageFragment"
-            app:destination="@id/frontPageFragment" />
-        <action
-            android:id="@+id/action_subscribedSubredditsFragment_to_subredditFragment"
-            app:destination="@id/subredditFragment" />
+            android:id="@+id/action_subscribedFragment_to_subredditFragment"
+            app:destination="@id/redditPageFragment" />
     </fragment>
     <fragment
-        android:id="@+id/subredditFragment"
-        android:name="com.example.snapshotsforreddit.ui.redditpage.SubredditFragment"
+        android:id="@+id/redditPageFragment"
+        android:name="com.example.snapshotsforreddit.ui.redditpage.RedditPageFragment"
         android:label="SubredditFragment" >
         <argument
-            android:name="subredditName"
+            android:name="redditPageName"
+            app:argType="string" />
+        <argument
+            android:name="redditPageType"
             app:argType="string" />
     </fragment>
 

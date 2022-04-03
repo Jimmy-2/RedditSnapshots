@@ -6,11 +6,11 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.snapshotsforreddit.model.AuthViewModel" />
+            type="com.example.snapshotsforreddit.ui.login.AuthViewModel" />
 
         <variable
             name="authFragment"
-            type="com.example.snapshotsforreddit.ui.auth.AuthFragment" />
+            type="com.example.snapshotsforreddit.ui.login.AuthFragment" />
 
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout

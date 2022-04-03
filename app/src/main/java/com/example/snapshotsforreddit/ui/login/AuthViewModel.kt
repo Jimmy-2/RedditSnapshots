@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.model
+package com.example.snapshotsforreddit.ui.login
 
 import android.content.ContentValues
 import android.net.Uri
@@ -59,7 +59,7 @@ class AuthViewModel(private val tokensDatastore: TokensDatastore): ViewModel() {
     //not sure if there is a need for async
     private fun getAccessToken(code: String) {
         Log.i("MainFragment", "code: $code")
-        val authString = "${CLIENT_ID}:"
+        val authString = "$CLIENT_ID:"
         val encodedAuthString: String = Base64.encodeToString(
             authString.toByteArray(),
             Base64.NO_WRAP
