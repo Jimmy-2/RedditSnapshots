@@ -1,6 +1,7 @@
 package com.example.snapshotsforreddit.network.services
 
 import com.example.snapshotsforreddit.network.responses.TokenResponse
+import retrofit2.Call
 import retrofit2.http.*
 
 
@@ -19,6 +20,15 @@ interface RedditAuthApiService {
         @Field("code") code: String?,
         @Field("redirect_uri") redirect_uri: String?
     ): TokenResponse
+
+    @FormUrlEncoded
+    @POST("/api/v1/access_token")
+    fun getRefreshedAccessToken(
+        @Header("User-Agent") User_Agent: String?,
+        @Header("Authorization") Authorization: String?,
+        @Field("grant_type") grant_type: String?,
+        @Field("refresh_token") refresh_token: String?,
+    ): Call<TokenResponse>
 
 
 

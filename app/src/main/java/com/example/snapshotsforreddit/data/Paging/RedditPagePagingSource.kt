@@ -15,7 +15,16 @@ class RedditPagePagingSource(private val redditApiService: RedditApiService, pri
     }
     override suspend fun load(params: LoadParams<String>): LoadResult<String, RedditPageChildrenObject> {
         return try {
+            /*
             val response = redditApiService.getListOfPosts("bearer $accessToken","snapshots-for-reddit", limit = params.loadSize,
+                after = if (params is LoadParams.Append) params.key else null,
+                before = if (params is LoadParams.Prepend) params.key else null,
+                type = subredditType ?: "",
+                subreddit = subredditName ?: "",
+                sort = "hot"
+            )
+             */
+            val response = redditApiService.getListOfPosts("snapshots-for-reddit", limit = params.loadSize,
                 after = if (params is LoadParams.Append) params.key else null,
                 before = if (params is LoadParams.Prepend) params.key else null,
                 type = subredditType ?: "",

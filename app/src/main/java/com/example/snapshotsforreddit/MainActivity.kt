@@ -5,11 +5,14 @@ import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
+import com.example.snapshotsforreddit.data.Repository.AuthDataStoreRepository
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
 
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -26,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         setupBottomNavMenu(navController)
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.subscribedFragment, R.id.downloadedPostsTestFragment,  R.id.optionsFragment)
+            setOf(R.id.subscribedFragment, R.id.loginFragment, R.id.downloadedPostsFragment,  R.id.optionsFragment)
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
     }

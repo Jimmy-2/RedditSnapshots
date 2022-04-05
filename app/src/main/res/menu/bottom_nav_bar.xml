@@ -5,14 +5,22 @@
         android:icon="@drawable/ic_error"
         android:contentDescription="home"
         android:title="Home" />
+
     <item
-        android:id="@+id/downloaded"
+        android:id="@+id/account"
         android:icon="@drawable/ic_error"
-        android:contentDescription="downloaded"
-        android:title="Downloaded" />
+        android:contentDescription="account"
+        android:title="Account" />
+
     <item
         android:id="@+id/options"
         android:icon="@drawable/ic_error"
         android:contentDescription="options"
         android:title="Options" />
+
+    <item
+        android:id="@+id/downloaded"
+        android:icon="@drawable/ic_error"
+        android:contentDescription="downloaded"
+        android:title="Downloaded" />
 </menu>

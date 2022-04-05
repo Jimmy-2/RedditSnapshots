@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/account"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.snapshotsforreddit.ui.general.login.LoginFragment"
+        android:label="LoginFragment">
+        <deepLink
+            android:id="@+id/signInRedirectDeepLink"
+            app:uri="http://www.snapshotstempaddress.com/random_redirect" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.example.snapshotsforreddit.ui.tabs.account.AccountFragment"
+        android:label="AccountFragment" />
+</navigation>

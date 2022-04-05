@@ -25,7 +25,7 @@ class RedditApiRepository @Inject constructor(private val redditApiService: Redd
     }.liveData
 
     suspend fun getUsername(accessToken: String?) = redditApiService.getLoggedInUsername(
-        "bearer $accessToken", USER_AGENT
+         USER_AGENT
     )
 
 

@@ -14,23 +14,21 @@ import retrofit2.http.*
 
 interface RedditApiService {
     companion object {
-        const val CLIENT_ID = BuildConfig.REDDIT_CLIENT_ID
         const val OAUTH_URL = "https://oauth.reddit.com"
 
     }
 
     @GET("/api/v1/me")
     suspend fun getLoggedInUsername(
-        @Header("Authorization") Authorization: String?,
+        //@Header("Authorization") Authorization: String?,
         @Header("User-Agent") User_Agent: String?
     ): Username
 
 
 
-    //@Headers("User-Agent: Testing", "Authorization: bearer $CLIENT_ID")
     @GET("/subreddits/mine/subscriber")
     suspend fun getSubscribedList(
-        @Header("Authorization") Authorization: String?,
+        //@Header("Authorization") Authorization: String?,
         @Header("User-Agent") User_Agent: String?,
         @Query("after") after: String? = null
     ): SubscribedJsonResponse
@@ -38,7 +36,7 @@ interface RedditApiService {
 
     @GET("/{r}/{subreddit}/{sort}")
     suspend fun getListOfPosts(
-        @Header("Authorization") Authorization: String?,
+       // @Header("Authorization") Authorization: String?,
         @Header("User-Agent") User_Agent: String?,
         @Path("r") type: String,
         @Path("subreddit") subreddit: String,

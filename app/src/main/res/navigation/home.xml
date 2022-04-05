@@ -5,20 +5,7 @@
     android:id="@+id/home"
     app:startDestination="@id/subscribedFragment">
     <fragment
-        android:id="@+id/frontPageFragment"
-        android:name="com.example.snapshotsforreddit.ui.redditpage.FrontPageFragment"
-        android:label="FrontPageFragment"
-        tools:layout="@layout/fragment_front_page">
-        <action
-            android:id="@+id/action_frontPageFragment_to_postDetailFragment"
-            app:destination="@id/postDetailFragment" />
-        <argument
-            android:name="subredditName"
-            app:argType="string"/>
-    </fragment>
-    <fragment
         android:id="@+id/postDetailFragment"
-        android:name="com.example.snapshotsforreddit.ui.post.PostDetailFragment"
         android:label="PostDetailFragment"
         tools:layout="@layout/fragment_post_detail">
         <argument
@@ -27,7 +14,7 @@
     </fragment>
     <fragment
         android:id="@+id/subscribedFragment"
-        android:name="com.example.snapshotsforreddit.ui.home.SubscribedFragment"
+        android:name="com.example.snapshotsforreddit.ui.tabs.home.SubscribedFragment"
         android:label="Subreddits"
         tools:layout="@layout/fragment_subscribed" >
         <action
@@ -36,7 +23,7 @@
     </fragment>
     <fragment
         android:id="@+id/redditPageFragment"
-        android:name="com.example.snapshotsforreddit.ui.redditpage.RedditPageFragment"
+        android:name="com.example.snapshotsforreddit.ui.general.redditpage.RedditPageFragment"
         android:label="SubredditFragment" >
         <argument
             android:name="redditPageName"
@@ -45,5 +32,9 @@
             android:name="redditPageType"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/loginFragment2"
+        android:name="com.example.snapshotsforreddit.ui.general.login.LoginFragment"
+        android:label="LoginFragment" />
 
 </navigation>

@@ -31,6 +31,8 @@
                     android:scheme="http"
                     android:path="/random_redirect" />
             </intent-filter>
+            <!-- Needed for the redirect deep link after accepting/declining the sign in. This will allow the app to return back to the sign in fragment instead of the start -->
+            <nav-graph android:value="@navigation/account" />
         </activity>
     </application>
 

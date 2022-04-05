@@ -1,5 +1,6 @@
 package com.example.snapshotsforreddit.data.Paging
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.snapshotsforreddit.data.DefaultsDatasource
@@ -12,6 +13,8 @@ import java.io.IOException
 
 
 class SubscribedPagingSource(private val redditApiService: RedditApiService, private val accessToken: String?) : PagingSource<String, SubscribedChildrenObject>() {
+    private val TAG: String = "SubscribedPagingSource"
+
     override fun getRefreshKey(state: PagingState<String, SubscribedChildrenObject>): String? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey
@@ -22,7 +25,12 @@ class SubscribedPagingSource(private val redditApiService: RedditApiService, pri
 
         return try {
 
+            /*
             val response = redditApiService.getSubscribedList("bearer $accessToken","snapshots-for-reddit",
+                after = if (params is LoadParams.Append) params.key else null,
+            )
+             */
+            val response = redditApiService.getSubscribedList("snapshots-for-reddit",
                 after = if (params is LoadParams.Append) params.key else null,
             )
 
@@ -39,8 +47,10 @@ class SubscribedPagingSource(private val redditApiService: RedditApiService, pri
                 nextKey = response.data.after
             )
         } catch (exception: IOException) {
+            Log.v(TAG, "HELLO $exception")
             LoadResult.Error(exception)
         } catch (exception: HttpException) {
+            Log.v(TAG, "HELLO $exception")
             LoadResult.Error(exception)
         }
     }

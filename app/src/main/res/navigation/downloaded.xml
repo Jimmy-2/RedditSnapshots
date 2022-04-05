@@ -2,10 +2,10 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/downloaded"
-    app:startDestination="@id/downloadedPostsTestFragment">
+    app:startDestination="@id/downloadedPostsFragment">
 
     <fragment
-        android:id="@+id/downloadedPostsTestFragment"
-        android:name="com.example.snapshotsforreddit.ui.downloadedposts.DownloadedPostsTestFragment"
-        android:label="DownloadedPostsTestFragment" />
+        android:id="@+id/downloadedPostsFragment"
+        android:name="com.example.snapshotsforreddit.ui.tabs.downloadedposts.DownloadedPostsFragment"
+        android:label="DownloadedPostsFragment" />
 </navigation>

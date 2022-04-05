@@ -41,6 +41,16 @@ class AuthDataStoreRepository @Inject constructor (@ApplicationContext context: 
         }
 
 
+    suspend fun getValsFromPreferencesStore() = authDataStore.data
+        .map { preferences ->
+            FilterAuth(
+                accessToken = preferences[AuthKeys.ACCESS_TOKEN] ?: "",
+                refreshToken = preferences[AuthKeys.REFRESH_TOKEN] ?: "",
+                loginState = preferences[AuthKeys.LOGIN_STATE] ?: false
+            )
+        }
+
+
 
 
 
