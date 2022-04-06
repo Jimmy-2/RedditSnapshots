@@ -20,7 +20,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        _binding  = FragmentLoginBinding.bind(view)
+        _binding = FragmentLoginBinding.bind(view)
 
 
         binding.apply {
@@ -30,9 +30,13 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 val actionView = Intent(Intent.ACTION_VIEW, intent)
                 startActivity(actionView)
             }
+
+            button2.setOnClickListener {
+                //browser authentication
+
+                viewModel.resetAccessTokenTest()
+            }
         }
-
-
 
 
     }
@@ -47,7 +51,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         }
     }
-
 
 
     override fun onDestroyView() {

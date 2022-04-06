@@ -1,11 +1,11 @@
-package com.example.snapshotsforreddit.data.Repository
+package com.example.snapshotsforreddit.data.repository
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.liveData
 import com.example.snapshotsforreddit.BuildConfig
-import com.example.snapshotsforreddit.data.Paging.RedditPagePagingSource
-import com.example.snapshotsforreddit.data.Paging.SubscribedPagingSource
+import com.example.snapshotsforreddit.data.paging.RedditPagePagingSource
+import com.example.snapshotsforreddit.data.paging.SubscribedPagingSource
 import com.example.snapshotsforreddit.network.services.RedditApiService
 import javax.inject.Inject
 import javax.inject.Singleton

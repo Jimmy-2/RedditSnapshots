@@ -8,11 +8,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.snapshotsforreddit.BuildConfig
-import com.example.snapshotsforreddit.data.Repository.AuthApiRepository
-import com.example.snapshotsforreddit.data.Repository.AuthDataStoreRepository
-import com.example.snapshotsforreddit.data.Repository.RedditApiRepository
+import com.example.snapshotsforreddit.data.repository.AuthApiRepository
+import com.example.snapshotsforreddit.data.repository.AuthDataStoreRepository
 import com.example.snapshotsforreddit.network.responses.TokenResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -48,12 +48,43 @@ class LoginViewModel @Inject constructor(
 
         }
 
+
     }
+    fun resetAccessTokenTest() = viewModelScope.launch {
+        val thing = authDataStoreRepository.getValsFromPreferencesStore().first().refreshToken
+        println("HELLO $thing")
+        try {
+            println("HELLO ${authApiRepository.getNewAccessToken(thing)}")
+        } catch (e: Exception) {
+            println("HELLO FAIL!")
+        }
+
+
+    }
+
+
 
     private fun onAccessTokensUpdated(tokenResponse: TokenResponse) = viewModelScope.launch {
         //update the sort order value in datastore on sort button clicked
         val accessToken = tokenResponse.access_token
-        val refreshToken = tokenResponse.access_token
+        val refreshToken = tokenResponse.refresh_token
+        if (accessToken != null && refreshToken != null) {
+            authDataStoreRepository.updateAccessToken(accessToken)
+            authDataStoreRepository.updateRefreshToken(refreshToken)
+            authDataStoreRepository.updateLoginState(true)
+            println("HELLO NEW REFRESHTOKEN $accessToken")
+            println("HELLO NEW REFRESHTOKEN $refreshToken")
+        } else {
+            authDataStoreRepository.updateLoginState(false)
+        }
+
+
+    }
+
+    private fun onAccessTokensUpdatedTest(tokenResponse: TokenResponse) = viewModelScope.launch {
+        //update the sort order value in datastore on sort button clicked
+        val accessToken = tokenResponse.access_token
+        val refreshToken = tokenResponse.refresh_token
         if (accessToken != null && refreshToken != null) {
             authDataStoreRepository.updateAccessToken(accessToken)
             authDataStoreRepository.updateRefreshToken(refreshToken)
@@ -65,6 +96,8 @@ class LoginViewModel @Inject constructor(
 
 
     }
+
+
 
     fun checkCode(uri: Uri?) {
         if (uri!!.getQueryParameter("error") != null) {

@@ -2,9 +2,9 @@ package com.example.snapshotsforreddit.ui.general.post
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.snapshotsforreddit.data.Repository.TokensDatastore
-import com.example.snapshotsforreddit.data.Room.Post
-import com.example.snapshotsforreddit.data.Room.PostDao
+import com.example.snapshotsforreddit.data.repository.TokensDatastore
+import com.example.snapshotsforreddit.data.room.Post
+import com.example.snapshotsforreddit.data.room.PostDao
 import com.example.snapshotsforreddit.network.responses.RedditPageChildrenData
 import com.example.snapshotsforreddit.network.responses.RedditJsonResponse
 import com.example.snapshotsforreddit.network.services.RedditApiTest

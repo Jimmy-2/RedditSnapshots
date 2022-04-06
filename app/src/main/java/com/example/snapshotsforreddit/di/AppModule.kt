@@ -2,7 +2,7 @@ package com.example.snapshotsforreddit.di
 
 import android.app.Application
 import androidx.room.Room
-import com.example.snapshotsforreddit.data.Room.PostRoomDatabase
+import com.example.snapshotsforreddit.data.room.PostRoomDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

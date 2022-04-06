@@ -1,8 +1,8 @@
-package com.example.snapshotsforreddit.data.Room
+package com.example.snapshotsforreddit.data.room
 
 
 import androidx.room.*
-import com.example.snapshotsforreddit.data.Repository.SortOrder
+import com.example.snapshotsforreddit.data.repository.SortOrder
 import kotlinx.coroutines.flow.Flow
 
 @Dao

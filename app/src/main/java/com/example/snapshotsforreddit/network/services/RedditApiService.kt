@@ -1,16 +1,12 @@
 package com.example.snapshotsforreddit.network.services
 
-import com.example.snapshotsforreddit.BuildConfig
 import com.example.snapshotsforreddit.network.responses.RedditJsonResponse
-import com.example.snapshotsforreddit.network.responses.TokenResponse
 import com.example.snapshotsforreddit.network.responses.subscribed.SubscribedJsonResponse
 import com.example.snapshotsforreddit.network.responses.subscribed.Username
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import retrofit2.Call
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.*
+import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface RedditApiService {
     companion object {
@@ -25,7 +21,6 @@ interface RedditApiService {
     ): Username
 
 
-
     @GET("/subreddits/mine/subscriber")
     suspend fun getSubscribedList(
         //@Header("Authorization") Authorization: String?,
@@ -36,7 +31,7 @@ interface RedditApiService {
 
     @GET("/{r}/{subreddit}/{sort}")
     suspend fun getListOfPosts(
-       // @Header("Authorization") Authorization: String?,
+        // @Header("Authorization") Authorization: String?,
         @Header("User-Agent") User_Agent: String?,
         @Path("r") type: String,
         @Path("subreddit") subreddit: String,

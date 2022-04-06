@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.data.Paging
+package com.example.snapshotsforreddit.data.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState

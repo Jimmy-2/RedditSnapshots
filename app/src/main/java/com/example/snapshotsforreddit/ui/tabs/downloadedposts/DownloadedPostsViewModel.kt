@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.snapshotsforreddit.data.Repository.PreferencesRepository
-import com.example.snapshotsforreddit.data.Repository.SortOrder
-import com.example.snapshotsforreddit.data.Room.Post
-import com.example.snapshotsforreddit.data.Room.PostDao
+import com.example.snapshotsforreddit.data.repository.PreferencesRepository
+import com.example.snapshotsforreddit.data.repository.SortOrder
+import com.example.snapshotsforreddit.data.room.Post
+import com.example.snapshotsforreddit.data.room.PostDao
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine

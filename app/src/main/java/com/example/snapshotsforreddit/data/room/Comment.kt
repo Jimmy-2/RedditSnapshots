@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.data.Room
+package com.example.snapshotsforreddit.data.room
 
 import android.os.Parcelable
 

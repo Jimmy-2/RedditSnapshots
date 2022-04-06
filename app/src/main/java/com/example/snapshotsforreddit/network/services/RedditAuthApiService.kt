@@ -2,7 +2,10 @@ package com.example.snapshotsforreddit.network.services
 
 import com.example.snapshotsforreddit.network.responses.TokenResponse
 import retrofit2.Call
-import retrofit2.http.*
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.Header
+import retrofit2.http.POST
 
 
 interface RedditAuthApiService {
@@ -29,7 +32,6 @@ interface RedditAuthApiService {
         @Field("grant_type") grant_type: String?,
         @Field("refresh_token") refresh_token: String?,
     ): Call<TokenResponse>
-
 
 
 }

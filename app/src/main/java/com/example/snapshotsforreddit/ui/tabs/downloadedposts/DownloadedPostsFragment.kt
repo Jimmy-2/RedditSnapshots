@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.snapshotsforreddit.R
-import com.example.snapshotsforreddit.data.Repository.SortOrder
-import com.example.snapshotsforreddit.data.Room.Post
+import com.example.snapshotsforreddit.data.repository.SortOrder
+import com.example.snapshotsforreddit.data.room.Post
 import com.example.snapshotsforreddit.databinding.FragmentDownloadedPostsBinding
 import com.example.snapshotsforreddit.util.onQueryTextChanged
 import dagger.hilt.android.AndroidEntryPoint

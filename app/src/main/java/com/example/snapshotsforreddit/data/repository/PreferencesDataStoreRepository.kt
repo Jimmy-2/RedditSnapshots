@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.data.Repository
+package com.example.snapshotsforreddit.data.repository
 
 import android.content.Context
 import android.util.Log
@@ -15,8 +15,6 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 
-
-
 enum class SortOrder { BY_TITLE, BY_DATE, BY_SUBREDDIT }
 
 data class FilterPreferences(val sortOrder: SortOrder, val isCompactView: Boolean)
@@ -25,7 +23,7 @@ private val Context.dataStore by preferencesDataStore("user_preferences")
 
 //this repository belongs to the entire activity and we only need 1 instance of it running (used in downloaded posts screen)
 @Singleton
-class PreferencesRepository @Inject constructor (@ApplicationContext context: Context){
+class PreferencesRepository @Inject constructor(@ApplicationContext context: Context) {
     //dagger injects context automatically
 
     private val TAG: String = "PreferencesRepository"
@@ -46,10 +44,9 @@ class PreferencesRepository @Inject constructor (@ApplicationContext context: Co
             val sortOrder = SortOrder.valueOf(
                 preferences[PreferencesKeys.SORT_ORDER] ?: SortOrder.BY_DATE.name
             )
-            val isCompactView = preferences[PreferencesKeys.IS_COMPACT_VIEW]?: false
+            val isCompactView = preferences[PreferencesKeys.IS_COMPACT_VIEW] ?: false
             FilterPreferences(sortOrder, isCompactView)
         }
-
 
 
     suspend fun updateSortOrder(sortOrder: SortOrder) {
@@ -62,7 +59,9 @@ class PreferencesRepository @Inject constructor (@ApplicationContext context: Co
     }
 
     suspend fun updateIsCompactView(isCompactView: Boolean) {
-        preferencesDataStore.edit {preferences -> preferences[PreferencesKeys.IS_COMPACT_VIEW] = isCompactView}
+        preferencesDataStore.edit { preferences ->
+            preferences[PreferencesKeys.IS_COMPACT_VIEW] = isCompactView
+        }
     }
 
 

@@ -1,15 +1,10 @@
 package com.example.snapshotsforreddit.ui.tabs.home
 
-import android.content.ContentValues
-import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.*
 import androidx.paging.cachedIn
-import com.example.snapshotsforreddit.BuildConfig
-import com.example.snapshotsforreddit.data.Repository.AuthApiRepository
-import com.example.snapshotsforreddit.data.Repository.AuthDataStoreRepository
-import com.example.snapshotsforreddit.data.Repository.RedditApiRepository
-import com.example.snapshotsforreddit.network.responses.TokenResponse
+import com.example.snapshotsforreddit.data.repository.AuthDataStoreRepository
+import com.example.snapshotsforreddit.data.repository.RedditApiRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch

@@ -1,7 +1,7 @@
 package com.example.snapshotsforreddit.di
 
 
-import com.example.snapshotsforreddit.data.Repository.AuthDataStoreRepository
+import com.example.snapshotsforreddit.network.AuthApiAuthenticator
 import com.example.snapshotsforreddit.network.RedditApiInterceptor
 import com.example.snapshotsforreddit.network.services.RedditApiService
 import com.example.snapshotsforreddit.network.services.RedditAuthApiService
@@ -16,17 +16,13 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
-import javax.inject.Inject
 import javax.inject.Named
 import javax.inject.Singleton
 
 
-
-
-
 @Module
 @InstallIn(SingletonComponent::class)
-object RetrofitModule {
+object NetworkModule {
 
     //Authentication
     @Provides
@@ -47,7 +43,6 @@ object RetrofitModule {
     @Singleton
     fun provideRedditAuthApiService(@Named("Auth") retrofit: Retrofit): RedditAuthApiService =
         retrofit.create(RedditAuthApiService::class.java)
-
 
 
     //Regular reddit usage
@@ -71,14 +66,17 @@ object RetrofitModule {
         retrofit.create()
 
 
-
     @Provides
     @Singleton
-    fun provideTokenInterceptorOkHttpClient(redditAPiInterceptor: RedditApiInterceptor): OkHttpClient {
-        val logging = HttpLoggingInterceptor()
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+    fun provideOkHttpClient(
+        redditAPiInterceptor: RedditApiInterceptor,
+        authApiAuthenticator: AuthApiAuthenticator
+    ): OkHttpClient {
+        //val logging = HttpLoggingInterceptor()
+        //logging.setLevel(HttpLoggingInterceptor.Level.BODY)
         return OkHttpClient.Builder().addInterceptor(redditAPiInterceptor)
-            .addInterceptor(logging)
+            //.addInterceptor(logging)
+            .authenticator(authApiAuthenticator)
             .build()
     }
 
