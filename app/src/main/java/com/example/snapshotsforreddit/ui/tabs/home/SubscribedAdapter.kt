@@ -72,7 +72,7 @@ class SubscribedAdapter(private val clickListener: OnItemClickListener) :
                     .error(R.drawable.ic_error)
                     .into(imageSubredditItem)
 
-                println(iconUrl )
+                println("HELLO $iconUrl")
                 println(subredditObject.data!!.display_name_prefixed)
                 textviewSubredditItemTitle.text = subredditObject.data!!.display_name_prefixed
                 favoriteSubredditItem.isVisible = subredditObject.data.user_has_favorited!!

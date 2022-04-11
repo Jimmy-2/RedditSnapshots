@@ -11,9 +11,10 @@ import javax.inject.Singleton
 class AuthApiRepository @Inject constructor(private val redditAuthApiService: RedditAuthApiService,private val authDataStoreRepository: AuthDataStoreRepository) {
     suspend fun getTokenValues(code: String) = redditAuthApiService.getTokens(USER_AGENT,"Basic $encodedAuthString:",GRANT_TYPE, code, REDIRECT_URI)
 
+
     fun getNewAccessToken(refreshToken: String) = redditAuthApiService.getRefreshedAccessToken(USER_AGENT,"Basic $encodedAuthString:",REFRESH_GRANT_TYPE, refreshToken)
 
-    suspend fun getStoredTokenValues() = authDataStoreRepository.getValsFromPreferencesStore()
+
 
     companion object {
         private val encodedAuthString: String by lazy {

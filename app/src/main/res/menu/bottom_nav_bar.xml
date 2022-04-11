@@ -7,6 +7,12 @@
         android:title="Home" />
 
     <item
+        android:id="@+id/inbox"
+        android:icon="@drawable/ic_error"
+        android:contentDescription="inbox"
+        android:title="Inbox" />
+
+    <item
         android:id="@+id/account"
         android:icon="@drawable/ic_error"
         android:contentDescription="account"

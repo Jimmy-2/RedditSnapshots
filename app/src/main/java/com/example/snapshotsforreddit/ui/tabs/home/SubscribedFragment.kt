@@ -12,6 +12,9 @@ import com.example.snapshotsforreddit.databinding.FragmentSubscribedBinding
 import com.example.snapshotsforreddit.network.responses.subscribed.SubscribedChildrenObject
 import dagger.hilt.android.AndroidEntryPoint
 
+
+//TODO: TURN THIS TO SIDE SHEET ON LEFT SIDE
+
 @AndroidEntryPoint
 class SubscribedFragment : Fragment(R.layout.fragment_subscribed), SubscribedAdapter.OnItemClickListener{
     private val viewModel: SubscribedViewModel by viewModels()
@@ -28,8 +31,8 @@ class SubscribedFragment : Fragment(R.layout.fragment_subscribed), SubscribedAda
         val subscribedAdapter = SubscribedAdapter(this)
 
         binding.apply {
-            recyclerViewSubreddits.setHasFixedSize(true)
-            recyclerViewSubreddits.adapter = subscribedAdapter
+            recyclerviewSubreddits.setHasFixedSize(true)
+            recyclerviewSubreddits.adapter = subscribedAdapter
         }
 
 

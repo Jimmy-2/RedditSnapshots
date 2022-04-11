@@ -28,13 +28,13 @@ class RedditPageViewModel @Inject constructor(
             _accessToken.value = accessToken
 
             //save the username in datastore. //if unable to get username, the user must relog because refresh token expired or an error with login
-            getLoggedInUsername(accessToken)
+            getLoggedInUsername()
         }
     }
     
-    private fun getLoggedInUsername(accessToken: String) = viewModelScope.launch {
+    private fun getLoggedInUsername() = viewModelScope.launch {
         try {
-            val request = redditApiRepository.getUsername(accessToken).name
+            val request = redditApiRepository.getUsername().name
         } catch (e: Exception) {
 
         }

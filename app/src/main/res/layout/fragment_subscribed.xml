@@ -10,7 +10,7 @@
     tools:context=".ui.tabs.home.SubscribedFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_subreddits"
+        android:id="@+id/recyclerview_subreddits"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

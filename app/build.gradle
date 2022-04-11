@@ -50,6 +50,13 @@ android {
         dataBinding true
         viewBinding true
     }
+    sourceSets {
+        main {
+            res {
+                srcDirs 'src\\main\\res', 'src\\main\\res\\layouts\\home', 'src\\main\\res\\layouts\\account', 'src\\main\\res\\layouts\\inbox', 'src\\main\\res\\layouts\\options', 'src\\main\\res\\layouts\\downloads', 'src\\main\\res\\layouts\\search'
+            }
+        }
+    }
 }
 
 dependencies {
@@ -116,6 +123,9 @@ dependencies {
 
     //Paging
     implementation("androidx.paging:paging-runtime:$paging_version")
+
+
+
 
 }
 

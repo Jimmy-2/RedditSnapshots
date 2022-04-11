@@ -8,19 +8,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.snapshotsforreddit.R
-import com.example.snapshotsforreddit.databinding.RedditPagePostItemBinding
+import com.example.snapshotsforreddit.databinding.PostItemBinding
 
-import com.example.snapshotsforreddit.network.responses.RedditPageChildrenObject
+
+import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
 
 class RedditPageAdapter() :
-    PagingDataAdapter<RedditPageChildrenObject, RedditPageAdapter.RedditPageViewHolder>(
+    PagingDataAdapter<RedditChildrenObject, RedditPageAdapter.RedditPageViewHolder>(
         POST_COMPARATOR
     ) {
     //TODO: Instead of 1 item layout for a post, have 2 different layouts, 1 for text only post vs image/video/gif post
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RedditPageViewHolder {
-        val binding = RedditPagePostItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = PostItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return RedditPageViewHolder(binding)
     }
 
@@ -32,9 +33,9 @@ class RedditPageAdapter() :
     }
 
 
-    inner class RedditPageViewHolder(private val binding: RedditPagePostItemBinding) :
+    inner class RedditPageViewHolder(private val binding: PostItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(postObject: RedditPageChildrenObject) {
+        fun bind(postObject: RedditChildrenObject) {
             val currentPost = postObject.data
             val removePart = "amp;"
             //TODO FIX CODE HERE : REFORMAT STATEMENTS
@@ -69,10 +70,10 @@ class RedditPageAdapter() :
 
     companion object {
         private val POST_COMPARATOR =
-            object : DiffUtil.ItemCallback<RedditPageChildrenObject>() {
+            object : DiffUtil.ItemCallback<RedditChildrenObject>() {
                 override fun areItemsTheSame(
-                    oldItem: RedditPageChildrenObject,
-                    newItem: RedditPageChildrenObject
+                    oldItem: RedditChildrenObject,
+                    newItem: RedditChildrenObject
                 ): Boolean {
 
                     //CHANGE THIS TO data.name LATER SO WE DO NOT HAVE TO UPDATE EVEN IF SUBSCRIPTION COUNT CHANGES
@@ -80,8 +81,8 @@ class RedditPageAdapter() :
                 }
 
                 override fun areContentsTheSame(
-                    oldItem: RedditPageChildrenObject,
-                    newItem: RedditPageChildrenObject
+                    oldItem: RedditChildrenObject,
+                    newItem: RedditChildrenObject
                 ): Boolean {
                     return oldItem == newItem
                 }

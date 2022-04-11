@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/account"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/accountOverviewFragment">
 
     <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.example.snapshotsforreddit.ui.general.login.LoginFragment"
-        android:label="LoginFragment">
+        android:id="@+id/accountOverviewFragment"
+        android:name="com.example.snapshotsforreddit.ui.tabs.account.AccountOverviewFragment"
+        android:label="AccountFragment" >
+        <action
+            android:id="@+id/action_accountOverviewFragment_to_loginDialogFragment"
+            app:destination="@id/loginDialogFragment" />
         <deepLink
             android:id="@+id/signInRedirectDeepLink"
             app:uri="http://www.snapshotstempaddress.com/random_redirect" />
     </fragment>
-    <fragment
-        android:id="@+id/accountFragment"
-        android:name="com.example.snapshotsforreddit.ui.tabs.account.AccountFragment"
-        android:label="AccountFragment" />
+    <dialog
+        android:id="@+id/loginDialogFragment"
+        android:name="com.example.snapshotsforreddit.ui.general.login.LoginDialogFragment"
+        android:label="fragment_login_dialog"
+        tools:layout="@layout/fragment_login_dialog" />
+
 </navigation>

@@ -4,6 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.liveData
 import com.example.snapshotsforreddit.BuildConfig
+import com.example.snapshotsforreddit.data.paging.AccountOverviewPagingSource
 import com.example.snapshotsforreddit.data.paging.RedditPagePagingSource
 import com.example.snapshotsforreddit.data.paging.SubscribedPagingSource
 import com.example.snapshotsforreddit.network.services.RedditApiService
@@ -12,10 +13,10 @@ import javax.inject.Singleton
 
 @Singleton
 class RedditApiRepository @Inject constructor(private val redditApiService: RedditApiService) {
-    fun getSubscribedResults(accessToken: String?) = Pager(
+    fun getSubscribedResults() = Pager(
         PagingConfig(count)
     ) {
-        SubscribedPagingSource(redditApiService, accessToken)
+        SubscribedPagingSource(redditApiService)
     }.liveData
 
     fun getSubredditPostsList(accessToken: String?, subredditName: String, subredditType: String) = Pager(
@@ -24,7 +25,16 @@ class RedditApiRepository @Inject constructor(private val redditApiService: Redd
         RedditPagePagingSource(redditApiService, accessToken, subredditName, subredditType)
     }.liveData
 
-    suspend fun getUsername(accessToken: String?) = redditApiService.getLoggedInUsername(
+    fun getUserOverviewList(username: String) = Pager(
+        PagingConfig(count)
+    ) {
+        AccountOverviewPagingSource(redditApiService, username)
+    }.liveData
+
+
+
+
+    suspend fun getUsername() = redditApiService.getLoggedInUsername(
          USER_AGENT
     )
 

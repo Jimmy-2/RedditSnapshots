@@ -19,8 +19,7 @@ class SubscribedViewModel @Inject constructor(
 
     val authFlow = authDataStoreRepository.authFlow.asLiveData()
     private val _accessToken = MutableLiveData<String>()
-    val subreddits = _accessToken.switchMap { accessT ->
-        redditApiRepository.getSubscribedResults(accessT).cachedIn(viewModelScope)
+    val subreddits = _accessToken.switchMap { redditApiRepository.getSubscribedResults().cachedIn(viewModelScope)
 
     }
     fun checkIfAccessTokenChanged(accessToken: String) = viewModelScope.launch {
@@ -29,16 +28,20 @@ class SubscribedViewModel @Inject constructor(
             _accessToken.value = accessToken
 
             //save the username in datastore. //if unable to get username, the user must relog because refresh token expired or an error with login
-            getLoggedInUsername(accessToken)
+            try {
+                val request = redditApiRepository.getUsername().name
+                Log.v(TAG, "HELLO $request")
+            } catch (e: Exception) {
+
+            }
         }
         Log.v(TAG, "HELLO $accessToken")
-        Log.v(TAG, "HELLO ${authDataStoreRepository.getValsFromPreferencesStore().first().accessToken}")
 
     }
 
-    private fun getLoggedInUsername(accessToken: String) = viewModelScope.launch {
+    private fun getLoggedInUsername() = viewModelScope.launch {
         try {
-            val request = redditApiRepository.getUsername(accessToken).name
+            val request = redditApiRepository.getUsername().name
             Log.v(TAG, "HELLO $request")
         } catch (e: Exception) {
 

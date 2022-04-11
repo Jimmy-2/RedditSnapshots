@@ -17,16 +17,17 @@ class RedditPageFragment: Fragment(R.layout.fragment_reddit_page) {
     private var _binding: FragmentRedditPageBinding? = null
     private val binding get() = _binding!!
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         _binding  = FragmentRedditPageBinding.bind(view)
 
-        val subredditAdapter = RedditPageAdapter()
+        val redditPageAdapter = RedditPageAdapter()
 
         binding.apply {
             recyclerviewPosts.setHasFixedSize(true)
-            recyclerviewPosts.adapter = subredditAdapter
+            recyclerviewPosts.adapter = redditPageAdapter
 
 
         }
@@ -41,7 +42,7 @@ class RedditPageFragment: Fragment(R.layout.fragment_reddit_page) {
 
         viewModel.redditPagePosts.observe(viewLifecycleOwner) {
             //connect data to adapter
-            subredditAdapter.submitData(viewLifecycleOwner.lifecycle, it)
+            redditPageAdapter.submitData(viewLifecycleOwner.lifecycle, it)
 
         }
     }

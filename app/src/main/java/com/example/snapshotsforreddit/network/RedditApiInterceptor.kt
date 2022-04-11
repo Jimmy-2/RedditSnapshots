@@ -17,7 +17,7 @@ class RedditApiInterceptor @Inject constructor(private val authDataStoreReposito
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val accessToken = runBlocking {
-            authDataStoreRepository.getValsFromPreferencesStore().first().accessToken
+            authDataStoreRepository.authFlow.first().accessToken
         }
 
         var request = chain.request()

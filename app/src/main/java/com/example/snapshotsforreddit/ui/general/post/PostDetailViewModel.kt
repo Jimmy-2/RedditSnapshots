@@ -5,7 +5,7 @@ import androidx.lifecycle.*
 import com.example.snapshotsforreddit.data.repository.TokensDatastore
 import com.example.snapshotsforreddit.data.room.Post
 import com.example.snapshotsforreddit.data.room.PostDao
-import com.example.snapshotsforreddit.network.responses.RedditPageChildrenData
+import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 import com.example.snapshotsforreddit.network.responses.RedditJsonResponse
 import com.example.snapshotsforreddit.network.services.RedditApiTest
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -37,8 +37,8 @@ class PostDetailViewModel @Inject constructor(private val postDao: PostDao, priv
 
 
 
-    private val _postInformation = MutableLiveData<RedditPageChildrenData?>()
-    val postInformation: LiveData<RedditPageChildrenData?> = _postInformation
+    private val _postInformation = MutableLiveData<RedditChildrenData?>()
+    val postInformation: LiveData<RedditChildrenData?> = _postInformation
 
 
     override fun onCleared() {
@@ -47,16 +47,16 @@ class PostDetailViewModel @Inject constructor(private val postDao: PostDao, priv
     }
 
 
-    private val _postComments = MutableLiveData<RedditPageChildrenData>()
-    val postComments : LiveData<RedditPageChildrenData> = _postComments
+    private val _postComments = MutableLiveData<RedditChildrenData>()
+    val postComments : LiveData<RedditChildrenData> = _postComments
 
     private val _postTitle= MutableLiveData<String>()
     val postTitle: LiveData<String> = _postTitle
     private val _postImageUrl= MutableLiveData<String>()
     val postImageUrl : LiveData<String> = _postImageUrl
 
-    fun retrievePostData(postDataRedditPage: RedditPageChildrenData?) {
-        _postInformation.value = postDataRedditPage!!
+    fun retrievePostData(postDataReddit: RedditChildrenData?) {
+        _postInformation.value = postDataReddit!!
     }
 
 

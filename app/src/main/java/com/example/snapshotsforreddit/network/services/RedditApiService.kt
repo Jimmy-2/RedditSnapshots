@@ -41,4 +41,14 @@ interface RedditApiService {
         @Query("before") before: String? = null,
     ): RedditJsonResponse
 
+    @GET("/user/{username}/{historyType}")
+    suspend fun getUserHistory(
+        // @Header("Authorization") Authorization: String?,
+        @Header("User-Agent") User_Agent: String?,
+        @Path("username") username: String,
+        @Path("historyType") historyType: String,
+        @Query("after") after: String? = null,
+        @Query("before") before: String? = null,
+    ): RedditJsonResponse
+
 }

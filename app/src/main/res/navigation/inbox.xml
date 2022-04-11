@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/inbox">
-
+    android:id="@+id/inbox"
+    app:startDestination="@id/inboxFragment">
+    <fragment
+        android:id="@+id/inboxFragment"
+        android:name="com.example.snapshotsforreddit.ui.tabs.inbox.InboxFragment"
+        android:label="InboxFragment" />
 </navigation>

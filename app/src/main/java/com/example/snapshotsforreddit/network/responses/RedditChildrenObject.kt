@@ -11,12 +11,12 @@ import com.squareup.moshi.JsonClass
 
 
 @JsonClass(generateAdapter = true)
-data class RedditPageChildrenObject(
+data class RedditChildrenObject(
     @Json(name = "kind")
     val kind: String?,
 
     @Json(name = "data")
-    val data: RedditPageChildrenData?
+    val data: RedditChildrenData?
 
 )
 

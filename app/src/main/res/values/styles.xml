@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="CardViewTopCorners" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/CardView_Top_Corners</item>
+    </style>
+
+    <style name="CardView_Top_Corners" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">25dp</item>
+        <item name="cornerSizeTopRight">25dp</item>
+    </style>
+
+
+
+    <style name="CardViewBottomCorners" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/CardView_Bottom_Corners</item>
+    </style>
+
+    <style name="CardView_Bottom_Corners" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeBottomLeft">25dp</item>
+        <item name="cornerSizeBottomRight">25dp</item>
+    </style>
+
+
+</resources>

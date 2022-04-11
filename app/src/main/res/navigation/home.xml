@@ -10,7 +10,7 @@
         tools:layout="@layout/fragment_post_detail">
         <argument
             android:name="post_data"
-            app:argType="com.example.snapshotsforreddit.network.responses.RedditPageChildrenData" />
+            app:argType="com.example.snapshotsforreddit.network.responses.RedditChildrenData" />
     </fragment>
     <fragment
         android:id="@+id/subscribedFragment"
@@ -32,9 +32,5 @@
             android:name="redditPageType"
             app:argType="string" />
     </fragment>
-    <fragment
-        android:id="@+id/loginFragment2"
-        android:name="com.example.snapshotsforreddit.ui.general.login.LoginFragment"
-        android:label="LoginFragment" />
 
 </navigation>

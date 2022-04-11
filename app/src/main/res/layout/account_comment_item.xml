@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#131313"
+    android:backgroundTint="#807397"
+    android:padding="8dp">
+
+
+    <TextView
+        android:id="@+id/textview_account_comment_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="4dp"
+        android:padding="8dp"
+        android:text="TextView"
+        app:drawableStartCompat="@drawable/ic_error"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Username" />
+
+    <TextView
+        android:id="@+id/textview_account_comment_body"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center|left"
+        android:padding="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textview_account_comment_username"
+        tools:text="Hello wow what a great post you have there!" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="5dp"
+        app:layout_constraintTop_toBottomOf="@+id/textview_account_comment_body">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textview_account_comment_post_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|left"
+                android:padding="8dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                tools:text="Title of original post that was posted!" />
+
+            <TextView
+                android:id="@+id/textview_account_comment_post_subreddit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|left"
+                android:padding="8dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                tools:text="r/Places" />
+
+        </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

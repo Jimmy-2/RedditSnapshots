@@ -12,7 +12,7 @@ import kotlinx.android.parcel.Parcelize
 
 /*
 
-data class RedditPageChildrenData(
+data class RedditChildrenData(
     val subreddit: String?,
     val selftext: String?,
     val author_fullname: String?,
@@ -36,20 +36,20 @@ data class RedditPageChildrenData(
 //Parcelize so that we can pass this object through safe args.
 @Parcelize
 @JsonClass(generateAdapter = true)
-data class RedditPageChildrenData(
+data class RedditChildrenData(
     val subreddit: String?,
 
     val selftext: String?,
 
-    val saved: Boolean,
+    val saved: Boolean?,
 
-    val title: String,
+    val title: String?,
 
-    val subreddit_name_prefixed: String,
+    val subreddit_name_prefixed: String?,
 
-    val is_reddit_media_domain: Boolean,
+    val is_reddit_media_domain: Boolean?,
 
-    val score: Int,
+    val score: Int?,
 
     //use preview for higher res. and if thumbnail == "" or "self", display text instead
     val thumbnail: String?,
@@ -71,25 +71,25 @@ data class RedditPageChildrenData(
     val url_overridden_by_dest: String?,
 
 
-    val archived: Boolean,
+    val archived: Boolean?,
 
     val no_follow: Boolean?,
 
-    val is_crosspostable: Boolean,
+    val is_crosspostable: Boolean?,
 
-    val over_18: Boolean,
+    val over_18: Boolean?,
 
     //This object contains the high res images/thumbnails
     val preview: ImagePreview?,
 
     //used to get post details information
-    val id: String,
+    val id: String?,
 
     //author of post
-    val author: String,
+    val author: String?,
 
 
-    val num_comments: Int,
+    val num_comments: Int?,
 
     //contains media items related to video/gif
     val media: RedditPageMedia?,
@@ -99,8 +99,14 @@ data class RedditPageChildrenData(
     val permalink: String?,
 
 
-    val is_video: Boolean,
+    val is_video: Boolean?,
 
 
+    //////////////////////////////////////////////////////////////////////////
+    //Comment type (t1)
+
+    val body: String?,
+
+    val link_title: String?
     ) : Parcelable
 

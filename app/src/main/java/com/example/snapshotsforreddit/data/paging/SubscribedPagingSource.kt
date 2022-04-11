@@ -12,7 +12,7 @@ import java.io.IOException
 
 
 
-class SubscribedPagingSource(private val redditApiService: RedditApiService, private val accessToken: String?) : PagingSource<String, SubscribedChildrenObject>() {
+class SubscribedPagingSource(private val redditApiService: RedditApiService) : PagingSource<String, SubscribedChildrenObject>() {
     private val TAG: String = "SubscribedPagingSource"
 
     override fun getRefreshKey(state: PagingState<String, SubscribedChildrenObject>): String? {
@@ -30,6 +30,8 @@ class SubscribedPagingSource(private val redditApiService: RedditApiService, pri
                 after = if (params is LoadParams.Append) params.key else null,
             )
              */
+
+
             val response = redditApiService.getSubscribedList("snapshots-for-reddit",
                 after = if (params is LoadParams.Append) params.key else null,
             )
