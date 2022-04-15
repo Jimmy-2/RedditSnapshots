@@ -2,8 +2,9 @@ package com.example.snapshotsforreddit.network.services
 
 import com.example.snapshotsforreddit.network.responses.RedditJsonResponse
 import com.example.snapshotsforreddit.network.responses.TokenResponse
+import com.example.snapshotsforreddit.network.responses.account.User
 import com.example.snapshotsforreddit.network.responses.subscribed.SubscribedJsonResponse
-import com.example.snapshotsforreddit.network.responses.subscribed.Username
+import com.example.snapshotsforreddit.network.responses.account.Username
 import com.example.snapshotsforreddit.network.services.RedditApiServiceTest.Companion.retrofitGetToken
 import com.example.snapshotsforreddit.network.services.RedditApiServiceTest.Companion.retrofitOAuth
 import com.example.snapshotsforreddit.network.services.RedditApiServiceTest.Companion.retrofitTest
@@ -95,6 +96,10 @@ interface RedditApiServiceTest {
         @Header("User-Agent") User_Agent: String?
     ): Call<SubscribedJsonResponse>
 
+    @GET("/user/{username}/about")
+    fun getUserInfoTest(
+        @Path("username") username: String
+    ): Call<User>
 
 }
 

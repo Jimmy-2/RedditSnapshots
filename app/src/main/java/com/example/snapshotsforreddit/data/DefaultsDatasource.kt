@@ -2,6 +2,7 @@ package com.example.snapshotsforreddit.data
 
 import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
+import com.example.snapshotsforreddit.network.responses.account.UserData
 import com.example.snapshotsforreddit.network.responses.subscribed.SubscribedChildrenData
 import com.example.snapshotsforreddit.network.responses.subscribed.SubscribedChildrenObject
 
@@ -23,10 +24,71 @@ class DefaultsDatasource {
         )
     }
 
-    fun loadDefaultAccountItems(): List<RedditChildrenObject> {
+    fun emptyRedditChildrenData(kind: String?, userData: UserData? ) : List<RedditChildrenObject> {
+        return listOf(RedditChildrenObject(
+            kind = "userData",
+            data = RedditChildrenData(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null, null, userData
+            )
+        ))
+    }
+
+    fun loadDefaultAccountItems(userData: UserData?): List<RedditChildrenObject> {
         return listOf(
             RedditChildrenObject(
-                kind = "default",
+                kind = "userData",
+                data = RedditChildrenData(
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null, null, userData
+                )
+            ),
+            RedditChildrenObject(
+                kind = "defaultTop",
                 data = RedditChildrenData(
                     null,
                     null,
@@ -51,7 +113,7 @@ class DefaultsDatasource {
                     null,
                     "submitted",
                     null,
-                    "Posts", null,
+                    "Posts", null, null
                 )
             ),
             RedditChildrenObject(
@@ -80,7 +142,7 @@ class DefaultsDatasource {
                     null,
                     "comments",
                     null,
-                    "Comments", null,
+                    "Comments", null,null
                 )
             ),
             RedditChildrenObject(
@@ -109,7 +171,7 @@ class DefaultsDatasource {
                     null,
                     "saved",
                     null,
-                    "Saved", null,
+                    "Saved", null,null
                 )
             ),
             RedditChildrenObject(
@@ -138,7 +200,7 @@ class DefaultsDatasource {
                     null,
                     null,
                     null,
-                    "Friends", null,
+                    "Friends", null,null
                 )
             ),
             RedditChildrenObject(
@@ -167,7 +229,7 @@ class DefaultsDatasource {
                     null,
                     "upvoted",
                     null,
-                    "Upvoted", null,
+                    "Upvoted", null,null
                 )
             ),
             RedditChildrenObject(
@@ -196,7 +258,7 @@ class DefaultsDatasource {
                     null,
                     "downvoted",
                     null,
-                    "Downvoted", null,
+                    "Downvoted", null,null
                 )
             ),
             RedditChildrenObject(
@@ -226,11 +288,11 @@ class DefaultsDatasource {
                     "hidden",
                     null,
                     "Hidden",
-                    null,
+                    null,null
                 )
             ),
             RedditChildrenObject(
-                kind = "default",
+                kind = "defaultBottom",
                 data = RedditChildrenData(
                     null,
                     null,
@@ -256,7 +318,7 @@ class DefaultsDatasource {
                     null,
                     null,
                     "Trophies",
-                    null,
+                    null,null
                 )
             ),
 

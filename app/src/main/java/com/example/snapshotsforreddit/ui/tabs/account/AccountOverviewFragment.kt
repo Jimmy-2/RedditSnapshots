@@ -35,9 +35,16 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview) {
                     AccountOverviewFragmentDirections.actionAccountOverviewFragmentToLoginDialogFragment()
                 )
             }
+            //swipeRefresh.setOnRefreshListener { accountOverviewAdapter.refresh() }
         }
 
         viewModel.authFlow.observe(viewLifecycleOwner) { authFlowValues ->
+
+            if(authFlowValues.username == "") {
+                binding.recyclerviewAccount.visibility = View.GONE
+            }else {
+                binding.recyclerviewAccount.visibility = View.VISIBLE
+            }
             viewModel.checkIfUsernameChanged(authFlowValues.username)
         }
 
@@ -50,6 +57,7 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview) {
 
     }
 
+
     override fun onResume() {
         super.onResume()
         //on successful authentication
@@ -59,6 +67,8 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview) {
         }
         //clear intent after successful retrieval of uri
         requireActivity().intent = null
+
+
 
     }
 

@@ -1,8 +1,9 @@
 package com.example.snapshotsforreddit.network.services
 
 import com.example.snapshotsforreddit.network.responses.RedditJsonResponse
+import com.example.snapshotsforreddit.network.responses.account.User
 import com.example.snapshotsforreddit.network.responses.subscribed.SubscribedJsonResponse
-import com.example.snapshotsforreddit.network.responses.subscribed.Username
+import com.example.snapshotsforreddit.network.responses.account.Username
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Path
@@ -50,5 +51,13 @@ interface RedditApiService {
         @Query("after") after: String? = null,
         @Query("before") before: String? = null,
     ): RedditJsonResponse
+
+
+    @GET("/user/{username}/about")
+    suspend fun getUserInfo(
+        // @Header("Authorization") Authorization: String?,
+        @Header("User-Agent") User_Agent: String?,
+        @Path("username") username: String
+    ): User
 
 }

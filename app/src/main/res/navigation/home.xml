@@ -31,6 +31,9 @@
         <argument
             android:name="redditPageType"
             app:argType="string" />
+        <action
+            android:id="@+id/action_redditPageFragment_to_postDetailFragment"
+            app:destination="@id/postDetailFragment" />
     </fragment>
 
 </navigation>

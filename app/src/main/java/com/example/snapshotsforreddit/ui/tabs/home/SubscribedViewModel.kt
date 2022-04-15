@@ -6,7 +6,6 @@ import androidx.paging.cachedIn
 import com.example.snapshotsforreddit.data.repository.AuthDataStoreRepository
 import com.example.snapshotsforreddit.data.repository.RedditApiRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,7 +18,7 @@ class SubscribedViewModel @Inject constructor(
 
     val authFlow = authDataStoreRepository.authFlow.asLiveData()
     private val _accessToken = MutableLiveData<String>()
-    val subreddits = _accessToken.switchMap { redditApiRepository.getSubscribedResults().cachedIn(viewModelScope)
+    val subreddits = _accessToken.switchMap { redditApiRepository.getSubscribedSubredditsList().cachedIn(viewModelScope)
 
     }
     fun checkIfAccessTokenChanged(accessToken: String) = viewModelScope.launch {

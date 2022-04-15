@@ -1,6 +1,7 @@
 package com.example.snapshotsforreddit.network.responses
 
 import android.os.Parcelable
+import com.example.snapshotsforreddit.network.responses.account.UserData
 import com.example.snapshotsforreddit.network.responses.postimage.ImagePreview
 import com.example.snapshotsforreddit.network.responses.postvideo.RedditPageMedia
 import com.squareup.moshi.JsonClass
@@ -101,12 +102,11 @@ data class RedditChildrenData(
 
     val is_video: Boolean?,
 
-
-    //////////////////////////////////////////////////////////////////////////
-    //Comment type (t1)
-
     val body: String?,
 
-    val link_title: String?
+    val link_title: String?,
+
+
+    val userData: UserData?,
     ) : Parcelable
 

@@ -3,12 +3,14 @@ package com.example.snapshotsforreddit.data.paging
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.snapshotsforreddit.data.DefaultsDatasource
+import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
+import com.example.snapshotsforreddit.network.responses.account.UserData
 import com.example.snapshotsforreddit.network.services.RedditApiService
 import retrofit2.HttpException
 import java.io.IOException
 
-class AccountOverviewPagingSource(private val redditApiService: RedditApiService, private val username: String) : PagingSource<String, RedditChildrenObject>(){
+class AccountOverviewPagingSource(private val redditApiService: RedditApiService, private val username: String, private val userData: UserData?) : PagingSource<String, RedditChildrenObject>(){
     private val TAG: String = "AccountOverviewPagingSource"
     override fun getRefreshKey(state: PagingState<String, RedditChildrenObject>): String? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -26,12 +28,12 @@ class AccountOverviewPagingSource(private val redditApiService: RedditApiService
             //make sort enum
 
             val overviewItems = if(params.key == null) {
-                DefaultsDatasource().loadDefaultAccountItems()+response.data!!.children
+                //DefaultsDatasource().emptyRedditChildrenData(kind = "userData", userData = userData) +
+                DefaultsDatasource().loadDefaultAccountItems(userData)+response.data!!.children
+
             }else {
                 response.data!!.children
             }
-
-
 
             LoadResult.Page(
                 data = overviewItems,

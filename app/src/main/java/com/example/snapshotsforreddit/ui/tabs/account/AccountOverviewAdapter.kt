@@ -9,11 +9,9 @@ import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.snapshotsforreddit.R
-import com.example.snapshotsforreddit.databinding.AccountCommentItemBinding
-import com.example.snapshotsforreddit.databinding.AccountDefaultItemBinding
-import com.example.snapshotsforreddit.databinding.AccountUserHeaderBinding
-import com.example.snapshotsforreddit.databinding.PostItemBinding
+import com.example.snapshotsforreddit.databinding.*
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
+import retrofit2.http.POST
 
 class AccountOverviewAdapter() :
     PagingDataAdapter<RedditChildrenObject, AccountOverviewAdapter.AccountOverviewViewHolder>(
@@ -25,8 +23,10 @@ class AccountOverviewAdapter() :
         return when (viewType) {
             COMMENT -> AccountOverviewViewHolder.CommentViewHolder(AccountCommentItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
             POST -> AccountOverviewViewHolder.PostViewHolder(PostItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-
+            USER_DATA -> AccountOverviewViewHolder.UserDataViewHolder(AccountUserDataItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
             DEFAULT -> AccountOverviewViewHolder.DefaultViewHolder(AccountDefaultItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            DEFAULT_TOP -> AccountOverviewViewHolder.DefaultTopViewHolder(AccountDefaultTopItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            DEFAULT_BOTTOM ->AccountOverviewViewHolder.DefaultBottomViewHolder(AccountDefaultBottomItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
             else -> throw IllegalArgumentException("Error with view type")
         }
     }
@@ -37,8 +37,10 @@ class AccountOverviewAdapter() :
             when (holder) {
                 is AccountOverviewViewHolder.CommentViewHolder -> holder.bind(currentItem)
                 is AccountOverviewViewHolder.PostViewHolder -> holder.bind(currentItem)
-
+                is AccountOverviewViewHolder.UserDataViewHolder -> holder.bind(currentItem)
                 is AccountOverviewViewHolder.DefaultViewHolder -> holder.bind(currentItem)
+                is AccountOverviewViewHolder.DefaultTopViewHolder -> holder.bind(currentItem)
+                is AccountOverviewViewHolder.DefaultBottomViewHolder -> holder.bind(currentItem)
             }
         }
 
@@ -48,8 +50,10 @@ class AccountOverviewAdapter() :
         return when (getItem(position)?.kind) {
             "t1" -> COMMENT
             "t3" -> POST
-            "header" -> HEADER
+            "userData" -> USER_DATA
             "default" -> DEFAULT
+            "defaultTop" -> DEFAULT_TOP
+            "defaultBottom" -> DEFAULT_BOTTOM
             else -> ERROR
         }
 
@@ -108,10 +112,18 @@ class AccountOverviewAdapter() :
 
         }
 
-        class HeaderViewHolder(val binding: AccountUserHeaderBinding): AccountOverviewViewHolder(binding) {
+
+
+
+        class UserDataViewHolder(val binding: AccountUserDataItemBinding): AccountOverviewViewHolder(binding) {
             fun bind(postObject: RedditChildrenObject) {
                 val currentPost = postObject.data
                 binding.apply {
+                    if (currentPost != null) {
+                        println("HELLO123123 ${currentPost}")
+                        buttonCommentKarma.text = currentPost.userData?.comment_karma.toString()
+                        buttonPostKarma.text = currentPost.userData?.link_karma.toString()
+                    }
 
                 }
             }
@@ -127,6 +139,29 @@ class AccountOverviewAdapter() :
                 }
             }
         }
+        class DefaultTopViewHolder(val binding: AccountDefaultTopItemBinding): AccountOverviewViewHolder(binding) {
+            fun bind(postObject: RedditChildrenObject) {
+                val currentPost = postObject.data
+                binding.apply {
+                    if (currentPost != null) {
+                        println("HELLLLLLLLLLLLLO ${currentPost.body}")
+                        textviewDefault.text = currentPost.body
+                    }
+                }
+            }
+        }
+
+        class DefaultBottomViewHolder(val binding: AccountDefaultBottomItemBinding): AccountOverviewViewHolder(binding) {
+            fun bind(postObject: RedditChildrenObject) {
+                val currentPost = postObject.data
+                binding.apply {
+                    if (currentPost != null) {
+                        textviewDefault.text = currentPost.body
+
+                    }
+                }
+            }
+        }
 
 
     }
@@ -137,10 +172,12 @@ class AccountOverviewAdapter() :
         // View Types
         private val COMMENT = 0
         private val POST = 1
-        private val HEADER = 2
+        private val USER_DATA = 2
         private val DEFAULT = 3
-        private val LOADING = 4
-        private val ERROR = 5
+        private val DEFAULT_TOP = 4
+        private val DEFAULT_BOTTOM = 5
+        private val LOADING = 6
+        private val ERROR = 7
 
 
 
