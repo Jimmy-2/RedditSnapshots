@@ -10,7 +10,7 @@ import com.example.snapshotsforreddit.data.room.Post
 import com.example.snapshotsforreddit.databinding.DownloadedPostItemBinding
 
 
-class DownloadedPostsAdapter(private val listener: OnItemClickListener) : ListAdapter<Post, DownloadedPostsAdapter.DownloadedPostsViewHolder>(DiffCallback()) {
+class DownloadedPostsAdapter(private val onClickListener: OnItemClickListener) : ListAdapter<Post, DownloadedPostsAdapter.DownloadedPostsViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DownloadedPostsViewHolder {
         //need parent.context for reference to activity/fragment to get layout inflater to inflate the binding layout
@@ -36,7 +36,7 @@ class DownloadedPostsAdapter(private val listener: OnItemClickListener) : ListAd
                     //an item that is deleted but still shows in screen due to animations/etc has a positon of -1 or NO_POSITION
                     if(position != RecyclerView.NO_POSITION) {
                         val post = getItem(position)
-                        listener.onItemClick(post)
+                        onClickListener.onItemClick(post)
                     }
                 }
             }

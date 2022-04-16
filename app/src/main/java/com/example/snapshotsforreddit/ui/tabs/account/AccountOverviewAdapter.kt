@@ -120,7 +120,6 @@ class AccountOverviewAdapter() :
                 val currentPost = postObject.data
                 binding.apply {
                     if (currentPost != null) {
-                        println("HELLO123123 ${currentPost}")
                         buttonCommentKarma.text = currentPost.userData?.comment_karma.toString()
                         buttonPostKarma.text = currentPost.userData?.link_karma.toString()
                     }

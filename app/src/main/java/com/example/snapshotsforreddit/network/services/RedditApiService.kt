@@ -42,6 +42,19 @@ interface RedditApiService {
         @Query("before") before: String? = null,
     ): RedditJsonResponse
 
+    @GET("/{sort}")
+    suspend fun getListOfHomePosts(
+        // @Header("Authorization") Authorization: String?,
+        @Header("User-Agent") User_Agent: String?,
+        @Path("sort") sort: String?,
+        @Query("limit") limit: Int,
+        @Query("after") after: String? = null,
+        @Query("before") before: String? = null,
+    ): RedditJsonResponse
+
+
+
+
     @GET("/user/{username}/{historyType}")
     suspend fun getUserHistory(
         // @Header("Authorization") Authorization: String?,

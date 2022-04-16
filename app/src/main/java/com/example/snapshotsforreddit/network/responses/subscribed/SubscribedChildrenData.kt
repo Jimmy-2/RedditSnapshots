@@ -15,5 +15,7 @@ data class SubscribedChildrenData(
 
     val subreddit_type: String?,
 
-    val user_has_favorited: Boolean?
+    val user_has_favorited: Boolean?,
+
+    val public_description: String?
 )

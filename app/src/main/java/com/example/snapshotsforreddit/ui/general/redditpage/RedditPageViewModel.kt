@@ -18,32 +18,24 @@ class RedditPageViewModel @Inject constructor(
 
     private val _accessToken = MutableLiveData<String>()
 
+    //TODO CHANGE THIS
     val redditPagePosts = _accessToken.switchMap { accessT ->
-        redditApiRepository.getSubredditPostsList(accessT, _subredditName.value!!, _subredditType.value!!).cachedIn(viewModelScope)
+        redditApiRepository.getSubredditPostsList(_subredditName.value!!, _subredditType.value!!).cachedIn(viewModelScope)
 
     }
+
+
     fun checkIfAccessTokenChanged(accessToken: String) = viewModelScope.launch {
         //only if accessToken changes do we update subreddits
         if (_accessToken.value != accessToken) {
             _accessToken.value = accessToken
 
-            //save the username in datastore. //if unable to get username, the user must relog because refresh token expired or an error with login
-            getLoggedInUsername()
         }
     }
     
-    private fun getLoggedInUsername() = viewModelScope.launch {
-        try {
-            val request = redditApiRepository.getUsername().name
-        } catch (e: Exception) {
-
-        }
-    }
 
     private val _subredditName= MutableLiveData<String>()
-    val subredditName: LiveData<String> = _subredditName
     private val _subredditType= MutableLiveData<String>()
-    val subredditType : LiveData<String> = _subredditType
 
     fun redditPageInformation(redditPageName: String, redditPageType: String) {
         _subredditName.value = redditPageName

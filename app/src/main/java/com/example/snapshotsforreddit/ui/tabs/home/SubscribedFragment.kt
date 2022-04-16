@@ -63,13 +63,21 @@ class SubscribedFragment : Fragment(R.layout.fragment_subscribed), SubscribedAda
 
     override fun onItemClick(subreddit: SubscribedChildrenObject) {
         if(subreddit.data?.display_name_prefixed != null) {
-            val action = if(subreddit.data.subreddit_type == "user") {
-                 SubscribedFragmentDirections.actionSubscribedFragmentToSubredditFragment(
-                    subreddit.data.display_name_prefixed.substring(2), "user"
-                )
-            }else {
-                SubscribedFragmentDirections.actionSubscribedFragmentToSubredditFragment(
-                    subreddit.data.display_name_prefixed.substring(2), "r")
+            val action = when {
+                subreddit.data.display_name_prefixed == "Home" -> {
+                    SubscribedFragmentDirections.actionSubscribedFragmentToSubredditFragment(
+                        "", ""
+                    )
+                }
+                subreddit.data.subreddit_type == "user" -> {
+                    SubscribedFragmentDirections.actionSubscribedFragmentToSubredditFragment(
+                        subreddit.data.display_name_prefixed.substring(2), "user"
+                    )
+                }
+                else -> {
+                    SubscribedFragmentDirections.actionSubscribedFragmentToSubredditFragment(
+                        subreddit.data.display_name_prefixed.substring(2), "r")
+                }
             }
             findNavController().navigate(action)
         }

@@ -31,7 +31,6 @@ class SubscribedPagingSource(private val redditApiService: RedditApiService) : P
             )
              */
 
-
             val response = redditApiService.getSubscribedList("snapshots-for-reddit",
                 after = if (params is LoadParams.Append) params.key else null,
             )
@@ -49,10 +48,8 @@ class SubscribedPagingSource(private val redditApiService: RedditApiService) : P
                 nextKey = response.data.after
             )
         } catch (exception: IOException) {
-            Log.v(TAG, "HELLO $exception")
             LoadResult.Error(exception)
         } catch (exception: HttpException) {
-            Log.v(TAG, "HELLO $exception")
             LoadResult.Error(exception)
         }
     }

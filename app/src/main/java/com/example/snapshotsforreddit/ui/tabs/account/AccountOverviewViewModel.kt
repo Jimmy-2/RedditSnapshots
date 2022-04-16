@@ -43,13 +43,14 @@ class AccountOverviewViewModel @Inject constructor(
     fun checkIfUsernameChanged(username: String)  {
         //only if accessToken changes do we update subreddits
 
-        /*
+
         if (_username.value != username ) {
-            _username.value = username
+            //_username.value = username
+            getLoggedInUserData(username)
         }
 
-         */
-        getLoggedInUserData(username)
+
+
 
     }
 
