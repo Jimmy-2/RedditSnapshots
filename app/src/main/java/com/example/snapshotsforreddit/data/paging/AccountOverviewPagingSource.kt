@@ -20,25 +20,29 @@ class AccountOverviewPagingSource(private val redditApiService: RedditApiService
 
     override suspend fun load(params: LoadParams<String>): LoadResult<String, RedditChildrenObject> {
         return try {
-            val response = redditApiService.getUserHistory("snapshots-for-reddit", username = username,
+            val responseData = redditApiService.getUserHistory("snapshots-for-reddit", username = username,
                 after = if (params is LoadParams.Append) params.key else null,
                 before = if (params is LoadParams.Prepend) params.key else null,
                 historyType = "overview"
-            )
-            //make sort enum
+            ).data
 
             val overviewItems = if(params.key == null) {
                 //DefaultsDatasource().emptyRedditChildrenData(kind = "userData", userData = userData) +
-                DefaultsDatasource().loadDefaultAccountItems(userData)+response.data!!.children
+                    if(responseData?.children!!.isEmpty()) {
+                        DefaultsDatasource().loadDefaultAccountItems(userData)+ responseData.children
+                    }else {
+                        DefaultsDatasource().loadDefaultAccountItems(userData)+DefaultsDatasource().addHeader()+ responseData.children
+                    }
+
 
             }else {
-                response.data!!.children
+                responseData!!.children
             }
 
             LoadResult.Page(
                 data = overviewItems,
-                prevKey = response.data.before,
-                nextKey = response.data.after
+                prevKey = responseData.before,
+                nextKey = responseData.after
             )
 
         } catch (exception: IOException) {

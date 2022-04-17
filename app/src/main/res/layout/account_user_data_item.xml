@@ -5,33 +5,119 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/button_comment_karma"
-        android:layout_width="0dp"
-        app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent=".333"
-        android:layout_height="wrap_content"
-        android:text="Button"
 
+    <LinearLayout
+        android:id="@+id/layout_comment_karma"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button_user_age"
-        android:layout_width="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent=".333"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/button_post_karma"
-        android:layout_width="0dp"
+        android:layout_marginBottom="30dp"
+        >
+
+
+        <TextView
+            android:id="@+id/textview_comment_karma"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:background="@android:color/transparent"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            tools:text="3.2K" />
+
+        <TextView
+            android:id="@+id/textview_comment_karma_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:gravity="center"
+            android:text="Comment \nKarma" />
+
+
+    </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:id="@+id/layout_account_age"
         android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintEnd_toStartOf="@+id/button_user_age"
-        app:layout_constraintStart_toEndOf="@+id/button_comment_karma"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="0dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent=".333"
+        android:layout_marginBottom="30dp"
+        >
+
+        <TextView
+            android:id="@+id/textview_account_age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:background="@android:color/transparent"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            tools:text="8y 11mo" />
+
+        <TextView
+            android:id="@+id/textview_account_age_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:gravity="center"
+            android:text="Account \nAge" />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/layout_post_karma"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@+id/layout_account_age"
+        app:layout_constraintStart_toEndOf="@+id/layout_comment_karma"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="30dp"
+        >
+
+        <TextView
+            android:id="@+id/textview_post_karma"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:background="@android:color/transparent"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            tools:text="2.1K" />
+
+        <TextView
+            android:id="@+id/textview_post_karma_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:gravity="center"
+            android:text="Post \nKarma" />
+
+
+    </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,7 +21,18 @@ class DefaultsDatasource {
                 kind = "default",
                 data = SubscribedChildrenData("All Posts", "r/All", null, null, "r", true, "Most active posts from all of Reddit")
             ),
+
+            SubscribedChildrenObject(
+                kind = "header",
+                data = null
+            ),
         )
+    }
+    fun addHeader(): List<RedditChildrenObject> {
+        return listOf(RedditChildrenObject(
+            kind = "header",
+            data = null
+        ),)
     }
 
     fun loadDefaultAccountItems(userData: UserData?): List<RedditChildrenObject> {
@@ -52,7 +63,7 @@ class DefaultsDatasource {
                     null,
                     null,
                     null,
-                    null, null, userData
+                    null, null, null, userData
                 )
             ),
             RedditChildrenObject(
@@ -81,7 +92,7 @@ class DefaultsDatasource {
                     null,
                     "submitted",
                     null,
-                    "Posts", null, null
+                    "Posts", null, null,null,
                 )
             ),
             RedditChildrenObject(
@@ -110,7 +121,7 @@ class DefaultsDatasource {
                     null,
                     "comments",
                     null,
-                    "Comments", null,null
+                    "Comments", null,null,null
                 )
             ),
             RedditChildrenObject(
@@ -139,7 +150,7 @@ class DefaultsDatasource {
                     null,
                     "saved",
                     null,
-                    "Saved", null,null
+                    "Saved", null,null,null
                 )
             ),
             RedditChildrenObject(
@@ -168,7 +179,7 @@ class DefaultsDatasource {
                     null,
                     null,
                     null,
-                    "Friends", null,null
+                    "Friends", null,null,null
                 )
             ),
             RedditChildrenObject(
@@ -197,7 +208,7 @@ class DefaultsDatasource {
                     null,
                     "upvoted",
                     null,
-                    "Upvoted", null,null
+                    "Upvoted", null,null,null
                 )
             ),
             RedditChildrenObject(
@@ -226,7 +237,7 @@ class DefaultsDatasource {
                     null,
                     "downvoted",
                     null,
-                    "Downvoted", null,null
+                    "Downvoted", null,null,null
                 )
             ),
             RedditChildrenObject(
@@ -256,7 +267,7 @@ class DefaultsDatasource {
                     "hidden",
                     null,
                     "Hidden",
-                    null,null
+                    null,null,null
                 )
             ),
             RedditChildrenObject(
@@ -286,9 +297,10 @@ class DefaultsDatasource {
                     null,
                     null,
                     "Trophies",
-                    null,null
+                    null,null,null
                 )
             ),
+
 
 
             )

@@ -37,6 +37,7 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+        coreLibraryDesugaringEnabled true
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -47,7 +48,6 @@ android {
     }
 
     buildFeatures {
-        dataBinding true
         viewBinding true
     }
     sourceSets {
@@ -124,6 +124,9 @@ dependencies {
     //Paging
     implementation("androidx.paging:paging-runtime-ktx:$paging_version")
 
+
+    //to allow access to java.time.instant
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 
 
 

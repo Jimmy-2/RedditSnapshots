@@ -5,17 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/account_overview_bottom_border"
-    android:padding="8dp">
+    android:paddingBottom="16dp"
+    android:paddingTop="8dp"
+    android:paddingRight="8dp"
+    android:paddingLeft="8dp">
 
 
     <TextView
-        android:id="@+id/textview_account_comment_username"
+        android:id="@+id/textview_account_comment_author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawablePadding="4dp"
-        android:padding="8dp"
-        android:text="TextView"
-        app:drawableStartCompat="@drawable/ic_error"
+        android:paddingTop="8dp"
+        android:paddingLeft="8dp"
+        android:paddingBottom="8dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Username" />
@@ -26,10 +30,10 @@
         android:layout_height="wrap_content"
         android:gravity="center|left"
         android:padding="8dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textview_account_comment_username"
+        app:layout_constraintTop_toBottomOf="@+id/textview_account_comment_author"
         tools:text="Hello wow what a great post you have there!" />
 
     <com.google.android.material.card.MaterialCardView
@@ -51,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center|left"
                 android:padding="8dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                 tools:text="Title of original post that was posted!" />
 
             <TextView
@@ -60,13 +64,59 @@
                 android:layout_height="wrap_content"
                 android:gravity="center|left"
                 android:padding="8dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+
                 tools:text="r/Places" />
 
         </LinearLayout>
 
 
     </com.google.android.material.card.MaterialCardView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_upvote_count"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textview_account_comment_author"
+        app:layout_constraintStart_toEndOf="@+id/textview_account_comment_author"
+        app:layout_constraintTop_toTopOf="@+id/textview_account_comment_author"
+        app:layout_constraintVertical_bias="0.0">
+
+
+        <ImageView
+            android:id="@+id/image_arrow"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingTop="8dp"
+            android:paddingLeft="8dp"
+            android:paddingBottom="8dp"
+            android:paddingRight="-12dp"
+            tools:srcCompat="@drawable/ic_up_arrow_null" />
+
+
+        <TextView
+            android:id="@+id/textview_upvote_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/image_arrow"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="321" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textview_comment_age"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="4d" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

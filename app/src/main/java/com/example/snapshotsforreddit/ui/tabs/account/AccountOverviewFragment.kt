@@ -3,14 +3,23 @@ package com.example.snapshotsforreddit.ui.tabs.account
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.snapshotsforreddit.R
+import com.example.snapshotsforreddit.data.repository.SortOrder
 import com.example.snapshotsforreddit.databinding.FragmentAccountOverviewBinding
 import com.example.snapshotsforreddit.ui.general.redditpage.RedditPageAdapter
+import com.example.snapshotsforreddit.util.onQueryTextChanged
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -30,11 +39,15 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview) {
         binding.apply {
             recyclerviewAccount.setHasFixedSize(true)
             recyclerviewAccount.adapter = accountOverviewAdapter
+
+            /*
             buttonDialog.setOnClickListener { loginView ->
                 loginView.findNavController().navigate(
                     AccountOverviewFragmentDirections.actionAccountOverviewFragmentToLoginDialogFragment()
                 )
             }
+
+             */
             //swipeRefresh.setOnRefreshListener { accountOverviewAdapter.refresh() }
         }
 
@@ -54,7 +67,7 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview) {
 
         }
 
-
+        setHasOptionsMenu(true)
     }
 
 
@@ -68,9 +81,27 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview) {
         //clear intent after successful retrieval of uri
         requireActivity().intent = null
 
+    }
 
+    //inflate/activate options menu
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_fragment_account_overview, menu)
 
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        //when statement for each of the menu items
+        return when(item.itemId) {
+            R.id.action_accounts_dialog -> {
+                findNavController().navigate(
+                    AccountOverviewFragmentDirections.actionAccountOverviewFragmentToLoginDialogFragment()
+                )
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
 
 
     override fun onDestroyView() {

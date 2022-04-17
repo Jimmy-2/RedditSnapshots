@@ -12,9 +12,9 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bottom_border"
             android:paddingLeft="8dp"
-            android:paddingTop="16dp"
+            android:paddingTop="8dp"
             android:paddingRight="8dp"
-            android:paddingBottom="16dp">
+            android:paddingBottom="8dp">
 
             <TextView
                 android:id="@+id/textview_subreddit_item_title"

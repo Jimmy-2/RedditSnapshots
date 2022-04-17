@@ -11,9 +11,9 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bottom_border"
         android:paddingLeft="8dp"
-        android:paddingTop="16dp"
+        android:paddingTop="8dp"
         android:paddingRight="8dp"
-        android:paddingBottom="16dp">
+        android:paddingBottom="8dp">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -80,17 +80,5 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/textview_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bottom_border_transparent"
-        android:paddingTop="2dp"
-        android:paddingBottom="2dp"
-        android:paddingLeft="8dp"
-        android:visibility="gone"
-        tools:text="Following" />
-
 
 </LinearLayout>

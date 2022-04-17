@@ -107,6 +107,9 @@ data class RedditChildrenData(
     val link_title: String?,
 
 
+    val created_utc: Long?,
+
+
     val userData: UserData?,
     ) : Parcelable
 
