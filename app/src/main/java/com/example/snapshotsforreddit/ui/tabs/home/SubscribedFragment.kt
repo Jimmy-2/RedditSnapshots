@@ -24,7 +24,6 @@ class SubscribedFragment : Fragment(R.layout.fragment_subscribed), SubscribedAda
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        println("HELLO subscribed created")
 
         _binding  = FragmentSubscribedBinding.bind(view)
 

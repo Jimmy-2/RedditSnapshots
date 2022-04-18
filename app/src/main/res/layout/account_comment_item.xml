@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/account_overview_bottom_border"
+    android:background="#FFFFFF"
+    android:layout_marginBottom="8dp"
     android:paddingBottom="16dp"
     android:paddingTop="8dp"
     android:paddingRight="8dp"
@@ -39,7 +40,7 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="8dp"
         app:cardCornerRadius="5dp"
         app:cardBackgroundColor="#efeff6"
         app:layout_constraintTop_toBottomOf="@+id/textview_account_comment_body">
@@ -91,9 +92,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:paddingTop="8dp"
-            android:paddingLeft="8dp"
             android:paddingBottom="8dp"
-            android:paddingRight="-12dp"
             tools:srcCompat="@drawable/ic_up_arrow_null" />
 
 
@@ -101,8 +100,11 @@
             android:id="@+id/textview_upvote_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:layout_marginLeft="-5dp"
             android:gravity="center"
+            android:paddingTop="8dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/image_arrow"
             app:layout_constraintTop_toTopOf="parent"

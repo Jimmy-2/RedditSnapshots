@@ -63,7 +63,7 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
     }
 
     override fun getItemViewType(position: Int): Int {
-        println("HELLOHAHA ${getItem(position)?.kind}")
+
         return when (getItem(position)?.kind) {
             "default" -> DEFAULT
             "t5" -> SUBREDDIT

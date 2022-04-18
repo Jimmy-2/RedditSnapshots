@@ -10,10 +10,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.*
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
-import java.time.Instant
-import java.time.LocalDate
-import java.time.Period
-import java.time.ZoneId
+import java.time.*
 
 class AccountOverviewAdapter() :
     PagingDataAdapter<RedditChildrenObject, RecyclerView.ViewHolder>(
@@ -116,7 +113,7 @@ class AccountOverviewAdapter() :
                 textviewAccountCommentBody.text = currentPost?.body
                 textviewAccountCommentPostTitle.text = currentPost?.link_title
                 textviewAccountCommentPostSubreddit.text = currentPost?.subreddit
-                textviewUpvoteCount.text = currentPost?.score.toString()
+                textviewUpvoteCount.text = getShortenedValue(currentPost?.score)
                 when {
                     currentPost?.likes == null -> {
                         imageArrow.setImageResource(R.drawable.ic_up_arrow_null)
@@ -128,7 +125,11 @@ class AccountOverviewAdapter() :
                         imageArrow.setImageResource(R.drawable.ic_downvote_arrow)
                     }
                 }
-                textviewCommentAge.text = currentPost?.created_utc.toString()
+                val epoch = currentPost?.created_utc
+                if (epoch != null) {
+                    textviewCommentAge.text = calculateAgeDifferenceLocalDateTime(epoch, 0)
+                }
+
 
             }
 
@@ -149,8 +150,7 @@ class AccountOverviewAdapter() :
                 } else {
                     //TODO REDO THIS TO ALLOW GIFS AND VIDEOS
                     if (currentPost.preview?.images?.get(0)?.source?.url != null) {
-                        val iconUrl =
-                            currentPost.preview.images[0].source!!.url?.replace(removePart, "")
+                        val iconUrl = currentPost.preview.images[0].source!!.url?.replace(removePart, "")
                         Glide.with(itemView)
                             .load(iconUrl)
                             .transition(DrawableTransitionOptions.withCrossFade())
@@ -163,9 +163,13 @@ class AccountOverviewAdapter() :
 
                 textviewPostItemSubreddit.text = currentPost.subreddit
                 textviewPostItemTitle.text = currentPost.title
-                textviewPostItemText.text = currentPost.selftext
-                textviewPostItemScore.text = currentPost.score.toString()
-                textviewPostItemCommentCount.text = currentPost.num_comments.toString()
+                //textviewPostItemText.text = currentPost.selftext
+                textviewPostItemScore.text = getShortenedValue(currentPost.score)
+                textviewPostItemCommentCount.text = getShortenedValue(currentPost.num_comments)
+                val epoch = currentPost.created_utc
+                if (epoch != null) {
+                    textviewPostItemAge.text = calculateAgeDifferenceLocalDateTime(epoch, 1)
+                }
             }
         }
 
@@ -178,23 +182,13 @@ class AccountOverviewAdapter() :
             val currentPost = postObject.data
             binding.apply {
                 if (currentPost != null) {
-                    textviewCommentKarma.text = getShortenedValue(currentPost.userData?.comment_karma)
+                    textviewCommentKarma.text =
+                        getShortenedValue(currentPost.userData?.comment_karma)
                     textviewPostKarma.text = getShortenedValue(currentPost.userData?.link_karma)
                     val epoch = currentPost.userData?.created_utc
-                    val createdOn = epoch?.let { Instant.ofEpochMilli(it*1000).atZone(ZoneId.systemDefault()).toLocalDate() }
-                    if(epoch != null && createdOn != null) {
-                        val accountAge = Period.between(createdOn, LocalDate.now())
-                        when {
-                            accountAge.years == 0 -> {
-                                textviewAccountAge.text = "${accountAge.months}m"
-                            }
-                            accountAge.months == 0 -> {
-                                textviewAccountAge.text = "${accountAge.years}y "
-                            }
-                            else -> {
-                                textviewAccountAge.text = "${accountAge.years}y ${accountAge.months}m"
-                            }
-                        }
+
+                    if (epoch != null) {
+                        textviewAccountAge.text = calculateAgeDifferenceLocalDateTime(epoch, 1)
                     }
 
                 }
@@ -202,23 +196,7 @@ class AccountOverviewAdapter() :
             }
         }
 
-        private fun getShortenedValue(value: Int?): String {
-            return when {
-                value == null -> {
-                    ""
-                }
-                value < 1000 -> {
-                    value.toString()
-                }
-                value < 1000000 -> {
-                    String.format("%.1f", (value.toDouble()/1000)) + "K"
-                }
-                else -> {
-                    String.format("%.1f", (value.toDouble()/1000000)) + "M"
-                }
-            }
 
-        }
     }
 
     inner class DefaultViewHolder(val binding: AccountDefaultItemBinding) :
@@ -300,6 +278,68 @@ class AccountOverviewAdapter() :
                 }
 
             }
+    }
+
+    private fun getShortenedValue(value: Int?): String {
+        return when {
+            value == null -> {
+                ""
+            }
+            value < 1000 -> {
+                value.toString()
+            }
+            value < 1000000 -> {
+                String.format("%.1f", (value.toDouble() / 1000)) + "K"
+            }
+            else -> {
+                String.format("%.1f", (value.toDouble() / 1000000)) + "M"
+            }
+        }
+    }
+
+    private fun calculateAgeDifferenceLocalDateTime(epoch: Long, type: Int): String {
+        val createdOn = epoch.let {
+            Instant.ofEpochMilli(it * 1000).atZone(ZoneId.systemDefault()).toLocalDate()
+        }
+        val ageMY = Period.between(createdOn, LocalDate.now())
+        return when {
+            //if both years and months == 0, we measure account age by days, hours, and minutes instead
+            ageMY.years == 0 && ageMY.months == 0 -> {
+                val createdOn = epoch.let {
+                    Instant.ofEpochMilli(it * 1000).atZone(ZoneId.systemDefault()).toLocalDateTime()
+                }
+                //Days, hours, minutes, and seconds
+                val ageDHMS = Duration.between(createdOn, LocalDateTime.now())
+                return when {
+                    ageDHMS.toHours() < 24 -> {
+                        if (ageDHMS.toHours() < 1) {
+                            if (ageDHMS.toMinutes() < 1) {
+                                return "${ageDHMS.seconds}s"
+                            } else {
+                                return "${ageDHMS.toMinutes()}m"
+                            }
+                        } else {
+                            return "${ageDHMS.toHours()}h"
+                        }
+                    }
+                    else -> "${ageDHMS.toHours() / 24}d"
+                }
+            }
+            ageMY.years == 0 -> "${ageMY.months}mo"
+            ageMY.months == 0 -> "${ageMY.years}y "
+            //type 1 = account age, type 0 = comments
+            else -> if (type == 1) {
+                "${ageMY.years}y ${ageMY.months}mo"
+            } else {
+                //comments older than or equal to 1 year are formatted as decimals
+                "${
+                    String.format(
+                        "%.1f",
+                        ((ageMY.years * 12.toDouble()) + ageMY.months.toDouble()) / 12
+                    )
+                }y"
+            }
+        }
     }
 
 

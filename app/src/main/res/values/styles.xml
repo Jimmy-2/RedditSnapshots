@@ -7,8 +7,8 @@
 
     <style name="CardView_Top_Corners" parent="">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeTopLeft">25dp</item>
-        <item name="cornerSizeTopRight">25dp</item>
+        <item name="cornerSizeTopLeft">10dp</item>
+        <item name="cornerSizeTopRight">10dp</item>
     </style>
 
 
@@ -19,8 +19,8 @@
 
     <style name="CardView_Bottom_Corners" parent="">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeBottomLeft">25dp</item>
-        <item name="cornerSizeBottomRight">25dp</item>
+        <item name="cornerSizeBottomLeft">10dp</item>
+        <item name="cornerSizeBottomRight">10dp</item>
     </style>
 
     <style name="MenuItemTextAppearance" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Menu">

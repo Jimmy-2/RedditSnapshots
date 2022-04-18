@@ -82,7 +82,7 @@ class AccountOverviewViewModel @Inject constructor(
 
             } else {
                 //TODO: Display error to user
-                println("ERROR CODE")
+
             }
         }
 
@@ -97,7 +97,6 @@ class AccountOverviewViewModel @Inject constructor(
 
     private fun onTokensUpdated(tokenResponse: TokenResponse) = viewModelScope.launch {
         //update the sort order value in datastore on sort button clicked
-        println("HELLO WHY THIS KEEP GETTING CALLED?")
         val accessToken = tokenResponse.access_token
         val refreshToken = tokenResponse.refresh_token
         if (accessToken != null && refreshToken != null) {
