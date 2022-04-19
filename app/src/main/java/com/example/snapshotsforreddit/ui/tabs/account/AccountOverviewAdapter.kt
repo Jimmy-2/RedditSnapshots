@@ -1,6 +1,7 @@
 package com.example.snapshotsforreddit.ui.tabs.account
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -29,6 +30,13 @@ class AccountOverviewAdapter() :
             )
             POST -> PostViewHolder(
                 PostItemBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
+            TEXT_POST -> TextPostViewHolder(
+                PostTextItemBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
@@ -79,6 +87,7 @@ class AccountOverviewAdapter() :
             when (holder) {
                 is CommentViewHolder -> holder.bind(currentItem)
                 is PostViewHolder -> holder.bind(currentItem)
+                is TextPostViewHolder -> holder.bind(currentItem)
                 is UserDataViewHolder -> holder.bind(currentItem)
                 is DefaultViewHolder -> holder.bind(currentItem)
                 is DefaultTopViewHolder -> holder.bind(currentItem)
@@ -92,7 +101,10 @@ class AccountOverviewAdapter() :
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)?.kind) {
             "t1" -> COMMENT
-            "t3" -> POST
+            "t3" -> return when (getItem(position)?.data?.is_self) {
+                true -> TEXT_POST
+                else -> POST
+            }
             "userData" -> USER_DATA
             "default" -> DEFAULT
             "defaultTop" -> DEFAULT_TOP
@@ -144,35 +156,92 @@ class AccountOverviewAdapter() :
             val removePart = "amp;"
             //TODO FIX CODE HERE : REFORMAT STATEMENTS
             binding.apply {
-                //if true, is text only post
-                if (currentPost!!.is_self == true) {
-                    imageviewPostItem.setImageResource(0);
-                } else {
-                    //TODO REDO THIS TO ALLOW GIFS AND VIDEOS
+                //TODO REDO THIS TO ALLOW GIFS AND VIDEOS
+                if (currentPost != null) {
                     if (currentPost.preview?.images?.get(0)?.source?.url != null) {
-                        val iconUrl = currentPost.preview.images[0].source!!.url?.replace(removePart, "")
+                        val imageUrl =
+                            currentPost.preview.images[0].source!!.url?.replace(removePart, "")
                         Glide.with(itemView)
-                            .load(iconUrl)
+                            .load(imageUrl)
                             .transition(DrawableTransitionOptions.withCrossFade())
                             .error(R.drawable.ic_error)
                             .into(imageviewPostItem)
                     }
+                    val currIconUrl = currentPost.sr_detail?.community_icon.toString()
+                    val iconUrl: String =
+                        if (currentPost.sr_detail?.community_icon == null && currentPost.sr_detail?.icon_img == null) {
+                            ""
+                        } else if (currIconUrl == "null") {
+                            currentPost.sr_detail.icon_img!!.replace(removePart, "")
+                        } else {
+                            currIconUrl.replace(removePart, "")
+                        }
+                    Glide.with(itemView)
+                        .load(iconUrl)
+                        .centerCrop()
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .error(R.drawable.ic_error)
+                        .into(imageviewSubredditIcon)
 
+                    textviewPostItemSubreddit.text =
+                        currentPost.subreddit.toString().replaceFirstChar { it.uppercase() }
+                    textviewPostItemTitle.text = currentPost.title
+                    textviewPostItemScore.text = getShortenedValue(currentPost.score)
+                    textviewPostItemCommentCount.text = getShortenedValue(currentPost.num_comments)
+                    val epoch = currentPost.created_utc
+                    if (epoch != null) {
+                        textviewPostItemAge.text = calculateAgeDifferenceLocalDateTime(epoch, 1)
+                    }
 
                 }
 
-                textviewPostItemSubreddit.text = currentPost.subreddit
-                textviewPostItemTitle.text = currentPost.title
-                //textviewPostItemText.text = currentPost.selftext
-                textviewPostItemScore.text = getShortenedValue(currentPost.score)
-                textviewPostItemCommentCount.text = getShortenedValue(currentPost.num_comments)
-                val epoch = currentPost.created_utc
-                if (epoch != null) {
-                    textviewPostItemAge.text = calculateAgeDifferenceLocalDateTime(epoch, 1)
-                }
             }
         }
 
+    }
+
+    inner class TextPostViewHolder(private val binding: PostTextItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(postObject: RedditChildrenObject) {
+            val currentPost = postObject.data
+            val removePart = "amp;"
+            binding.apply {
+                if (currentPost != null) {
+                    val currIconUrl = currentPost.sr_detail?.community_icon.toString()
+                    val iconUrl: String =
+                        if (currentPost.sr_detail?.community_icon == null && currentPost.sr_detail?.icon_img == null) {
+                            ""
+                        } else if (currIconUrl == "null") {
+                            currentPost.sr_detail.icon_img!!.replace(removePart, "")
+                        } else {
+                            currIconUrl.replace(removePart, "")
+                        }
+                    Glide.with(itemView)
+                        .load(iconUrl)
+                        .centerCrop()
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .error(R.drawable.ic_error)
+                        .into(imageviewSubredditIcon)
+
+                    textviewPostItemSubreddit.text =
+                        currentPost.subreddit.toString().replaceFirstChar { it.uppercase() }
+                    textviewPostItemTitle.text = currentPost.title
+                    if (currentPost.selftext == "") {
+                        textviewPostItemText.visibility = View.GONE
+                    } else {
+                        textviewPostItemText.text = currentPost.selftext
+                    }
+
+                    textviewPostItemScore.text = getShortenedValue(currentPost.score)
+                    textviewPostItemCommentCount.text = getShortenedValue(currentPost.num_comments)
+                    val epoch = currentPost.created_utc
+                    if (epoch != null) {
+                        textviewPostItemAge.text = calculateAgeDifferenceLocalDateTime(epoch, 1)
+                    }
+                }
+
+            }
+        }
     }
 
 
@@ -250,13 +319,14 @@ class AccountOverviewAdapter() :
         // View Types
         private val COMMENT = 0
         private val POST = 1
-        private val USER_DATA = 2
-        private val DEFAULT = 3
-        private val DEFAULT_TOP = 4
-        private val DEFAULT_BOTTOM = 5
-        private val HEADER = 6
-        private val LOADING = 7
-        private val ERROR = 8
+        private val TEXT_POST = 2
+        private val USER_DATA = 3
+        private val DEFAULT = 4
+        private val DEFAULT_TOP = 5
+        private val DEFAULT_BOTTOM = 6
+        private val HEADER = 7
+        private val LOADING = 8
+        private val ERROR = 9
 
 
         private val POST_COMPARATOR =

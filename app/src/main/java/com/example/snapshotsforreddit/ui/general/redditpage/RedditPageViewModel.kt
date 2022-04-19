@@ -4,6 +4,8 @@ import androidx.lifecycle.*
 import androidx.paging.cachedIn
 import com.example.snapshotsforreddit.data.repository.AuthDataStoreRepository
 import com.example.snapshotsforreddit.data.repository.RedditApiRepository
+import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
+import com.example.snapshotsforreddit.network.responses.subscribed.SubscribedChildrenObject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -32,7 +34,21 @@ class RedditPageViewModel @Inject constructor(
 
         }
     }
-    
+
+
+    fun voteOnPost(typeOfVote: Int, post: RedditChildrenObject) = viewModelScope.launch {
+        try {
+
+            post.data?.name?.let { redditApiRepository.voteOnThing(typeOfVote, it) }
+            println("HELLO123 $typeOfVote ${post.data?.name}" )
+        }
+        catch (e: Exception) {
+
+        }
+
+    }
+
+
 
     private val _subredditName= MutableLiveData<String>()
     private val _subredditType= MutableLiveData<String>()

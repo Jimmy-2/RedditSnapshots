@@ -42,6 +42,8 @@ class RedditApiRepository @Inject constructor(private val redditApiService: Redd
         USER_AGENT
     )
 
+    suspend fun voteOnThing(dir: Int, id: String) = redditApiService.vote(USER_AGENT,dir, id)
+
 
     companion object {
         const val count = 25

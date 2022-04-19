@@ -81,6 +81,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginStart="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageview_post_item">
 
@@ -173,7 +174,9 @@
         android:id="@+id/card_upvote_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp"
         app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/card_downvote_button"
         app:layout_constraintTop_toBottomOf="@+id/imageview_post_item">
 
@@ -190,8 +193,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_upvote_arrow"
-                tools:srcCompat="@drawable/ic_upvote_arrow" />
+                app:srcCompat="@drawable/ic_up_arrow_null" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -203,7 +205,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
+        app:cardCornerRadius="8dp"
         app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageview_post_item">
 
@@ -221,8 +225,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_downvote_arrow"
-                tools:srcCompat="@drawable/ic_downvote_arrow" />
+                app:srcCompat="@drawable/ic_down_arrow_null" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -56,7 +56,7 @@ class AccountOverviewViewModel @Inject constructor(
 
     private fun getLoggedInUserData(username: String) = viewModelScope.launch {
         try {
-            _userData.value = redditApiRepository.getUserInfoData(username)?.data
+            _userData.value = redditApiRepository.getUserInfoData(username).data
             _username.value = _userData.value?.name
         }catch (e: Exception) {
 

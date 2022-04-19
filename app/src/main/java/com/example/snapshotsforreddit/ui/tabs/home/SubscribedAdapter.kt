@@ -91,23 +91,23 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
             val removePart = "amp;"
             //TODO FIX CODE HERE : REFORMAT STATEMENTS
             binding.apply {
-                val currIconUrl = subredditObject.data?.community_icon
-                val iconUrl: String =
-                    if (subredditObject.data?.community_icon == null && subredditObject.data?.icon_img == null) {
-                        ""
-                    } else if (currIconUrl == "") {
-                        subredditObject.data.icon_img!!.replace(removePart, "")
-                    } else {
-                        currIconUrl!!.replace(removePart, "")
-                    }
-                Glide.with(itemView)
-                    .load(iconUrl)
-                    .centerCrop()
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .error(R.drawable.ic_error)
-                    .into(imageSubredditItem)
-
                 if (subredditObject.data != null) {
+                    val currIconUrl = subredditObject.data.community_icon.toString()
+                    val iconUrl: String =
+                        if (subredditObject.data.community_icon == null && subredditObject.data.icon_img == null) {
+                            ""
+                        } else if (currIconUrl == "") {
+                            subredditObject.data.icon_img!!.replace(removePart, "")
+                        } else {
+                            currIconUrl.replace(removePart, "")
+                        }
+                    Glide.with(itemView)
+                        .load(iconUrl)
+                        .centerCrop()
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .error(R.drawable.ic_error)
+                        .into(imageSubredditItem)
+
                     textviewDefaultSubredditItemTitle.text = subredditObject.data.display_name
                     textviewDefaultSubredditItemDescription.text =
                         subredditObject.data.public_description
@@ -170,12 +170,15 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
         }
     }
 
+    interface OnItemClickListener {
+        fun onItemClick(subreddit: SubscribedChildrenObject)
+    }
 
     companion object {
-        private val DEFAULT = 0
-        private val SUBREDDIT = 1
-        private val HEADER = 2
-        private val ERROR = 3
+        private const val DEFAULT = 0
+        private const val SUBREDDIT = 1
+        private const val HEADER = 2
+        private const val ERROR = 3
 
         private val SUBREDDIT_COMPARATOR =
             object : DiffUtil.ItemCallback<SubscribedChildrenObject>() {
@@ -183,7 +186,6 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
                     oldItem: SubscribedChildrenObject,
                     newItem: SubscribedChildrenObject
                 ): Boolean {
-
                     //CHANGE THIS TO data.name LATER SO WE DO NOT HAVE TO UPDATE EVEN IF SUBSCRIPTION COUNT CHANGES
                     return oldItem.data == newItem.data
                 }
@@ -199,8 +201,6 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
     }
 
 
-    interface OnItemClickListener {
-        fun onItemClick(subreddit: SubscribedChildrenObject)
-    }
+
 
 }

@@ -1,13 +1,13 @@
 package com.example.snapshotsforreddit.network.services
 
 import com.example.snapshotsforreddit.network.responses.RedditJsonResponse
+import com.example.snapshotsforreddit.network.responses.TokenResponse
 import com.example.snapshotsforreddit.network.responses.account.User
 import com.example.snapshotsforreddit.network.responses.subscribed.SubscribedJsonResponse
 import com.example.snapshotsforreddit.network.responses.account.Username
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Path
-import retrofit2.http.Query
+import com.example.snapshotsforreddit.network.responses.subscribed.PostRequestResponse
+import retrofit2.Call
+import retrofit2.http.*
 
 interface RedditApiService {
     companion object {
@@ -30,7 +30,7 @@ interface RedditApiService {
     ): SubscribedJsonResponse
 
 
-    @GET("/{r}/{subreddit}/{sort}")
+    @GET("/{r}/{subreddit}/{sort}/?sr_detail=1")
     suspend fun getListOfPosts(
         // @Header("Authorization") Authorization: String?,
         @Header("User-Agent") User_Agent: String?,
@@ -42,7 +42,7 @@ interface RedditApiService {
         @Query("before") before: String? = null,
     ): RedditJsonResponse
 
-    @GET("/{sort}")
+    @GET("/{sort}/?sr_detail=1")
     suspend fun getListOfHomePosts(
         // @Header("Authorization") Authorization: String?,
         @Header("User-Agent") User_Agent: String?,
@@ -53,9 +53,7 @@ interface RedditApiService {
     ): RedditJsonResponse
 
 
-
-
-    @GET("/user/{username}/{historyType}")
+    @GET("/user/{username}/{historyType}/?sr_detail=1")
     suspend fun getUserHistory(
         // @Header("Authorization") Authorization: String?,
         @Header("User-Agent") User_Agent: String?,
@@ -72,5 +70,31 @@ interface RedditApiService {
         @Header("User-Agent") User_Agent: String?,
         @Path("username") username: String
     ): User
+
+
+//    POST requests
+    @FormUrlEncoded
+    @POST("/api/vote")
+    suspend fun vote(
+        @Header("User-Agent") User_Agent: String?,
+        @Field("dir") dir: Int,
+        @Field("id") id: String,
+    ): PostRequestResponse
+
+    @FormUrlEncoded
+    @POST("/api/save")
+    suspend fun save(
+        @Header("User-Agent") User_Agent: String?,
+        @Field("id") id: String,
+    ): PostRequestResponse
+
+
+    @FormUrlEncoded
+    @POST("/api/unsave")
+    suspend fun unsave(
+        @Header("User-Agent") User_Agent: String?,
+        @Field("id") id: String,
+    ): PostRequestResponse
+
 
 }

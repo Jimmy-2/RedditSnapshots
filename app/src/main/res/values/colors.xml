@@ -11,4 +11,6 @@
 
 
     <color name="light_background">#efeff6</color>
+    <color name="upvote_color">#E24824</color>
+    <color name="downvote_color">#5250DE</color>
 </resources>

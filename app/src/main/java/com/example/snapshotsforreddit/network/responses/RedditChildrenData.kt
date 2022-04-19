@@ -4,6 +4,7 @@ import android.os.Parcelable
 import com.example.snapshotsforreddit.network.responses.account.UserData
 import com.example.snapshotsforreddit.network.responses.postimage.ImagePreview
 import com.example.snapshotsforreddit.network.responses.postvideo.RedditPageMedia
+import com.example.snapshotsforreddit.network.responses.subscribed.SubscribedChildrenData
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
 
@@ -65,7 +66,8 @@ data class RedditChildrenData(
     val is_self: Boolean?,
 
     //true = post upvoted, false = post downvoted, null = neither
-    val likes: Boolean?,
+    //declare as var since we need to update its value when upvoting/downvoting on client side without having to recall api to fetch new changes
+    var likes: Boolean?,
 
 
     //url to image if post is only image
@@ -86,6 +88,9 @@ data class RedditChildrenData(
     //used to get post details information
     val id: String?,
 
+    //kind+  id
+    val name: String?,
+
     //author of post
     val author: String?,
 
@@ -94,6 +99,10 @@ data class RedditChildrenData(
 
     //contains media items related to video/gif
     val media: RedditPageMedia?,
+
+    //contains data that you can get from a subreddit's /about endpoint
+    //use this to get subreddit icon
+    val sr_detail: SubscribedChildrenData?,
 
 
     //not used atm

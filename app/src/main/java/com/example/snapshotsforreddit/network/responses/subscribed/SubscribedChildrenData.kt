@@ -1,7 +1,10 @@
 package com.example.snapshotsforreddit.network.responses.subscribed
 
+import android.os.Parcelable
 import com.squareup.moshi.JsonClass
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 @JsonClass(generateAdapter = true)
 data class SubscribedChildrenData(
 
@@ -18,4 +21,4 @@ data class SubscribedChildrenData(
     val user_has_favorited: Boolean?,
 
     val public_description: String?
-)
+) : Parcelable
