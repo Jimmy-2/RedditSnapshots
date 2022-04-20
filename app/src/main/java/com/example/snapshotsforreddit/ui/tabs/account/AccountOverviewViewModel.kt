@@ -4,13 +4,11 @@ import android.content.ContentValues
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.*
-import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.snapshotsforreddit.BuildConfig
 import com.example.snapshotsforreddit.data.repository.AuthApiRepository
 import com.example.snapshotsforreddit.data.repository.AuthDataStoreRepository
 import com.example.snapshotsforreddit.data.repository.RedditApiRepository
-import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
 import com.example.snapshotsforreddit.network.responses.TokenResponse
 import com.example.snapshotsforreddit.network.responses.account.UserData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,7 +26,7 @@ class AccountOverviewViewModel @Inject constructor(
 
     val authFlow = authDataStoreRepository.authFlow.asLiveData()
 
-    private val _username = MutableLiveData(DEFAULT_USERNAME)
+    private val _username = MutableLiveData("")
     private val _userData = MutableLiveData<UserData?>()
 
     val accountOverviewItems = _username.switchMap { username ->
@@ -36,38 +34,22 @@ class AccountOverviewViewModel @Inject constructor(
 
     }
 
-    fun searchPhotos() {
-        _username.value = ""
-    }
-
-    fun checkIfUsernameChanged(username: String)  {
+    fun checkIfUsernameChanged(username: String) {
         //only if accessToken changes do we update subreddits
-
-
-        if (_username.value != username ) {
+        if (_username.value != username) {
             //_username.value = username
             getLoggedInUserData(username)
         }
-
-
-
-
     }
 
     private fun getLoggedInUserData(username: String) = viewModelScope.launch {
         try {
             _userData.value = redditApiRepository.getUserInfoData(username).data
             _username.value = _userData.value?.name
-        }catch (e: Exception) {
+        } catch (e: Exception) {
 
         }
     }
-
-
-    companion object {
-        private const val DEFAULT_USERNAME = ""
-    }
-
 
     fun checkCode(uri: Uri?) {
         if (uri!!.getQueryParameter("error") != null) {
@@ -87,6 +69,7 @@ class AccountOverviewViewModel @Inject constructor(
         }
 
     }
+
     private fun getTokens(code: String) = viewModelScope.launch {
         try {
             onTokensUpdated(authApiRepository.getTokenValues(code))
@@ -116,9 +99,6 @@ class AccountOverviewViewModel @Inject constructor(
             Log.v(TAG, "Log in fail")
         }
     }
-
-
-
 
 
 }
