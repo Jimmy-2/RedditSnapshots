@@ -32,7 +32,7 @@ class DownloadedPostsAdapter(private val onClickListener: OnItemClickListener) :
         init {
             binding.apply {
                 root.setOnClickListener {
-                    val position = adapterPosition
+                    val position = bindingAdapterPosition
                     //an item that is deleted but still shows in screen due to animations/etc has a positon of -1 or NO_POSITION
                     if(position != RecyclerView.NO_POSITION) {
                         val post = getItem(position)
