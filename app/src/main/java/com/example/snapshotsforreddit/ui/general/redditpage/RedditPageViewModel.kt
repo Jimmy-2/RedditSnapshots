@@ -3,9 +3,8 @@ package com.example.snapshotsforreddit.ui.general.redditpage
 import androidx.lifecycle.*
 import androidx.paging.cachedIn
 import com.example.snapshotsforreddit.data.repository.AuthDataStoreRepository
-import com.example.snapshotsforreddit.data.repository.RedditApiRepository
+import com.example.snapshotsforreddit.network.RedditApiRepository
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
-import com.example.snapshotsforreddit.network.responses.subscribed.SubscribedChildrenObject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

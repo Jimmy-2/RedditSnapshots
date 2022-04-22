@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.ui.tabs.account
+package com.example.snapshotsforreddit.ui.tabs.account.overview
 
 import android.content.Intent
 import android.net.Uri
@@ -7,23 +7,17 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.navigation.fragment.findNavController
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.snapshotsforreddit.R
-import com.example.snapshotsforreddit.data.repository.SortOrder
 import com.example.snapshotsforreddit.databinding.FragmentAccountOverviewBinding
-import com.example.snapshotsforreddit.ui.general.redditpage.RedditPageAdapter
-import com.example.snapshotsforreddit.util.onQueryTextChanged
+import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview) {
+class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), AccountAdapter.OnItemClickListener {
     private val viewModel: AccountOverviewViewModel by viewModels()
 
     private var _binding: FragmentAccountOverviewBinding? = null
@@ -34,7 +28,7 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview) {
 
         _binding  = FragmentAccountOverviewBinding.bind(view)
 
-        val accountOverviewAdapter = AccountOverviewAdapter ()
+        val accountOverviewAdapter = AccountAdapter (this)
 
         binding.apply {
             recyclerviewAccount.setHasFixedSize(true)
@@ -107,6 +101,21 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview) {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+
+    override fun onInfoClick(infoItem: RedditChildrenObject, type: Int) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onHistoryClick(historyType: String?, username: String?) {
+        if(historyType != null && username != null) {
+            findNavController().navigate(AccountOverviewFragmentDirections.actionAccountOverviewFragmentToAccountHistoryFragment(historyType, username))
+        }
+    }
+
+    override fun onPostCommentClick(overviewItem: RedditChildrenObject, type: Int) {
+        TODO("Not yet implemented")
     }
 }
 

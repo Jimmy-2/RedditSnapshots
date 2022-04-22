@@ -1,13 +1,13 @@
-package com.example.snapshotsforreddit.data.repository
+package com.example.snapshotsforreddit.network
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.liveData
 import com.example.snapshotsforreddit.BuildConfig
-import com.example.snapshotsforreddit.data.paging.AccountOverviewPagingSource
+import com.example.snapshotsforreddit.data.paging.AccountPagingSource
 import com.example.snapshotsforreddit.data.paging.RedditPagePagingSource
 import com.example.snapshotsforreddit.data.paging.SubscribedPagingSource
-import com.example.snapshotsforreddit.network.responses.account.UserData
+import com.example.snapshotsforreddit.network.responses.account.UserInfo
 import com.example.snapshotsforreddit.network.services.RedditApiService
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -28,10 +28,16 @@ class RedditApiRepository @Inject constructor(private val redditApiService: Redd
         }.liveData
 
 
-    fun getUserOverviewList(username: String?, userData: UserData?) = Pager(
+    fun getUserOverviewList(username: String?, userInfo: UserInfo?) = Pager(
         PagingConfig(count)
     ) {
-        AccountOverviewPagingSource(redditApiService, username?: "", userData)
+        AccountPagingSource(redditApiService, username?: "", userInfo, "overview")
+    }.liveData
+
+    fun getUserPostsList(username: String?, userInfo: UserInfo?, historyType: String) = Pager(
+        PagingConfig(count)
+    ) {
+        AccountPagingSource(redditApiService, username?: "", userInfo, historyType)
     }.liveData
 
 

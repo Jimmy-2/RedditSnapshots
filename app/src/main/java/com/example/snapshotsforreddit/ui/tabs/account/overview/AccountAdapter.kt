@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.ui.tabs.account
+package com.example.snapshotsforreddit.ui.tabs.account.overview
 
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +13,7 @@ import com.example.snapshotsforreddit.databinding.*
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
 import java.time.*
 
-class AccountOverviewAdapter() :
+class AccountAdapter(private val onClickListener: OnItemClickListener) :
     PagingDataAdapter<RedditChildrenObject, RecyclerView.ViewHolder>(
         POST_COMPARATOR
     ) {
@@ -42,8 +42,8 @@ class AccountOverviewAdapter() :
                     false
                 )
             )
-            USER_DATA -> UserDataViewHolder(
-                AccountUserDataItemBinding.inflate(
+            USER_INFO -> UserInfoViewHolder(
+                AccountUserInfoItemBinding.inflate(
                     LayoutInflater.from(
                         parent.context
                     ), parent, false
@@ -88,7 +88,7 @@ class AccountOverviewAdapter() :
                 is CommentViewHolder -> holder.bind(currentItem)
                 is PostViewHolder -> holder.bind(currentItem)
                 is TextPostViewHolder -> holder.bind(currentItem)
-                is UserDataViewHolder -> holder.bind(currentItem)
+                is UserInfoViewHolder -> holder.bind(currentItem)
                 is DefaultViewHolder -> holder.bind(currentItem)
                 is DefaultTopViewHolder -> holder.bind(currentItem)
                 is DefaultBottomViewHolder -> holder.bind(currentItem)
@@ -105,7 +105,7 @@ class AccountOverviewAdapter() :
                 true -> TEXT_POST
                 else -> POST
             }
-            "userData" -> USER_DATA
+            "userInfo" -> USER_INFO
             "default" -> DEFAULT
             "defaultTop" -> DEFAULT_TOP
             "defaultBottom" -> DEFAULT_BOTTOM
@@ -245,16 +245,16 @@ class AccountOverviewAdapter() :
     }
 
 
-    inner class UserDataViewHolder(val binding: AccountUserDataItemBinding) :
+    inner class UserInfoViewHolder(val binding: AccountUserInfoItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(postObject: RedditChildrenObject) {
             val currentPost = postObject.data
             binding.apply {
                 if (currentPost != null) {
                     textviewCommentKarma.text =
-                        getShortenedValue(currentPost.userData?.comment_karma)
-                    textviewPostKarma.text = getShortenedValue(currentPost.userData?.link_karma)
-                    val epoch = currentPost.userData?.created_utc
+                        getShortenedValue(currentPost.userInfo?.comment_karma)
+                    textviewPostKarma.text = getShortenedValue(currentPost.userInfo?.link_karma)
+                    val epoch = currentPost.userInfo?.created_utc
 
                     if (epoch != null) {
                         textviewAccountAge.text = calculateAgeDifferenceLocalDateTime(epoch, 1)
@@ -268,8 +268,24 @@ class AccountOverviewAdapter() :
 
     }
 
+
+    //USER HISTORY
+
     inner class DefaultViewHolder(val binding: AccountDefaultItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.root.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val item = getItem(position)
+                    if (item != null) {
+                        onClickListener.onHistoryClick(item.data?.permalink,
+                            item.data?.userInfo?.name
+                        )
+                    }
+                }
+            }
+        }
         fun bind(postObject: RedditChildrenObject) {
             val currentPost = postObject.data
             binding.apply {
@@ -282,6 +298,17 @@ class AccountOverviewAdapter() :
 
     inner class DefaultTopViewHolder(val binding: AccountDefaultTopItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.root.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val item = getItem(position)
+                    if (item != null) {
+                        onClickListener.onHistoryClick(item.data?.permalink,item.data?.userInfo?.name)
+                    }
+                }
+            }
+        }
         fun bind(postObject: RedditChildrenObject) {
             val currentPost = postObject.data
             binding.apply {
@@ -294,6 +321,17 @@ class AccountOverviewAdapter() :
 
     inner class DefaultBottomViewHolder(val binding: AccountDefaultBottomItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.root.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val item = getItem(position)
+                    if (item != null) {
+                        onClickListener.onHistoryClick(item.data?.permalink,item.data?.userInfo?.name)
+                    }
+                }
+            }
+        }
         fun bind(postObject: RedditChildrenObject) {
             val currentPost = postObject.data
             binding.apply {
@@ -314,13 +352,23 @@ class AccountOverviewAdapter() :
         }
     }
 
+    interface OnItemClickListener {
+        fun onInfoClick(infoItem: RedditChildrenObject, type: Int)
+
+        fun onHistoryClick(historyType: String?, username: String?)
+
+        fun onPostCommentClick(overviewItem: RedditChildrenObject, type: Int)
+
+
+    }
+
 
     companion object {
         // View Types
         private val COMMENT = 0
         private val POST = 1
         private val TEXT_POST = 2
-        private val USER_DATA = 3
+        private val USER_INFO = 3
         private val DEFAULT = 4
         private val DEFAULT_TOP = 5
         private val DEFAULT_BOTTOM = 6

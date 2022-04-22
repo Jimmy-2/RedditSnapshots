@@ -86,6 +86,13 @@
         <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/menu/menu_fragment_downloaded_posts.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/menu/menu_fragment_front_page.xml" value="0.22" />
         <entry key="..\:/Users/kingl/AndroidStudioProjects/SnapshotsForReddit/app/src/main/res/menu/menu_fragment_subscribed_subreddits.xml" value="0.33125" />
+        <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/drawable/account_overview_defaults_bottom.xml" value="0.332" />
+        <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/drawable/bottom_border.xml" value="0.332" />
+        <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/drawable/ic_error.xml" value="0.332" />
+        <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layout/fragment_account_history.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layout/fragment_account_info.xml" value="0.35260416666666666" />
+        <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layout/fragment_account_overview.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layout/fragment_user_information.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>

@@ -3,9 +3,9 @@ package com.example.snapshotsforreddit.ui.general.login
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.snapshotsforreddit.BuildConfig
-import com.example.snapshotsforreddit.data.repository.AuthApiRepository
+import com.example.snapshotsforreddit.network.AuthApiRepository
 import com.example.snapshotsforreddit.data.repository.AuthDataStoreRepository
-import com.example.snapshotsforreddit.data.repository.RedditApiRepository
+import com.example.snapshotsforreddit.network.RedditApiRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -14,8 +14,8 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val authDataStoreRepository: AuthDataStoreRepository,
     private val authApiRepository: AuthApiRepository,
-    private val redditApiRepository: RedditApiRepository
-) : ViewModel() {
+
+    ) : ViewModel() {
     private val TAG: String = "LoginViewModel"
 
     //observe login state
@@ -25,12 +25,23 @@ class LoginViewModel @Inject constructor(
     val authSignInURL: LiveData<String> = _authSignInURL
 
 
+    val accessToken = MutableLiveData<String>()
+    val refreshToken = MutableLiveData<String>()
+
     fun onLogoutClicked() = viewModelScope.launch {
         Log.v(TAG, "HELLO Clearing user login data")
+
+        try {
+            //only need to revoke refresh token to also revoke all access tokens associated to it
+            refreshToken.value?.let { authApiRepository.logoutUser(it, "refresh_token") }
+        } catch (e: Exception) {
+
+        }
         authDataStoreRepository.updateAccessToken("")
         authDataStoreRepository.updateRefreshToken("")
         authDataStoreRepository.updateUsername("")
         authDataStoreRepository.updateLoginState(false)
+
     }
 
 

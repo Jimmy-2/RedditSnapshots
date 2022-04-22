@@ -39,6 +39,9 @@ class LoginDialogFragment : BottomSheetDialogFragment() {
         //TODO: Use onlyt 1 button and have a ENUM class to change text and function of the button instead of using 2
         //observe the login state of the user so we can hide the sign in or the logout buttons depending on the login state
         viewModel.authFlow.observe(viewLifecycleOwner) { authFlowValues ->
+            viewModel.accessToken.value = authFlowValues.accessToken
+            viewModel.refreshToken.value = authFlowValues.refreshToken
+
             if(authFlowValues.loginState) {
                 binding.buttonLogin2.visibility = View.GONE
                 binding.buttonLogout2.visibility = View.VISIBLE

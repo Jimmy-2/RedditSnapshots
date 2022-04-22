@@ -1,7 +1,6 @@
 package com.example.snapshotsforreddit.network
 
 
-import com.example.snapshotsforreddit.data.repository.AuthApiRepository
 import com.example.snapshotsforreddit.data.repository.AuthDataStoreRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking

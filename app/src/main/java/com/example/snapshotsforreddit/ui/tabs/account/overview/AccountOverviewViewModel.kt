@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.ui.tabs.account
+package com.example.snapshotsforreddit.ui.tabs.account.overview
 
 import android.content.ContentValues
 import android.net.Uri
@@ -6,11 +6,11 @@ import android.util.Log
 import androidx.lifecycle.*
 import androidx.paging.cachedIn
 import com.example.snapshotsforreddit.BuildConfig
-import com.example.snapshotsforreddit.data.repository.AuthApiRepository
 import com.example.snapshotsforreddit.data.repository.AuthDataStoreRepository
-import com.example.snapshotsforreddit.data.repository.RedditApiRepository
+import com.example.snapshotsforreddit.network.AuthApiRepository
+import com.example.snapshotsforreddit.network.RedditApiRepository
 import com.example.snapshotsforreddit.network.responses.TokenResponse
-import com.example.snapshotsforreddit.network.responses.account.UserData
+import com.example.snapshotsforreddit.network.responses.account.UserInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,7 +27,7 @@ class AccountOverviewViewModel @Inject constructor(
     val authFlow = authDataStoreRepository.authFlow.asLiveData()
 
     private val _username = MutableLiveData("")
-    private val _userData = MutableLiveData<UserData?>()
+    private val _userData = MutableLiveData<UserInfo?>()
 
     val accountOverviewItems = _username.switchMap { username ->
         redditApiRepository.getUserOverviewList(username, _userData.value).cachedIn(viewModelScope)

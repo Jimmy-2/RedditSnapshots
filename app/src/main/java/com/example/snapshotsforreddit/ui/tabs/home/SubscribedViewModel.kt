@@ -3,7 +3,7 @@ package com.example.snapshotsforreddit.ui.tabs.home
 import androidx.lifecycle.*
 import androidx.paging.cachedIn
 import com.example.snapshotsforreddit.data.repository.AuthDataStoreRepository
-import com.example.snapshotsforreddit.data.repository.RedditApiRepository
+import com.example.snapshotsforreddit.network.RedditApiRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
