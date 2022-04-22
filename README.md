@@ -3,3 +3,5 @@
 ## Current stack: Coroutines, Retrofit, Moshi, Room, Preferences DataStore, ViewModel, LiveData, Navigation, Glide, ViewBinding, Hilt, Paging
 ## Will add: WorkManager for downloading comments
 
+
+## Currently building up the reddit client before working on allowing users to download posts.
