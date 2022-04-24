@@ -1,15 +1,14 @@
 package com.example.snapshotsforreddit.ui.tabs.home
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentSubscribedBinding
 import com.example.snapshotsforreddit.network.responses.subscribed.SubscribedChildrenObject
+import com.example.snapshotsforreddit.ui.RedditLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -31,7 +30,10 @@ class SubscribedFragment : Fragment(R.layout.fragment_subscribed), SubscribedAda
 
         binding.apply {
             recyclerviewSubreddits.setHasFixedSize(true)
-            recyclerviewSubreddits.adapter = subscribedAdapter
+            recyclerviewSubreddits.adapter = subscribedAdapter.withLoadStateHeaderAndFooter(
+                header = RedditLoadStateAdapter {subscribedAdapter .retry()},
+                footer = RedditLoadStateAdapter {subscribedAdapter .retry()}
+            )
         }
 
 

@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentAccountOverviewBinding
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
+import com.example.snapshotsforreddit.ui.RedditLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -32,7 +33,10 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Acc
 
         binding.apply {
             recyclerviewAccount.setHasFixedSize(true)
-            recyclerviewAccount.adapter = accountOverviewAdapter
+            recyclerviewAccount.adapter = accountOverviewAdapter.withLoadStateHeaderAndFooter(
+                header = RedditLoadStateAdapter {accountOverviewAdapter.retry()},
+                footer = RedditLoadStateAdapter {accountOverviewAdapter.retry()}
+            )
 
             /*
             buttonDialog.setOnClickListener { loginView ->

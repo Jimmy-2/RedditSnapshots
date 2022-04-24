@@ -11,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentRedditPageBinding
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
+import com.example.snapshotsforreddit.ui.RedditLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,9 +32,10 @@ class RedditPageFragment: Fragment(R.layout.fragment_reddit_page), RedditPageAda
 
         binding.apply {
             recyclerviewPosts.setHasFixedSize(true)
-            recyclerviewPosts.adapter = redditPageAdapter
-
-
+            recyclerviewPosts.adapter = redditPageAdapter.withLoadStateHeaderAndFooter(
+                header = RedditLoadStateAdapter {redditPageAdapter.retry()},
+                footer = RedditLoadStateAdapter {redditPageAdapter.retry()}
+            )
         }
 
         val redditPageName= navigationArgs.redditPageName
@@ -62,6 +64,12 @@ class RedditPageFragment: Fragment(R.layout.fragment_reddit_page), RedditPageAda
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onSearchSubmit(query: String?) {
+        if(query != null) {
+            //go to next screen
+        }
     }
 
 

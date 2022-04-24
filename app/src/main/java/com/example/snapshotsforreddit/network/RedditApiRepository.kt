@@ -24,7 +24,7 @@ class RedditApiRepository @Inject constructor(private val redditApiService: Redd
         Pager(
             PagingConfig(count)
         ) {
-            RedditPagePagingSource(redditApiService, subredditName, subredditType)
+            RedditPagePagingSource(redditApiService, subredditName, subredditType, "best")
         }.liveData
 
 

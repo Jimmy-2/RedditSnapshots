@@ -1,10 +1,12 @@
 package com.example.snapshotsforreddit.ui.general.redditpage
 
+
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -13,19 +15,26 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.PostItemBinding
 import com.example.snapshotsforreddit.databinding.PostTextItemBinding
-
-
+import com.example.snapshotsforreddit.databinding.SearchBarItemBinding
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
-import java.time.*
+import com.example.snapshotsforreddit.util.calculateAgeDifferenceLocalDateTime
+import com.example.snapshotsforreddit.util.getShortenedValue
 
 
 //TODO for now use notifyItemChanged(position) until db pagination is implemented
-class RedditPageAdapter(private val onClickListener: OnItemClickListener):
+class RedditPageAdapter(private val onClickListener: OnItemClickListener) :
     PagingDataAdapter<RedditChildrenObject, RecyclerView.ViewHolder>(
         POST_COMPARATOR
     ) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder{
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
+            SEARCH -> SearchBarViewHolder(
+                SearchBarItemBinding.inflate(
+                    LayoutInflater.from(
+                        parent.context
+                    ), parent, false
+                )
+            )
             TEXT_POST -> TextPostViewHolder(
                 PostTextItemBinding.inflate(
                     LayoutInflater.from(
@@ -55,14 +64,33 @@ class RedditPageAdapter(private val onClickListener: OnItemClickListener):
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (getItem(position)?.data?.is_self) {
-            true -> TEXT_POST
-            false -> POST
-            else -> ERROR
+        return when (getItem(position)?.kind) {
+            "header" -> SEARCH
+            else -> return when (getItem(position)?.data?.is_self) {
+                true -> TEXT_POST
+                false -> POST
+                else -> ERROR
+            }
+        }
+    }
+
+    inner class SearchBarViewHolder(private val binding: SearchBarItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.searchview.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    onClickListener.onSearchSubmit(query)
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    return true
+                }
+
+            })
         }
 
     }
-
 
     inner class PostViewHolder(private val binding: PostItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -81,10 +109,10 @@ class RedditPageAdapter(private val onClickListener: OnItemClickListener):
                 if (position != RecyclerView.NO_POSITION) {
                     val post = getItem(position)
                     if (post != null) {
-                        if(post.data?.likes == true) {
+                        if (post.data?.likes == true) {
                             post.data.likes = null
                             onClickListener.onVoteClick(post, 0, position)
-                        }else {
+                        } else {
                             post.data?.likes = true
                             onClickListener.onVoteClick(post, 1, position)
                         }
@@ -98,10 +126,10 @@ class RedditPageAdapter(private val onClickListener: OnItemClickListener):
                 if (position != RecyclerView.NO_POSITION) {
                     val post = getItem(position)
                     if (post != null) {
-                        if(post.data?.likes == false) {
+                        if (post.data?.likes == false) {
                             post.data.likes = null
                             onClickListener.onVoteClick(post, 0, position)
-                        }else {
+                        } else {
                             post.data?.likes = false
                             onClickListener.onVoteClick(post, -1, position)
                         }
@@ -120,7 +148,7 @@ class RedditPageAdapter(private val onClickListener: OnItemClickListener):
             //TODO FIX CODE HERE : REFORMAT STATEMENTS
             binding.apply {
                 //if true, is text only post
-                if(currentPost != null) {
+                if (currentPost != null) {
                     if (currentPost.preview?.images?.get(0)?.source?.url != null) {
                         val imageUrl =
                             currentPost.preview.images[0].source!!.url?.replace(removePart, "")
@@ -148,7 +176,8 @@ class RedditPageAdapter(private val onClickListener: OnItemClickListener):
                         .error(R.drawable.ic_error)
                         .into(imageviewSubredditIcon)
 
-                    textviewPostItemSubreddit.text = currentPost.subreddit.toString().replaceFirstChar { it.uppercase() }
+                    textviewPostItemSubreddit.text =
+                        currentPost.subreddit.toString().replaceFirstChar { it.uppercase() }
                     textviewPostItemTitle.text = currentPost.title
                     textviewPostItemScore.text = getShortenedValue(currentPost.score)
                     textviewPostItemCommentCount.text = getShortenedValue(currentPost.num_comments)
@@ -157,10 +186,6 @@ class RedditPageAdapter(private val onClickListener: OnItemClickListener):
                         textviewPostItemAge.text = calculateAgeDifferenceLocalDateTime(epoch, 1)
                     }
 
-                    //upvote/downvote related
-
-                    val upvoteColor = "#E24824"
-                    val downvoteColor = "#5250DE"
                     when (currentPost.likes) {
                         true -> {
                             textviewPostItemScore.setTextColor(Color.parseColor(upvoteColor))
@@ -177,15 +202,10 @@ class RedditPageAdapter(private val onClickListener: OnItemClickListener):
                     }
 
 
-
-
                 }
             }
         }
     }
-
-
-
 
 
     inner class TextPostViewHolder(private val binding: PostTextItemBinding) :
@@ -205,10 +225,10 @@ class RedditPageAdapter(private val onClickListener: OnItemClickListener):
                 if (position != RecyclerView.NO_POSITION) {
                     val post = getItem(position)
                     if (post != null) {
-                        if(post.data?.likes == true) {
+                        if (post.data?.likes == true) {
                             post.data.likes = null
                             onClickListener.onVoteClick(post, 0, position)
-                        }else {
+                        } else {
                             post.data?.likes = true
                             onClickListener.onVoteClick(post, 1, position)
                         }
@@ -222,10 +242,10 @@ class RedditPageAdapter(private val onClickListener: OnItemClickListener):
                 if (position != RecyclerView.NO_POSITION) {
                     val post = getItem(position)
                     if (post != null) {
-                        if(post.data?.likes == false) {
+                        if (post.data?.likes == false) {
                             post.data.likes = null
                             onClickListener.onVoteClick(post, 0, position)
-                        }else {
+                        } else {
                             post.data?.likes = false
                             onClickListener.onVoteClick(post, -1, position)
                         }
@@ -260,11 +280,12 @@ class RedditPageAdapter(private val onClickListener: OnItemClickListener):
                         .error(R.drawable.ic_error)
                         .into(imageviewSubredditIcon)
 
-                    textviewPostItemSubreddit.text = currentPost.subreddit.toString().replaceFirstChar { it.uppercase() }
+                    textviewPostItemSubreddit.text =
+                        currentPost.subreddit.toString().replaceFirstChar { it.uppercase() }
                     textviewPostItemTitle.text = currentPost.title
-                    if(currentPost.selftext == "") {
+                    if (currentPost.selftext == "") {
                         textviewPostItemText.visibility = GONE
-                    }else {
+                    } else {
                         textviewPostItemText.text = currentPost.selftext
                     }
 
@@ -276,10 +297,7 @@ class RedditPageAdapter(private val onClickListener: OnItemClickListener):
                     }
 
 
-
-                    val upvoteColor = "#E24824"
-                    val downvoteColor = "#5250DE"
-                    when (currentPost.likes ) {
+                    when (currentPost.likes) {
                         true -> {
                             textviewPostItemScore.setTextColor(Color.parseColor(upvoteColor))
                             imageArrow.setImageResource(R.drawable.ic_upvote_arrow)
@@ -301,15 +319,20 @@ class RedditPageAdapter(private val onClickListener: OnItemClickListener):
 
 
     interface OnItemClickListener {
+        fun onSearchSubmit(query: String?)
         fun onItemClick(post: RedditChildrenObject)
         fun onVoteClick(post: RedditChildrenObject, type: Int, position: Int)
+
     }
 
     companion object {
+        private const val SEARCH = 0
+        private const val POST = 1
+        private const val TEXT_POST = 2
+        private const val ERROR = 3
 
-        private const val POST = 0
-        private const val TEXT_POST = 1
-        private const val ERROR = 2
+        private const val upvoteColor = "#E24824"
+        private const val downvoteColor = "#5250DE"
 
         private val POST_COMPARATOR =
             object : DiffUtil.ItemCallback<RedditChildrenObject>() {
@@ -331,59 +354,6 @@ class RedditPageAdapter(private val onClickListener: OnItemClickListener):
 
             }
     }
-    private fun getShortenedValue(value: Int?): String {
-        return when {
-            value == null -> {
-                ""
-            }
-            value < 1000 -> {
-                value.toString()
-            }
-            value < 1000000 -> {
-                String.format("%.1f", (value.toDouble()/1000)) + "K"
-            }
-            else -> {
-                String.format("%.1f", (value.toDouble()/1000000)) + "M"
-            }
-        }
-    }
-
-    private fun calculateAgeDifferenceLocalDateTime(epoch: Long, type: Int): String {
-        val createdOn = epoch.let { Instant.ofEpochMilli(it*1000).atZone(ZoneId.systemDefault()).toLocalDate() }
-        val ageMY = Period.between(createdOn, LocalDate.now())
-        return when {
-            //if both years and months == 0, we measure account age by days, hours, and minutes instead
-            ageMY.years == 0 && ageMY.months == 0 -> {
-                val createdOn = epoch.let { Instant.ofEpochMilli(it*1000).atZone(ZoneId.systemDefault()).toLocalDateTime() }
-                //Days, hours, minutes, and seconds
-                val ageDHMS = Duration.between(createdOn, LocalDateTime.now())
-                return when {
-                    ageDHMS.toHours() < 24 -> {
-                        if(ageDHMS.toHours() < 1) {
-                            if(ageDHMS.toMinutes() < 1) {
-                                return "${ageDHMS.seconds}s"
-                            }else {
-                                return "${ageDHMS.toMinutes()}m"
-                            }
-                        }else {
-                            return "${ageDHMS.toHours()}h"
-                        }
-                    }
-                    else -> "${ageDHMS.toHours()/24}d"
-                }
-            }
-            ageMY.years == 0 -> "${ageMY.months}mo"
-            ageMY.months == 0 -> "${ageMY.years}y "
-            //type 1 = account age, type 0 = comments
-            else -> if(type == 1) {
-                "${ageMY.years}y ${ageMY.months}mo"
-            }else {
-                //comments older than or equal to 1 year are formatted as decimals
-                "${String.format("%.1f", ((ageMY.years*12.toDouble())+ ageMY.months.toDouble())/12)}y"
-            }
-        }
-    }
-
 
 
 }

@@ -1,6 +1,5 @@
 package com.example.snapshotsforreddit.data.paging
 
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.snapshotsforreddit.data.DefaultsDatasource
@@ -31,7 +30,7 @@ class SubscribedPagingSource(private val redditApiService: RedditApiService) : P
             )
              */
 
-            val response = redditApiService.getSubscribedList("snapshots-for-reddit",
+            val response = redditApiService.getSubscribedSubreddits("snapshots-for-reddit",
                 after = if (params is LoadParams.Append) params.key else null,
             )
 

@@ -18,6 +18,8 @@ class RedditPageViewModel @Inject constructor(
     val authFlow = authDataStoreRepository.authFlow.asLiveData()
 
     private val _accessToken = MutableLiveData<String>()
+    private val _subredditName= MutableLiveData<String>()
+    private val _subredditType= MutableLiveData<String>()
 
     //TODO CHANGE THIS
     val redditPagePosts = _accessToken.switchMap { accessT ->
@@ -46,11 +48,6 @@ class RedditPageViewModel @Inject constructor(
         }
 
     }
-
-
-
-    private val _subredditName= MutableLiveData<String>()
-    private val _subredditType= MutableLiveData<String>()
 
     fun redditPageInformation(redditPageName: String, redditPageType: String) {
         _subredditName.value = redditPageName

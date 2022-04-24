@@ -8,6 +8,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentAccountHistoryBinding
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
+import com.example.snapshotsforreddit.ui.RedditLoadStateAdapter
 import com.example.snapshotsforreddit.ui.tabs.account.overview.AccountAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,21 +32,26 @@ class AccountHistoryFragment : Fragment(R.layout.fragment_account_history), Acco
 
         binding.apply {
             recyclerviewAccountHistory.setHasFixedSize(true)
-            recyclerviewAccountHistory.adapter = accountHistoryAdapter
+            recyclerviewAccountHistory.adapter = accountHistoryAdapter.withLoadStateHeaderAndFooter(
+                header = RedditLoadStateAdapter {accountHistoryAdapter.retry()},
+                footer = RedditLoadStateAdapter {accountHistoryAdapter.retry()}
+            )
 
         }
 
-        val historyType = navigationArgs.historyType
-        val username = navigationArgs.username
-        viewModel.selectedUserHistory(historyType, username)
+        val newUserHistory = UserHistory(navigationArgs.historyType, navigationArgs.username)
+        viewModel.selectedUserHistory(newUserHistory)
 
         viewModel.accountHistoryItems.observe(viewLifecycleOwner) {
-            //connect data to adapter
             accountHistoryAdapter.submitData(viewLifecycleOwner.lifecycle, it)
-
         }
 
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onInfoClick(infoItem: RedditChildrenObject, type: Int) {
