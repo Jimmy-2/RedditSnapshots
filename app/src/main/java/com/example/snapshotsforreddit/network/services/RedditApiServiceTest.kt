@@ -3,8 +3,8 @@ package com.example.snapshotsforreddit.network.services
 import com.example.snapshotsforreddit.network.responses.RedditJsonResponse
 import com.example.snapshotsforreddit.network.responses.TokenResponse
 import com.example.snapshotsforreddit.network.responses.account.User
-import com.example.snapshotsforreddit.network.responses.subscribed.SubscribedJsonResponse
 import com.example.snapshotsforreddit.network.responses.account.Username
+import com.example.snapshotsforreddit.network.responses.subscribed.SubscribedJsonResponse
 import com.example.snapshotsforreddit.network.services.RedditApiServiceTest.Companion.retrofitGetToken
 import com.example.snapshotsforreddit.network.services.RedditApiServiceTest.Companion.retrofitOAuth
 import com.example.snapshotsforreddit.network.services.RedditApiServiceTest.Companion.retrofitTest
@@ -100,6 +100,24 @@ interface RedditApiServiceTest {
     fun getUserInfoTest(
         @Path("username") username: String
     ): Call<User>
+
+    @GET("/{r}/{subreddit}/search/")
+    fun getSearchResultsTest(
+        // @Header("Authorization") Authorization: String?,
+        @Path("r") type: String,
+        @Path("subreddit") subreddit: String,
+        @Query("q") q: String?
+        ,
+        @Query("restrict_sr") restrict_sr: Int,
+        @Query("sr_nsfw") sr_nsfw: String?,
+        @Query("sort") sort: String?,
+
+        @Query("limit") limit: Int,
+        @Query("after") after: String? = null,
+        @Query("before") before: String? = null,
+        @Query("sr_detail") sr_detail: Int? = 1
+    ): Call<RedditJsonResponse>
+
 
 }
 

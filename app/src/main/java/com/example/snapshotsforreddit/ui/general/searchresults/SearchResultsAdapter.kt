@@ -1,12 +1,10 @@
-package com.example.snapshotsforreddit.ui.general.redditpage
-
+package com.example.snapshotsforreddit.ui.general.searchresults
 
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.LayoutInflater
-import android.view.View.GONE
+import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.SearchView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -15,18 +13,14 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.PostItemBinding
 import com.example.snapshotsforreddit.databinding.PostTextItemBinding
-import com.example.snapshotsforreddit.databinding.SearchBarItemBinding
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
 import com.example.snapshotsforreddit.util.calculateAgeDifferenceLocalDateTime
 import com.example.snapshotsforreddit.util.getShortenedValue
 
-
-//TODO for now use notifyItemChanged(position) until db pagination is implemented
-class RedditPageAdapter(private val onClickListener: OnItemClickListener) : PagingDataAdapter<RedditChildrenObject, RecyclerView.ViewHolder>(POST_COMPARATOR) {
+class SearchResultsAdapter(private val onClickListener: OnItemClickListener) : PagingDataAdapter<RedditChildrenObject, RecyclerView.ViewHolder>(POST_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            SEARCH -> SearchBarViewHolder(SearchBarItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
             TEXT_POST -> TextPostViewHolder(PostTextItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
             POST -> PostViewHolder(PostItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
             else -> throw IllegalArgumentException("Error with view type")
@@ -37,7 +31,6 @@ class RedditPageAdapter(private val onClickListener: OnItemClickListener) : Pagi
         val currentItem = getItem(position)
         if (currentItem != null) {
             when (holder) {
-                //is SearchBarViewHolder -> holder.bind(currentItem)
                 is TextPostViewHolder -> holder.bind(currentItem)
                 is PostViewHolder -> holder.bind(currentItem)
             }
@@ -45,32 +38,12 @@ class RedditPageAdapter(private val onClickListener: OnItemClickListener) : Pagi
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (getItem(position)?.kind) {
-            "search" -> SEARCH
-            else -> return when (getItem(position)?.data?.is_self) {
-                true -> TEXT_POST
-                false -> POST
-                else -> ERROR
-            }
+        return when (getItem(position)?.data?.is_self) {
+            true -> TEXT_POST
+            false -> POST
+            else -> ERROR
         }
-    }
 
-    inner class SearchBarViewHolder(private val binding: SearchBarItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        init {
-            binding.searchview.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                val subredditName = getItem(0)?.data?.subreddit
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    if (subredditName != null) {
-                        onClickListener.onSearchSubmit(query, subredditName)
-                    }
-                    return true
-                }
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    return true
-                }
-            })
-        }
     }
 
     inner class PostViewHolder(private val binding: PostItemBinding) :
@@ -97,6 +70,7 @@ class RedditPageAdapter(private val onClickListener: OnItemClickListener) : Pagi
                             post.data?.likes = true
                             onClickListener.onVoteClick(post, 1, position)
                         }
+
                         notifyItemChanged(position)
                     }
                 }
@@ -119,12 +93,12 @@ class RedditPageAdapter(private val onClickListener: OnItemClickListener) : Pagi
             }
         }
 
-
         @SuppressLint("ResourceAsColor")
         fun bind(postObject: RedditChildrenObject) {
             val currentPost = postObject.data
             //TODO FIX CODE HERE : REFORMAT STATEMENTS
             binding.apply {
+                //if true, is text only post
                 if (currentPost != null) {
                     if (currentPost.preview?.images?.get(0)?.source?.url != null) {
                         val imageUrl =
@@ -141,6 +115,7 @@ class RedditPageAdapter(private val onClickListener: OnItemClickListener) : Pagi
                         if (currentPost.sr_detail?.community_icon == null && currentPost.sr_detail?.icon_img == null) {
                             ""
                         } else if (currIconUrl == "null") {
+
                             currentPost.sr_detail.icon_img!!.replace(removePart, "")
                         } else {
                             currIconUrl.replace(removePart, "")
@@ -174,8 +149,6 @@ class RedditPageAdapter(private val onClickListener: OnItemClickListener) : Pagi
                             imageArrow.setImageResource(R.drawable.ic_up_arrow_null)
                         }
                     }
-
-
                 }
             }
         }
@@ -250,15 +223,13 @@ class RedditPageAdapter(private val onClickListener: OnItemClickListener) : Pagi
                         .error(R.drawable.ic_error)
                         .into(imageviewSubredditIcon)
 
-                    textviewPostItemSubreddit.text =
-                        currentPost.subreddit.toString().replaceFirstChar { it.uppercase() }
+                    textviewPostItemSubreddit.text = currentPost.subreddit.toString().replaceFirstChar { it.uppercase() }
                     textviewPostItemTitle.text = currentPost.title
                     if (currentPost.selftext == "") {
-                        textviewPostItemText.visibility = GONE
+                        textviewPostItemText.visibility = View.GONE
                     } else {
                         textviewPostItemText.text = currentPost.selftext
                     }
-
                     textviewPostItemScore.text = getShortenedValue(currentPost.score)
                     textviewPostItemCommentCount.text = getShortenedValue(currentPost.num_comments)
                     val epoch = currentPost.created_utc
@@ -280,23 +251,20 @@ class RedditPageAdapter(private val onClickListener: OnItemClickListener) : Pagi
                         }
                     }
                 }
+
             }
         }
     }
 
-
     interface OnItemClickListener {
-        fun onSearchSubmit(query: String?, subredditName: String)
         fun onItemClick(post: RedditChildrenObject)
         fun onVoteClick(post: RedditChildrenObject, type: Int, position: Int)
-
     }
 
     companion object {
-        private const val SEARCH = 0
-        private const val POST = 1
-        private const val TEXT_POST = 2
-        private const val ERROR = 3
+        private const val POST = 0
+        private const val TEXT_POST = 1
+        private const val ERROR = 2
 
         private const val removePart = "amp;"
         private const val upvoteColor = "#E24824"

@@ -12,7 +12,7 @@ class RedditPagePagingSource(
     private val redditApiService: RedditApiService,
     private val subredditName: String?,
     private val subredditType: String?,
-    private val sort: String?
+    private val sort: String?,
 ) : PagingSource<String, RedditChildrenObject>() {
 
     override fun getRefreshKey(state: PagingState<String, RedditChildrenObject>): String? {
@@ -21,14 +21,15 @@ class RedditPagePagingSource(
         }
     }
 
-    override suspend fun load(params: LoadParams<String>): LoadResult<String, RedditChildrenObject> {
+    override suspend fun load(params: LoadParams<String>): PagingSource.LoadResult<String, RedditChildrenObject> {
         return try {
-
             val responseData = if (subredditType == "" && subredditName == "") {
                 redditApiService.getHomePosts(
-                    "snapshots-for-reddit", limit = params.loadSize,
+                    "snapshots-for-reddit",
+                    limit = params.loadSize,
                     after = if (params is LoadParams.Append) params.key else null,
-                    before = if (params is LoadParams.Prepend) params.key else null, sort = sort ?: "best"
+                    before = if (params is LoadParams.Prepend) params.key else null,
+                    sort = sort ?: "best"
                 ).data
             } else {
                 redditApiService.getSubredditPosts(
@@ -41,22 +42,21 @@ class RedditPagePagingSource(
                 ).data
             }
 
-
             val posts = if (params.key == null) {
-                DefaultsDatasource().addHeader() + responseData!!.children
+                DefaultsDatasource().addSearchBar(subredditName!!) + responseData!!.children
             } else {
                 responseData!!.children
             }
 
 
-            LoadResult.Page(
+            PagingSource.LoadResult.Page(
                 data = posts,
                 prevKey = responseData.before,
                 nextKey = responseData.after
             )
 
         } catch (exception: IOException) {
-            LoadResult.Error(exception)
+            PagingSource.LoadResult.Error(exception)
         } catch (exception: HttpException) {
             LoadResult.Error(exception)
         }

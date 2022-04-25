@@ -22,62 +22,14 @@ class AccountAdapter(private val onClickListener: OnItemClickListener) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            COMMENT -> CommentViewHolder(
-                AccountCommentItemBinding.inflate(
-                    LayoutInflater.from(
-                        parent.context
-                    ), parent, false
-                )
-            )
-            POST -> PostViewHolder(
-                PostItemBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
-            )
-            TEXT_POST -> TextPostViewHolder(
-                PostTextItemBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
-            )
-            USER_INFO -> UserInfoViewHolder(
-                AccountUserInfoItemBinding.inflate(
-                    LayoutInflater.from(
-                        parent.context
-                    ), parent, false
-                )
-            )
-            DEFAULT -> DefaultViewHolder(
-                AccountDefaultItemBinding.inflate(
-                    LayoutInflater.from(
-                        parent.context
-                    ), parent, false
-                )
-            )
-            DEFAULT_TOP -> DefaultTopViewHolder(
-                AccountDefaultTopItemBinding.inflate(
-                    LayoutInflater.from(
-                        parent.context
-                    ), parent, false
-                )
-            )
-            DEFAULT_BOTTOM -> DefaultBottomViewHolder(
-                AccountDefaultBottomItemBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
-            )
-            HEADER -> HeaderViewHolder(
-                HeaderItemBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
-            )
+            COMMENT -> CommentViewHolder(AccountCommentItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            POST -> PostViewHolder(PostItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            TEXT_POST -> TextPostViewHolder(PostTextItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            USER_INFO -> UserInfoViewHolder(AccountUserInfoItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            DEFAULT -> DefaultViewHolder(AccountDefaultItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            DEFAULT_TOP -> DefaultTopViewHolder(AccountDefaultTopItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            DEFAULT_BOTTOM -> DefaultBottomViewHolder(AccountDefaultBottomItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            HEADER -> HeaderViewHolder(HeaderItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
             else -> throw IllegalArgumentException("Error with view type")
         }
     }
@@ -115,8 +67,6 @@ class AccountAdapter(private val onClickListener: OnItemClickListener) :
         }
 
     }
-
-
     inner class CommentViewHolder(val binding: AccountCommentItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(postObject: RedditChildrenObject) {
@@ -142,19 +92,15 @@ class AccountAdapter(private val onClickListener: OnItemClickListener) :
                 if (epoch != null) {
                     textviewCommentAge.text = calculateAgeDifferenceLocalDateTime(epoch, 0)
                 }
-
-
             }
-
         }
-
     }
 
     inner class PostViewHolder(val binding: PostItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(postObject: RedditChildrenObject) {
             val currentPost = postObject.data
-            val removePart = "amp;"
+
             //TODO FIX CODE HERE : REFORMAT STATEMENTS
             binding.apply {
                 //TODO REDO THIS TO ALLOW GIFS AND VIDEOS
@@ -193,19 +139,15 @@ class AccountAdapter(private val onClickListener: OnItemClickListener) :
                     if (epoch != null) {
                         textviewPostItemAge.text = calculateAgeDifferenceLocalDateTime(epoch, 1)
                     }
-
                 }
-
             }
         }
-
     }
 
     inner class TextPostViewHolder(private val binding: PostTextItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(postObject: RedditChildrenObject) {
             val currentPost = postObject.data
-            val removePart = "amp;"
             binding.apply {
                 if (currentPost != null) {
                     val currIconUrl = currentPost.sr_detail?.community_icon.toString()
@@ -232,7 +174,6 @@ class AccountAdapter(private val onClickListener: OnItemClickListener) :
                     } else {
                         textviewPostItemText.text = currentPost.selftext
                     }
-
                     textviewPostItemScore.text = getShortenedValue(currentPost.score)
                     textviewPostItemCommentCount.text = getShortenedValue(currentPost.num_comments)
                     val epoch = currentPost.created_utc
@@ -244,8 +185,6 @@ class AccountAdapter(private val onClickListener: OnItemClickListener) :
             }
         }
     }
-
-
     inner class UserInfoViewHolder(val binding: AccountUserInfoItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(postObject: RedditChildrenObject) {
@@ -260,18 +199,13 @@ class AccountAdapter(private val onClickListener: OnItemClickListener) :
                     if (epoch != null) {
                         textviewAccountAge.text = calculateAgeDifferenceLocalDateTime(epoch, 1)
                     }
-
                 }
-
             }
         }
-
-
     }
 
 
     //USER HISTORY
-
     inner class DefaultViewHolder(val binding: AccountDefaultItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
@@ -355,12 +289,8 @@ class AccountAdapter(private val onClickListener: OnItemClickListener) :
 
     interface OnItemClickListener {
         fun onInfoClick(infoItem: RedditChildrenObject, type: Int)
-
         fun onHistoryClick(historyType: String?, username: String?)
-
         fun onPostCommentClick(overviewItem: RedditChildrenObject, type: Int)
-
-
     }
 
 
@@ -377,22 +307,15 @@ class AccountAdapter(private val onClickListener: OnItemClickListener) :
         private val LOADING = 8
         private val ERROR = 9
 
+        const val removePart = "amp;"
 
         private val POST_COMPARATOR =
             object : DiffUtil.ItemCallback<RedditChildrenObject>() {
-                override fun areItemsTheSame(
-                    oldItem: RedditChildrenObject,
-                    newItem: RedditChildrenObject
-                ): Boolean {
-
+                override fun areItemsTheSame(oldItem: RedditChildrenObject, newItem: RedditChildrenObject): Boolean {
                     //CHANGE THIS TO data.name LATER SO WE DO NOT HAVE TO UPDATE EVEN IF SUBSCRIPTION COUNT CHANGES
                     return oldItem.data.toString() == newItem.data.toString()
                 }
-
-                override fun areContentsTheSame(
-                    oldItem: RedditChildrenObject,
-                    newItem: RedditChildrenObject
-                ): Boolean {
+                override fun areContentsTheSame(oldItem: RedditChildrenObject, newItem: RedditChildrenObject): Boolean {
                     return oldItem == newItem
                 }
 

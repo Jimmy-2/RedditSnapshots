@@ -23,10 +23,9 @@ class RedditPageViewModel @Inject constructor(
 
     //TODO CHANGE THIS
     val redditPagePosts = _accessToken.switchMap { accessT ->
-        redditApiRepository.getSubredditPostsList(_subredditName.value!!, _subredditType.value!!).cachedIn(viewModelScope)
+        redditApiRepository.getSubredditPostsList(_subredditName.value!!, _subredditType.value!!, null).cachedIn(viewModelScope)
 
     }
-
 
     fun checkIfAccessTokenChanged(accessToken: String) = viewModelScope.launch {
         //only if accessToken changes do we update subreddits
@@ -35,7 +34,6 @@ class RedditPageViewModel @Inject constructor(
 
         }
     }
-
 
     fun voteOnPost(typeOfVote: Int, post: RedditChildrenObject) = viewModelScope.launch {
         try {

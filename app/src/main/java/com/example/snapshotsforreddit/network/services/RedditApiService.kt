@@ -43,6 +43,7 @@ interface RedditApiService {
         @Query("before") before: String? = null,
     ): RedditJsonResponse
 
+    /*
     //TODO CHANGE PATHS
     @GET("/{r}/{subreddit}/?sr_detail=1/search?q={query}&restrict_sr={num}&sr_nsfw={nsfw}&sort={sort}")
     suspend fun getResultsByQuery(
@@ -58,6 +59,27 @@ interface RedditApiService {
         @Query("after") after: String? = null,
         @Query("before") before: String? = null,
     ): RedditJsonResponse
+    */
+
+    @GET("/{r}/{subreddit}/search")
+    suspend fun getSearchResults(
+        // @Header("Authorization") Authorization: String?,
+        @Header("User-Agent") User_Agent: String?,
+        @Path("r") type: String,
+        @Path("subreddit") subreddit: String,
+        @Query("q") q: String?
+        ,
+        @Query("restrict_sr") restrict_sr: Int,
+        @Query("sr_nsfw") sr_nsfw: String?,
+        @Query("sort") sort: String?,
+
+        @Query("limit") limit: Int,
+        @Query("after") after: String? = null,
+        @Query("before") before: String? = null,
+
+        @Query("sr_detail") sr_detail: Int?
+    ): RedditJsonResponse
+
 
 
 

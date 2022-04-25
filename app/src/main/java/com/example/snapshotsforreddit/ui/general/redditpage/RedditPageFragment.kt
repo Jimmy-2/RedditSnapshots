@@ -66,9 +66,10 @@ class RedditPageFragment: Fragment(R.layout.fragment_reddit_page), RedditPageAda
         _binding = null
     }
 
-    override fun onSearchSubmit(query: String?) {
-        if(query != null) {
-            //go to next screen
+    override fun onSearchSubmit(query: String?, subredditName: String) {
+        if(query != null && query != "") {
+            //emit these from viewmodel
+            findNavController().navigate(RedditPageFragmentDirections.actionRedditPageFragmentToSearchResultsFragment(query, subredditName))
         }
     }
 

@@ -16,6 +16,15 @@ class ApiTest {
         assertNotNull(response.body())
     }
 
+    @Test
+    fun getSearchResults() {
+        val response = api.getSearchResultsTest("r","aww","hello",1,null,null,25,null,null,1).execute()
+        println(response.raw().toString())
+        println(response.body())
+        assertNotNull(response.body())
+    }
+
+
     /*
     @Test
     fun getPostDetailInformation() {

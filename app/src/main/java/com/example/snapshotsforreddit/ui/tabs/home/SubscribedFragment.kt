@@ -59,6 +59,7 @@ class SubscribedFragment : Fragment(R.layout.fragment_subscribed), SubscribedAda
     }
 
     override fun onItemClick(subreddit: SubscribedChildrenObject) {
+        //TODO PUT LOGIC INTO VIEWMODEL NOT FRAGMENT
         if(subreddit.data?.display_name_prefixed != null) {
             val action = when {
                 subreddit.data.display_name_prefixed == "Home" -> {

@@ -35,6 +35,38 @@ class DefaultsDatasource {
         ),)
     }
 
+    fun addSearchBar(subreddit: String): List<RedditChildrenObject> {
+        return listOf(RedditChildrenObject(
+            kind = "search",
+            data = RedditChildrenData(
+                subreddit,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,null,
+                null,null,
+                null,
+                null,
+                null,
+                null,
+                null, null, null, null
+            )
+        ),)
+    }
+
     fun loadDefaultAccountItems(userInfo: UserInfo?): List<RedditChildrenObject> {
         return listOf(
             RedditChildrenObject(
