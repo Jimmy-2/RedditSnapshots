@@ -31,7 +31,6 @@ class SearchResultsFragment : Fragment(R.layout.fragment_search_results), Search
         }
 
         val currentSearchQuery = CurrentSearch(navigationArgs.searchQuery,navigationArgs.subredditName)
-        println("HELLO ${navigationArgs.searchQuery} ${navigationArgs.subredditName}")
         viewModel.changeQuery(currentSearchQuery )
 
 

@@ -1,7 +1,5 @@
 package com.example.snapshotsforreddit.ui.tabs.home
 
-import android.content.res.Resources
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -14,10 +12,10 @@ import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.HeaderItemBinding
 import com.example.snapshotsforreddit.databinding.SubscribedDefaultItemBinding
 import com.example.snapshotsforreddit.databinding.SubscribedItemBinding
-import com.example.snapshotsforreddit.network.responses.subscribed.SubscribedChildrenObject
+import com.example.snapshotsforreddit.network.responses.subreddit.SubredditChildrenObject
 
 class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
-    PagingDataAdapter<SubscribedChildrenObject, RecyclerView.ViewHolder>(
+    PagingDataAdapter<SubredditChildrenObject, RecyclerView.ViewHolder>(
         SUBREDDIT_COMPARATOR
     ) {
 
@@ -87,7 +85,7 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
             }
         }
 
-        fun bind(subredditObject: SubscribedChildrenObject) {
+        fun bind(subredditObject: SubredditChildrenObject) {
             val removePart = "amp;"
             //TODO FIX CODE HERE : REFORMAT STATEMENTS
             binding.apply {
@@ -132,7 +130,7 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
             }
         }
 
-        fun bind(subredditObject: SubscribedChildrenObject) {
+        fun bind(subredditObject: SubredditChildrenObject) {
             val removePart = "amp;"
             //TODO FIX CODE HERE : REFORMAT STATEMENTS
             binding.apply {
@@ -163,7 +161,7 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
     inner class HeaderViewHolder(val binding: HeaderItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(subredditObject: SubscribedChildrenObject) {
+        fun bind(subredditObject: SubredditChildrenObject) {
             binding.apply {
                 textviewHeader.text = "FOLLOWING"
             }
@@ -171,7 +169,7 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
     }
 
     interface OnItemClickListener {
-        fun onItemClick(subreddit: SubscribedChildrenObject)
+        fun onItemClick(subreddit: SubredditChildrenObject)
     }
 
     companion object {
@@ -181,18 +179,18 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
         private const val ERROR = 3
 
         private val SUBREDDIT_COMPARATOR =
-            object : DiffUtil.ItemCallback<SubscribedChildrenObject>() {
+            object : DiffUtil.ItemCallback<SubredditChildrenObject>() {
                 override fun areItemsTheSame(
-                    oldItem: SubscribedChildrenObject,
-                    newItem: SubscribedChildrenObject
+                    oldItem: SubredditChildrenObject,
+                    newItem: SubredditChildrenObject
                 ): Boolean {
                     //CHANGE THIS TO data.name LATER SO WE DO NOT HAVE TO UPDATE EVEN IF SUBSCRIPTION COUNT CHANGES
                     return oldItem.data == newItem.data
                 }
 
                 override fun areContentsTheSame(
-                    oldItem: SubscribedChildrenObject,
-                    newItem: SubscribedChildrenObject
+                    oldItem: SubredditChildrenObject,
+                    newItem: SubredditChildrenObject
                 ): Boolean {
                     return oldItem == newItem
                 }

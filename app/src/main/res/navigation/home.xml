@@ -24,20 +24,8 @@
             android:name="redditPageType"
             app:argType="string" />
         <action
-            android:id="@+id/action_redditPageFragment_to_postDetailFragment"
-            app:destination="@id/postDetailFragment" />
-        <action
             android:id="@+id/action_redditPageFragment_to_searchResultsFragment"
             app:destination="@id/searchResultsFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/postDetailFragment"
-        android:name="com.example.snapshotsforreddit.ui.general.post.PostDetailFragment"
-        android:label="fragment_post_detail"
-        tools:layout="@layout/fragment_post_detail" >
-        <argument
-            android:name="post_details"
-            app:argType="com.example.snapshotsforreddit.network.responses.RedditChildrenObject" />
     </fragment>
     <fragment
         android:id="@+id/searchResultsFragment"
@@ -49,7 +37,8 @@
             app:argType="string" />
         <argument
             android:name="subredditName"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 
 </navigation>

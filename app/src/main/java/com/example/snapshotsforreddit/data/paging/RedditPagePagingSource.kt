@@ -36,7 +36,7 @@ class RedditPagePagingSource(
                     "snapshots-for-reddit", limit = params.loadSize,
                     after = if (params is LoadParams.Append) params.key else null,
                     before = if (params is LoadParams.Prepend) params.key else null,
-                    type = subredditType ?: "",
+                    pageType = subredditType ?: "",
                     subreddit = subredditName ?: "",
                     sort = sort ?: "best"
                 ).data

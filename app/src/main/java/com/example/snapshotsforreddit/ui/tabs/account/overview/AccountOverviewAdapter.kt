@@ -14,7 +14,7 @@ import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
 import com.example.snapshotsforreddit.util.calculateAgeDifferenceLocalDateTime
 import com.example.snapshotsforreddit.util.getShortenedValue
 
-class AccountAdapter(private val onClickListener: OnItemClickListener) :
+class AccountOverviewAdapter(private val onClickListener: OnItemClickListener) :
     PagingDataAdapter<RedditChildrenObject, RecyclerView.ViewHolder>(
         POST_COMPARATOR
     ) {

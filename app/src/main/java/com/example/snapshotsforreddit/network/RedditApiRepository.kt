@@ -7,7 +7,7 @@ import com.example.snapshotsforreddit.BuildConfig
 import com.example.snapshotsforreddit.data.paging.AccountPagingSource
 import com.example.snapshotsforreddit.data.paging.RedditPagePagingSource
 import com.example.snapshotsforreddit.data.paging.SearchResultsPagingSource
-import com.example.snapshotsforreddit.data.paging.SubscribedPagingSource
+import com.example.snapshotsforreddit.data.paging.SubredditPagingSource
 import com.example.snapshotsforreddit.network.responses.account.UserInfo
 import com.example.snapshotsforreddit.network.services.RedditApiService
 import javax.inject.Inject
@@ -19,7 +19,7 @@ class RedditApiRepository @Inject constructor(private val redditApiService: Redd
     fun getSubscribedSubredditsList() = Pager(
         PagingConfig(count)
     ) {
-        SubscribedPagingSource(redditApiService)
+        SubredditPagingSource(redditApiService, null, null, null)
     }.liveData
 
     fun getSubredditPostsList(subredditName: String, subredditType: String, sort: String?) =
@@ -29,11 +29,18 @@ class RedditApiRepository @Inject constructor(private val redditApiService: Redd
             RedditPagePagingSource(redditApiService, subredditName, subredditType, sort)
         }.liveData
 
-    fun getSearchResultsList(subredditName: String, subredditType: String, query: String?, subredditOnly: Int?, includeNSFW: String?, sort: String?) =
+    fun getSearchResultsList(subredditName: String?, subredditType: String, query: String?, searchType: String?, subredditOnly: Int?, includeNSFW: String?, sort: String?) =
         Pager(
             PagingConfig(count)
         ) {
-            SearchResultsPagingSource(redditApiService, subredditName, subredditType, query, subredditOnly, includeNSFW, sort)
+            SearchResultsPagingSource(redditApiService, subredditName, subredditType, query, searchType, subredditOnly, includeNSFW, sort)
+        }.liveData
+
+    fun getSearchResultsSubredditList(query: String?, searchType: String?, includeNSFW: Int?) =
+        Pager(
+            PagingConfig(count)
+        ) {
+            SubredditPagingSource(redditApiService, query, searchType, includeNSFW)
         }.liveData
 
 

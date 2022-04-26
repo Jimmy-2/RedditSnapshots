@@ -1,7 +1,7 @@
 package com.example.snapshotsforreddit
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         setupBottomNavMenu(navController)
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.subscribedFragment,R.id.inboxFragment, R.id.accountOverviewFragment, R.id.downloadedPostsFragment,  R.id.optionsFragment)
+            setOf(R.id.subscribedFragment,R.id.inboxFragment, R.id.accountOverviewFragment, R.id.searchFragment, R.id.downloadedPostsFragment)
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
     }

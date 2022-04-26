@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), AccountAdapter.OnItemClickListener {
+class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), AccountOverviewAdapter.OnItemClickListener {
     private val viewModel: AccountOverviewViewModel by viewModels()
 
     private var _binding: FragmentAccountOverviewBinding? = null
@@ -29,7 +29,7 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Acc
 
         _binding  = FragmentAccountOverviewBinding.bind(view)
 
-        val accountOverviewAdapter = AccountAdapter (this)
+        val accountOverviewAdapter = AccountOverviewAdapter (this)
 
         binding.apply {
             recyclerviewAccount.setHasFixedSize(true)
@@ -37,16 +37,6 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Acc
                 header = RedditLoadStateAdapter {accountOverviewAdapter.retry()},
                 footer = RedditLoadStateAdapter {accountOverviewAdapter.retry()}
             )
-
-            /*
-            buttonDialog.setOnClickListener { loginView ->
-                loginView.findNavController().navigate(
-                    AccountOverviewFragmentDirections.actionAccountOverviewFragmentToLoginDialogFragment()
-                )
-            }
-
-             */
-            //swipeRefresh.setOnRefreshListener { accountOverviewAdapter.refresh() }
         }
 
         viewModel.authFlow.observe(viewLifecycleOwner) { authFlowValues ->

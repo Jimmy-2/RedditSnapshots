@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.network.responses.subscribed
+package com.example.snapshotsforreddit.network.responses.subreddit
 
 import android.os.Parcelable
 import com.squareup.moshi.JsonClass
@@ -12,6 +12,11 @@ data class SubscribedChildrenData(
     val display_name: String?,
 
     val display_name_prefixed: String?,
+
+
+    val subscribers: Int?,
+    val created_utc: Long?,
+
 
     val community_icon: String?,
     val icon_img: String?,

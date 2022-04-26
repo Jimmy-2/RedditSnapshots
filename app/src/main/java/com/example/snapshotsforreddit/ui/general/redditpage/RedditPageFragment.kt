@@ -68,14 +68,14 @@ class RedditPageFragment: Fragment(R.layout.fragment_reddit_page), RedditPageAda
 
     override fun onSearchSubmit(query: String?, subredditName: String) {
         if(query != null && query != "") {
-            //emit these from viewmodel
+            //TODO emit these from viewmodel
             findNavController().navigate(RedditPageFragmentDirections.actionRedditPageFragmentToSearchResultsFragment(query, subredditName))
         }
     }
 
 
     override fun onItemClick(post: RedditChildrenObject) {
-        findNavController().navigate(RedditPageFragmentDirections.actionRedditPageFragmentToPostDetailFragment(post))
+        //findNavController().navigate(RedditPageFragmentDirections.actionRedditPageFragmentToPostDetailFragment(post))
     }
 
 

@@ -1,7 +1,7 @@
 package com.example.snapshotsforreddit.network.services
 
 import com.example.snapshotsforreddit.network.responses.TokenResponse
-import com.example.snapshotsforreddit.network.responses.subscribed.PostRequestResponse
+import com.example.snapshotsforreddit.network.responses.PostRequestResponse
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded

@@ -12,6 +12,7 @@ class SearchResultsPagingSource(
     private val subredditName: String?,
     private val subredditType: String?,
     private val query: String?,
+    private val searchType: String?,
     private val subredditOnly: Int?,
     private val includeNSFW: String?,
     private val sort: String?,
@@ -26,18 +27,35 @@ class SearchResultsPagingSource(
     override suspend fun load(params: LoadParams<String>): PagingSource.LoadResult<String, RedditChildrenObject> {
         return try {
 
-            val responseData = redditApiService.getSearchResults(
-                "snapshots-for-reddit",
-                limit = params.loadSize,
-                after = if (params is LoadParams.Append) params.key else null,
-                before = if (params is LoadParams.Prepend) params.key else null,
-                type = subredditType ?: "r",
-                subreddit = subredditName ?: "aww",
-                q = query,
-                restrict_sr = subredditOnly ?: 1,
-                sr_nsfw = includeNSFW,
-                sort = sort ?: "relevance", sr_detail = 1
-            ).data
+            val responseData = if(subredditName == null){
+                redditApiService.getSearchResults(
+                    "snapshots-for-reddit",
+                    pageType = subredditType ?: "r",
+                    subreddit = subredditName ?: "aww",
+                    q = query,
+                    restrict_sr = 0,
+                    sr_nsfw = includeNSFW,
+                    type = searchType,
+                    limit = params.loadSize,
+                    after = if (params is LoadParams.Append) params.key else null,
+                    before = if (params is LoadParams.Prepend) params.key else null,
+                    sort = sort ?: "relevance", sr_detail = 1
+                ).data
+            }else {
+                redditApiService.getSearchResults(
+                    "snapshots-for-reddit",
+                    pageType = subredditType ?: "r",
+                    subreddit = subredditName,
+                    q = query,
+                    restrict_sr = subredditOnly ?: 1,
+                    sr_nsfw = includeNSFW,
+                    type = searchType,
+                    limit = params.loadSize,
+                    after = if (params is LoadParams.Append) params.key else null,
+                    before = if (params is LoadParams.Prepend) params.key else null,
+                    sort = sort ?: "relevance", sr_detail = 1
+                ).data
+            }
 
 
             val searchResults = responseData!!.children

@@ -4,7 +4,7 @@ import com.example.snapshotsforreddit.network.responses.RedditJsonResponse
 import com.example.snapshotsforreddit.network.responses.TokenResponse
 import com.example.snapshotsforreddit.network.responses.account.User
 import com.example.snapshotsforreddit.network.responses.account.Username
-import com.example.snapshotsforreddit.network.responses.subscribed.SubscribedJsonResponse
+import com.example.snapshotsforreddit.network.responses.subreddit.SubredditJsonResponse
 import com.example.snapshotsforreddit.network.services.RedditApiServiceTest.Companion.retrofitGetToken
 import com.example.snapshotsforreddit.network.services.RedditApiServiceTest.Companion.retrofitOAuth
 import com.example.snapshotsforreddit.network.services.RedditApiServiceTest.Companion.retrofitTest
@@ -94,7 +94,7 @@ interface RedditApiServiceTest {
     fun getSubscribedList(
         @Header("Authorization") Authorization: String?,
         @Header("User-Agent") User_Agent: String?
-    ): Call<SubscribedJsonResponse>
+    ): Call<SubredditJsonResponse>
 
     @GET("/user/{username}/about")
     fun getUserInfoTest(

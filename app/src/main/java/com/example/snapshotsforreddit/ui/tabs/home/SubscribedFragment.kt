@@ -7,7 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentSubscribedBinding
-import com.example.snapshotsforreddit.network.responses.subscribed.SubscribedChildrenObject
+import com.example.snapshotsforreddit.network.responses.subreddit.SubredditChildrenObject
 import com.example.snapshotsforreddit.ui.RedditLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -58,7 +58,7 @@ class SubscribedFragment : Fragment(R.layout.fragment_subscribed), SubscribedAda
         _binding = null
     }
 
-    override fun onItemClick(subreddit: SubscribedChildrenObject) {
+    override fun onItemClick(subreddit: SubredditChildrenObject) {
         //TODO PUT LOGIC INTO VIEWMODEL NOT FRAGMENT
         if(subreddit.data?.display_name_prefixed != null) {
             val action = when {

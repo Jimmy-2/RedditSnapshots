@@ -4,7 +4,7 @@ import android.os.Parcelable
 import com.example.snapshotsforreddit.network.responses.account.UserInfo
 import com.example.snapshotsforreddit.network.responses.postimage.ImagePreview
 import com.example.snapshotsforreddit.network.responses.postvideo.RedditPageMedia
-import com.example.snapshotsforreddit.network.responses.subscribed.SubscribedChildrenData
+import com.example.snapshotsforreddit.network.responses.subreddit.SubscribedChildrenData
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
 
@@ -103,7 +103,6 @@ data class RedditChildrenData(
     //contains data that you can get from a subreddit's /about endpoint
     //use this to get subreddit icon
     val sr_detail: SubscribedChildrenData?,
-
 
     //not used atm
     val permalink: String?,

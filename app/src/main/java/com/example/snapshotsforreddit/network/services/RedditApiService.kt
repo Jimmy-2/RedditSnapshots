@@ -1,10 +1,10 @@
 package com.example.snapshotsforreddit.network.services
 
+import com.example.snapshotsforreddit.network.responses.PostRequestResponse
 import com.example.snapshotsforreddit.network.responses.RedditJsonResponse
 import com.example.snapshotsforreddit.network.responses.account.User
 import com.example.snapshotsforreddit.network.responses.account.Username
-import com.example.snapshotsforreddit.network.responses.subscribed.PostRequestResponse
-import com.example.snapshotsforreddit.network.responses.subscribed.SubscribedJsonResponse
+import com.example.snapshotsforreddit.network.responses.subreddit.SubredditJsonResponse
 import retrofit2.http.*
 
 interface RedditApiService {
@@ -18,7 +18,7 @@ interface RedditApiService {
         //@Header("Authorization") Authorization: String?,
         @Header("User-Agent") User_Agent: String?,
         @Query("after") after: String? = null
-    ): SubscribedJsonResponse
+    ): SubredditJsonResponse
 
     @GET("/{sort}/?sr_detail=1")
     suspend fun getHomePosts(
@@ -35,7 +35,7 @@ interface RedditApiService {
     suspend fun getSubredditPosts(
         // @Header("Authorization") Authorization: String?,
         @Header("User-Agent") User_Agent: String?,
-        @Path("r") type: String,
+        @Path("r") pageType: String,
         @Path("subreddit") subreddit: String,
         @Path("sort") sort: String?,
         @Query("limit") limit: Int,
@@ -43,35 +43,19 @@ interface RedditApiService {
         @Query("before") before: String? = null,
     ): RedditJsonResponse
 
-    /*
-    //TODO CHANGE PATHS
-    @GET("/{r}/{subreddit}/?sr_detail=1/search?q={query}&restrict_sr={num}&sr_nsfw={nsfw}&sort={sort}")
-    suspend fun getResultsByQuery(
-        // @Header("Authorization") Authorization: String?,
-        @Header("User-Agent") User_Agent: String?,
-        @Path("r") type: String,
-        @Path("subreddit") subreddit: String,
-        @Path("query") query: String,
-        @Path("num") num: Int,
-        @Path("nsfw") nsfw: String?,
-        @Path("sort") sort: String?,
-        @Query("limit") limit: Int,
-        @Query("after") after: String? = null,
-        @Query("before") before: String? = null,
-    ): RedditJsonResponse
-    */
 
     @GET("/{r}/{subreddit}/search")
     suspend fun getSearchResults(
         // @Header("Authorization") Authorization: String?,
         @Header("User-Agent") User_Agent: String?,
-        @Path("r") type: String,
+        @Path("r") pageType: String,
         @Path("subreddit") subreddit: String,
         @Query("q") q: String?
         ,
         @Query("restrict_sr") restrict_sr: Int,
         @Query("sr_nsfw") sr_nsfw: String?,
         @Query("sort") sort: String?,
+        @Query("type") type: String?,
 
         @Query("limit") limit: Int,
         @Query("after") after: String? = null,
@@ -80,6 +64,16 @@ interface RedditApiService {
         @Query("sr_detail") sr_detail: Int?
     ): RedditJsonResponse
 
+    @GET("/search")
+    suspend fun getSearchResultsSubreddit(
+        @Header("User-Agent") User_Agent: String?,
+        @Query("q") q: String?,
+        @Query("type") type: String?,
+        @Query("include_over_18") include_over_18r: Int?,
+        @Query("limit") limit: Int,
+        @Query("after") after: String? = null,
+        @Query("before") before: String? = null,
+    ): SubredditJsonResponse
 
 
 

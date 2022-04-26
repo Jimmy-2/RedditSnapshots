@@ -3,26 +3,26 @@ package com.example.snapshotsforreddit.data
 import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
 import com.example.snapshotsforreddit.network.responses.account.UserInfo
-import com.example.snapshotsforreddit.network.responses.subscribed.SubscribedChildrenData
-import com.example.snapshotsforreddit.network.responses.subscribed.SubscribedChildrenObject
+import com.example.snapshotsforreddit.network.responses.subreddit.SubredditChildrenObject
+import com.example.snapshotsforreddit.network.responses.subreddit.SubscribedChildrenData
 
 class DefaultsDatasource {
-    fun loadDefaultSubreddits(): List<SubscribedChildrenObject> {
+    fun loadDefaultSubreddits(): List<SubredditChildrenObject> {
         return listOf(
-            SubscribedChildrenObject(
+            SubredditChildrenObject(
                 kind = "default",
-                data = SubscribedChildrenData("Home", "Home", null, null, null, true, "Posts from your subscribed subreddits")
+                data = SubscribedChildrenData("Home", "Home", null,null,null, null, null, true, "Posts from your subscribed subreddits")
             ),
-            SubscribedChildrenObject(
+            SubredditChildrenObject(
                 kind = "default",
-                data = SubscribedChildrenData("Popular Posts", "r/Popular", null, null, "r", true, "Popular recommended posts from Reddit")
+                data = SubscribedChildrenData("Popular Posts", "r/Popular", null,null,null, null, "r", true, "Popular recommended posts from Reddit")
             ),
-            SubscribedChildrenObject(
+            SubredditChildrenObject(
                 kind = "default",
-                data = SubscribedChildrenData("All Posts", "r/All", null, null, "r", true, "Most active posts from all of Reddit")
+                data = SubscribedChildrenData("All Posts", "r/All", null,null,null, null, "r", true, "Most active posts from all of Reddit")
             ),
 
-            SubscribedChildrenObject(
+            SubredditChildrenObject(
                 kind = "header",
                 data = null
             ),

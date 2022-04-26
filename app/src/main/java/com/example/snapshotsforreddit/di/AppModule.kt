@@ -35,14 +35,7 @@ object AppModule {
         .fallbackToDestructiveMigration()
         .addCallback(callback)
         .build()
-    //the = sign basically is equivalent to
-    /*
-            {
-            return Room.databaseBuilder(app, PostRoomDatabase::class.java, "post_database")
-        .fallbackToDestructiveMigration()
-        .build()
-            }
-     */
+
 
     //create the actual post dao object we need to make database operation
     @Provides

@@ -17,7 +17,7 @@ import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
 import com.example.snapshotsforreddit.util.calculateAgeDifferenceLocalDateTime
 import com.example.snapshotsforreddit.util.getShortenedValue
 
-class SearchResultsAdapter(private val onClickListener: OnItemClickListener) : PagingDataAdapter<RedditChildrenObject, RecyclerView.ViewHolder>(POST_COMPARATOR) {
+class SearchResultsAdapter(private val onClickListener: OnItemClickListener) : PagingDataAdapter<RedditChildrenObject, RecyclerView.ViewHolder>(SEARCH_RESULT_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -44,7 +44,10 @@ class SearchResultsAdapter(private val onClickListener: OnItemClickListener) : P
             else -> ERROR
         }
 
+
+
     }
+
 
     inner class PostViewHolder(private val binding: PostItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -270,9 +273,10 @@ class SearchResultsAdapter(private val onClickListener: OnItemClickListener) : P
         private const val upvoteColor = "#E24824"
         private const val downvoteColor = "#5250DE"
 
-        private val POST_COMPARATOR = object : DiffUtil.ItemCallback<RedditChildrenObject>() {
+        private val SEARCH_RESULT_COMPARATOR = object : DiffUtil.ItemCallback<RedditChildrenObject>() {
             override fun areItemsTheSame(oldItem: RedditChildrenObject, newItem: RedditChildrenObject): Boolean {
                 //CHANGE THIS TO data.name LATER SO WE DO NOT HAVE TO UPDATE EVEN IF SUBSCRIPTION COUNT CHANGES
+                //TODO FIX ISSUE WITH IMAGE DUPLICATION
                 return oldItem.data.toString() == newItem.data.toString()
             }
             override fun areContentsTheSame(oldItem: RedditChildrenObject, newItem: RedditChildrenObject): Boolean {

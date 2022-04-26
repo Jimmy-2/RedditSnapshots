@@ -9,6 +9,5 @@
     <include app:graph="@navigation/inbox"/>
     <include app:graph="@navigation/account"/>
     <include app:graph="@navigation/search"/>
-    <include app:graph="@navigation/options"/>
     <include app:graph="@navigation/downloaded"/>
 </navigation>

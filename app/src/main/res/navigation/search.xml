@@ -1,6 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/search">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/search"
+    app:startDestination="@id/searchFragment">
 
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.snapshotsforreddit.ui.tabs.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_searchResultsFragment2"
+            app:destination="@id/searchResultsFragment2" />
+        <action
+            android:id="@+id/action_searchFragment_to_userOverviewFragment"
+            app:destination="@id/userOverviewFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_searchResultsSubredditFragment"
+            app:destination="@id/searchResultsSubredditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchResultsFragment2"
+        android:name="com.example.snapshotsforreddit.ui.general.searchresults.SearchResultsFragment"
+        android:label="fragment_search_results"
+        tools:layout="@layout/fragment_search_results" >
+        <argument
+            android:name="searchQuery"
+            app:argType="string" />
+        <argument
+            android:name="subredditName"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/userOverviewFragment"
+        android:name="com.example.snapshotsforreddit.ui.general.user.UserOverviewFragment"
+        android:label="fragment_user_overview"
+        tools:layout="@layout/fragment_user_overview" >
+        <argument
+            android:name="username"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/redditPageFragment2"
+        android:name="com.example.snapshotsforreddit.ui.general.redditpage.RedditPageFragment"
+        android:label="RedditPageFragment" />
+    <fragment
+        android:id="@+id/searchResultsSubredditFragment"
+        android:name="com.example.snapshotsforreddit.ui.tabs.search.subreddits.SearchResultsSubredditFragment"
+        android:label="fragment_search_results_subreddit"
+        tools:layout="@layout/fragment_search_results_subreddit" >
+        <action
+            android:id="@+id/action_searchResultsSubredditFragment_to_redditPageFragment2"
+            app:destination="@id/redditPageFragment2" />
+        <argument
+            android:name="searchQuery"
+            app:argType="string" />
+    </fragment>
 </navigation>

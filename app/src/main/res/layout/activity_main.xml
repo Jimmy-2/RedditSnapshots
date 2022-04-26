@@ -21,5 +21,6 @@
         android:id="@+id/bottom_nav_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:labelVisibilityMode="labeled"
         app:menu="@menu/bottom_nav_bar" />
 </LinearLayout>
