@@ -16,8 +16,10 @@ import javax.inject.Singleton
 @Singleton
 class RedditApiRepository @Inject constructor(private val redditApiService: RedditApiService) {
 
+    //TODO CHANGE PAGING SIZE AFTER ADDING CACHING TO PAGINATION
+
     fun getSubscribedSubredditsList() = Pager(
-        PagingConfig(count)
+        PagingConfig(50)
     ) {
         SubredditPagingSource(redditApiService, null, null, null)
     }.liveData
@@ -29,16 +31,16 @@ class RedditApiRepository @Inject constructor(private val redditApiService: Redd
             RedditPagePagingSource(redditApiService, subredditName, subredditType, sort)
         }.liveData
 
-    fun getSearchResultsList(subredditName: String?, subredditType: String, query: String?, searchType: String?, subredditOnly: Int?, includeNSFW: String?, sort: String?) =
+    fun getSearchResultsList(subredditName: String?, subredditType: String, query: String?, searchType: String?, includeNSFW: String?, sort: String?) =
         Pager(
             PagingConfig(count)
         ) {
-            SearchResultsPagingSource(redditApiService, subredditName, subredditType, query, searchType, subredditOnly, includeNSFW, sort)
+            SearchResultsPagingSource(redditApiService, subredditName, subredditType, query, searchType, includeNSFW, sort)
         }.liveData
 
     fun getSearchResultsSubredditList(query: String?, searchType: String?, includeNSFW: Int?) =
         Pager(
-            PagingConfig(count)
+            PagingConfig(50)
         ) {
             SubredditPagingSource(redditApiService, query, searchType, includeNSFW)
         }.liveData

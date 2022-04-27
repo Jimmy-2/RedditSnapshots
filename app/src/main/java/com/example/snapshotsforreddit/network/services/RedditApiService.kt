@@ -17,7 +17,8 @@ interface RedditApiService {
     suspend fun getSubscribedSubreddits(
         //@Header("Authorization") Authorization: String?,
         @Header("User-Agent") User_Agent: String?,
-        @Query("after") after: String? = null
+        @Query("after") after: String? = null,
+        @Query("before") before: String? = null,
     ): SubredditJsonResponse
 
     @GET("/{sort}/?sr_detail=1")

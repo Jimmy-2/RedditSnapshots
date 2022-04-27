@@ -61,19 +61,73 @@
         app:layout_constraintTop_toBottomOf="@+id/textview_post_item_subreddit"
         tools:text="1" />
 
-    <ImageView
-        android:id="@+id/imageview_post_item"
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:id="@+id/layout_post_details"
+
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textview_post_item_title"
-        app:layout_constraintVertical_bias="0.0"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageview_post_item"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview_post_item_title"
+            app:layout_constraintVertical_bias="0.0"
+            tools:srcCompat="@tools:sample/avatars" />
+        <TextView
+            android:id="@+id/textview_post_item_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:padding="8dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview_post_item_title"
+            tools:text="At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiore" />
+
+
+
+    </LinearLayout>
+<!--    <ImageView-->
+<!--        android:id="@+id/imageview_post_item"-->
+<!--        android:layout_width="fill_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:adjustViewBounds="true"-->
+<!--        android:scaleType="fitCenter"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textview_post_item_title"-->
+<!--        app:layout_constraintVertical_bias="0.0"-->
+<!--        tools:srcCompat="@tools:sample/avatars" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/textview_post_item_text"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="4dp"-->
+<!--        android:layout_marginEnd="4dp"-->
+<!--        android:ellipsize="end"-->
+<!--        android:maxLines="3"-->
+<!--        android:padding="8dp"-->
+<!--        android:textAppearance="@style/TextAppearance.AppCompat.Body2"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textview_post_item_title"-->
+<!--        tools:text="At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiore" />-->
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -83,7 +137,7 @@
         android:layout_marginStart="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageview_post_item">
+        app:layout_constraintTop_toBottomOf="@+id/layout_post_details">
 
 
         <ImageView
@@ -124,7 +178,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/layout_upvote_count"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toEndOf="@+id/layout_upvote_count"
-        app:layout_constraintTop_toBottomOf="@+id/imageview_post_item"
+        app:layout_constraintTop_toBottomOf="@+id/layout_post_details"
         app:srcCompat="@drawable/ic_comment"
         tools:srcCompat="@drawable/ic_comment" />
 
@@ -139,7 +193,7 @@
         android:paddingBottom="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/image_comment"
         app:layout_constraintStart_toEndOf="@+id/image_comment"
-        app:layout_constraintTop_toBottomOf="@+id/imageview_post_item"
+        app:layout_constraintTop_toBottomOf="@+id/layout_post_details"
         tools:text="300" />
 
 
@@ -152,7 +206,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/layout_upvote_count"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toEndOf="@+id/textview_post_item_comment_count"
-        app:layout_constraintTop_toBottomOf="@+id/imageview_post_item"
+        app:layout_constraintTop_toBottomOf="@+id/layout_post_details"
         app:srcCompat="@drawable/ic_clock"
         tools:srcCompat="@drawable/ic_clock" />
 
@@ -166,7 +220,7 @@
         android:paddingBottom="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/image_age"
         app:layout_constraintStart_toEndOf="@+id/image_age"
-        app:layout_constraintTop_toBottomOf="@+id/imageview_post_item"
+        app:layout_constraintTop_toBottomOf="@+id/layout_post_details"
         tools:text="300" />
 
 
@@ -178,7 +232,7 @@
         app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/card_downvote_button"
-        app:layout_constraintTop_toBottomOf="@+id/imageview_post_item">
+        app:layout_constraintTop_toBottomOf="@+id/layout_post_details">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -209,7 +263,7 @@
         app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageview_post_item">
+        app:layout_constraintTop_toBottomOf="@+id/layout_post_details">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

@@ -12,9 +12,7 @@ import javax.inject.Inject
 data class CurrentSearch(val currentSearchQuery: String, val currentSubreddit: String?)
 
 @HiltViewModel
-class SearchResultsViewModel @Inject constructor(private val redditApiRepository: RedditApiRepository) :
-    ViewModel() {
-
+class SearchResultsViewModel @Inject constructor(private val redditApiRepository: RedditApiRepository) : ViewModel() {
     private val currentSearch = MutableLiveData<CurrentSearch>()
 
     val searchResults = currentSearch.switchMap { search ->
@@ -23,11 +21,9 @@ class SearchResultsViewModel @Inject constructor(private val redditApiRepository
             "r",
             search.currentSearchQuery,
             null,
-            1,
             null,
             null
         ).cachedIn(viewModelScope)
-
     }
 
     fun changeQuery(currentSearchQuery: CurrentSearch) {

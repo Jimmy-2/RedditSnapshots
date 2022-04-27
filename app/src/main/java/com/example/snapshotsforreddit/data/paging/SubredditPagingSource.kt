@@ -37,6 +37,7 @@ class SubredditPagingSource(
                 redditApiService.getSubscribedSubreddits(
                     "snapshots-for-reddit",
                     after = if (params is LoadParams.Append) params.key else null,
+                    before = if (params is LoadParams.Prepend) params.key else null,
                 )
             } else {
                 redditApiService.getSearchResultsSubreddit(

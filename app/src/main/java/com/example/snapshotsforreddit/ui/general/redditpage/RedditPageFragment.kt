@@ -8,14 +8,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.paging.CombinedLoadStates
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentRedditPageBinding
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
 import com.example.snapshotsforreddit.ui.RedditLoadStateAdapter
+import com.example.snapshotsforreddit.util.changeViewOnLoadState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RedditPageFragment: Fragment(R.layout.fragment_reddit_page), RedditPageAdapter.OnItemClickListener {
+class RedditPageFragment : Fragment(R.layout.fragment_reddit_page),
+    RedditPageAdapter.OnItemClickListener {
     private val navigationArgs: RedditPageFragmentArgs by navArgs()
     private val viewModel: RedditPageViewModel by viewModels()
 
@@ -26,19 +29,21 @@ class RedditPageFragment: Fragment(R.layout.fragment_reddit_page), RedditPageAda
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        _binding  = FragmentRedditPageBinding.bind(view)
+        _binding = FragmentRedditPageBinding.bind(view)
 
         val redditPageAdapter = RedditPageAdapter(this)
 
         binding.apply {
             recyclerviewPosts.setHasFixedSize(true)
             recyclerviewPosts.adapter = redditPageAdapter.withLoadStateHeaderAndFooter(
-                header = RedditLoadStateAdapter {redditPageAdapter.retry()},
-                footer = RedditLoadStateAdapter {redditPageAdapter.retry()}
+                header = RedditLoadStateAdapter { redditPageAdapter.retry() },
+                footer = RedditLoadStateAdapter { redditPageAdapter.retry() }
             )
+            refreshRedditPage.setOnRefreshListener { redditPageAdapter.refresh() }
+            buttonRedditPageRetry.setOnClickListener { redditPageAdapter.retry() }
         }
 
-        val redditPageName= navigationArgs.redditPageName
+        val redditPageName = navigationArgs.redditPageName
         val redditPageType = navigationArgs.redditPageType
         viewModel.redditPageInformation(redditPageName, redditPageType)
 
@@ -52,8 +57,26 @@ class RedditPageFragment: Fragment(R.layout.fragment_reddit_page), RedditPageAda
 
         }
 
+        //depending on the load state of the adapter (list of items) (error, loading, no results), we will display the necessary view for the user to see
+        redditPageAdapter.addLoadStateListener { loadState: CombinedLoadStates ->
+            binding.apply {
+                changeViewOnLoadState(
+                    loadState,
+                    redditPageAdapter.itemCount,
+                    1,
+                    progressbarRedditPage,
+                    recyclerviewPosts,
+                    buttonRedditPageRetry,
+                    textviewRedditPageError,
+                    textviewRedditPageEmpty,
+                    refreshRedditPage
+                )
+            }
+        }
+
         setHasOptionsMenu(true)
     }
+
 
     //inflate/activate options menu
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -67,9 +90,14 @@ class RedditPageFragment: Fragment(R.layout.fragment_reddit_page), RedditPageAda
     }
 
     override fun onSearchSubmit(query: String?, subredditName: String) {
-        if(query != null && query != "") {
+        if (query != null && query != "") {
             //TODO emit these from viewmodel
-            findNavController().navigate(RedditPageFragmentDirections.actionRedditPageFragmentToSearchResultsFragment(query, subredditName))
+            findNavController().navigate(
+                RedditPageFragmentDirections.actionRedditPageFragmentToSearchResultsFragment(
+                    query,
+                    subredditName
+                )
+            )
         }
     }
 

@@ -9,6 +9,7 @@ import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentSubscribedBinding
 import com.example.snapshotsforreddit.network.responses.subreddit.SubredditChildrenObject
 import com.example.snapshotsforreddit.ui.RedditLoadStateAdapter
+import com.example.snapshotsforreddit.util.changeViewOnLoadState
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -29,11 +30,14 @@ class SubscribedFragment : Fragment(R.layout.fragment_subscribed), SubscribedAda
         val subscribedAdapter = SubscribedAdapter(this)
 
         binding.apply {
+            recyclerviewSubreddits.itemAnimator = null
             recyclerviewSubreddits.setHasFixedSize(true)
             recyclerviewSubreddits.adapter = subscribedAdapter.withLoadStateHeaderAndFooter(
                 header = RedditLoadStateAdapter {subscribedAdapter .retry()},
                 footer = RedditLoadStateAdapter {subscribedAdapter .retry()}
             )
+            refreshSubscribed.setOnRefreshListener { subscribedAdapter.refresh() }
+            buttonSubscribedRetry.setOnClickListener { subscribedAdapter.retry() }
         }
 
 
@@ -48,6 +52,15 @@ class SubscribedFragment : Fragment(R.layout.fragment_subscribed), SubscribedAda
             //connect data to adapter
             subscribedAdapter.submitData(viewLifecycleOwner.lifecycle, it)
 
+        }
+
+
+
+        //depending on the load state of the adapter (list of items) (error, loading, no results), we will display the necessary view for the user to see
+        subscribedAdapter.addLoadStateListener { loadState ->
+            binding.apply {
+                changeViewOnLoadState(loadState, subscribedAdapter.itemCount, 0 , progressbarSubscribed, recyclerviewSubreddits, buttonSubscribedRetry, textviewSubscribedError, textviewSubscribedEmpty, refreshSubscribed)
+            }
         }
 
     }

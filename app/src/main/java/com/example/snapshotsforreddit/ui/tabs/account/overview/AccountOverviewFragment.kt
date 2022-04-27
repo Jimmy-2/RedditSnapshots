@@ -14,6 +14,7 @@ import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentAccountOverviewBinding
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
 import com.example.snapshotsforreddit.ui.RedditLoadStateAdapter
+import com.example.snapshotsforreddit.util.changeViewOnLoadState
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -32,19 +33,21 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Acc
         val accountOverviewAdapter = AccountOverviewAdapter (this)
 
         binding.apply {
-            recyclerviewAccount.setHasFixedSize(true)
-            recyclerviewAccount.adapter = accountOverviewAdapter.withLoadStateHeaderAndFooter(
+            recyclerviewAccountOverview.setHasFixedSize(true)
+            recyclerviewAccountOverview.adapter = accountOverviewAdapter.withLoadStateHeaderAndFooter(
                 header = RedditLoadStateAdapter {accountOverviewAdapter.retry()},
                 footer = RedditLoadStateAdapter {accountOverviewAdapter.retry()}
             )
+            refreshAccountOverview.setOnRefreshListener { accountOverviewAdapter.refresh()}
+            buttonAccountOverviewRetry.setOnClickListener { accountOverviewAdapter.retry() }
         }
 
         viewModel.authFlow.observe(viewLifecycleOwner) { authFlowValues ->
 
             if(authFlowValues.username == "") {
-                binding.recyclerviewAccount.visibility = View.GONE
+                binding.recyclerviewAccountOverview.visibility = View.GONE
             }else {
-                binding.recyclerviewAccount.visibility = View.VISIBLE
+                binding.recyclerviewAccountOverview.visibility = View.VISIBLE
             }
             viewModel.checkIfUsernameChanged(authFlowValues.username)
         }
@@ -53,6 +56,13 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Acc
             //connect data to adapter
             accountOverviewAdapter.submitData(viewLifecycleOwner.lifecycle, it)
 
+        }
+
+        //depending on the load state of the adapter (list of items) (error, loading, no results), we will display the necessary view for the user to see
+        accountOverviewAdapter.addLoadStateListener { loadState ->
+            binding.apply {
+                changeViewOnLoadState(loadState, accountOverviewAdapter.itemCount, 0 , progressbarAccountOverview, recyclerviewAccountOverview, buttonAccountOverviewRetry, textviewAccountOverviewError, textviewAccountOverviewEmpty, refreshAccountOverview)
+            }
         }
 
         setHasOptionsMenu(true)

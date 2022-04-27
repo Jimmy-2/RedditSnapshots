@@ -20,8 +20,9 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
+
     <ProgressBar
-        android:id="@+id/progressbar_posts"
+        android:id="@+id/progressbar_reddit_page"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
@@ -33,20 +34,20 @@
 
 
     <TextView
-        android:id="@+id/textview_posts_error"
+        android:id="@+id/textview_reddit_page_error"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/button_posts_retry"
+        android:layout_above="@id/button_reddit_page_retry"
         android:layout_centerHorizontal="true"
         android:text="Error with loading"
-        app:layout_constraintBottom_toTopOf="@+id/button_posts_retry"
+        app:layout_constraintBottom_toTopOf="@+id/button_reddit_page_retry"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:visibility="gone"
         tools:visibility="visible"/>
 
     <Button
-        android:id="@+id/button_posts_retry"
+        android:id="@+id/button_reddit_page_retry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Retry"
@@ -58,11 +59,11 @@
         tools:visibility="visible" />
 
     <TextView
-        android:id="@+id/textview_posts_empty"
+        android:id="@+id/textview_reddit_page_empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="No posts found"
+        android:text="No results found"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

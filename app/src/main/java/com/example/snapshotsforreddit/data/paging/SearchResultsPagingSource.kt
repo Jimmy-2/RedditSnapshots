@@ -13,7 +13,6 @@ class SearchResultsPagingSource(
     private val subredditType: String?,
     private val query: String?,
     private val searchType: String?,
-    private val subredditOnly: Int?,
     private val includeNSFW: String?,
     private val sort: String?,
     ) : PagingSource<String, RedditChildrenObject>() {
@@ -24,16 +23,15 @@ class SearchResultsPagingSource(
         }
     }
 
-    override suspend fun load(params: LoadParams<String>): PagingSource.LoadResult<String, RedditChildrenObject> {
+    override suspend fun load(params: LoadParams<String>): LoadResult<String, RedditChildrenObject> {
         return try {
-
-            val responseData = if(subredditName == null){
+            val responseData =
                 redditApiService.getSearchResults(
                     "snapshots-for-reddit",
                     pageType = subredditType ?: "r",
-                    subreddit = subredditName ?: "aww",
+                    subreddit = subredditName ?: "all",
                     q = query,
-                    restrict_sr = 0,
+                    restrict_sr = if(subredditName == null) 0 else 1,
                     sr_nsfw = includeNSFW,
                     type = searchType,
                     limit = params.loadSize,
@@ -41,35 +39,17 @@ class SearchResultsPagingSource(
                     before = if (params is LoadParams.Prepend) params.key else null,
                     sort = sort ?: "relevance", sr_detail = 1
                 ).data
-            }else {
-                redditApiService.getSearchResults(
-                    "snapshots-for-reddit",
-                    pageType = subredditType ?: "r",
-                    subreddit = subredditName,
-                    q = query,
-                    restrict_sr = subredditOnly ?: 1,
-                    sr_nsfw = includeNSFW,
-                    type = searchType,
-                    limit = params.loadSize,
-                    after = if (params is LoadParams.Append) params.key else null,
-                    before = if (params is LoadParams.Prepend) params.key else null,
-                    sort = sort ?: "relevance", sr_detail = 1
-                ).data
-            }
-
 
             val searchResults = responseData!!.children
-
-
-
-            PagingSource.LoadResult.Page(
+            
+            LoadResult.Page(
                 data = searchResults,
                 prevKey = responseData.before,
                 nextKey = responseData.after
             )
 
         } catch (exception: IOException) {
-            PagingSource.LoadResult.Error(exception)
+            LoadResult.Error(exception)
         } catch (exception: HttpException) {
             LoadResult.Error(exception)
         }

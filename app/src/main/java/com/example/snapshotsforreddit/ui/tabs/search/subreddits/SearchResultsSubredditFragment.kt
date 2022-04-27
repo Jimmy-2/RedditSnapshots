@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentSearchResultsSubredditBinding
+import com.example.snapshotsforreddit.util.changeViewOnLoadState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,16 +28,25 @@ class SearchResultsSubredditFragment : Fragment(R.layout.fragment_search_results
         binding.apply {
             recyclerviewSearchResultsSubreddit.setHasFixedSize(true)
             recyclerviewSearchResultsSubreddit.adapter = searchResultsSubredditAdapter
+            refreshSearchResultsSubreddit.setOnRefreshListener { searchResultsSubredditAdapter.refresh() }
+            buttonSearchResultsSubredditRetry.setOnClickListener { searchResultsSubredditAdapter.retry() }
         }
 
         val currentSubredditSearchQuery = navigationArgs.searchQuery
         viewModel.changeQuery(currentSubredditSearchQuery)
 
-
         viewModel.searchResults.observe(viewLifecycleOwner) {
             //connect data to adapter
             searchResultsSubredditAdapter.submitData(viewLifecycleOwner.lifecycle, it)
 
+        }
+
+        //depending on the load state of the adapter (list of items) (error, loading, no results), we will display the necessary view for the user to see
+        searchResultsSubredditAdapter.addLoadStateListener { loadState ->
+            binding.apply {
+                changeViewOnLoadState(loadState, searchResultsSubredditAdapter.itemCount, 0 , progressbarSearchResultsSubreddit, recyclerviewSearchResultsSubreddit, buttonSearchResultsSubredditRetry, textviewSearchResultsSubredditError, textviewSearchResultsSubredditEmpty, refreshSearchResultsSubreddit)
+
+            }
         }
 
     }
