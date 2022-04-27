@@ -7,5 +7,5 @@
 ## Currently building up the reddit client before working on allowing users to download posts.
 
 ## WIP Demo Gifs:
-[Imgur Link]('https://i.imgur.com/YcBM8jd.gif)
+[Imgur Link](https://i.imgur.com/YcBM8jd.gif)
 
