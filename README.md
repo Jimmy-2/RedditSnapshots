@@ -5,3 +5,7 @@
 
 
 ## Currently building up the reddit client before working on allowing users to download posts.
+
+## WIP Demo Gifs:
+
+<img src='https://i.imgur.com/YcBM8jd.gif' title='April 26' width=''  /> 
