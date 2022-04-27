@@ -61,7 +61,17 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Acc
         //depending on the load state of the adapter (list of items) (error, loading, no results), we will display the necessary view for the user to see
         accountOverviewAdapter.addLoadStateListener { loadState ->
             binding.apply {
-                changeViewOnLoadState(loadState, accountOverviewAdapter.itemCount, 0 , progressbarAccountOverview, recyclerviewAccountOverview, buttonAccountOverviewRetry, textviewAccountOverviewError, textviewAccountOverviewEmpty, refreshAccountOverview)
+                changeViewOnLoadState(
+                    loadState,
+                    accountOverviewAdapter.itemCount,
+                    0,
+                    progressbarAccountOverview,
+                    recyclerviewAccountOverview,
+                    buttonAccountOverviewRetry,
+                    textviewAccountOverviewError,
+                    textviewAccountOverviewEmpty,
+                    refreshAccountOverview
+                )
             }
         }
 

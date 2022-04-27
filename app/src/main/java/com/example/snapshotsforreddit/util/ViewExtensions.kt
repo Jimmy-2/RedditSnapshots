@@ -28,6 +28,27 @@ inline fun SearchView.onQueryTextChanged(crossinline listener: (String) -> Unit)
     })
 }
 
+//fun Button.setOnClickListener(adapterPosition: Int, adapter: PagingDataAdapter) {
+//    val position = bindingAdapterPosition
+//    if (position != RecyclerView.NO_POSITION) {
+//        val post = adapter.getItem(position)
+//        if (post != null) {
+//            if (post.data?.likes == true) {
+//                post.data.likes = null
+//                onClickListener.onVoteClick(post, 0, position)
+//            } else {
+//                post.data?.likes = true
+//                onClickListener.onVoteClick(post, 1, position)
+//            }
+//
+//            notifyItemChanged(position)
+//        }
+//    }
+//}
+
+fun <T : RecyclerView.ViewHolder> RecyclerView.ViewHolder() {
+
+}
 
 fun changeViewOnLoadState(
     loadState: CombinedLoadStates,

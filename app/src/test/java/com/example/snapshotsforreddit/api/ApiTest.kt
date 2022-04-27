@@ -24,6 +24,14 @@ class ApiTest {
         assertNotNull(response.body())
     }
 
+    @Test
+    fun getSearchResultsSubreddit() {
+        val response = api.getSearchResultsSubreddit("dog","sr",null,25,null,null).execute()
+        println(response.raw().toString())
+        println(response.body())
+        assertNotNull(response.body())
+    }
+
 
     /*
     @Test

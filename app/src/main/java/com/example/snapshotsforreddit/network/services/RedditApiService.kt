@@ -65,7 +65,7 @@ interface RedditApiService {
         @Query("sr_detail") sr_detail: Int?
     ): RedditJsonResponse
 
-    @GET("/search")
+    @GET("/subreddits/search")
     suspend fun getSearchResultsSubreddit(
         @Header("User-Agent") User_Agent: String?,
         @Query("q") q: String?,

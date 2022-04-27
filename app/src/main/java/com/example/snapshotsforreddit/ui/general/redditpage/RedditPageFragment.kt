@@ -109,7 +109,7 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page),
 
     //type will tell us what the user has clicked on item
     //for example: if user clicked on the upvote button, the type will be 1
-    override fun onVoteClick(post: RedditChildrenObject, type: Int, position: Int) {
+    override fun onVoteClick(post: RedditChildrenObject, type: Int) {
         //pass the post object to the post details screen
         when (type) {
             -1 -> viewModel.voteOnPost(-1, post)

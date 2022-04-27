@@ -5,3 +5,7 @@
 
 
 ## Currently building up the reddit client before working on allowing users to download posts.
+
+## WIP Demo Gifs:
+[Imgur Link, Flickering bug with recording software. Will downsize and rerecord](https://i.imgur.com/YcBM8jd.gif)
+

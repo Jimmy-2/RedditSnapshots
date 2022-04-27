@@ -44,7 +44,17 @@ class SearchResultsSubredditFragment : Fragment(R.layout.fragment_search_results
         //depending on the load state of the adapter (list of items) (error, loading, no results), we will display the necessary view for the user to see
         searchResultsSubredditAdapter.addLoadStateListener { loadState ->
             binding.apply {
-                changeViewOnLoadState(loadState, searchResultsSubredditAdapter.itemCount, 0 , progressbarSearchResultsSubreddit, recyclerviewSearchResultsSubreddit, buttonSearchResultsSubredditRetry, textviewSearchResultsSubredditError, textviewSearchResultsSubredditEmpty, refreshSearchResultsSubreddit)
+                changeViewOnLoadState(
+                    loadState,
+                    searchResultsSubredditAdapter.itemCount,
+                    0,
+                    progressbarSearchResultsSubreddit,
+                    recyclerviewSearchResultsSubreddit,
+                    buttonSearchResultsSubredditRetry,
+                    textviewSearchResultsSubredditError,
+                    textviewSearchResultsSubredditEmpty,
+                    refreshSearchResultsSubreddit
+                )
 
             }
         }

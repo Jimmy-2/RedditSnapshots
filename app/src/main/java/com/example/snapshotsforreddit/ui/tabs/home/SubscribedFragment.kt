@@ -59,7 +59,17 @@ class SubscribedFragment : Fragment(R.layout.fragment_subscribed), SubscribedAda
         //depending on the load state of the adapter (list of items) (error, loading, no results), we will display the necessary view for the user to see
         subscribedAdapter.addLoadStateListener { loadState ->
             binding.apply {
-                changeViewOnLoadState(loadState, subscribedAdapter.itemCount, 0 , progressbarSubscribed, recyclerviewSubreddits, buttonSubscribedRetry, textviewSubscribedError, textviewSubscribedEmpty, refreshSubscribed)
+                changeViewOnLoadState(
+                    loadState,
+                    subscribedAdapter.itemCount,
+                    0,
+                    progressbarSubscribed,
+                    recyclerviewSubreddits,
+                    buttonSubscribedRetry,
+                    textviewSubscribedError,
+                    textviewSubscribedEmpty,
+                    refreshSubscribed
+                )
             }
         }
 

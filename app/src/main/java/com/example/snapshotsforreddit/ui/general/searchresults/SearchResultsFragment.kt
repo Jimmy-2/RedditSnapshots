@@ -49,7 +49,17 @@ class SearchResultsFragment : Fragment(R.layout.fragment_search_results), Search
         //depending on the load state of the adapter (list of items) (error, loading, no results), we will display the necessary view for the user to see
         searchResultsAdapter.addLoadStateListener { loadState ->
             binding.apply {
-                changeViewOnLoadState(loadState, searchResultsAdapter.itemCount, 0 , progressbarSearchResults, recyclerviewSearchResults, buttonSearchResultsRetry, textviewSearchResultsError, textviewSearchResultsEmpty, refreshSearchResults)
+                changeViewOnLoadState(
+                    loadState,
+                    searchResultsAdapter.itemCount,
+                    0,
+                    progressbarSearchResults,
+                    recyclerviewSearchResults,
+                    buttonSearchResultsRetry,
+                    textviewSearchResultsError,
+                    textviewSearchResultsEmpty,
+                    refreshSearchResults
+                )
             }
         }
 
@@ -64,8 +74,10 @@ class SearchResultsFragment : Fragment(R.layout.fragment_search_results), Search
 
     }
 
-    override fun onVoteClick(post: RedditChildrenObject, type: Int, position: Int) {
+    override fun onVoteClick(post: RedditChildrenObject, type: Int) {
 
     }
+
+
 
 }

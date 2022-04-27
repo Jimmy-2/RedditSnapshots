@@ -106,8 +106,8 @@ interface RedditApiServiceTest {
         // @Header("Authorization") Authorization: String?,
         @Path("r") type: String,
         @Path("subreddit") subreddit: String,
-        @Query("q") q: String?
-        ,
+        @Query("q") q: String?,
+
         @Query("restrict_sr") restrict_sr: Int,
         @Query("sr_nsfw") sr_nsfw: String?,
         @Query("sort") sort: String?,
@@ -117,6 +117,16 @@ interface RedditApiServiceTest {
         @Query("before") before: String? = null,
         @Query("sr_detail") sr_detail: Int? = 1
     ): Call<RedditJsonResponse>
+
+    @GET("/subreddits/search")
+    fun getSearchResultsSubreddit(
+        @Query("q") q: String?,
+        @Query("type") type: String?,
+        @Query("include_over_18") include_over_18r: Int?,
+        @Query("limit") limit: Int,
+        @Query("after") after: String? = null,
+        @Query("before") before: String? = null,
+    ): Call<SubredditJsonResponse>
 
 
 }
