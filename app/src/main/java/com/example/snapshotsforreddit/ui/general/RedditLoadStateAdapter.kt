@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.ui
+package com.example.snapshotsforreddit.ui.general
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,12 +6,12 @@ import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.snapshotsforreddit.databinding.LoadStateItemBinding
+import com.example.snapshotsforreddit.databinding.ItemLoadStateBinding
 
 class RedditLoadStateAdapter(private val retry: () -> Unit): LoadStateAdapter<RedditLoadStateAdapter.LoadStateItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): LoadStateItemViewHolder {
-        val binding = LoadStateItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemLoadStateBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return LoadStateItemViewHolder(binding)
     }
 
@@ -21,7 +21,7 @@ class RedditLoadStateAdapter(private val retry: () -> Unit): LoadStateAdapter<Re
         holder.bind(loadState)
     }
 
-    inner class LoadStateItemViewHolder(private val binding: LoadStateItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class LoadStateItemViewHolder(private val binding: ItemLoadStateBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.buttonLoadingRetry.setOnClickListener {
                 retry.invoke()

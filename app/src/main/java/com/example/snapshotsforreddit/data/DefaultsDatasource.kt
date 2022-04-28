@@ -39,7 +39,7 @@ class DefaultsDatasource {
         return listOf(RedditChildrenObject(
             kind = "search",
             data = RedditChildrenData(
-                subreddit,
+                subreddit = subreddit,
                 null,
                 null,
                 null,

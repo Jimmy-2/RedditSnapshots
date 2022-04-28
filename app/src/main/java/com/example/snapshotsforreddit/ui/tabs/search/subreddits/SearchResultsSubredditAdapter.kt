@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.snapshotsforreddit.databinding.SearchResultsSubredditItemBinding
+import com.example.snapshotsforreddit.databinding.ItemSearchResultsSubredditBinding
 import com.example.snapshotsforreddit.network.responses.subreddit.SubredditChildrenObject
 import com.example.snapshotsforreddit.util.calculateAgeDifferenceLocalDateTime
 import com.example.snapshotsforreddit.util.getShortenedValue
@@ -13,7 +13,7 @@ import com.example.snapshotsforreddit.util.getShortenedValue
 class SearchResultsSubredditAdapter : PagingDataAdapter<SubredditChildrenObject, SearchResultsSubredditAdapter.SubredditViewHolder>(SUBREDDIT_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubredditViewHolder {
-        val binding = SearchResultsSubredditItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemSearchResultsSubredditBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return SubredditViewHolder(binding)
     }
 
@@ -25,7 +25,7 @@ class SearchResultsSubredditAdapter : PagingDataAdapter<SubredditChildrenObject,
         }
     }
 
-    class SubredditViewHolder(private val binding: SearchResultsSubredditItemBinding) :
+    class SubredditViewHolder(private val binding: ItemSearchResultsSubredditBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(searchResultsSubreddit : SubredditChildrenObject) {

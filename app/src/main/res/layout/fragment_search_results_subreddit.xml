@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:background="@color/light_background"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/post_item" />
+            tools:listitem="@layout/item_post" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <ProgressBar

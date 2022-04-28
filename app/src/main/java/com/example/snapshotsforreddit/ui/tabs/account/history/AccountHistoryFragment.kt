@@ -8,8 +8,9 @@ import androidx.navigation.fragment.navArgs
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentAccountHistoryBinding
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
-import com.example.snapshotsforreddit.ui.RedditLoadStateAdapter
+import com.example.snapshotsforreddit.ui.general.RedditLoadStateAdapter
 import com.example.snapshotsforreddit.ui.tabs.account.overview.AccountOverviewAdapter
+import com.example.snapshotsforreddit.util.changeViewOnLoadState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,6 +37,8 @@ class AccountHistoryFragment : Fragment(R.layout.fragment_account_history), Acco
                 header = RedditLoadStateAdapter {accountHistoryAdapter.retry()},
                 footer = RedditLoadStateAdapter {accountHistoryAdapter.retry()}
             )
+            refreshAccountHistory.setOnRefreshListener { accountHistoryAdapter.refresh()}
+            buttonAccountHistoryRetry.setOnClickListener { accountHistoryAdapter.retry() }
 
         }
 
@@ -44,6 +47,24 @@ class AccountHistoryFragment : Fragment(R.layout.fragment_account_history), Acco
 
         viewModel.accountHistoryItems.observe(viewLifecycleOwner) {
             accountHistoryAdapter.submitData(viewLifecycleOwner.lifecycle, it)
+        }
+
+
+        //depending on the load state of the adapter (list of items) (error, loading, no results), we will display the necessary view for the user to see
+        accountHistoryAdapter.addLoadStateListener { loadState ->
+            binding.apply {
+                changeViewOnLoadState(
+                    loadState,
+                    accountHistoryAdapter.itemCount,
+                    0,
+                    progressbarAccountHistory,
+                    recyclerviewAccountHistory,
+                    buttonAccountHistoryRetry,
+                    textviewAccountHistoryError,
+                    textviewAccountHistoryEmpty,
+                    refreshAccountHistory
+                )
+            }
         }
 
 
@@ -63,6 +84,14 @@ class AccountHistoryFragment : Fragment(R.layout.fragment_account_history), Acco
     }
 
     override fun onPostCommentClick(overviewItem: RedditChildrenObject, type: Int) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onItemClick(post: RedditChildrenObject) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onVoteClick(post: RedditChildrenObject, type: Int) {
         TODO("Not yet implemented")
     }
 }

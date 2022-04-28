@@ -6,15 +6,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.snapshotsforreddit.data.room.Post
-
-import com.example.snapshotsforreddit.databinding.DownloadedPostItemBinding
+import com.example.snapshotsforreddit.databinding.ItemDownloadedPostBinding
 
 
 class DownloadedPostsAdapter(private val onClickListener: OnItemClickListener) : ListAdapter<Post, DownloadedPostsAdapter.DownloadedPostsViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DownloadedPostsViewHolder {
         //need parent.context for reference to activity/fragment to get layout inflater to inflate the binding layout
-        val binding = DownloadedPostItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemDownloadedPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         //instantiate viewholder and return it
         return DownloadedPostsViewHolder(binding)
@@ -26,7 +25,7 @@ class DownloadedPostsAdapter(private val onClickListener: OnItemClickListener) :
     }
 
     //instead of using find view by id for everything, we can use viewbinding
-    inner class DownloadedPostsViewHolder(private val binding: DownloadedPostItemBinding) :
+    inner class DownloadedPostsViewHolder(private val binding: ItemDownloadedPostBinding) :
         RecyclerView.ViewHolder(binding.root) {
         //executes when viewholder is instantiated
         init {

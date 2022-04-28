@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.ui.general.redditpage
+package com.example.snapshotsforreddit.ui.general
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.snapshotsforreddit.R
-import com.example.snapshotsforreddit.databinding.PostItemBinding
+import com.example.snapshotsforreddit.databinding.ItemPostBinding
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
 import com.example.snapshotsforreddit.util.calculateAgeDifferenceLocalDateTime
 import com.example.snapshotsforreddit.util.getShortenedValue
@@ -16,17 +16,16 @@ import com.example.snapshotsforreddit.util.getShortenedValue
 class PostViewHolder(
     private val adapter: PagingDataAdapter<RedditChildrenObject, RecyclerView.ViewHolder>,
     private val onClickListener: OnItemClickListener,
-    private val binding: PostItemBinding
-) :
-    RecyclerView.ViewHolder(binding.root) {
+    private val binding: ItemPostBinding
+) : RecyclerView.ViewHolder(binding.root) {
     private var post: RedditChildrenObject? = null
-
     init {
         binding.root.setOnClickListener {
             if (post != null) {
                 onClickListener.onItemClick(post!!)
             }
         }
+
         binding.cardUpvoteButton.setOnClickListener {
             val position = bindingAdapterPosition
             if (position != RecyclerView.NO_POSITION) {
@@ -48,10 +47,10 @@ class PostViewHolder(
                 if (post != null) {
                     if (post!!.data?.likes == false) {
                         post!!.data?.likes = null
-                        onClickListener.onVoteClick(post!!, 0,)
+                        onClickListener.onVoteClick(post!!, 0)
                     } else {
                         post!!.data?.likes = false
-                        onClickListener.onVoteClick(post!!, -1,)
+                        onClickListener.onVoteClick(post!!, -1)
                     }
                     adapter.notifyItemChanged(position)
                 }

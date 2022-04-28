@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.snapshotsforreddit.R
-import com.example.snapshotsforreddit.databinding.HeaderItemBinding
-import com.example.snapshotsforreddit.databinding.SubscribedDefaultItemBinding
-import com.example.snapshotsforreddit.databinding.SubscribedItemBinding
+import com.example.snapshotsforreddit.databinding.ItemHeaderBinding
+import com.example.snapshotsforreddit.databinding.ItemSubscribedBinding
+import com.example.snapshotsforreddit.databinding.ItemSubscribedDefaultBinding
 import com.example.snapshotsforreddit.network.responses.subreddit.SubredditChildrenObject
 
 class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
@@ -25,21 +25,21 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
     ): RecyclerView.ViewHolder {
         return when (viewType) {
             DEFAULT -> DefaultSubredditViewHolder(
-                SubscribedDefaultItemBinding.inflate(
+                ItemSubscribedDefaultBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
                 )
             )
             SUBREDDIT -> SubscribedSubredditViewHolder(
-                SubscribedItemBinding.inflate(
+                ItemSubscribedBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
                 )
             )
             HEADER -> HeaderViewHolder(
-                HeaderItemBinding.inflate(
+                ItemHeaderBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -71,7 +71,7 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
     }
 
 
-    inner class DefaultSubredditViewHolder(val binding: SubscribedDefaultItemBinding) :
+    inner class DefaultSubredditViewHolder(val binding: ItemSubscribedDefaultBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener {
@@ -116,7 +116,7 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
         }
     }
 
-    inner class SubscribedSubredditViewHolder(val binding: SubscribedItemBinding) :
+    inner class SubscribedSubredditViewHolder(val binding: ItemSubscribedBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener {
@@ -158,7 +158,7 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
         }
     }
 
-    inner class HeaderViewHolder(val binding: HeaderItemBinding) :
+    inner class HeaderViewHolder(val binding: ItemHeaderBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(subredditObject: SubredditChildrenObject) {

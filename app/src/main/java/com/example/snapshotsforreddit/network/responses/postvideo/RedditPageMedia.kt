@@ -1,7 +1,7 @@
 package com.example.snapshotsforreddit.network.responses.postvideo
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class RedditPageMedia (

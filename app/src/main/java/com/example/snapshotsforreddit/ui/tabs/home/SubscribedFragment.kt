@@ -8,7 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentSubscribedBinding
 import com.example.snapshotsforreddit.network.responses.subreddit.SubredditChildrenObject
-import com.example.snapshotsforreddit.ui.RedditLoadStateAdapter
+import com.example.snapshotsforreddit.ui.general.RedditLoadStateAdapter
 import com.example.snapshotsforreddit.util.changeViewOnLoadState
 import dagger.hilt.android.AndroidEntryPoint
 
