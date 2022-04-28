@@ -34,9 +34,9 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             buttonSearchSubreddit.setOnClickListener {
                 searchNavigate(viewModel.searchQuery.value, 0)
             }
-//            buttonSearchUser.setOnClickListener {
-//                searchNavigate(viewModel.searchQuery.value, 1)
-//            }
+            buttonSearchUser.setOnClickListener {
+                searchNavigate(viewModel.searchQuery.value, 1)
+            }
 
             searchViewSearchTab.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
                 override fun onQueryTextSubmit(query: String?): Boolean {
@@ -69,20 +69,13 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             })
 
         }
-
-
-
-
-
-
-
     }
 
     //TODO put logic in viewmodel and emit to fragment
     fun searchNavigate(searchQuery: String, searchType: Int?) {
         when(searchType) {
             0 -> findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToSearchResultsSubredditFragment(searchQuery))
-            //1 -> findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToUserFragment(searchQuery, null, "user"))
+            1 -> findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToUserOverviewFragment(searchQuery))
             else  -> findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToSearchResultsFragment2(searchQuery, null))
         }
 

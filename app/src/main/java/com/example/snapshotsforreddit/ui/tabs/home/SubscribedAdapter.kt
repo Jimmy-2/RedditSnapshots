@@ -1,6 +1,7 @@
 package com.example.snapshotsforreddit.ui.tabs.home
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
@@ -13,6 +14,7 @@ import com.example.snapshotsforreddit.databinding.ItemHeaderBinding
 import com.example.snapshotsforreddit.databinding.ItemSubscribedBinding
 import com.example.snapshotsforreddit.databinding.ItemSubscribedDefaultBinding
 import com.example.snapshotsforreddit.network.responses.subreddit.SubredditChildrenObject
+import com.example.snapshotsforreddit.ui.tabs.account.overview.AccountOverviewAdapter.HeaderViewHolder
 
 class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
     PagingDataAdapter<SubredditChildrenObject, RecyclerView.ViewHolder>(
@@ -24,7 +26,7 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
         viewType: Int
     ): RecyclerView.ViewHolder {
         return when (viewType) {
-            DEFAULT -> DefaultSubredditViewHolder(
+            DEFAULT -> DefaultSubscribedSubredditViewHolder(
                 ItemSubscribedDefaultBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
@@ -40,10 +42,11 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
             )
             HEADER -> HeaderViewHolder(
                 ItemHeaderBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            ))
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
             else -> throw IllegalArgumentException("Error with view type")
         }
     }
@@ -52,7 +55,7 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
         val currentItem = getItem(position)
         if (currentItem != null) {
             when (holder) {
-                is DefaultSubredditViewHolder -> holder.bind(currentItem)
+                is DefaultSubscribedSubredditViewHolder -> holder.bind(currentItem)
                 is SubscribedSubredditViewHolder -> holder.bind(currentItem)
                 is HeaderViewHolder -> holder.bind(currentItem)
             }
@@ -71,7 +74,7 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
     }
 
 
-    inner class DefaultSubredditViewHolder(val binding: ItemSubscribedDefaultBinding) :
+    inner class DefaultSubscribedSubredditViewHolder(val binding: ItemSubscribedDefaultBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener {
@@ -163,10 +166,13 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
 
         fun bind(subredditObject: SubredditChildrenObject) {
             binding.apply {
-                textviewHeader.text = "FOLLOWING"
+                textviewHeaderSubscribed.visibility = View.VISIBLE
+                textviewHeaderSubscribed.text = "FOLLOWING"
             }
         }
     }
+
+
 
     interface OnItemClickListener {
         fun onItemClick(subreddit: SubredditChildrenObject)

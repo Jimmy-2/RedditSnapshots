@@ -66,6 +66,131 @@ class DefaultsDatasource {
             )
         ),)
     }
+    fun loadDefaultUserItems(userInfo: UserInfo?): List<RedditChildrenObject> {
+        return listOf(RedditChildrenObject(
+            kind = "userInfo",
+            data = RedditChildrenData(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,null,
+                null,null,
+                null,
+                null,
+                null,
+                null,
+                null, null, null, userInfo
+            )
+        ),RedditChildrenObject(
+            kind = "defaultTop",
+            data = RedditChildrenData(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,null,
+                null,
+                null,
+                "submitted",
+                null,
+                "Posts", null, null,userInfo
+            )
+        ), RedditChildrenObject(
+            kind = "default",
+            data = RedditChildrenData(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,null,
+                null,
+                null,
+                "comments",
+                null,
+                "Comments", null,null,userInfo
+            )
+        ), RedditChildrenObject(
+            kind = "default",
+            data = RedditChildrenData(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,null,
+                null,
+                null,
+                null,
+                null,
+                "Multireddits", null,null,userInfo
+            )
+        ),
+            RedditChildrenObject(
+                kind = "defaultBottom",
+                data = RedditChildrenData(null, null,null, null, null,
+                    null, null, null, null,
+                    null, null, null, null, null,
+                    null, null, null, null, null, null, null,
+                    null, null, null, null,"Trophies", null,null,userInfo
+                )
+            ),)
+    }
+
 
     fun loadDefaultAccountItems(userInfo: UserInfo?): List<RedditChildrenObject> {
         return listOf(

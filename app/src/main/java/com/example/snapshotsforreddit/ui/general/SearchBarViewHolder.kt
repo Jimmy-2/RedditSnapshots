@@ -7,8 +7,8 @@ import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
 
 class SearchBarViewHolder(
     private val onClickListener: OnItemClickListener,
-    private val binding: ItemSearchBarBinding) :
-    RecyclerView.ViewHolder(binding.root) {
+    private val binding: ItemSearchBarBinding) : RecyclerView.ViewHolder(binding.root) {
+
     private var post: RedditChildrenObject? = null
     private var currentSubreddit: String? = null
 
@@ -29,6 +29,9 @@ class SearchBarViewHolder(
     fun bind(postObject: RedditChildrenObject) {
         this.post = postObject
         this.currentSubreddit = post?.data?.subreddit
+        binding.apply {
+            searchview.queryHint = "Search r/$currentSubreddit"
+        }
     }
 
     interface OnItemClickListener {

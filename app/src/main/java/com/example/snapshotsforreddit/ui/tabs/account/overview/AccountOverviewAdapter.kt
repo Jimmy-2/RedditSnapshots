@@ -1,6 +1,8 @@
 package com.example.snapshotsforreddit.ui.tabs.account.overview
 
+import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -24,8 +26,6 @@ class AccountOverviewAdapter(private val onClickListener: OnItemClickListener) :
             POST -> PostViewHolder(this@AccountOverviewAdapter, onClickListener, ItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false))
             USER_INFO -> UserInfoViewHolder(ItemAccountUserInfoBinding.inflate(LayoutInflater.from(parent.context), parent, false))
             DEFAULT -> DefaultViewHolder(ItemAccountDefaultBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-            DEFAULT_TOP -> DefaultTopViewHolder(ItemAccountDefaultTopBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-            DEFAULT_BOTTOM -> DefaultBottomViewHolder(ItemAccountDefaultBottomBinding.inflate(LayoutInflater.from(parent.context), parent, false))
             HEADER -> HeaderViewHolder(ItemHeaderBinding.inflate(LayoutInflater.from(parent.context), parent, false))
             else -> throw IllegalArgumentException("Error with view type")
         }
@@ -39,8 +39,6 @@ class AccountOverviewAdapter(private val onClickListener: OnItemClickListener) :
                 is PostViewHolder -> holder.bind(currentItem)
                 is UserInfoViewHolder -> holder.bind(currentItem)
                 is DefaultViewHolder -> holder.bind(currentItem)
-                is DefaultTopViewHolder -> holder.bind(currentItem)
-                is DefaultBottomViewHolder -> holder.bind(currentItem)
                 is HeaderViewHolder -> holder.bind(currentItem)
             }
         }
@@ -53,8 +51,8 @@ class AccountOverviewAdapter(private val onClickListener: OnItemClickListener) :
             "t3" -> POST
             "userInfo" -> USER_INFO
             "default" -> DEFAULT
-            "defaultTop" -> DEFAULT_TOP
-            "defaultBottom" -> DEFAULT_BOTTOM
+            "defaultTop" -> DEFAULT
+            "defaultBottom" -> DEFAULT
             "header" -> HEADER
             else -> ERROR
         }
@@ -132,64 +130,37 @@ class AccountOverviewAdapter(private val onClickListener: OnItemClickListener) :
             val currentPost = postObject.data
             binding.apply {
                 if (currentPost != null) {
-                    textviewDefault.text = currentPost.body
-                }
-            }
-        }
-    }
+                    println(postObject.kind)
+                    when(postObject.kind) {
 
-    inner class DefaultTopViewHolder(val binding: ItemAccountDefaultTopBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        init {
-            binding.root.setOnClickListener {
-                val position = bindingAdapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    val item = getItem(position)
-                    if (item != null) {
-                        onClickListener.onHistoryClick(item.data?.permalink,item.data?.userInfo?.name)
+                        "default" -> {
+                            layoutAccountDefault.setBackgroundColor(Color.WHITE)
+                            cardDefaultMid.visibility = View.VISIBLE
+                            textviewDefaultMid.text = currentPost.body
+                        }
+                        "defaultTop" -> {
+                            cardDefaultTop.visibility = View.VISIBLE
+                            textviewDefaultTop.text = currentPost.body
+                        }
+                        "defaultBottom" -> {
+                            cardDefaultBottom.visibility = View.VISIBLE
+                            textviewDefaultBottom.text = currentPost.body
+                        }
                     }
-                }
-            }
-        }
-        fun bind(postObject: RedditChildrenObject) {
-            val currentPost = postObject.data
-            binding.apply {
-                if (currentPost != null) {
-                    textviewDefault.text = currentPost.body
-                }
-            }
-        }
-    }
-
-    inner class DefaultBottomViewHolder(val binding: ItemAccountDefaultBottomBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        init {
-            binding.root.setOnClickListener {
-                val position = bindingAdapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    val item = getItem(position)
-                    if (item != null) {
-                        onClickListener.onHistoryClick(item.data?.permalink,item.data?.userInfo?.name)
-                    }
-                }
-            }
-        }
-        fun bind(postObject: RedditChildrenObject) {
-            val currentPost = postObject.data
-            binding.apply {
-                if (currentPost != null) {
-                    textviewDefault.text = currentPost.body
 
                 }
             }
         }
     }
+
+
 
     inner class HeaderViewHolder(val binding: ItemHeaderBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(postObject: RedditChildrenObject) {
             binding.apply {
-                textviewHeader.text = "OVERVIEW"
+                textviewHeaderOverview.visibility = View.VISIBLE
+                textviewHeaderOverview.text = "OVERVIEW"
             }
         }
     }

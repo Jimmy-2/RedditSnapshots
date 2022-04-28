@@ -45,7 +45,15 @@
     <fragment
         android:id="@+id/redditPageFragment2"
         android:name="com.example.snapshotsforreddit.ui.general.redditpage.RedditPageFragment"
-        android:label="RedditPageFragment" />
+        android:label="RedditPageFragment" >
+        <argument
+            android:name="redditPageName"
+            app:argType="string" />
+        <argument
+            android:name="redditPageType"
+            app:argType="string" />
+    </fragment>
+
     <fragment
         android:id="@+id/searchResultsSubredditFragment"
         android:name="com.example.snapshotsforreddit.ui.tabs.search.subreddits.SearchResultsSubredditFragment"

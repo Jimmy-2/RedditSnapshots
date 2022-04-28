@@ -7,14 +7,15 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentAccountOverviewBinding
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
 import com.example.snapshotsforreddit.ui.general.RedditLoadStateAdapter
-import com.example.snapshotsforreddit.util.changeViewOnLoadState
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -43,7 +44,7 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Acc
         }
 
         viewModel.authFlow.observe(viewLifecycleOwner) { authFlowValues ->
-
+            println("HELLO 332 ${authFlowValues.username}")
             if(authFlowValues.username == "") {
                 binding.recyclerviewAccountOverview.visibility = View.GONE
             }else {
@@ -61,17 +62,21 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Acc
         //depending on the load state of the adapter (list of items) (error, loading, no results), we will display the necessary view for the user to see
         accountOverviewAdapter.addLoadStateListener { loadState ->
             binding.apply {
-                changeViewOnLoadState(
-                    loadState,
-                    accountOverviewAdapter.itemCount,
-                    0,
-                    progressbarAccountOverview,
-                    recyclerviewAccountOverview,
-                    buttonAccountOverviewRetry,
-                    textviewAccountOverviewError,
-                    textviewAccountOverviewEmpty,
-                    refreshAccountOverview
-                )
+//                changeViewOnLoadState(
+//                    loadState,
+//                    accountOverviewAdapter.itemCount,
+//                    0,
+//                    progressbarAccountOverview,
+//                    recyclerviewAccountOverview,
+//                    buttonAccountOverviewRetry,
+//                    textviewAccountOverviewError,
+//                    textviewAccountOverviewEmpty,
+//                    refreshAccountOverview
+//                )
+                progressbarAccountOverview.isVisible = loadState.source.refresh is LoadState.Loading
+                refreshAccountOverview.isRefreshing = loadState.mediator?.refresh is LoadState.Loading
+                //add a login button
+
             }
         }
 
@@ -123,6 +128,7 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Acc
     }
 
     override fun onHistoryClick(historyType: String?, username: String?) {
+        println("HELLO $historyType")
         if(historyType != null && username != null) {
             findNavController().navigate(AccountOverviewFragmentDirections.actionAccountOverviewFragmentToAccountHistoryFragment(historyType, username))
         }

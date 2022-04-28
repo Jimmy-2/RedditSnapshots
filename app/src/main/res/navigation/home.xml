@@ -10,13 +10,13 @@
         android:label="Subreddits"
         tools:layout="@layout/fragment_subscribed" >
         <action
-            android:id="@+id/action_subscribedFragment_to_subredditFragment"
+            android:id="@+id/action_subscribedFragment_to_redditPageFragment"
             app:destination="@id/redditPageFragment" />
     </fragment>
     <fragment
         android:id="@+id/redditPageFragment"
         android:name="com.example.snapshotsforreddit.ui.general.redditpage.RedditPageFragment"
-        android:label="SubredditFragment" >
+        android:label="RedditPageFragment">
         <argument
             android:name="redditPageName"
             app:argType="string" />

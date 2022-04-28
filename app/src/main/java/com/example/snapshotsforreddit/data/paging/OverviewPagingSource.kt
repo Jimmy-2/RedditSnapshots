@@ -9,7 +9,7 @@ import com.example.snapshotsforreddit.network.services.RedditApiService
 import retrofit2.HttpException
 import java.io.IOException
 
-class AccountPagingSource(private val redditApiService: RedditApiService, private val username: String, private val userInfo: UserInfo?, private val historyType: String) : PagingSource<String, RedditChildrenObject>(){
+class OverviewPagingSource(private val redditApiService: RedditApiService, private val username: String, private val userInfo: UserInfo?, private val historyType: String, private val accountType: Int?) : PagingSource<String, RedditChildrenObject>(){
     private val TAG: String = "AccountPagingSource"
     override fun getRefreshKey(state: PagingState<String, RedditChildrenObject>): String? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -30,7 +30,10 @@ class AccountPagingSource(private val redditApiService: RedditApiService, privat
                     if(responseData?.children!!.isEmpty()) {
                         DefaultsDatasource().loadDefaultAccountItems(userInfo)+ responseData.children
                     }else {
-                        DefaultsDatasource().loadDefaultAccountItems(userInfo)+DefaultsDatasource().addHeader()+ responseData.children
+                        when (accountType) {
+                            0 -> DefaultsDatasource().loadDefaultAccountItems(userInfo)+DefaultsDatasource().addHeader()+ responseData.children
+                            else -> DefaultsDatasource().loadDefaultUserItems(userInfo)+DefaultsDatasource().addHeader()+ responseData.children
+                        }
                     }
 
 

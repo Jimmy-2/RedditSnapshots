@@ -10,7 +10,7 @@ import com.example.snapshotsforreddit.network.responses.subreddit.SubredditChild
 import com.example.snapshotsforreddit.util.calculateAgeDifferenceLocalDateTime
 import com.example.snapshotsforreddit.util.getShortenedValue
 
-class SearchResultsSubredditAdapter : PagingDataAdapter<SubredditChildrenObject, SearchResultsSubredditAdapter.SubredditViewHolder>(SUBREDDIT_COMPARATOR) {
+class SearchResultsSubredditAdapter(private val onClickListener: OnItemClickListener) : PagingDataAdapter<SubredditChildrenObject, SearchResultsSubredditAdapter.SubredditViewHolder>(SUBREDDIT_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubredditViewHolder {
         val binding = ItemSearchResultsSubredditBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -19,31 +19,40 @@ class SearchResultsSubredditAdapter : PagingDataAdapter<SubredditChildrenObject,
 
     override fun onBindViewHolder(holder: SubredditViewHolder, position: Int) {
         val currentItem = getItem(position)
-
         if (currentItem != null) {
             holder.bind(currentItem)
         }
     }
 
-    class SubredditViewHolder(private val binding: ItemSearchResultsSubredditBinding) :
+    inner class SubredditViewHolder(private val binding: ItemSearchResultsSubredditBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.root.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val item = getItem(position)
+                    if (item != null) {
+                        onClickListener.onItemClick(item)
+                    }
+                }
+            }
+        }
 
         fun bind(searchResultsSubreddit : SubredditChildrenObject) {
             binding.apply {
                 if(searchResultsSubreddit.data != null ) {
                     textviewSubredditName.text = searchResultsSubreddit.data.display_name_prefixed
                     textviewSubredditSummary.text = searchResultsSubreddit.data.public_description
-                    textviewSubredditStats.text = "${getShortenedValue(searchResultsSubreddit.data.subscribers)} Subscribers * ${searchResultsSubreddit.data.created_utc?.let {
-                        calculateAgeDifferenceLocalDateTime(
-                            it, 0)
-                    }} Old"
+                    textviewSubredditStats.text = "${getShortenedValue(searchResultsSubreddit.data.subscribers)} Subscribers * ${calculateAgeDifferenceLocalDateTime(searchResultsSubreddit.data.created_utc?: 0 ,0)} Old"
                 }
-
-
-
             }
         }
     }
+
+    interface OnItemClickListener {
+        fun onItemClick(subreddit: SubredditChildrenObject)
+    }
+
 
     companion object {
         private val SUBREDDIT_COMPARATOR = object : DiffUtil.ItemCallback<SubredditChildrenObject>() {

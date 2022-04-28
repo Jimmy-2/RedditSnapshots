@@ -4,7 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.liveData
 import com.example.snapshotsforreddit.BuildConfig
-import com.example.snapshotsforreddit.data.paging.AccountPagingSource
+import com.example.snapshotsforreddit.data.paging.OverviewPagingSource
 import com.example.snapshotsforreddit.data.paging.RedditPagePagingSource
 import com.example.snapshotsforreddit.data.paging.SearchResultsPagingSource
 import com.example.snapshotsforreddit.data.paging.SubredditPagingSource
@@ -48,16 +48,16 @@ class RedditApiRepository @Inject constructor(private val redditApiService: Redd
 
 
 
-    fun getUserOverviewList(username: String?, userInfo: UserInfo?) = Pager(
+    fun getUserOverviewList(username: String?, userInfo: UserInfo?, accountType: Int) = Pager(
         PagingConfig(count)
     ) {
-        AccountPagingSource(redditApiService, username?: "", userInfo, "overview")
+        OverviewPagingSource(redditApiService, username?: "", userInfo, "overview", accountType)
     }.liveData
 
     fun getUserPostsList(username: String?, userInfo: UserInfo?, historyType: String) = Pager(
         PagingConfig(count)
     ) {
-        AccountPagingSource(redditApiService, username?: "", userInfo, historyType)
+        OverviewPagingSource(redditApiService, username?: "", userInfo, historyType,null)
     }.liveData
 
 

@@ -33,6 +33,8 @@ class LoginDialogFragment : BottomSheetDialogFragment() {
 
             buttonLogout2.setOnClickListener {
                 viewModel.onLogoutClicked()
+
+                //findNavController().navigateUp()
             }
 
         }

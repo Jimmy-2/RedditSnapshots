@@ -12,7 +12,6 @@
     </style>
 
 
-
     <style name="CardViewBottomCorners" parent="@style/Widget.MaterialComponents.CardView">
         <item name="shapeAppearanceOverlay">@style/CardView_Bottom_Corners</item>
     </style>
@@ -22,6 +21,7 @@
         <item name="cornerSizeBottomLeft">10dp</item>
         <item name="cornerSizeBottomRight">10dp</item>
     </style>
+
 
     <style name="MenuItemTextAppearance" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Menu">
         <item name="android:textSize">18sp</item>

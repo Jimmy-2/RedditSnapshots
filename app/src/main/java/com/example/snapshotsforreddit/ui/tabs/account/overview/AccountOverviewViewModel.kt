@@ -30,7 +30,7 @@ class AccountOverviewViewModel @Inject constructor(
     private val _userData = MutableLiveData<UserInfo?>()
 
     val accountOverviewItems = _username.switchMap { username ->
-        redditApiRepository.getUserOverviewList(username, _userData.value).cachedIn(viewModelScope)
+        redditApiRepository.getUserOverviewList(username, _userData.value, 0).cachedIn(viewModelScope)
 
     }
 

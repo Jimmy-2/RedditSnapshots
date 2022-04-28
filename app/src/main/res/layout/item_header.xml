@@ -1,22 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/textview_header"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bottom_border_transparent"
-        android:paddingTop="2dp"
-        android:paddingBottom="3dp"
-        android:paddingLeft="16dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Following" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textview_header_subscribed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_border_transparent"
+            android:paddingLeft="16dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="3dp"
+            android:visibility="gone"
+            tools:text="Following" />
+
+        <TextView
+            android:id="@+id/textview_header_overview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_border_transparent"
+            android:layout_marginTop="23dp"
+            android:paddingLeft="16dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="3dp"
+            android:visibility="gone"
+            tools:text="Overview" />
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

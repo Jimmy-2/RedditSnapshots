@@ -4,14 +4,17 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentSearchResultsSubredditBinding
+import com.example.snapshotsforreddit.network.responses.subreddit.SubredditChildrenObject
 import com.example.snapshotsforreddit.util.changeViewOnLoadState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SearchResultsSubredditFragment : Fragment(R.layout.fragment_search_results_subreddit) {
+class SearchResultsSubredditFragment : Fragment(R.layout.fragment_search_results_subreddit),
+    SearchResultsSubredditAdapter.OnItemClickListener  {
     private val navigationArgs: SearchResultsSubredditFragmentArgs by navArgs()
     private val viewModel: SearchResultsSubredditViewModel by viewModels()
 
@@ -23,7 +26,7 @@ class SearchResultsSubredditFragment : Fragment(R.layout.fragment_search_results
 
         _binding  = FragmentSearchResultsSubredditBinding.bind(view)
 
-        val searchResultsSubredditAdapter = SearchResultsSubredditAdapter()
+        val searchResultsSubredditAdapter = SearchResultsSubredditAdapter(this)
 
         binding.apply {
             recyclerviewSearchResultsSubreddit.setHasFixedSize(true)
@@ -64,5 +67,28 @@ class SearchResultsSubredditFragment : Fragment(R.layout.fragment_search_results
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onItemClick(subreddit: SubredditChildrenObject) {
+        //TODO PUT LOGIC INTO VIEWMODEL NOT FRAGMENT
+        if(subreddit.data?.display_name_prefixed != null) {
+            val action = when {
+                subreddit.data.display_name_prefixed == "Home" -> {
+                    SearchResultsSubredditFragmentDirections.actionSearchResultsSubredditFragmentToRedditPageFragment2(
+                        "", ""
+                    )
+                }
+                subreddit.data.subreddit_type == "user" -> {
+                    SearchResultsSubredditFragmentDirections.actionSearchResultsSubredditFragmentToRedditPageFragment2(
+                        subreddit.data.display_name_prefixed.substring(2), "user"
+                    )
+                }
+                else -> {
+                    SearchResultsSubredditFragmentDirections.actionSearchResultsSubredditFragmentToRedditPageFragment2(
+                        subreddit.data.display_name_prefixed.substring(2), "r")
+                }
+            }
+            findNavController().navigate(action)
+        }
     }
 }

@@ -86,17 +86,17 @@ class SubscribedFragment : Fragment(R.layout.fragment_subscribed), SubscribedAda
         if(subreddit.data?.display_name_prefixed != null) {
             val action = when {
                 subreddit.data.display_name_prefixed == "Home" -> {
-                    SubscribedFragmentDirections.actionSubscribedFragmentToSubredditFragment(
+                    SubscribedFragmentDirections.actionSubscribedFragmentToRedditPageFragment(
                         "", ""
                     )
                 }
                 subreddit.data.subreddit_type == "user" -> {
-                    SubscribedFragmentDirections.actionSubscribedFragmentToSubredditFragment(
+                    SubscribedFragmentDirections.actionSubscribedFragmentToRedditPageFragment(
                         subreddit.data.display_name_prefixed.substring(2), "user"
                     )
                 }
                 else -> {
-                    SubscribedFragmentDirections.actionSubscribedFragmentToSubredditFragment(
+                    SubscribedFragmentDirections.actionSubscribedFragmentToRedditPageFragment(
                         subreddit.data.display_name_prefixed.substring(2), "r")
                 }
             }
