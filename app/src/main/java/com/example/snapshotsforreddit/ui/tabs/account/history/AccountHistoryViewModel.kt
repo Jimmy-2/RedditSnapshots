@@ -2,7 +2,7 @@ package com.example.snapshotsforreddit.ui.tabs.account.history
 
 import androidx.lifecycle.*
 import androidx.paging.cachedIn
-import com.example.snapshotsforreddit.data.repository.AuthDataStoreRepository
+import com.example.snapshotsforreddit.data.AuthDataStoreRepository
 import com.example.snapshotsforreddit.network.RedditApiRepository
 import com.example.snapshotsforreddit.network.responses.account.UserInfo
 import dagger.hilt.android.lifecycle.HiltViewModel

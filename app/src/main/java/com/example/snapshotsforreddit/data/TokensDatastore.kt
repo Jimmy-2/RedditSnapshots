@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.data.repository
+package com.example.snapshotsforreddit.data
 
 import android.content.Context
 import android.util.Log

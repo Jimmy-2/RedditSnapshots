@@ -1,7 +1,6 @@
 package com.example.snapshotsforreddit.network.responses
 
 import android.os.Parcelable
-import com.example.snapshotsforreddit.network.responses.account.UserInfo
 import com.example.snapshotsforreddit.network.responses.postimage.ImagePreview
 import com.example.snapshotsforreddit.network.responses.postvideo.RedditPageMedia
 import com.example.snapshotsforreddit.network.responses.subreddit.SubscribedChildrenData
@@ -118,6 +117,6 @@ data class RedditChildrenData(
     val created_utc: Long?,
 
 
-    val userInfo: UserInfo?,
+
     ) : Parcelable
 

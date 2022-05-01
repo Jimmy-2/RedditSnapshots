@@ -2,7 +2,7 @@ package com.example.snapshotsforreddit.data.room
 
 
 import androidx.room.*
-import com.example.snapshotsforreddit.data.repository.SortOrder
+import com.example.snapshotsforreddit.data.SortOrder
 import kotlinx.coroutines.flow.Flow
 
 @Dao

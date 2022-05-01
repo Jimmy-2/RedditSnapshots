@@ -113,9 +113,11 @@
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layout/item_account_default_bottom.xml" value="0.1" />
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layout/item_account_default_top.xml" value="0.33" />
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layout/item_account_user_info.xml" value="0.2453125" />
+        <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layout/item_compact_post.xml" value="0.33" />
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layout/item_header.xml" value="0.35104166666666664" />
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layout/item_post.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layout/item_post_comment.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layout/item_post_compact.xml" value="0.19610507246376813" />
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layout/item_post_detail.xml" value="0.2453125" />
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layout/item_test.xml" value="0.5859375" />
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layout/post_comment_item.xml" value="0.3374094202898551" />

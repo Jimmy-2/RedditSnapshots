@@ -1,6 +1,7 @@
 package com.example.snapshotsforreddit.network.responses
 
 import android.os.Parcelable
+import com.example.snapshotsforreddit.network.responses.account.UserInfo
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
@@ -19,9 +20,15 @@ data class RedditChildrenObject(
     val kind: String?,
 
     @Json(name = "data")
-    val data: RedditChildrenData?
+    val data: RedditChildrenData?,
+
+    val defaults: Defaults?,
 
 ) : Parcelable
+
+//store hard coded values
+@Parcelize
+data class Defaults (val type: String?, val text: String?, val userInfo: UserInfo?, val isCompact: Boolean? = null) : Parcelable
 
 
 

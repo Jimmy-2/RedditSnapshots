@@ -1,7 +1,7 @@
 package com.example.snapshotsforreddit.ui.tabs.account.info
 
 import androidx.lifecycle.ViewModel
-import com.example.snapshotsforreddit.data.repository.AuthDataStoreRepository
+import com.example.snapshotsforreddit.data.AuthDataStoreRepository
 import com.example.snapshotsforreddit.network.AuthApiRepository
 import com.example.snapshotsforreddit.network.RedditApiRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

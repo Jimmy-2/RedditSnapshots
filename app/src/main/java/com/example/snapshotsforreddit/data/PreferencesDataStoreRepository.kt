@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.data.repository
+package com.example.snapshotsforreddit.data
 
 import android.content.Context
 import android.util.Log
@@ -23,7 +23,7 @@ private val Context.dataStore by preferencesDataStore("user_preferences")
 
 //this repository belongs to the entire activity and we only need 1 instance of it running (used in downloaded posts screen)
 @Singleton
-class PreferencesRepository @Inject constructor(@ApplicationContext context: Context) {
+class PreferencesDataStoreRepository @Inject constructor(@ApplicationContext context: Context) {
     //dagger injects context automatically
 
     private val TAG: String = "PreferencesRepository"

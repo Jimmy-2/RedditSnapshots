@@ -3,7 +3,7 @@ package com.example.snapshotsforreddit.network
 
 import android.util.Base64
 import com.example.snapshotsforreddit.BuildConfig
-import com.example.snapshotsforreddit.data.repository.AuthDataStoreRepository
+import com.example.snapshotsforreddit.data.AuthDataStoreRepository
 import com.example.snapshotsforreddit.network.services.RedditAuthApiService
 import javax.inject.Inject
 import javax.inject.Singleton

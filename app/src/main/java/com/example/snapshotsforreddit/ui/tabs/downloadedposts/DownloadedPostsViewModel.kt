@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.snapshotsforreddit.data.repository.PreferencesRepository
-import com.example.snapshotsforreddit.data.repository.SortOrder
+import com.example.snapshotsforreddit.data.PreferencesDataStoreRepository
+import com.example.snapshotsforreddit.data.SortOrder
 import com.example.snapshotsforreddit.data.room.Post
 import com.example.snapshotsforreddit.data.room.PostDao
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,14 +18,14 @@ import javax.inject.Inject
 @HiltViewModel
 class DownloadedPostsViewModel @Inject constructor(
     private val postDao: PostDao,
-    private val preferencesRepository: PreferencesRepository
+    private val preferencesDataStoreRepository: PreferencesDataStoreRepository
 ): ViewModel() {
     //holds a single value like mutable live data which holds a string of values
     val searchQuery = MutableStateFlow("")
 
     //val sortOrder = MutableStateFlow(SortOrder.BY_DATE)
     //val isCompactView = MutableStateFlow(false)
-    val preferencesFlow = preferencesRepository.preferencesFlow
+    val preferencesFlow = preferencesDataStoreRepository.preferencesFlow
 
     //use combine to query by multiple flows.
     //private val postsFlow = searchQuery.flatMapLatest {
@@ -46,12 +46,12 @@ class DownloadedPostsViewModel @Inject constructor(
     //with suspend functions, we need coroutines to run them
     fun onSortOrderSelected(sortOrder: SortOrder) = viewModelScope.launch {
         //update the sort order value in datastore on sort button clicked
-        preferencesRepository.updateSortOrder(sortOrder)
+        preferencesDataStoreRepository.updateSortOrder(sortOrder)
     }
 
     fun onCompactViewClicked(isCompactView: Boolean) = viewModelScope.launch{
         //update iscompactview in datastore on compact button clicked
-        preferencesRepository.updateIsCompactView(isCompactView)
+        preferencesDataStoreRepository.updateIsCompactView(isCompactView)
     }
 
     fun onPostSelected(post: Post) {

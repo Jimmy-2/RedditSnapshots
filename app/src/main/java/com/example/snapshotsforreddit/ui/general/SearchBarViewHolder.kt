@@ -28,7 +28,7 @@ class SearchBarViewHolder(
 
     fun bind(postObject: RedditChildrenObject) {
         this.post = postObject
-        this.currentSubreddit = post?.data?.subreddit
+        this.currentSubreddit = post?.defaults?.type
         binding.apply {
             searchview.queryHint = "Search r/$currentSubreddit"
         }

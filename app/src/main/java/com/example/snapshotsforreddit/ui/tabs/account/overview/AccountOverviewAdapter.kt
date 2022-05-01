@@ -93,7 +93,7 @@ class AccountOverviewAdapter(private val onClickListener: OnItemClickListener) :
     inner class UserInfoViewHolder(val binding: ItemAccountUserInfoBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(postObject: RedditChildrenObject) {
-            val currentPost = postObject.data
+            val currentPost = postObject.defaults
             binding.apply {
                 if (currentPost != null) {
                     textviewCommentKarma.text =
@@ -119,15 +119,16 @@ class AccountOverviewAdapter(private val onClickListener: OnItemClickListener) :
                 if (position != RecyclerView.NO_POSITION) {
                     val item = getItem(position)
                     if (item != null) {
-                        onClickListener.onHistoryClick(item.data?.permalink,
-                            item.data?.userInfo?.name
+                        onClickListener.onHistoryClick(
+                            item.defaults?.type,
+                            item.defaults?.userInfo?.name
                         )
                     }
                 }
             }
         }
         fun bind(postObject: RedditChildrenObject) {
-            val currentPost = postObject.data
+            val currentPost = postObject.defaults
             binding.apply {
                 if (currentPost != null) {
                     println(postObject.kind)
@@ -136,15 +137,15 @@ class AccountOverviewAdapter(private val onClickListener: OnItemClickListener) :
                         "default" -> {
                             layoutAccountDefault.setBackgroundColor(Color.WHITE)
                             cardDefaultMid.visibility = View.VISIBLE
-                            textviewDefaultMid.text = currentPost.body
+                            textviewDefaultMid.text = currentPost.text
                         }
                         "defaultTop" -> {
                             cardDefaultTop.visibility = View.VISIBLE
-                            textviewDefaultTop.text = currentPost.body
+                            textviewDefaultTop.text = currentPost.text
                         }
                         "defaultBottom" -> {
                             cardDefaultBottom.visibility = View.VISIBLE
-                            textviewDefaultBottom.text = currentPost.body
+                            textviewDefaultBottom.text = currentPost.text
                         }
                     }
 

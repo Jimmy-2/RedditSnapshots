@@ -3,9 +3,8 @@ package com.example.snapshotsforreddit.ui.general.login
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.snapshotsforreddit.BuildConfig
+import com.example.snapshotsforreddit.data.AuthDataStoreRepository
 import com.example.snapshotsforreddit.network.AuthApiRepository
-import com.example.snapshotsforreddit.data.repository.AuthDataStoreRepository
-import com.example.snapshotsforreddit.network.RedditApiRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

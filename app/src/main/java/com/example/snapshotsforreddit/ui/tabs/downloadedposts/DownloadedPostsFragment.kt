@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.snapshotsforreddit.R
-import com.example.snapshotsforreddit.data.repository.SortOrder
+import com.example.snapshotsforreddit.data.SortOrder
 import com.example.snapshotsforreddit.data.room.Post
 import com.example.snapshotsforreddit.databinding.FragmentDownloadedPostsBinding
 import com.example.snapshotsforreddit.util.onQueryTextChanged
@@ -114,6 +114,7 @@ class DownloadedPostsFragment: Fragment(R.layout.fragment_downloaded_posts), Dow
                     //read value from flow with collect or first since we do not need to check again
                     //when app starts, we get isCompactView value from preferencesFlow and then set it to menu item and cancels the flow inside this coroutine.
                 viewModel.preferencesFlow.first().isCompactView
+
         }
     }
 

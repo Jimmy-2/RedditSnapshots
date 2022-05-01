@@ -24,11 +24,11 @@ class RedditApiRepository @Inject constructor(private val redditApiService: Redd
         SubredditPagingSource(redditApiService, null, null, null)
     }.liveData
 
-    fun getSubredditPostsList(subredditName: String, subredditType: String, sort: String?) =
+    fun getSubredditPostsList(subredditName: String, subredditType: String, sort: String?, isCompact: Boolean?) =
         Pager(
             PagingConfig(count)
         ) {
-            RedditPagePagingSource(redditApiService, subredditName, subredditType, sort)
+            RedditPagePagingSource(redditApiService, subredditName, subredditType, sort, isCompact)
         }.liveData
 
     fun getSearchResultsList(subredditName: String?, subredditType: String, query: String?, searchType: String?, includeNSFW: String?, sort: String?) =

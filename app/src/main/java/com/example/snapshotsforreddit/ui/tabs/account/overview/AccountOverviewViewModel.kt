@@ -6,7 +6,7 @@ import android.util.Log
 import androidx.lifecycle.*
 import androidx.paging.cachedIn
 import com.example.snapshotsforreddit.BuildConfig
-import com.example.snapshotsforreddit.data.repository.AuthDataStoreRepository
+import com.example.snapshotsforreddit.data.AuthDataStoreRepository
 import com.example.snapshotsforreddit.network.AuthApiRepository
 import com.example.snapshotsforreddit.network.RedditApiRepository
 import com.example.snapshotsforreddit.network.responses.TokenResponse

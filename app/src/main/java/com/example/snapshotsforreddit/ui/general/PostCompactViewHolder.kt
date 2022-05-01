@@ -8,17 +8,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.snapshotsforreddit.R
-import com.example.snapshotsforreddit.databinding.ItemPostBinding
+import com.example.snapshotsforreddit.databinding.ItemPostCompactBinding
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
 import com.example.snapshotsforreddit.util.calculateAgeDifferenceLocalDateTime
 import com.example.snapshotsforreddit.util.getShortenedValue
 
-class PostViewHolder(
+class PostCompactViewHolder(
     private val adapter: PagingDataAdapter<RedditChildrenObject, RecyclerView.ViewHolder>,
     private val onClickListener: OnItemClickListener,
-    private val binding: ItemPostBinding
+    private val binding: ItemPostCompactBinding
 ) : RecyclerView.ViewHolder(binding.root) {
     private var post: RedditChildrenObject? = null
+
     init {
         binding.root.setOnClickListener {
             if (post != null) {
@@ -41,7 +42,6 @@ class PostViewHolder(
                 }
             }
         }
-
         binding.cardDownvoteButton.setOnClickListener {
             val position = bindingAdapterPosition
             if (position != RecyclerView.NO_POSITION) {
@@ -62,7 +62,7 @@ class PostViewHolder(
 
     @SuppressLint("ResourceAsColor")
     fun bind(postObject: RedditChildrenObject) {
-        println("HELLOHAHAHA")
+        println("HELLOHAHAHAGood")
         this.post = postObject
         val currentPost = postObject.data
         //TODO FIX CODE HERE : REFORMAT STATEMENTS
@@ -86,38 +86,28 @@ class PostViewHolder(
                     .error(R.drawable.ic_error)
                     .into(imageviewSubredditIcon)
 
-                when (post?.data?.is_self) {
-                    true -> {
-                        imageviewPostItem.visibility = View.GONE
-                        if (currentPost.selftext == "") {
-                            textviewPostItemText.visibility = View.GONE
-                        } else {
-                            textviewPostItemText.text = currentPost.selftext
-                            textviewPostItemText.visibility = View.VISIBLE
-                        }
-                    }
-                    else -> {
-                        textviewPostItemText.visibility = View.GONE
-                        imageviewPostItem.visibility = View.VISIBLE
-                        if (currentPost.preview?.images?.get(0)?.source?.url != null) {
-                            val imageUrl =
-                                currentPost.preview.images[0].source!!.url?.replace(
-                                    removePart, ""
-                                )
-                            Glide.with(itemView)
-                                .load(imageUrl)
-                                .transition(DrawableTransitionOptions.withCrossFade())
-                                .error(R.drawable.ic_error)
-                                .into(imageviewPostItem)
-                        }
-                    }
+
+                imageviewPostItem.visibility = View.VISIBLE
+                if (currentPost.preview?.images?.get(0)?.source?.url != null) {
+                    val imageUrl =
+                        currentPost.preview.images[0].source!!.url?.replace(
+                            removePart, ""
+                        )
+                    Glide.with(itemView)
+                        .load(imageUrl)
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .error(R.drawable.ic_error)
+                        .into(imageviewPostItem)
                 }
+
+
 
                 textviewPostItemSubreddit.text =
                     currentPost.subreddit.toString().replaceFirstChar { it.uppercase() }
                 textviewPostItemTitle.text = currentPost.title
                 textviewPostItemScore.text = getShortenedValue(currentPost.score)
-                textviewPostItemCommentCount.text = getShortenedValue(currentPost.num_comments)
+                textviewPostItemCommentCount.text =
+                    getShortenedValue(currentPost.num_comments)
                 val epoch = currentPost.created_utc
                 if (epoch != null) {
                     textviewPostItemAge.text = calculateAgeDifferenceLocalDateTime(epoch, 1)

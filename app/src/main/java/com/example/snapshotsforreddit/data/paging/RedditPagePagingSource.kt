@@ -13,6 +13,7 @@ class RedditPagePagingSource(
     private val subredditName: String?,
     private val subredditType: String?,
     private val sort: String?,
+    private val isCompact: Boolean?
 ) : PagingSource<String, RedditChildrenObject>() {
 
     override fun getRefreshKey(state: PagingState<String, RedditChildrenObject>): String? {
@@ -21,7 +22,7 @@ class RedditPagePagingSource(
         }
     }
 
-    override suspend fun load(params: LoadParams<String>): PagingSource.LoadResult<String, RedditChildrenObject> {
+    override suspend fun load(params: LoadParams<String>): LoadResult<String, RedditChildrenObject> {
         return try {
             val responseData = if (subredditType == "" && subredditName == "") {
                 redditApiService.getHomePosts(
@@ -43,20 +44,20 @@ class RedditPagePagingSource(
             }
 
             val posts = if (params.key == null) {
-                DefaultsDatasource().addSearchBar(subredditName!!) + responseData!!.children
+                DefaultsDatasource().addSearchBar(subredditName!!, isCompact?: false) + responseData!!.children
             } else {
                 responseData!!.children
             }
 
 
-            PagingSource.LoadResult.Page(
+            LoadResult.Page(
                 data = posts,
                 prevKey = responseData.before,
                 nextKey = responseData.after
             )
 
         } catch (exception: IOException) {
-            PagingSource.LoadResult.Error(exception)
+            LoadResult.Error(exception)
         } catch (exception: HttpException) {
             LoadResult.Error(exception)
         }
