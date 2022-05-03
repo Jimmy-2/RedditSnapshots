@@ -2,7 +2,6 @@ package com.example.snapshotsforreddit.ui.general.redditpage
 
 import androidx.lifecycle.*
 import androidx.paging.cachedIn
-import com.example.snapshotsforreddit.data.AuthDataStoreRepository
 import com.example.snapshotsforreddit.data.PreferencesDataStoreRepository
 import com.example.snapshotsforreddit.network.RedditApiRepository
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
@@ -13,22 +12,26 @@ import javax.inject.Inject
 @HiltViewModel
 class RedditPageViewModel @Inject constructor(
     private val preferencesDataStoreRepository: PreferencesDataStoreRepository,
-    private val authDataStoreRepository: AuthDataStoreRepository,
     private val redditApiRepository: RedditApiRepository
 ) : ViewModel() {
 
-    val authFlow = authDataStoreRepository.authFlow.asLiveData()
-
+    //read and update isCompact value
     val preferencesFlow = preferencesDataStoreRepository.preferencesFlow
 
     private val subredditName = MutableLiveData<String>()
     private val subredditType = MutableLiveData<String>()
     private val isCompact = MutableLiveData<Boolean?>()
+    private val sortOrder = MutableLiveData<String?>()
 
-    //TODO CHANGE THIS
-    val redditPagePosts = isCompact.switchMap {
-        redditApiRepository.getSubredditPostsList(subredditName.value!!, subredditType.value!!, null, it).cachedIn(viewModelScope)
 
+//    val redditPagePosts = subredditInfo.switchMap {
+//        redditApiRepository.getSubredditPostsList(subredditName.value!!, subredditType.value!!, it.sortOrder, it.isCompactView).cachedIn(viewModelScope)
+//    }
+
+    //if isCompact or sortOrder value changes, we will update the screen
+    val redditPagePosts = Transformations.switchMap(MonitorPair(isCompact, sortOrder)) {
+        redditApiRepository.getSubredditPostsList(subredditName.value!!, subredditType.value!!,
+            it.second, it.first).cachedIn(viewModelScope)
     }
 
     fun onVoteOnPost(typeOfVote: Int, post: RedditChildrenObject) = viewModelScope.launch {
@@ -41,14 +44,19 @@ class RedditPageViewModel @Inject constructor(
 
     }
 
+    fun onSortOrderSelected(newSortOrder: String) {
+        if(sortOrder.value != newSortOrder) {
+            sortOrder.value = newSortOrder
+        }
+    }
     fun onCompactViewClicked(isCompactView: Boolean) = viewModelScope.launch{
-        //update iscompactview in datastore on compact button clicked
+        //update isCompactView in datastore on compact button clicked
         preferencesDataStoreRepository.updateIsCompactView(isCompactView)
         checkIsCompact(isCompactView)
 
     }
 
-    fun checkIsCompact(newVal: Boolean) {
+    fun checkIsCompact(newVal : Boolean) {
         if(isCompact.value != newVal) {
             isCompact.value = newVal
         }
@@ -61,4 +69,12 @@ class RedditPageViewModel @Inject constructor(
     }
 
 
+}
+//monitor 2 values for switchMap.
+//source: https://stackoverflow.com/questions/49493772/mediatorlivedata-or-switchmap-transformation-with-multiple-parameters
+class MonitorPair<A, B>(a: LiveData<A>, b: LiveData<B>) : MediatorLiveData<Pair<A?, B?>>() {
+    init {
+        addSource(a) { value = it to b.value }
+        addSource(b) { value = a.value to it }
+    }
 }

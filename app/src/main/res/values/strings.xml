@@ -3,4 +3,14 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="view_posts">View Posts</string>
+    <string name="title_subreddits">Subreddits</string>
+    <string name="title_home">Home</string>
+    <string name="title_inbox">Inbox</string>
+    <string name="title_account">Account</string>
+    <string name="title_search">Search</string>
+    <string name="title_options">Options</string>
+    <string name="title_snapshots">Snapshots</string>
+    <string name="hint_search_fragment">Search Posts, Subreddits, Users</string>
+    <string name="menu_accounts">Accounts</string>
+    <string name="title_boxes">Boxes</string>
 </resources>

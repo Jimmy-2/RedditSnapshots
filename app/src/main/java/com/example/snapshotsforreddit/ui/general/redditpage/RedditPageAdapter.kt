@@ -77,7 +77,8 @@ class RedditPageAdapter(
             "search" -> SEARCH
             else -> when (getItem(0)?.defaults?.isCompact) {
                 true -> POST_COMPACT
-                else -> POST
+                false -> POST
+                else -> ERROR
             }
         }
     }
@@ -102,6 +103,7 @@ class RedditPageAdapter(
                 oldItem: RedditChildrenObject,
                 newItem: RedditChildrenObject
             ): Boolean {
+                //TODO compare more variables than just name
                 return oldItem.data?.name == newItem.data?.name
             }
 

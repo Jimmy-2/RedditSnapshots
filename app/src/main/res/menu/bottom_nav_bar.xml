@@ -4,30 +4,25 @@
     <item
         android:id="@+id/home"
         android:icon="@drawable/ic_error"
-        android:contentDescription="home"
-        android:title="Home" />
+        android:title="@string/title_home" />
 
     <item
         android:id="@+id/inbox"
         android:icon="@drawable/ic_error"
-        android:contentDescription="inbox"
-        android:title="Inbox" />
+        android:title="@string/title_inbox" />
 
     <item
         android:id="@+id/account"
         android:icon="@drawable/ic_error"
-        android:contentDescription="account"
-        android:title="Account" />
+        android:title="@string/title_account" />
 
     <item
         android:id="@+id/search"
         android:icon="@drawable/ic_error"
-        android:contentDescription="search"
-        android:title="Search" />
+        android:title="@string/title_search" />
 
     <item
         android:id="@+id/downloaded"
         android:icon="@drawable/ic_error"
-        android:contentDescription="downloaded"
-        android:title="Downloaded" />
+        android:title="@string/title_snapshots" />
 </menu>

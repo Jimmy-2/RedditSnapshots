@@ -95,6 +95,7 @@ class PostCompactViewHolder(
                         )
                     Glide.with(itemView)
                         .load(imageUrl)
+                        .centerCrop()
                         .transition(DrawableTransitionOptions.withCrossFade())
                         .error(R.drawable.ic_error)
                         .into(imageviewPostItem)

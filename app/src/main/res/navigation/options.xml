@@ -8,6 +8,6 @@
     <fragment
         android:id="@+id/optionsFragment"
         android:name="com.example.snapshotsforreddit.ui.tabs.options.OptionsFragment"
-        android:label="fragment_options"
+        android:label="@string/title_options"
         tools:layout="@layout/fragment_options" />
 </navigation>

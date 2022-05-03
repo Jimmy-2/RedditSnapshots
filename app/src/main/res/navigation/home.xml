@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/subscribedFragment"
         android:name="com.example.snapshotsforreddit.ui.tabs.home.SubscribedFragment"
-        android:label="Subreddits"
+        android:label="@string/title_subreddits"
         tools:layout="@layout/fragment_subscribed" >
         <action
             android:id="@+id/action_subscribedFragment_to_redditPageFragment"

@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/accountOverviewFragment"
         android:name="com.example.snapshotsforreddit.ui.tabs.account.overview.AccountOverviewFragment"
-        android:label="AccountFragment" >
+        android:label="@string/title_account">
         <action
             android:id="@+id/action_accountOverviewFragment_to_loginDialogFragment"
             app:destination="@id/loginDialogFragment" />

@@ -101,6 +101,27 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page),
                 viewModel.onCompactViewClicked(newVal)
                 return true
             }
+            //TODO add ischecked to the menu items
+            R.id.action_sort_by_best -> {
+                viewModel.onSortOrderSelected("best")
+                return true
+            }
+
+            R.id.action_sort_by_hot -> {
+                viewModel.onSortOrderSelected("hot")
+                return true
+            }
+            R.id.action_sort_by_new -> {
+                viewModel.onSortOrderSelected("new")
+                return true
+            }
+            R.id.action_sort_by_rising  -> {
+                viewModel.onSortOrderSelected("rising")
+                return true
+            }
+            R.id.action_sort_by_top -> {
+                return true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
