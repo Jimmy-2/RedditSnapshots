@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.ui.general.redditpage
+package com.example.snapshotsforreddit.ui.common.redditpage
 
 
 import android.view.LayoutInflater
@@ -10,9 +10,9 @@ import com.example.snapshotsforreddit.databinding.ItemPostBinding
 import com.example.snapshotsforreddit.databinding.ItemPostCompactBinding
 import com.example.snapshotsforreddit.databinding.ItemSearchBarBinding
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
-import com.example.snapshotsforreddit.ui.general.PostCompactViewHolder
-import com.example.snapshotsforreddit.ui.general.PostViewHolder
-import com.example.snapshotsforreddit.ui.general.SearchBarViewHolder
+import com.example.snapshotsforreddit.ui.common.PostCompactViewHolder
+import com.example.snapshotsforreddit.ui.common.PostViewHolder
+import com.example.snapshotsforreddit.ui.common.SearchBarViewHolder
 
 
 //TODO for now use notifyItemChanged(position) until db pagination is implemented

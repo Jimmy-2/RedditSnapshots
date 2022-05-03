@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchResultsFragment2"
-        android:name="com.example.snapshotsforreddit.ui.general.searchresults.SearchResultsFragment"
+        android:name="com.example.snapshotsforreddit.ui.common.searchresults.SearchResultsFragment"
         android:label="fragment_search_results"
         tools:layout="@layout/fragment_search_results" >
         <argument
@@ -35,7 +35,7 @@
     </fragment>
     <fragment
         android:id="@+id/userOverviewFragment"
-        android:name="com.example.snapshotsforreddit.ui.general.user.UserOverviewFragment"
+        android:name="com.example.snapshotsforreddit.ui.common.user.UserOverviewFragment"
         android:label="fragment_user_overview"
         tools:layout="@layout/fragment_user_overview" >
         <argument
@@ -44,7 +44,7 @@
     </fragment>
     <fragment
         android:id="@+id/redditPageFragment2"
-        android:name="com.example.snapshotsforreddit.ui.general.redditpage.RedditPageFragment"
+        android:name="com.example.snapshotsforreddit.ui.common.redditpage.RedditPageFragment"
         android:label="RedditPageFragment" >
         <argument
             android:name="redditPageName"

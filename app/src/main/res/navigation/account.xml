@@ -24,7 +24,7 @@
     </fragment>
     <dialog
         android:id="@+id/loginDialogFragment"
-        android:name="com.example.snapshotsforreddit.ui.general.login.LoginDialogFragment"
+        android:name="com.example.snapshotsforreddit.ui.common.login.LoginDialogFragment"
         android:label="fragment_login_dialog"
         tools:layout="@layout/fragment_login_dialog" />
     <fragment

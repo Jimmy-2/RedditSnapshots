@@ -28,7 +28,7 @@ data class RedditChildrenObject(
 
 //store hard coded values
 @Parcelize
-data class Defaults (val type: String?, val text: String?, val userInfo: UserInfo?, val isCompact: Boolean? = null) : Parcelable
+data class Defaults (val type: String?, val text: String?, val userInfo: UserInfo?, val icon:Int? = null, val isCompact: Boolean? = null) : Parcelable
 
 
 

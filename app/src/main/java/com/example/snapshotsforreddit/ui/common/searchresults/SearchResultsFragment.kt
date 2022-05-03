@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.ui.general.searchresults
+package com.example.snapshotsforreddit.ui.common.searchresults
 
 import android.os.Bundle
 import android.view.View

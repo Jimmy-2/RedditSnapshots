@@ -15,7 +15,7 @@ import androidx.paging.LoadState
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentAccountOverviewBinding
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
-import com.example.snapshotsforreddit.ui.general.RedditLoadStateAdapter
+import com.example.snapshotsforreddit.ui.common.RedditLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 

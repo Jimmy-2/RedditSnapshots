@@ -7,7 +7,7 @@
     android:layout_margin="16dp"
     app:cardCornerRadius="25dp"
     app:cardElevation="20dp"
-    tools:context=".ui.general.login.LoginDialogFragment">
+    tools:context=".ui.common.login.LoginDialogFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.constraintlayout.widget.ConstraintLayout

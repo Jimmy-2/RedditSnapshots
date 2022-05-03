@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.ui.general.searchresults
+package com.example.snapshotsforreddit.ui.common.searchresults
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.snapshotsforreddit.databinding.ItemPostBinding
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
-import com.example.snapshotsforreddit.ui.general.PostViewHolder
+import com.example.snapshotsforreddit.ui.common.PostViewHolder
 
 class SearchResultsAdapter(private val onClickListener: OnItemClickListener) : PagingDataAdapter<RedditChildrenObject, RecyclerView.ViewHolder>(SEARCH_RESULT_COMPARATOR) {
 

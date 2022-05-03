@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.ui.general.redditpage
+package com.example.snapshotsforreddit.ui.common.redditpage
 
 import android.os.Bundle
 import android.view.Menu
@@ -14,7 +14,7 @@ import androidx.paging.CombinedLoadStates
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentRedditPageBinding
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
-import com.example.snapshotsforreddit.ui.general.RedditLoadStateAdapter
+import com.example.snapshotsforreddit.ui.common.RedditLoadStateAdapter
 import com.example.snapshotsforreddit.util.changeViewOnLoadState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first

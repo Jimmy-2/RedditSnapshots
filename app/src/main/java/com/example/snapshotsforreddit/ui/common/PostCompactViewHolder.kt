@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.ui.general
+package com.example.snapshotsforreddit.ui.common
 
 import android.annotation.SuppressLint
 import android.graphics.Color

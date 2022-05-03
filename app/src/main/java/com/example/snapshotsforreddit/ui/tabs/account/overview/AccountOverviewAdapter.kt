@@ -1,5 +1,6 @@
 package com.example.snapshotsforreddit.ui.tabs.account.overview
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.*
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
-import com.example.snapshotsforreddit.ui.general.PostViewHolder
+import com.example.snapshotsforreddit.ui.common.PostViewHolder
 import com.example.snapshotsforreddit.util.calculateAgeDifferenceLocalDateTime
 import com.example.snapshotsforreddit.util.getShortenedValue
 
@@ -26,6 +27,8 @@ class AccountOverviewAdapter(private val onClickListener: OnItemClickListener) :
             POST -> PostViewHolder(this@AccountOverviewAdapter, onClickListener, ItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false))
             USER_INFO -> UserInfoViewHolder(ItemAccountUserInfoBinding.inflate(LayoutInflater.from(parent.context), parent, false))
             DEFAULT -> DefaultViewHolder(ItemAccountDefaultBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            DEFAULT_TOP -> DefaultViewHolder(ItemAccountDefaultBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            DEFAULT_BOTTOM -> DefaultViewHolder(ItemAccountDefaultBinding.inflate(LayoutInflater.from(parent.context), parent, false))
             HEADER -> HeaderViewHolder(ItemHeaderBinding.inflate(LayoutInflater.from(parent.context), parent, false))
             else -> throw IllegalArgumentException("Error with view type")
         }
@@ -51,8 +54,8 @@ class AccountOverviewAdapter(private val onClickListener: OnItemClickListener) :
             "t3" -> POST
             "userInfo" -> USER_INFO
             "default" -> DEFAULT
-            "defaultTop" -> DEFAULT
-            "defaultBottom" -> DEFAULT
+            "defaultTop" -> DEFAULT_TOP
+            "defaultBottom" -> DEFAULT_BOTTOM
             "header" -> HEADER
             else -> ERROR
         }
@@ -127,25 +130,42 @@ class AccountOverviewAdapter(private val onClickListener: OnItemClickListener) :
                 }
             }
         }
+        @SuppressLint("ResourceAsColor")
         fun bind(postObject: RedditChildrenObject) {
             val currentPost = postObject.defaults
             binding.apply {
                 if (currentPost != null) {
                     println(postObject.kind)
+                    val leftIcon = currentPost.icon
                     when(postObject.kind) {
-
                         "default" -> {
                             layoutAccountDefault.setBackgroundColor(Color.WHITE)
                             cardDefaultMid.visibility = View.VISIBLE
                             textviewDefaultMid.text = currentPost.text
+                            leftIcon?.let {
+                                textviewDefaultMid.setCompoundDrawablesWithIntrinsicBounds(
+                                    it,0,R.drawable.ic_right_arrow,0)
+                                textviewDefaultMid.compoundDrawables[0].setTint(Color.parseColor("#3895e8"))
+
+                            }
                         }
                         "defaultTop" -> {
                             cardDefaultTop.visibility = View.VISIBLE
                             textviewDefaultTop.text = currentPost.text
+                            leftIcon?.let {
+                                textviewDefaultTop.setCompoundDrawablesWithIntrinsicBounds(
+                                    it,0,R.drawable.ic_right_arrow,0)
+                                textviewDefaultTop.compoundDrawables[0].setTint(Color.parseColor("#3895e8"))
+                            }
                         }
                         "defaultBottom" -> {
                             cardDefaultBottom.visibility = View.VISIBLE
                             textviewDefaultBottom.text = currentPost.text
+                            leftIcon?.let {
+                                textviewDefaultBottom.setCompoundDrawablesWithIntrinsicBounds(
+                                    it,0,R.drawable.ic_right_arrow,0)
+                                textviewDefaultBottom.compoundDrawables[0].setTint(Color.parseColor("#3895e8"))
+                            }
                         }
                     }
 

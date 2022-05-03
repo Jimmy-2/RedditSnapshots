@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.ui.general.redditpage
+package com.example.snapshotsforreddit.ui.common.redditpage
 
 import androidx.lifecycle.*
 import androidx.paging.cachedIn

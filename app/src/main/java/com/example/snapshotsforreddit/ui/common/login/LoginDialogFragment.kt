@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.ui.general.login
+package com.example.snapshotsforreddit.ui.common.login
 
 
 import android.content.Intent

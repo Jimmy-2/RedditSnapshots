@@ -90,7 +90,10 @@
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/drawable/account_overview_bottom_border.xml" value="0.1" />
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/drawable/account_overview_defaults_bottom.xml" value="0.332" />
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/drawable/bottom_border.xml" value="0.332" />
+        <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/drawable/bottom_nav_bar_selected.xml" value="0.105" />
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/drawable/ic_error.xml" value="0.332" />
+        <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
+        <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/drawable/ic_right_arrow.xml" value="0.1" />
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/drawable/ic_search.xml" value="0.193" />
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layout/account_comment_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layout/account_default_bottom_item.xml" value="0.25052083333333336" />
@@ -110,7 +113,7 @@
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layout/fragment_user_information.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layout/fragment_user_overview.xml" value="0.33177083333333335" />
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layout/item_account_comment.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layout/item_account_default.xml" value="0.22" />
+        <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layout/item_account_default.xml" value="0.25" />
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layout/item_account_default_bottom.xml" value="0.1" />
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layout/item_account_default_top.xml" value="0.33" />
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layout/item_account_user_info.xml" value="0.2453125" />
@@ -130,10 +133,24 @@
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layout/search_result_subreddit_item.xml" value="0.33177083333333335" />
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layout/search_results_subreddit_item.xml" value="0.25181159420289856" />
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layout/subscribed_default_item.xml" value="0.25181159420289856" />
+        <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layouts/search/drawable/ic_comment.xml" value="0.1" />
+        <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layouts/search/drawable/ic_comment_overview.xml" value="0.102" />
+        <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layouts/search/drawable/ic_downvote_arrow.xml" value="0.1" />
+        <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layouts/search/drawable/ic_downvoted_overview.xml" value="0.1" />
+        <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layouts/search/drawable/ic_hidden_temp.xml" value="0.1" />
+        <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layouts/search/drawable/ic_post_temp.xml" value="0.102" />
+        <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layouts/search/drawable/ic_reply.xml" value="0.1" />
+        <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layouts/search/drawable/ic_save.xml" value="0.1" />
+        <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layouts/search/drawable/ic_saved_overview.xml" value="0.1" />
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layouts/search/drawable/ic_search.xml" value="0.193" />
+        <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layouts/search/drawable/ic_share_android.xml" value="0.1" />
+        <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layouts/search/drawable/ic_trophies_overview.xml" value="0.1" />
+        <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layouts/search/drawable/ic_up_arrow_null.xml" value="0.1" />
+        <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/layouts/search/drawable/ic_upvote_arrow.xml" value="0.1" />
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/menu/bottom_nav_bar.xml" value="0.2640625" />
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/menu/menu_fragment_account_overview.xml" value="0.203125" />
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/menu/menu_fragment_reddit_page.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/menu/menu_fragment_subscribed_subreddits.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>

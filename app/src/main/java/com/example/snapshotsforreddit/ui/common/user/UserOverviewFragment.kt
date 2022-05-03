@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.ui.general.user
+package com.example.snapshotsforreddit.ui.common.user
 
 import android.os.Bundle
 import android.view.View
@@ -8,7 +8,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentUserOverviewBinding
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
-import com.example.snapshotsforreddit.ui.general.RedditLoadStateAdapter
+import com.example.snapshotsforreddit.ui.common.RedditLoadStateAdapter
 import com.example.snapshotsforreddit.ui.tabs.account.overview.AccountOverviewAdapter
 import com.example.snapshotsforreddit.util.changeViewOnLoadState
 import dagger.hilt.android.AndroidEntryPoint

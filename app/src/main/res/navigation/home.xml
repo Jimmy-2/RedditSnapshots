@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/redditPageFragment"
-        android:name="com.example.snapshotsforreddit.ui.general.redditpage.RedditPageFragment"
+        android:name="com.example.snapshotsforreddit.ui.common.redditpage.RedditPageFragment"
         android:label="RedditPageFragment">
         <argument
             android:name="redditPageName"
@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchResultsFragment"
-        android:name="com.example.snapshotsforreddit.ui.general.searchresults.SearchResultsFragment"
+        android:name="com.example.snapshotsforreddit.ui.common.searchresults.SearchResultsFragment"
         android:label="fragment_search_results"
         tools:layout="@layout/fragment_search_results" >
         <argument
