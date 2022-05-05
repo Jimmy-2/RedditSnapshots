@@ -24,18 +24,40 @@ class RedditApiRepository @Inject constructor(private val redditApiService: Redd
         SubredditPagingSource(redditApiService, null, null, null)
     }.liveData
 
-    fun getSubredditPostsList(subredditName: String, subredditType: String, sort: String?, isCompact: Boolean?) =
+    fun getSubredditPostsList(
+        subredditName: String,
+        subredditType: String,
+        sort: String?,
+        isCompact: Boolean?
+    ) =
         Pager(
             PagingConfig(count)
         ) {
             RedditPagePagingSource(redditApiService, subredditName, subredditType, sort, isCompact)
         }.liveData
 
-    fun getSearchResultsList(subredditName: String?, subredditType: String, query: String?, searchType: String?, includeNSFW: String?, sort: String?) =
+    fun getSearchResultsList(
+        subredditName: String?,
+        subredditType: String,
+        query: String?,
+        searchType: String?,
+        includeNSFW: String?,
+        sort: String?,
+        isCompact: Boolean?
+    ) =
         Pager(
             PagingConfig(count)
         ) {
-            SearchResultsPagingSource(redditApiService, subredditName, subredditType, query, searchType, includeNSFW, sort)
+            SearchResultsPagingSource(
+                redditApiService,
+                subredditName,
+                subredditType,
+                query,
+                searchType,
+                includeNSFW,
+                sort,
+                isCompact
+            )
         }.liveData
 
     fun getSearchResultsSubredditList(query: String?, searchType: String?, includeNSFW: Int?) =
@@ -46,18 +68,40 @@ class RedditApiRepository @Inject constructor(private val redditApiService: Redd
         }.liveData
 
 
-
-
-    fun getUserOverviewList(username: String?, userInfo: UserInfo?, accountType: Int) = Pager(
+    fun getUserOverviewList(
+        username: String?,
+        userInfo: UserInfo?,
+        accountType: Int,
+        isCompact: Boolean?
+    ) = Pager(
         PagingConfig(count)
     ) {
-        OverviewPagingSource(redditApiService, username?: "", userInfo, "overview", accountType)
+        OverviewPagingSource(
+            redditApiService,
+            username ?: "",
+            userInfo,
+            "overview",
+            accountType,
+            isCompact
+        )
     }.liveData
 
-    fun getUserPostsList(username: String?, userInfo: UserInfo?, historyType: String) = Pager(
+    fun getUserPostsList(
+        username: String?,
+        userInfo: UserInfo?,
+        historyType: String,
+        isCompact: Boolean?
+    ) = Pager(
         PagingConfig(count)
     ) {
-        OverviewPagingSource(redditApiService, username?: "", userInfo, historyType,null)
+        OverviewPagingSource(
+            redditApiService,
+            username ?: "",
+            userInfo,
+            historyType,
+            null,
+            isCompact
+        )
     }.liveData
 
 
@@ -68,7 +112,7 @@ class RedditApiRepository @Inject constructor(private val redditApiService: Redd
         USER_AGENT
     )
 
-    suspend fun voteOnThing(dir: Int, id: String) = redditApiService.vote(USER_AGENT,dir, id)
+    suspend fun voteOnThing(dir: Int, id: String) = redditApiService.vote(USER_AGENT, dir, id)
 
 
     companion object {

@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         setupBottomNavMenu(navController)
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.subscribedFragment,R.id.inboxFragment, R.id.accountOverviewFragment, R.id.searchFragment, R.id.downloadedPostsFragment)
+            setOf(R.id.subscribedFragment,R.id.inboxFragment, R.id.accountOverviewFragment, R.id.searchFragment, R.id.settingsFragment)
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
     }

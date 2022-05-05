@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.ui.common.user
+package com.example.snapshotsforreddit.ui.common.user.overview
 
 import android.os.Bundle
 import android.view.View
@@ -8,13 +8,13 @@ import androidx.navigation.fragment.navArgs
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentUserOverviewBinding
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
-import com.example.snapshotsforreddit.ui.common.RedditLoadStateAdapter
-import com.example.snapshotsforreddit.ui.tabs.account.overview.AccountOverviewAdapter
+import com.example.snapshotsforreddit.ui.common.loadstate.RedditLoadStateAdapter
 import com.example.snapshotsforreddit.util.changeViewOnLoadState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class UserOverviewFragment : Fragment(R.layout.fragment_user_overview), AccountOverviewAdapter.OnItemClickListener {
+class UserOverviewFragment : Fragment(R.layout.fragment_user_overview),
+    OverviewAdapter.OnItemClickListener {
     private val navigationArgs: UserOverviewFragmentArgs by navArgs()
     private val viewModel: UserOverviewViewModel by viewModels()
 
@@ -26,7 +26,7 @@ class UserOverviewFragment : Fragment(R.layout.fragment_user_overview), AccountO
 
         _binding = FragmentUserOverviewBinding.bind(view)
 
-        val userOverviewAdapter = AccountOverviewAdapter(this)
+        val userOverviewAdapter = OverviewAdapter(this)
 
         binding.apply {
             recyclerviewUserOverview.setHasFixedSize(true)

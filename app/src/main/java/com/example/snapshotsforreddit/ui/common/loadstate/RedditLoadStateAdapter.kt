@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.ui.common
+package com.example.snapshotsforreddit.ui.common.loadstate
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

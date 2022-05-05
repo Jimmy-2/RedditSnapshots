@@ -1,10 +1,14 @@
 package com.example.snapshotsforreddit.ui.common.redditpage
 
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.example.snapshotsforreddit.data.PreferencesDataStoreRepository
 import com.example.snapshotsforreddit.network.RedditApiRepository
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
+import com.example.snapshotsforreddit.util.MonitorTriple
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,8 +21,7 @@ class RedditPageViewModel @Inject constructor(
 
     //read and update isCompact value
     val preferencesFlow = preferencesDataStoreRepository.preferencesFlow
-
-    private val subredditName = MutableLiveData<String>()
+    val subredditName = MutableLiveData<String>()
     private val subredditType = MutableLiveData<String>()
     private val isCompact = MutableLiveData<Boolean?>()
     private val sortOrder = MutableLiveData<String?>()
@@ -29,8 +32,9 @@ class RedditPageViewModel @Inject constructor(
 //    }
 
     //if isCompact or sortOrder value changes, we will update the screen
-    val redditPagePosts = Transformations.switchMap(MonitorPair(isCompact, sortOrder)) {
-        redditApiRepository.getSubredditPostsList(subredditName.value!!, subredditType.value!!,
+    val redditPagePosts = Transformations.switchMap(MonitorTriple(isCompact, sortOrder, subredditName)) {
+        redditApiRepository.getSubredditPostsList(
+            it.third!!, subredditType.value!!,
             it.second, it.first).cachedIn(viewModelScope)
     }
 
@@ -63,18 +67,23 @@ class RedditPageViewModel @Inject constructor(
 
     }
 
+    fun loadRedditPage(redditPageName: String, redditPageType: String) {
+        if(subredditName.value == null || subredditName.value == "") {
+            subredditName.value = redditPageName
+            subredditType.value = redditPageType
+        }
+
+
+    }
+
     fun changeRedditPage(redditPageName: String, redditPageType: String) {
-        subredditName.value = redditPageName
-        subredditType.value = redditPageType
+        if(subredditName.value != redditPageName) {
+            subredditName.value = redditPageName
+        }
+        if(subredditType.value != redditPageType) {
+            subredditType.value = redditPageType
+        }
     }
 
 
-}
-//monitor 2 values for switchMap.
-//source: https://stackoverflow.com/questions/49493772/mediatorlivedata-or-switchmap-transformation-with-multiple-parameters
-class MonitorPair<A, B>(a: LiveData<A>, b: LiveData<B>) : MediatorLiveData<Pair<A?, B?>>() {
-    init {
-        addSource(a) { value = it to b.value }
-        addSource(b) { value = a.value to it }
-    }
 }

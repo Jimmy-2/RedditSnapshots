@@ -8,13 +8,13 @@ import androidx.navigation.fragment.navArgs
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentAccountHistoryBinding
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
-import com.example.snapshotsforreddit.ui.common.RedditLoadStateAdapter
-import com.example.snapshotsforreddit.ui.tabs.account.overview.AccountOverviewAdapter
+import com.example.snapshotsforreddit.ui.common.loadstate.RedditLoadStateAdapter
+import com.example.snapshotsforreddit.ui.common.user.overview.OverviewAdapter
 import com.example.snapshotsforreddit.util.changeViewOnLoadState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AccountHistoryFragment : Fragment(R.layout.fragment_account_history), AccountOverviewAdapter.OnItemClickListener {
+class AccountHistoryFragment : Fragment(R.layout.fragment_account_history), OverviewAdapter.OnItemClickListener {
 
     private val navigationArgs: AccountHistoryFragmentArgs by navArgs()
 
@@ -29,7 +29,7 @@ class AccountHistoryFragment : Fragment(R.layout.fragment_account_history), Acco
         _binding  = FragmentAccountHistoryBinding.bind(view)
 
 
-        val accountHistoryAdapter = AccountOverviewAdapter (this)
+        val accountHistoryAdapter = OverviewAdapter (this)
 
         binding.apply {
             recyclerviewAccountHistory.setHasFixedSize(true)

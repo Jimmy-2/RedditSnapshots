@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.util
+ package com.example.snapshotsforreddit.util
 
 import android.widget.Button
 import android.widget.ProgressBar

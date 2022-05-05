@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.ui.common
+package com.example.snapshotsforreddit.ui.common.viewholders
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -62,7 +62,6 @@ class PostCompactViewHolder(
 
     @SuppressLint("ResourceAsColor")
     fun bind(postObject: RedditChildrenObject) {
-        println("HELLOHAHAHAGood")
         this.post = postObject
         val currentPost = postObject.data
         //TODO FIX CODE HERE : REFORMAT STATEMENTS
@@ -88,18 +87,28 @@ class PostCompactViewHolder(
 
 
                 imageviewPostItem.visibility = View.VISIBLE
-                if (currentPost.preview?.images?.get(0)?.source?.url != null) {
-                    val imageUrl =
-                        currentPost.preview.images[0].source!!.url?.replace(
-                            removePart, ""
-                        )
-                    Glide.with(itemView)
-                        .load(imageUrl)
-                        .centerCrop()
-                        .transition(DrawableTransitionOptions.withCrossFade())
-                        .error(R.drawable.ic_error)
-                        .into(imageviewPostItem)
+                when (post?.data?.is_self) {
+                    true -> {
+                        imageviewPostItem.setImageResource(R.drawable.ic_text)
+                    }
+                    else -> {
+
+                        if (currentPost.preview?.images?.get(0)?.source?.url != null) {
+                            val imageUrl =
+                                currentPost.preview.images[0].source!!.url?.replace(
+                                    removePart, ""
+                                )
+                            Glide.with(itemView)
+                                .load(imageUrl)
+                                .centerCrop()
+                                .transition(DrawableTransitionOptions.withCrossFade())
+                                .error(R.drawable.ic_error)
+                                .into(imageviewPostItem)
+                        }
+                    }
                 }
+
+
 
 
 

@@ -72,9 +72,10 @@
 
             <ImageView
                 android:id="@+id/image_subreddit_item"
+                android:padding="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:srcCompat="@tools:sample/avatars" />
+                tools:srcCompat="@drawable/ic_home" />
 
         </com.google.android.material.card.MaterialCardView>
 

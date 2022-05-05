@@ -99,7 +99,7 @@ class BottomNavigationTest {
     private fun openOptionsScreen() {
         Espresso.onView(
             CoreMatchers.allOf(
-                withContentDescription(R.string.title_options),
+                withContentDescription(R.string.title_settings),
                 ViewMatchers.isDisplayed()
             )
         )
@@ -144,7 +144,7 @@ class BottomNavigationTest {
     }
 
     private fun assertOptionsScreen() {
-        Espresso.onView(withText(R.string.title_options))
+        Espresso.onView(withText(R.string.title_settings))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
     }
     private fun assertSnapshotsScreen() {

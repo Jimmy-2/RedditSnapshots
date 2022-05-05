@@ -16,7 +16,7 @@
     <fragment
         android:id="@+id/redditPageFragment"
         android:name="com.example.snapshotsforreddit.ui.common.redditpage.RedditPageFragment"
-        android:label="RedditPageFragment">
+        android:label="">
         <argument
             android:name="redditPageName"
             app:argType="string" />
@@ -24,14 +24,14 @@
             android:name="redditPageType"
             app:argType="string" />
         <action
-            android:id="@+id/action_redditPageFragment_to_searchResultsFragment"
-            app:destination="@id/searchResultsFragment" />
+            android:id="@+id/action_redditPageFragment_to_searchResultsPostFragment"
+            app:destination="@id/searchResultsPostFragment" />
     </fragment>
     <fragment
-        android:id="@+id/searchResultsFragment"
-        android:name="com.example.snapshotsforreddit.ui.common.searchresults.SearchResultsFragment"
-        android:label="fragment_search_results"
-        tools:layout="@layout/fragment_search_results" >
+        android:id="@+id/searchResultsPostFragment"
+        android:name="com.example.snapshotsforreddit.ui.common.searchresults.posts.SearchResultsPostFragment"
+        android:label="fragment_search_results_post"
+        tools:layout="@layout/fragment_search_results_post" >
         <argument
             android:name="searchQuery"
             app:argType="string" />

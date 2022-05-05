@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.ui.common.user
+package com.example.snapshotsforreddit.ui.common.user.overview
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,7 +24,7 @@ class UserOverviewViewModel @Inject constructor(
     private val _userData = MutableLiveData<UserInfo?>()
 
     val userOverviewItems = currentUser.switchMap { userQuery ->
-        redditApiRepository.getUserOverviewList(userQuery, _userData.value, 1).cachedIn(viewModelScope)
+        redditApiRepository.getUserOverviewList(userQuery, _userData.value, 1, false).cachedIn(viewModelScope)
     }
 
 

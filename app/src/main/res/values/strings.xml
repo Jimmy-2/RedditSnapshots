@@ -8,7 +8,7 @@
     <string name="title_inbox">Inbox</string>
     <string name="title_account">Account</string>
     <string name="title_search">Search</string>
-    <string name="title_options">Options</string>
+    <string name="title_settings">Settings</string>
     <string name="title_snapshots">Snapshots</string>
     <string name="hint_search_fragment">Search Posts, Subreddits, Users</string>
     <string name="menu_accounts">Accounts</string>

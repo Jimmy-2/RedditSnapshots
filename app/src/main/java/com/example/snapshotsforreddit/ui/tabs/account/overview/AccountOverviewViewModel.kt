@@ -7,10 +7,12 @@ import androidx.lifecycle.*
 import androidx.paging.cachedIn
 import com.example.snapshotsforreddit.BuildConfig
 import com.example.snapshotsforreddit.data.AuthDataStoreRepository
+import com.example.snapshotsforreddit.data.PreferencesDataStoreRepository
 import com.example.snapshotsforreddit.network.AuthApiRepository
 import com.example.snapshotsforreddit.network.RedditApiRepository
 import com.example.snapshotsforreddit.network.responses.TokenResponse
 import com.example.snapshotsforreddit.network.responses.account.UserInfo
+import com.example.snapshotsforreddit.util.MonitorPair
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,23 +22,29 @@ import javax.inject.Inject
 class AccountOverviewViewModel @Inject constructor(
     private val authDataStoreRepository: AuthDataStoreRepository,
     private val authApiRepository: AuthApiRepository,
-    private val redditApiRepository: RedditApiRepository
+    private val redditApiRepository: RedditApiRepository,
+    private val preferencesDataStoreRepository: PreferencesDataStoreRepository,
 ) : ViewModel() {
     private val TAG: String = "AccountOverviewViewModel"
 
     val authFlow = authDataStoreRepository.authFlow.asLiveData()
 
-    private val _username = MutableLiveData("")
-    private val _userData = MutableLiveData<UserInfo?>()
+    //read and update isCompact value
+    val preferencesFlow = preferencesDataStoreRepository.preferencesFlow.asLiveData()
 
-    val accountOverviewItems = _username.switchMap { username ->
-        redditApiRepository.getUserOverviewList(username, _userData.value, 0).cachedIn(viewModelScope)
+
+    private val username = MutableLiveData("")
+    private val userData = MutableLiveData<UserInfo?>()
+    private val isCompact = MutableLiveData<Boolean?>()
+
+    val accountOverviewItems = Transformations.switchMap(MonitorPair(username,isCompact)) { pair ->
+        redditApiRepository.getUserOverviewList(pair.first, userData.value, 0, pair.second).cachedIn(viewModelScope)
 
     }
 
     fun checkIfUsernameChanged(username: String) {
         //only if accessToken changes do we update subreddits
-        if (_username.value != username) {
+        if (this.username.value != username) {
             //_username.value = username
             getLoggedInUserData(username)
         }
@@ -44,10 +52,16 @@ class AccountOverviewViewModel @Inject constructor(
 
     private fun getLoggedInUserData(username: String) = viewModelScope.launch {
         try {
-            _userData.value = redditApiRepository.getUserInfoData(username).data
-            _username.value = _userData.value?.name
+            userData.value = redditApiRepository.getUserInfoData(username).data
+            this@AccountOverviewViewModel.username.value = userData.value?.name
         } catch (e: Exception) {
 
+        }
+    }
+
+    fun checkIsCompact(newVal : Boolean) {
+        if(isCompact.value != newVal) {
+            isCompact.value = newVal
         }
     }
 

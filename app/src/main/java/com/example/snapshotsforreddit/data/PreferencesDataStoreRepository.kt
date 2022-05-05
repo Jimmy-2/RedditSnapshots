@@ -66,7 +66,12 @@ class PreferencesDataStoreRepository @Inject constructor(@ApplicationContext con
 
 
     private object PreferencesKeys {
+        //SORT_ORDER is only used and saved in snapshots screen
         val SORT_ORDER = stringPreferencesKey("sort_order")
+
+        //global
         val IS_COMPACT_VIEW = booleanPreferencesKey("is_compact_view")
+        val ALLOW_NSFW = booleanPreferencesKey("allow_nsfw")
+        val BLUR_NSFW = booleanPreferencesKey("allow_nsfw")
     }
 }

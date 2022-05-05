@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -14,7 +15,7 @@ import androidx.paging.CombinedLoadStates
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentRedditPageBinding
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
-import com.example.snapshotsforreddit.ui.common.RedditLoadStateAdapter
+import com.example.snapshotsforreddit.ui.common.loadstate.RedditLoadStateAdapter
 import com.example.snapshotsforreddit.util.changeViewOnLoadState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
@@ -49,7 +50,8 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page),
 
         val redditPageName = navigationArgs.redditPageName
         val redditPageType = navigationArgs.redditPageType
-        viewModel.changeRedditPage(redditPageName, redditPageType)
+        //only load this once
+        viewModel.loadRedditPage(redditPageName, redditPageType)
 
         viewModel.redditPagePosts.observe(viewLifecycleOwner) {
             //connect data to adapter
@@ -81,12 +83,39 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page),
     //inflate/activate options menu
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_fragment_reddit_page, menu)
+        //reference to SearchView
+        val searchPost = menu.findItem(R.id.action_search_subreddits)
+        searchPost.title = viewModel.subredditName.value + downArrow
+
+        val searchView = searchPost.actionView as SearchView
+
+        //REFORMAT AND USE VIEW EXTENSIONS
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    if (query!= null) {
+                        viewModel.changeRedditPage(query,"r")
+                        searchPost.title = query + downArrow
+                    }
+                    return true
+                }
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    //TODO display a list of subreddits that start with the searched query and update as the user deletes/adds a letter.
+                    //TODO: MAY NOT ADD DUE TO 60 API CALLS PER MIN LIMIT AND THIS CAN EASILY REACH LIMIT
+                    return true
+                }
+            })
+
+
+
         viewLifecycleOwner.lifecycleScope.launch {
             var isChecked = viewModel.preferencesFlow.first().isCompactView
             menu.findItem(R.id.action_compact).isChecked = isChecked
             viewModel.checkIsCompact(isChecked)
 
         }
+
+
 
     }
 
@@ -106,7 +135,6 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page),
                 viewModel.onSortOrderSelected("best")
                 return true
             }
-
             R.id.action_sort_by_hot -> {
                 viewModel.onSortOrderSelected("hot")
                 return true
@@ -131,7 +159,7 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page),
         if (query != null && query != "") {
             //TODO emit these from viewmodel
             findNavController().navigate(
-                RedditPageFragmentDirections.actionRedditPageFragmentToSearchResultsFragment(
+                RedditPageFragmentDirections.actionRedditPageFragmentToSearchResultsPostFragment(
                     query,
                     subredditName
                 )
@@ -159,6 +187,10 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page),
             0 -> viewModel.onVoteOnPost(0, post)
             1 -> viewModel.onVoteOnPost(1, post)
         }
+    }
+
+    companion object{
+        const val downArrow = 0x25BC.toChar()
     }
 
 }

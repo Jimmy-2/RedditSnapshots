@@ -9,7 +9,7 @@ import com.example.snapshotsforreddit.network.services.RedditApiService
 import retrofit2.HttpException
 import java.io.IOException
 
-class OverviewPagingSource(private val redditApiService: RedditApiService, private val username: String, private val userInfo: UserInfo?, private val historyType: String, private val accountType: Int?) : PagingSource<String, RedditChildrenObject>(){
+class OverviewPagingSource(private val redditApiService: RedditApiService, private val username: String, private val userInfo: UserInfo?, private val historyType: String, private val accountType: Int?, private val isCompact: Boolean?) : PagingSource<String, RedditChildrenObject>(){
     private val TAG: String = "AccountPagingSource"
     override fun getRefreshKey(state: PagingState<String, RedditChildrenObject>): String? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -27,14 +27,18 @@ class OverviewPagingSource(private val redditApiService: RedditApiService, priva
 
             val overviewItems = if(params.key == null && historyType == "overview") {
                 //DefaultsDatasource().emptyRedditChildrenData(kind = "userData", userData = userData) +
-                    if(responseData?.children!!.isEmpty()) {
-                        DefaultsDatasource().loadDefaultAccountItems(userInfo)+ responseData.children
-                    }else {
-                        when (accountType) {
-                            0 -> DefaultsDatasource().loadDefaultAccountItems(userInfo)+DefaultsDatasource().addHeader()+ responseData.children
-                            else -> DefaultsDatasource().loadDefaultUserItems(userInfo)+DefaultsDatasource().addHeader()+ responseData.children
-                        }
+                if(responseData?.children!!.isEmpty()) {
+                    when (accountType) {
+                        0 -> DefaultsDatasource().loadDefaultAccountItems(userInfo,isCompact?: false)+ responseData.children
+                        else -> DefaultsDatasource().loadDefaultUserItems(userInfo,isCompact?: false)+ responseData.children
                     }
+
+                }else {
+                    when (accountType) {
+                        0 -> DefaultsDatasource().loadDefaultAccountItems(userInfo,isCompact?: false)+DefaultsDatasource().addHeader()+ responseData.children
+                        else -> DefaultsDatasource().loadDefaultUserItems(userInfo,isCompact?: false)+DefaultsDatasource().addHeader()+ responseData.children
+                    }
+                }
 
 
             }else {

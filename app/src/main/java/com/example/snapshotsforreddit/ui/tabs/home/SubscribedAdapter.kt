@@ -1,5 +1,6 @@
 package com.example.snapshotsforreddit.ui.tabs.home
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,6 @@ import com.example.snapshotsforreddit.databinding.ItemHeaderBinding
 import com.example.snapshotsforreddit.databinding.ItemSubscribedBinding
 import com.example.snapshotsforreddit.databinding.ItemSubscribedDefaultBinding
 import com.example.snapshotsforreddit.network.responses.subreddit.SubredditChildrenObject
-import com.example.snapshotsforreddit.ui.tabs.account.overview.AccountOverviewAdapter.HeaderViewHolder
 
 class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
     PagingDataAdapter<SubredditChildrenObject, RecyclerView.ViewHolder>(
@@ -89,26 +89,13 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
         }
 
         fun bind(subredditObject: SubredditChildrenObject) {
-            val removePart = "amp;"
             //TODO FIX CODE HERE : REFORMAT STATEMENTS
             binding.apply {
                 if (subredditObject.data != null) {
-                    val currIconUrl = subredditObject.data.community_icon.toString()
-                    val iconUrl: String =
-                        if (subredditObject.data.community_icon == null && subredditObject.data.icon_img == null) {
-                            ""
-                        } else if (currIconUrl == "") {
-                            subredditObject.data.icon_img!!.replace(removePart, "")
-                        } else {
-                            currIconUrl.replace(removePart, "")
-                        }
-                    Glide.with(itemView)
-                        .load(iconUrl)
-                        .centerCrop()
-                        .transition(DrawableTransitionOptions.withCrossFade())
-                        .error(R.drawable.ic_error)
-                        .into(imageSubredditItem)
-
+                    val iconBackgroundColor = subredditObject.data.icon_img
+                    val icon = subredditObject.data.subscribers
+                    cardSubredditItem.setCardBackgroundColor(Color.parseColor(iconBackgroundColor))
+                    icon?.let { imageSubredditItem.setImageResource(it) }
                     textviewDefaultSubredditItemTitle.text = subredditObject.data.display_name
                     textviewDefaultSubredditItemDescription.text =
                         subredditObject.data.public_description
@@ -137,22 +124,25 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
             val removePart = "amp;"
             //TODO FIX CODE HERE : REFORMAT STATEMENTS
             binding.apply {
-                val currIconUrl = subredditObject.data?.community_icon
-                val iconUrl: String =
-                    if (subredditObject.data?.community_icon == null && subredditObject.data?.icon_img == null) {
-                        ""
-                    } else if (currIconUrl == "") {
-                        subredditObject.data.icon_img!!.replace(removePart, "")
-                    } else {
-                        currIconUrl!!.replace(removePart, "")
-                    }
-                Glide.with(itemView)
-                    .load(iconUrl)
-                    .centerCrop()
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .error(R.drawable.ic_error)
-                    .into(imageSubredditItem)
                 if (subredditObject.data != null) {
+                    val currIconUrl = subredditObject.data.community_icon
+                    val iconUrl: String =
+                        if (subredditObject.data.community_icon == null && subredditObject.data.icon_img == null) {
+                            ""
+                        } else if (currIconUrl == "") {
+                            subredditObject.data.icon_img!!.replace(removePart, "")
+                        } else {
+                            currIconUrl!!.replace(removePart, "")
+                        }
+                    Glide.with(itemView)
+                        .load(iconUrl)
+                        .centerCrop()
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .error(R.drawable.ic_error)
+                        .into(imageSubredditItem)
+
+
+
                     textviewSubredditItemTitle.text = subredditObject.data.display_name_prefixed
                     favoriteSubredditItem.isVisible = subredditObject.data.user_has_favorited!!
                 }

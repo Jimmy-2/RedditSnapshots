@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.ui.common
+package com.example.snapshotsforreddit.ui.common.viewholders
 
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.RecyclerView

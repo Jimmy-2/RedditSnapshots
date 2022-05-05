@@ -15,12 +15,13 @@ import androidx.paging.LoadState
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentAccountOverviewBinding
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
-import com.example.snapshotsforreddit.ui.common.RedditLoadStateAdapter
+import com.example.snapshotsforreddit.ui.common.loadstate.RedditLoadStateAdapter
+import com.example.snapshotsforreddit.ui.common.user.overview.OverviewAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), AccountOverviewAdapter.OnItemClickListener {
+class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), OverviewAdapter.OnItemClickListener {
     private val viewModel: AccountOverviewViewModel by viewModels()
 
     private var _binding: FragmentAccountOverviewBinding? = null
@@ -31,7 +32,7 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Acc
 
         _binding  = FragmentAccountOverviewBinding.bind(view)
 
-        val accountOverviewAdapter = AccountOverviewAdapter (this)
+        val accountOverviewAdapter = OverviewAdapter (this)
 
         binding.apply {
             recyclerviewAccountOverview.setHasFixedSize(true)
@@ -44,7 +45,6 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Acc
         }
 
         viewModel.authFlow.observe(viewLifecycleOwner) { authFlowValues ->
-            println("HELLO 332 ${authFlowValues.username}")
             if(authFlowValues.username == "") {
                 binding.recyclerviewAccountOverview.visibility = View.GONE
             }else {
@@ -52,6 +52,11 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Acc
             }
             viewModel.checkIfUsernameChanged(authFlowValues.username)
         }
+
+        viewModel.preferencesFlow.observe(viewLifecycleOwner) { preferencesFlowValues ->
+            viewModel.checkIsCompact(preferencesFlowValues.isCompactView)
+        }
+
 
         viewModel.accountOverviewItems.observe(viewLifecycleOwner) {
             //connect data to adapter

@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.ui.tabs.downloadedposts
+package com.example.snapshotsforreddit.ui.tabs.snapshots
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

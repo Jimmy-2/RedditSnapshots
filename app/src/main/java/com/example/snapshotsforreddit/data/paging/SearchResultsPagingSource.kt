@@ -15,6 +15,7 @@ class SearchResultsPagingSource(
     private val searchType: String?,
     private val includeNSFW: String?,
     private val sort: String?,
+    private val isCompact: Boolean?,
     ) : PagingSource<String, RedditChildrenObject>() {
 
     override fun getRefreshKey(state: PagingState<String, RedditChildrenObject>): String? {

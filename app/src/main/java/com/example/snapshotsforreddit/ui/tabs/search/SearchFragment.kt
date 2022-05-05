@@ -76,7 +76,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         when(searchType) {
             0 -> findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToSearchResultsSubredditFragment(searchQuery))
             1 -> findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToUserOverviewFragment(searchQuery))
-            else  -> findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToSearchResultsFragment2(searchQuery, null))
+            else  -> findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToSearchResultsPostFragment2(searchQuery, null))
         }
 
     }

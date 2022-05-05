@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.ui.common.searchresults
+package com.example.snapshotsforreddit.ui.common.searchresults.posts
 
 import android.os.Bundle
 import android.view.View
@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.snapshotsforreddit.R
-import com.example.snapshotsforreddit.databinding.FragmentSearchResultsBinding
+import com.example.snapshotsforreddit.databinding.FragmentSearchResultsPostBinding
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
 import com.example.snapshotsforreddit.util.changeViewOnLoadState
 import dagger.hilt.android.AndroidEntryPoint
@@ -14,19 +14,20 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 
 //TODO change to RedditChildrenData (not object)
-class SearchResultsFragment : Fragment(R.layout.fragment_search_results), SearchResultsAdapter.OnItemClickListener  {
-    private val navigationArgs: SearchResultsFragmentArgs by navArgs()
+class SearchResultsPostFragment : Fragment(R.layout.fragment_search_results_post),
+    SearchResultsPostAdapter.OnItemClickListener {
+    private val navigationArgs: SearchResultsPostFragmentArgs by navArgs()
     private val viewModel: SearchResultsViewModel by viewModels()
 
-    private var _binding: FragmentSearchResultsBinding? = null
+    private var _binding: FragmentSearchResultsPostBinding? = null
     private val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        _binding  = FragmentSearchResultsBinding.bind(view)
+        _binding  = FragmentSearchResultsPostBinding.bind(view)
 
-        val searchResultsAdapter = SearchResultsAdapter(this)
+        val searchResultsAdapter = SearchResultsPostAdapter(this)
 
         binding.apply {
             recyclerviewSearchResults.setHasFixedSize(true)
@@ -39,6 +40,9 @@ class SearchResultsFragment : Fragment(R.layout.fragment_search_results), Search
         val currentSearchQuery = CurrentSearch(navigationArgs.searchQuery,navigationArgs.subredditName)
         viewModel.changeQuery(currentSearchQuery )
 
+        viewModel.preferencesFlow.observe(viewLifecycleOwner) { preferencesFlowValues ->
+            viewModel.checkIsCompact(preferencesFlowValues.isCompactView)
+        }
 
         viewModel.searchResults.observe(viewLifecycleOwner) {
             //connect data to adapter

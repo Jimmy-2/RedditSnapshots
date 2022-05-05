@@ -10,9 +10,9 @@ import com.example.snapshotsforreddit.databinding.ItemPostBinding
 import com.example.snapshotsforreddit.databinding.ItemPostCompactBinding
 import com.example.snapshotsforreddit.databinding.ItemSearchBarBinding
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
-import com.example.snapshotsforreddit.ui.common.PostCompactViewHolder
-import com.example.snapshotsforreddit.ui.common.PostViewHolder
-import com.example.snapshotsforreddit.ui.common.SearchBarViewHolder
+import com.example.snapshotsforreddit.ui.common.viewholders.PostCompactViewHolder
+import com.example.snapshotsforreddit.ui.common.viewholders.PostViewHolder
+import com.example.snapshotsforreddit.ui.common.viewholders.SearchBarViewHolder
 
 
 //TODO for now use notifyItemChanged(position) until db pagination is implemented

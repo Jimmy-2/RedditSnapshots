@@ -11,8 +11,8 @@
         android:label="@string/title_search"
         tools:layout="@layout/fragment_search">
         <action
-            android:id="@+id/action_searchFragment_to_searchResultsFragment2"
-            app:destination="@id/searchResultsFragment2" />
+            android:id="@+id/action_searchFragment_to_searchResultsPostFragment2"
+            app:destination="@id/searchResultsPostFragment2" />
         <action
             android:id="@+id/action_searchFragment_to_userOverviewFragment"
             app:destination="@id/userOverviewFragment" />
@@ -21,10 +21,10 @@
             app:destination="@id/searchResultsSubredditFragment" />
     </fragment>
     <fragment
-        android:id="@+id/searchResultsFragment2"
-        android:name="com.example.snapshotsforreddit.ui.common.searchresults.SearchResultsFragment"
-        android:label="fragment_search_results"
-        tools:layout="@layout/fragment_search_results" >
+        android:id="@+id/searchResultsPostFragment2"
+        android:name="com.example.snapshotsforreddit.ui.common.searchresults.posts.SearchResultsPostFragment"
+        android:label="fragment_search_results_post"
+        tools:layout="@layout/fragment_search_results_post" >
         <argument
             android:name="searchQuery"
             app:argType="string" />
@@ -35,7 +35,7 @@
     </fragment>
     <fragment
         android:id="@+id/userOverviewFragment"
-        android:name="com.example.snapshotsforreddit.ui.common.user.UserOverviewFragment"
+        android:name="com.example.snapshotsforreddit.ui.common.user.overview.UserOverviewFragment"
         android:label="fragment_user_overview"
         tools:layout="@layout/fragment_user_overview" >
         <argument

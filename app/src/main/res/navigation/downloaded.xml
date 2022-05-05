@@ -6,6 +6,6 @@
 
     <fragment
         android:id="@+id/downloadedPostsFragment"
-        android:name="com.example.snapshotsforreddit.ui.tabs.downloadedposts.DownloadedPostsFragment"
+        android:name="com.example.snapshotsforreddit.ui.tabs.snapshots.DownloadedPostsFragment"
         android:label="DownloadedPostsFragment" />
 </navigation>

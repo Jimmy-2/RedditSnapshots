@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.ui.common
+package com.example.snapshotsforreddit.ui.common.viewholders
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -62,7 +62,6 @@ class PostViewHolder(
 
     @SuppressLint("ResourceAsColor")
     fun bind(postObject: RedditChildrenObject) {
-        println("HELLOHAHAHA")
         this.post = postObject
         val currentPost = postObject.data
         //TODO FIX CODE HERE : REFORMAT STATEMENTS

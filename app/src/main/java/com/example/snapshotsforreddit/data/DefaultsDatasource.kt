@@ -15,10 +15,10 @@ class DefaultsDatasource {
                 data = SubscribedChildrenData(
                     "Home",
                     "Home",
+                    R.drawable.ic_home,
                     null,
                     null,
-                    null,
-                    null,
+                    "#f80e5f",
                     null,
                     true,
                     "Posts from your subscribed subreddits"
@@ -29,10 +29,10 @@ class DefaultsDatasource {
                 data = SubscribedChildrenData(
                     "Popular Posts",
                     "r/Popular",
+                    R.drawable.ic_popular,
                     null,
                     null,
-                    null,
-                    null,
+                    "#0091ff",
                     "r",
                     true,
                     "Popular recommended posts from Reddit"
@@ -43,10 +43,10 @@ class DefaultsDatasource {
                 data = SubscribedChildrenData(
                     "All Posts",
                     "r/All",
+                    R.drawable.ic_all,
                     null,
                     null,
-                    null,
-                    null,
+                    "#0cd23c",
                     "r",
                     true,
                     "Most active posts from all of Reddit"
@@ -76,12 +76,12 @@ class DefaultsDatasource {
         )
     }
 
-    fun loadDefaultUserItems(userInfo: UserInfo?): List<RedditChildrenObject> {
+    fun loadDefaultUserItems(userInfo: UserInfo?, isCompact: Boolean): List<RedditChildrenObject> {
         return listOf(
             RedditChildrenObject(
                 kind = "userInfo",
                 data = null,
-                defaults = Defaults(null, null, userInfo)
+                defaults = Defaults(null, null, userInfo, null, isCompact)
             ),
             RedditChildrenObject(
                 kind = "defaultTop",
@@ -107,12 +107,12 @@ class DefaultsDatasource {
     }
 
 
-    fun loadDefaultAccountItems(userInfo: UserInfo?): List<RedditChildrenObject> {
+    fun loadDefaultAccountItems(userInfo: UserInfo?, isCompact: Boolean): List<RedditChildrenObject> {
         return listOf(
             RedditChildrenObject(
                 kind = "userInfo",
                 data = null,
-                defaults = Defaults(null, null, userInfo)
+                defaults = Defaults(null, null, userInfo,null, isCompact)
             ),
             RedditChildrenObject(
                 kind = "defaultTop",
