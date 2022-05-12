@@ -49,7 +49,6 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 override fun onQueryTextChange(newText: String?): Boolean {
                     if (newText != null && newText != "") {
                         viewModel.searchQuery.value = newText
-
                         buttonSearchPost.visibility=VISIBLE
                         textviewSearchPost.text = "Posts with \"${viewModel.searchQuery.value}\""
 

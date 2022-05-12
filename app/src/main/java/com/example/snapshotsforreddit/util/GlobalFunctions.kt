@@ -1,5 +1,9 @@
 package com.example.snapshotsforreddit.util
 
+import android.annotation.SuppressLint
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import com.example.snapshotsforreddit.data.AppTheme
 import java.time.*
 
 
@@ -18,6 +22,13 @@ fun getShortenedValue(value: Int?): String {
             String.format("%.1f", (value.toDouble() / 1000000)) + "M"
         }
     }
+}
+
+@SuppressLint("WrongConstant")
+fun AppCompatActivity.updateForTheme(theme: String) = when (theme) {
+    AppTheme.DARK.name -> delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_YES
+    AppTheme.LIGHT.name  -> delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_NO
+    else -> delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
 }
 
 fun calculateAgeDifferenceLocalDateTime(epoch: Long, type: Int): String {

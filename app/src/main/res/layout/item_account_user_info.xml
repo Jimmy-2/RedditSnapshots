@@ -28,9 +28,10 @@
             android:paddingTop="16dp"
             android:background="@android:color/transparent"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+
             android:gravity="center"
             android:maxLines="1"
-            android:textColor="@color/black"
+
             tools:text="3.2K" />
 
         <TextView
@@ -69,7 +70,7 @@
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             android:gravity="center"
             android:maxLines="1"
-            android:textColor="@color/black"
+
             tools:text="8y 11mo" />
 
         <TextView
@@ -105,7 +106,7 @@
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             android:gravity="center"
             android:maxLines="1"
-            android:textColor="@color/black"
+
             tools:text="2.1K" />
 
         <TextView

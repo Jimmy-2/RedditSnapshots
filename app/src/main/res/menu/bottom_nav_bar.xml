@@ -7,6 +7,7 @@
         android:title="@string/title_home" />
 
     <item
+
         android:id="@+id/inbox"
         android:icon="@drawable/ic_inbox"
         android:title="@string/title_inbox" />

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF"
+    android:background="@color/post_background"
     android:layout_marginBottom="8dp">
 
 
@@ -26,7 +26,6 @@
             android:id="@+id/imageview_subreddit_icon"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
@@ -285,10 +284,6 @@
 
 
     </com.google.android.material.card.MaterialCardView>
-
-
-
-
 
 
 

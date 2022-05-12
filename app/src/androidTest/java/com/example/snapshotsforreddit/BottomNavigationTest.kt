@@ -9,6 +9,7 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.rule.ActivityTestRule
+import com.example.snapshotsforreddit.ui.MainActivity
 import org.hamcrest.CoreMatchers
 import org.junit.Assert
 import org.junit.Rule

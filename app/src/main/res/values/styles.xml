@@ -30,10 +30,47 @@
     </style>
 
 
-    <style name="ThemeOverlay.Actionbar" parent="ThemeOverlay.MaterialComponents.ActionBar.Surface" >
+    <style name="ThemeOverlay.Actionbar" parent="ThemeOverlay.MaterialComponents.ActionBar.Surface">
+
         <item name="android:textColorPrimary">@color/black</item>
         <item name="actionMenuTextColor">@color/menu_blue</item>
 
     </style>
+
+    <style name="ThemeOverlay.Actionbar.Night" parent="ThemeOverlay.MaterialComponents.ActionBar.Surface">
+
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="actionMenuTextColor">@color/menu_blue</item>
+
+    </style>
+
+
+    <style name="Widget.SnapshotsForReddit" parent="@android:style/Widget.Material" />
+
+    <!-- Settings -->
+    <style name="Widget.SnapshotsForReddit.Button.Retry" parent="">
+        <item name="android:backgroundTint">@color/orange</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:text">Retry</item>
+    </style>
+
+    <!-- Settings -->
+    <style name="Widget.SnapshotsForReddit.Settings" />
+
+    <style name="Widget.SnapshotsForReddit.Settings.Button">
+        <item name="android:drawableRight">@drawable/ic_right_arrow</item>
+        <item name="android:foreground">?selectableItemBackground</item>
+        <item name="android:background">@color/item_background</item>
+
+        <item name="android:gravity">start|center_vertical</item>
+        <item name="android:minHeight">?listPreferredItemHeightSmall</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingEnd">?listPreferredItemPaddingEnd</item>
+        <item name="android:paddingStart">?listPreferredItemPaddingStart</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:textAppearance">?textAppearanceBody2</item>
+    </style>
+
 
 </resources>

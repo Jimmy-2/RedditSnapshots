@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.example.snapshotsforreddit.data.PreferencesDataStoreRepository.PreferencesKeys.APP_THEME
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -16,6 +17,8 @@ import javax.inject.Singleton
 
 
 enum class SortOrder { BY_TITLE, BY_DATE, BY_SUBREDDIT }
+
+enum class AppTheme { LIGHT, DARK, SYSTEM }
 
 data class FilterPreferences(val sortOrder: SortOrder, val isCompactView: Boolean)
 
@@ -48,6 +51,8 @@ class PreferencesDataStoreRepository @Inject constructor(@ApplicationContext con
             FilterPreferences(sortOrder, isCompactView)
         }
 
+    val selectedTheme = preferencesDataStore.data.map { it[APP_THEME] ?: AppTheme.SYSTEM.name }
+
 
     suspend fun updateSortOrder(sortOrder: SortOrder) {
         preferencesDataStore.edit {
@@ -64,6 +69,13 @@ class PreferencesDataStoreRepository @Inject constructor(@ApplicationContext con
         }
     }
 
+    suspend fun updateAppTheme(theme: AppTheme) {
+        preferencesDataStore.edit { preferences ->
+            preferences[PreferencesKeys.APP_THEME] = theme.name
+        }
+    }
+
+
 
     private object PreferencesKeys {
         //SORT_ORDER is only used and saved in snapshots screen
@@ -71,7 +83,8 @@ class PreferencesDataStoreRepository @Inject constructor(@ApplicationContext con
 
         //global
         val IS_COMPACT_VIEW = booleanPreferencesKey("is_compact_view")
-        val ALLOW_NSFW = booleanPreferencesKey("allow_nsfw")
-        val BLUR_NSFW = booleanPreferencesKey("allow_nsfw")
+
+        //settings
+        val APP_THEME = stringPreferencesKey("app_theme")
     }
 }

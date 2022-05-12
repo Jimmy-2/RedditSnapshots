@@ -16,9 +16,6 @@
             android:id="@+id/signInRedirectDeepLink"
             app:uri="http://www.snapshotstempaddress.com/random_redirect" />
         <action
-            android:id="@+id/action_accountOverviewFragment_to_accountInfoFragment"
-            app:destination="@id/accountInfoFragment" />
-        <action
             android:id="@+id/action_accountOverviewFragment_to_accountHistoryFragment"
             app:destination="@id/accountHistoryFragment" />
     </fragment>
@@ -28,17 +25,9 @@
         android:label="fragment_login_dialog"
         tools:layout="@layout/fragment_login_dialog" />
     <fragment
-        android:id="@+id/accountInfoFragment"
-        android:name="com.example.snapshotsforreddit.ui.tabs.account.info.AccountInfoFragment"
-        android:label="AccountInfoFragment" >
-        <argument
-            android:name="infoType"
-            app:argType="string" />
-    </fragment>
-    <fragment
         android:id="@+id/accountHistoryFragment"
         android:name="com.example.snapshotsforreddit.ui.tabs.account.history.AccountHistoryFragment"
-        android:label="fragment_account_history"
+        android:label="Title: {historyType}"
         tools:layout="@layout/fragment_account_history" >
         <argument
             android:name="historyType"

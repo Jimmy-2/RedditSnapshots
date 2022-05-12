@@ -6,12 +6,12 @@
         android:right="-2dp"
         android:top="-2dp">
         <shape android:shape="rectangle">
-            <solid android:color="#FFFFFF" />
+            <solid android:color="@android:color/transparent" />
 
 
             <stroke
-                android:width="3dp"
-                android:color="@color/light_background" />
+                android:width="2dp"
+                android:color="@android:color/transparent"  />
         </shape>
     </item>
 

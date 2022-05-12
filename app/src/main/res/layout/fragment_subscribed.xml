@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/alt_background_1"
     tools:context=".ui.tabs.home.SubscribedFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -15,7 +16,7 @@
             android:id="@+id/recyclerview_subreddits"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/light_background"
+            android:background="@android:color/transparent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_subscribed" />
 
@@ -40,19 +41,21 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/button_subscribed_retry"
         android:layout_centerHorizontal="true"
-        android:text="Error with loading"
+        android:text="Error loading subscribed subreddits"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/button_subscribed_retry"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:visibility="gone"
-        tools:visibility="visible"/>
+        tools:visibility="visible" />
 
     <Button
         android:id="@+id/button_subscribed_retry"
+        style="@style/Widget.SnapshotsForReddit.Button.Retry"
         android:layout_width="wrap_content"
+
         android:layout_height="wrap_content"
-        android:text="Retry"
         android:visibility="gone"
+        app:cornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -65,12 +68,12 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="No results found"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone"
-        tools:visibility="visible"/>
+        tools:visibility="visible" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

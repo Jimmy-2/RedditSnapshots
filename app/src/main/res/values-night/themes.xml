@@ -2,15 +2,31 @@
     <!-- Base application theme. -->
     <style name="Theme.SnapshotsForReddit" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/black</item>
-        <item name="colorPrimaryVariant">@color/black</item>
+        <item name="colorPrimary">@color/bar_color</item>
+        <item name="colorPrimaryVariant">@color/bar_color</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/background_dark</item>
         <item name="colorOnSecondary">@color/black</item>
+
+
+
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+
+        <item name="actionMenuTextAppearance">@style/MenuItemTextAppearance</item>
+
+
+        <item name="colorTertiary">@color/comment_bubble_dark</item>
+
+        <item name="android:textColorPrimary">@color/white</item>
+
+        <item name="actionBarTheme">@style/ThemeOverlay.Actionbar.Night</item>
+
+        <item name="actionBarStyle">@style/Widget.MaterialComponents.ActionBar.Primary</item>
+
+<!--        <item name="android:navigationBarColor">@android:color/transparent</item>-->
     </style>
 </resources>

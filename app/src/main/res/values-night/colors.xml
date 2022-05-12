@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <resources>
-    <color name="bar_color">#fbfbfd</color>
-    <color name="alt_background_1">#f2f3f8</color>
-    <color name="alt_background_2">#f2f3f8</color>
-    <color name="post_background">#FFFFFFFF</color>
-    <color name="item_background">#FFFFFFFF</color>
-    <color name="text_color_1">#FF000000</color>
+    <color name="bar_color">#FF000000</color>
+    <color name="alt_background_1">#1b1b1b</color>
+    <color name="alt_background_2">#FF000000</color>
+    <color name="post_background">#FF000000</color>
+    <color name="item_background">#141517</color>
+    <color name="text_color_1">#FFFFFFFF</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>

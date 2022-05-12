@@ -48,6 +48,7 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page),
             buttonRedditPageRetry.setOnClickListener { redditPageAdapter.retry() }
         }
 
+
         val redditPageName = navigationArgs.redditPageName
         val redditPageType = navigationArgs.redditPageType
         //only load this once
@@ -85,17 +86,20 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page),
         inflater.inflate(R.menu.menu_fragment_reddit_page, menu)
         //reference to SearchView
         val searchPost = menu.findItem(R.id.action_search_subreddits)
-        searchPost.title = viewModel.subredditName.value + downArrow
+
+        viewModel.subredditName.observe(viewLifecycleOwner) {
+            searchPost.title = (it + downArrow).replaceFirstChar { it.uppercase() }
+        }
+
 
         val searchView = searchPost.actionView as SearchView
-
+        searchView.queryHint = "Subreddit..."
         //REFORMAT AND USE VIEW EXTENSIONS
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     if (query!= null) {
                         viewModel.changeRedditPage(query,"r")
-                        searchPost.title = query + downArrow
                     }
                     return true
                 }
@@ -109,7 +113,7 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page),
 
 
         viewLifecycleOwner.lifecycleScope.launch {
-            var isChecked = viewModel.preferencesFlow.first().isCompactView
+            val isChecked = viewModel.preferencesFlow.first().isCompactView
             menu.findItem(R.id.action_compact).isChecked = isChecked
             viewModel.checkIsCompact(isChecked)
 

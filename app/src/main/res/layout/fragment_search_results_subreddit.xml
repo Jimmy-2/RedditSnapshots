@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.common.searchresults.posts.SearchResultsPostFragment">
 
 
@@ -16,7 +16,7 @@
             android:id="@+id/recyclerview_search_results_subreddit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/light_background"
+            android:background="?colorSecondaryVariant"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_post" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
@@ -39,18 +39,19 @@
         android:layout_above="@id/button_search_results_subreddit_retry"
         android:layout_centerHorizontal="true"
         android:text="Error with loading"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/button_search_results_subreddit_retry"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:visibility="gone"
-        tools:visibility="visible"/>
+        tools:visibility="visible" />
 
     <Button
         android:id="@+id/button_search_results_subreddit_retry"
+        style="@style/Widget.SnapshotsForReddit.Button.Retry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Retry"
         android:visibility="gone"
+        app:cornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -63,12 +64,12 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="No results found"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone"
-        tools:visibility="visible"/>
+        tools:visibility="visible" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -130,10 +130,7 @@ class PostViewHolder(
                         textviewPostItemScore.setTextColor(Color.parseColor(downvoteColor))
                         imageArrow.setImageResource(R.drawable.ic_downvote_arrow)
                     }
-                    null -> {
-                        textviewPostItemScore.setTextColor(coil.base.R.color.androidx_core_secondary_text_default_material_light)
-                        imageArrow.setImageResource(R.drawable.ic_up_arrow_null)
-                    }
+
                 }
             }
         }

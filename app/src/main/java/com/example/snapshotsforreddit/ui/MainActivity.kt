@@ -1,12 +1,19 @@
-package com.example.snapshotsforreddit
+package com.example.snapshotsforreddit.ui
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
+import com.example.snapshotsforreddit.R
+import com.example.snapshotsforreddit.util.updateForTheme
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -14,6 +21,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
+
+    private val viewModel: MainActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +36,31 @@ class MainActivity : AppCompatActivity() {
         setupBottomNavMenu(navController)
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.subscribedFragment,R.id.inboxFragment, R.id.accountOverviewFragment, R.id.searchFragment, R.id.settingsFragment)
+            setOf(
+                R.id.subscribedFragment,
+                R.id.inboxFragment,
+                R.id.accountOverviewFragment,
+                R.id.searchFragment,
+                R.id.settingsFragment
+            )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
+
+        //remove elevation shadow from the action bar
+        //supportActionBar?.elevation = 0F
+//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.selectedTheme.collect { flow ->
+                        updateForTheme(flow)
+                    }
+                }
+            }
+        }
     }
 
     private fun setupBottomNavMenu(navController: NavController) {

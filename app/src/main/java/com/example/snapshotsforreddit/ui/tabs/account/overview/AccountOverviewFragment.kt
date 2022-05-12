@@ -34,6 +34,8 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Ove
 
         val accountOverviewAdapter = OverviewAdapter (this)
 
+        //(requireActivity() as AppCompatActivity).supportActionBar?.title = TODO: username
+
         binding.apply {
             recyclerviewAccountOverview.setHasFixedSize(true)
             recyclerviewAccountOverview.adapter = accountOverviewAdapter.withLoadStateHeaderAndFooter(
