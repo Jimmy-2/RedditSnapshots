@@ -23,7 +23,11 @@ class MainActivityViewModel @Inject constructor(
         emit(Unit)
         emitAll(refreshSignal)
     }
-
+//
+//    val currentTheme: AppTheme = {
+//
+//    }
+//
 
     val selectedTheme = preferencesDataStoreRepository.selectedTheme
 

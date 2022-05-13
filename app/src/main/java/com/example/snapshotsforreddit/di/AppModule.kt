@@ -1,8 +1,5 @@
 package com.example.snapshotsforreddit.di
 
-import android.app.Application
-import androidx.room.Room
-import com.example.snapshotsforreddit.data.room.PostRoomDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,23 +21,7 @@ object AppModule {
     //we only ever need 1 instance of our dao and database throughout the app
     //so we annotate with singleton
 
-    //dagger will create and provide the post database
-    @Provides
-    @Singleton
-    fun provideDatabase(
-        app: Application,
-        callback: PostRoomDatabase.Callback
 
-    ) = Room.databaseBuilder(app, PostRoomDatabase::class.java, "post_database")
-        .fallbackToDestructiveMigration()
-        .addCallback(callback)
-        .build()
-
-
-    //create the actual post dao object we need to make database operation
-    @Provides
-    @Singleton
-    fun providePostDao(db: PostRoomDatabase) = db.postDao()
 
     @ApplicationScope
     @Provides

@@ -34,7 +34,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         }
 
         binding.apply {
-            settingsChooseTheme.setOnClickListener{
+            buttonChangeTheme.setOnClickListener{
                 viewModel.onChangeColorClicked()
             }
         }

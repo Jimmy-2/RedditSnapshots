@@ -41,7 +41,7 @@
                 android:background="?android:dividerHorizontal" />
 
             <TextView
-                android:id="@+id/settings_choose_theme"
+                android:id="@+id/button_change_theme"
                 style="@style/Widget.SnapshotsForReddit.Settings.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

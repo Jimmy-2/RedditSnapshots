@@ -27,6 +27,8 @@
 
         <item name="actionBarStyle">@style/Widget.MaterialComponents.ActionBar.Primary</item>
 
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.MaterialAlertDialog</item>
+
 <!--        <item name="android:navigationBarColor">@android:color/transparent</item>-->
     </style>
 </resources>

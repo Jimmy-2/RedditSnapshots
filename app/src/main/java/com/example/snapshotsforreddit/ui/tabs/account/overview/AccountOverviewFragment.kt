@@ -10,14 +10,17 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentAccountOverviewBinding
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
 import com.example.snapshotsforreddit.ui.common.loadstate.RedditLoadStateAdapter
+import com.example.snapshotsforreddit.ui.common.login.AccountLoginDialogFragment
 import com.example.snapshotsforreddit.ui.common.user.overview.OverviewAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -35,6 +38,16 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Ove
         val accountOverviewAdapter = OverviewAdapter (this)
 
         //(requireActivity() as AppCompatActivity).supportActionBar?.title = TODO: username
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.navigationActions.collect {
+                if (it is AccountOverviewNavigationAction.NavigateToAccountSelector) {
+                    AccountLoginDialogFragment.newInstance()
+                        .show(parentFragmentManager, null)
+                }
+            }
+        }
+
 
         binding.apply {
             recyclerviewAccountOverview.setHasFixedSize(true)
@@ -116,6 +129,11 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Ove
                 findNavController().navigate(
                     AccountOverviewFragmentDirections.actionAccountOverviewFragmentToLoginDialogFragment()
                 )
+                true
+            }
+            R.id.test_dialog -> {
+                viewModel.onAccountsClicked()
+                //viewModel.onEditButtonClicked()
                 true
             }
             else -> super.onOptionsItemSelected(item)

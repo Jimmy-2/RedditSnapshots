@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.snapshotsforreddit.data.AppTheme
+import kotlinx.coroutines.channels.SendChannel
 import java.time.*
 
 
@@ -22,6 +23,12 @@ fun getShortenedValue(value: Int?): String {
             String.format("%.1f", (value.toDouble() / 1000000)) + "M"
         }
     }
+}
+
+fun <E> SendChannel<E>.tryOffer(element: E): Boolean = try {
+    trySend(element).isSuccess
+} catch (t: Throwable) {
+    false
 }
 
 @SuppressLint("WrongConstant")
