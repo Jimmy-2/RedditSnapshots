@@ -6,19 +6,24 @@ import android.util.Log
 import androidx.lifecycle.*
 import androidx.paging.cachedIn
 import com.example.snapshotsforreddit.BuildConfig
+import com.example.snapshotsforreddit.data.AppTheme
 import com.example.snapshotsforreddit.data.AuthDataStoreRepository
 import com.example.snapshotsforreddit.data.PreferencesDataStoreRepository
+import com.example.snapshotsforreddit.data.TestDataStoreRepository
 import com.example.snapshotsforreddit.data.room.Account
 import com.example.snapshotsforreddit.data.room.AccountDao
+import com.example.snapshotsforreddit.di.ApplicationScope
 import com.example.snapshotsforreddit.network.AuthApiRepository
 import com.example.snapshotsforreddit.network.RedditApiRepository
 import com.example.snapshotsforreddit.network.responses.TokenResponse
 import com.example.snapshotsforreddit.network.responses.account.UserInfo
+import com.example.snapshotsforreddit.ui.tabs.settings.themeFromPreferences
 import com.example.snapshotsforreddit.util.MonitorPair
 import com.example.snapshotsforreddit.util.tryOffer
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,10 +33,18 @@ class AccountOverviewViewModel @Inject constructor(
     private val authDataStoreRepository: AuthDataStoreRepository,
     private val authApiRepository: AuthApiRepository,
     private val redditApiRepository: RedditApiRepository,
+    private val testDataStoreRepository: TestDataStoreRepository,
     private val preferencesDataStoreRepository: PreferencesDataStoreRepository,
     private val accountDao: AccountDao,
 ) : ViewModel() {
     private val TAG: String = "AccountOverviewViewModel"
+
+    private val refreshSignal = MutableSharedFlow<Unit>()
+
+    private val loadDataSignal: Flow<Unit> = flow {
+        emit(Unit)
+        emitAll(refreshSignal)
+    }
 
     private val _navigationActions = Channel<AccountOverviewNavigationAction>(capacity = Channel.CONFLATED)
 
@@ -42,25 +55,16 @@ class AccountOverviewViewModel @Inject constructor(
     //read and update isCompact value
     val preferencesFlow = preferencesDataStoreRepository.preferencesFlow.asLiveData()
 
-    private val _authSignInURL = MutableLiveData<String>()
-    val authSignInURL: LiveData<String> = _authSignInURL
 
-    val loggedInAccounts = accountDao.getLoggedInAccounts()
 
-    val accessToken = MutableLiveData<String>()
-    val refreshToken = MutableLiveData<String>()
     private val username = MutableLiveData("")
     private val userData = MutableLiveData<UserInfo?>()
     private val isCompact = MutableLiveData<Boolean?>()
 
     val accountOverviewItems = Transformations.switchMap(MonitorPair(username,isCompact)) { pair ->
-        redditApiRepository.getUserOverviewList(pair.first, userData.value, 0, pair.second).cachedIn(viewModelScope)
+        redditApiRepository.getUserOverviewList(pair.first, 0, pair.second).cachedIn(viewModelScope)
 
     }
-
-
-
-
 
     fun checkIfUsernameChanged(username: String) {
         //only if accessToken changes do we update subreddits
@@ -69,7 +73,6 @@ class AccountOverviewViewModel @Inject constructor(
             getLoggedInUserData(username)
         }
     }
-
     private fun getLoggedInUserData(username: String) = viewModelScope.launch {
         try {
             userData.value = redditApiRepository.getUserInfoData(username).data
@@ -139,62 +142,13 @@ class AccountOverviewViewModel @Inject constructor(
         }
     }
 
-
-
-    // dialogs
-
     private fun addAccountToApp(account: Account) = viewModelScope.launch {
         accountDao.insert(account)
     }
 
-    fun onAccountSwitch(account: Account) {
-        println("HELLO ${account.username}")
-    }
-
-    fun onLogoutClicked() = viewModelScope.launch {
-        Log.v(TAG, "HELLO Clearing user login data")
-
-        try {
-            //only need to revoke refresh token to also revoke all access tokens associated to it
-            refreshToken.value?.let { authApiRepository.logoutUser(it, "refresh_token") }
-        } catch (e: Exception) {
-
-        }
-        authDataStoreRepository.updateAccessToken("")
-        authDataStoreRepository.updateRefreshToken("")
-        authDataStoreRepository.updateUsername("")
-        authDataStoreRepository.updateLoginState(false)
-
-    }
-
-    fun onAccountSwitch() = viewModelScope.launch {
-
-    }
-
-
-
     fun onAccountsClicked() {
         _navigationActions.tryOffer(AccountOverviewNavigationAction.NavigateToAccountSelector)
     }
-
-
-
-
-    init {
-        _authSignInURL.value = String.format(
-            AUTH_URL,
-            BuildConfig.REDDIT_CLIENT_ID,
-            BuildConfig.AUTH_STATE,
-            BuildConfig.AUTH_REDIRECT_URI
-        )
-
-    }
-    companion object {
-        private const val AUTH_URL: String =
-            "https://www.reddit.com/api/v1/authorize.compact?client_id=%s" + "&response_type=code&state=%s&redirect_uri=%s&" + "duration=permanent&scope=identity edit flair history mysubreddits privatemessages read report save submit subscribe vote"
-
-    }
-
 }
 
 sealed class AccountOverviewNavigationAction {

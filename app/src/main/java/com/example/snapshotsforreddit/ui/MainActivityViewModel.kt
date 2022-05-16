@@ -17,12 +17,12 @@ class MainActivityViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    private val refreshSignal = MutableSharedFlow<Unit>()
-
-    private val loadDataSignal: Flow<Unit> = flow {
-        emit(Unit)
-        emitAll(refreshSignal)
-    }
+//    private val refreshSignal = MutableSharedFlow<Unit>()
+//
+//    private val loadDataSignal: Flow<Unit> = flow {
+//        emit(Unit)
+//        emitAll(refreshSignal)
+//    }
 //
 //    val currentTheme: AppTheme = {
 //
@@ -31,15 +31,15 @@ class MainActivityViewModel @Inject constructor(
 
     val selectedTheme = preferencesDataStoreRepository.selectedTheme
 
-    val theme: StateFlow<AppTheme> = loadDataSignal.mapLatest {
-        getTheme()
-    }.stateIn(applicationScope, SharingStarted.Eagerly, AppTheme.SYSTEM)
-
-
-    private suspend fun getTheme(): AppTheme {
-        val selectedTheme: String = preferencesDataStoreRepository.selectedTheme.first()
-        return themeFromPreferences(selectedTheme) ?: AppTheme.SYSTEM
-    }
+//    val theme: StateFlow<AppTheme> = loadDataSignal.mapLatest {
+//        getTheme()
+//    }.stateIn(applicationScope, SharingStarted.Eagerly, AppTheme.SYSTEM)
+//
+//
+//    private suspend fun getTheme(): AppTheme {
+//        val selectedTheme: String = preferencesDataStoreRepository.selectedTheme.first()
+//        return themeFromPreferences(selectedTheme) ?: AppTheme.SYSTEM
+//    }
 
 
 }

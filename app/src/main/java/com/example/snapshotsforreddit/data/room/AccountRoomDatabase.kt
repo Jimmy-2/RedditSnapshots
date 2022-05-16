@@ -30,7 +30,7 @@ abstract class AccountRoomDatabase: RoomDatabase() {
             //we also have to scope the coroutine so it knows when to stop,
             //we need to create a coroutine scope that runs as long as the app is running
             applicationScope.launch {
-                //dao.insert(Account())
+                dao.insert(Account("Anonymous","nothing", "nothing"))
 
 
             }

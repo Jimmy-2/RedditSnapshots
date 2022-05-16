@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AccountEditDialogFragment: AppCompatDialogFragment() {
-    private val viewModel: AccountOverviewViewModel by viewModels()
+    private val viewModel: AccountDialogViewModel by viewModels()
 
     private lateinit var listAdapter: ArrayAdapter<AccountLogin>
 

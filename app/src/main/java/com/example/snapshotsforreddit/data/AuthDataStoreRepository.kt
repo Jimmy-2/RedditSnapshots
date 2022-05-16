@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.example.snapshotsforreddit.data.AuthDataStoreRepository.AuthKeys.CURRENT_USERNAME
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -40,12 +41,13 @@ class AuthDataStoreRepository @Inject constructor (@ApplicationContext context: 
             val accessToken = preferences[AuthKeys.ACCESS_TOKEN] ?: ""
             val refreshToken = preferences[AuthKeys.REFRESH_TOKEN] ?: ""
             val loginState = preferences[AuthKeys.LOGIN_STATE] ?: false
-            val username = preferences[AuthKeys.USERNAME] ?: ""
+            val username = preferences[AuthKeys.CURRENT_USERNAME] ?: ""
             FilterAuth(accessToken,refreshToken,loginState, username)
         }
 
 
 
+    val currentUsername = authDataStore.data.map { it[CURRENT_USERNAME] ?: "Anonymous" }
 
     //transactionally updates the data
 
@@ -77,7 +79,16 @@ class AuthDataStoreRepository @Inject constructor (@ApplicationContext context: 
         //store new refresh token string value
         //write to datastore
         authDataStore.edit { preferences ->
-            preferences[AuthKeys.USERNAME] = username
+            preferences[AuthKeys.CURRENT_USERNAME] = username
+        }
+    }
+
+    suspend fun updateCurrentAccount(username: String, refreshToken: String, accessToken: String, loginState: Boolean) {
+        authDataStore.edit { preferences ->
+            preferences[AuthKeys.CURRENT_USERNAME] = username
+            preferences[AuthKeys.REFRESH_TOKEN] = refreshToken
+            preferences[AuthKeys.ACCESS_TOKEN] = accessToken
+            preferences[AuthKeys.LOGIN_STATE] = loginState
         }
     }
 
@@ -90,7 +101,7 @@ class AuthDataStoreRepository @Inject constructor (@ApplicationContext context: 
         val ACCESS_TOKEN = stringPreferencesKey("access_token")
         val REFRESH_TOKEN = stringPreferencesKey("refresh_token")
         val LOGIN_STATE = booleanPreferencesKey("login_state")
-        val USERNAME = stringPreferencesKey("username")
+        val CURRENT_USERNAME = stringPreferencesKey("username")
     }
 
 

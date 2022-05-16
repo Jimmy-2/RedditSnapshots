@@ -64,12 +64,14 @@ class PreferencesDataStoreRepository @Inject constructor(@ApplicationContext con
     }
 
     suspend fun updateIsCompactView(isCompactView: Boolean) {
+
         preferencesDataStore.edit { preferences ->
             preferences[PreferencesKeys.IS_COMPACT_VIEW] = isCompactView
         }
     }
 
     suspend fun updateAppTheme(theme: AppTheme) {
+        println("HELLO UPDATING THEME ${theme.name}")
         preferencesDataStore.edit { preferences ->
             preferences[PreferencesKeys.APP_THEME] = theme.name
         }

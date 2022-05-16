@@ -48,7 +48,6 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Ove
             }
         }
 
-
         binding.apply {
             recyclerviewAccountOverview.setHasFixedSize(true)
             recyclerviewAccountOverview.adapter = accountOverviewAdapter.withLoadStateHeaderAndFooter(

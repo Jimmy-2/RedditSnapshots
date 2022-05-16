@@ -24,7 +24,7 @@ class AccountHistoryViewModel @Inject constructor(
     private val isCompact = MutableLiveData<Boolean?>()
 
     val accountHistoryItems = _currentUserHistory.switchMap { userHistory ->
-        redditApiRepository.getUserPostsList(userHistory.username, _userData.value, userHistory.historyType, isCompact.value).cachedIn(viewModelScope)
+        redditApiRepository.getUserPostsList(userHistory.username, userHistory.historyType, isCompact.value).cachedIn(viewModelScope)
 
     }
 

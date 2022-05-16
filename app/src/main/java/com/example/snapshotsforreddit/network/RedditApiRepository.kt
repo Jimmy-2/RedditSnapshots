@@ -4,10 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.liveData
 import com.example.snapshotsforreddit.BuildConfig
-import com.example.snapshotsforreddit.data.paging.OverviewPagingSource
-import com.example.snapshotsforreddit.data.paging.RedditPagePagingSource
-import com.example.snapshotsforreddit.data.paging.SearchResultsPagingSource
-import com.example.snapshotsforreddit.data.paging.SubredditPagingSource
+import com.example.snapshotsforreddit.data.paging.*
 import com.example.snapshotsforreddit.network.responses.account.UserInfo
 import com.example.snapshotsforreddit.network.services.RedditApiService
 import javax.inject.Inject
@@ -68,9 +65,26 @@ class RedditApiRepository @Inject constructor(private val redditApiService: Redd
         }.liveData
 
 
-    fun getUserOverviewList(
+//    fun getUserOverviewList(
+//        username: String?,
+//        userInfo: UserInfo?,
+//        accountType: Int,
+//        isCompact: Boolean?
+//    ) = Pager(
+//        PagingConfig(count)
+//    ) {
+//        OverviewPagingSource(
+//            redditApiService,
+//            username ?: "",
+//            userInfo,
+//            "overview",
+//            accountType,
+//            isCompact
+//        )
+//    }.liveData
+
+        fun getUserOverviewList(
         username: String?,
-        userInfo: UserInfo?,
         accountType: Int,
         isCompact: Boolean?
     ) = Pager(
@@ -79,16 +93,15 @@ class RedditApiRepository @Inject constructor(private val redditApiService: Redd
         OverviewPagingSource(
             redditApiService,
             username ?: "",
-            userInfo,
             "overview",
             accountType,
             isCompact
         )
     }.liveData
 
+
     fun getUserPostsList(
         username: String?,
-        userInfo: UserInfo?,
         historyType: String,
         isCompact: Boolean?
     ) = Pager(
@@ -97,7 +110,6 @@ class RedditApiRepository @Inject constructor(private val redditApiService: Redd
         OverviewPagingSource(
             redditApiService,
             username ?: "",
-            userInfo,
             historyType,
             null,
             isCompact

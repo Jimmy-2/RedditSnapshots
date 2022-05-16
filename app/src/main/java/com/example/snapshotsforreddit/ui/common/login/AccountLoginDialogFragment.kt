@@ -6,8 +6,8 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.View
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -24,7 +24,7 @@ data class AccountLogin(val account: Account, val username: String) {
 }
 @AndroidEntryPoint
 class AccountLoginDialogFragment: AppCompatDialogFragment()  {
-    private val viewModel: AccountOverviewViewModel by viewModels()
+    private val viewModel: AccountDialogViewModel by viewModels()
 
     private lateinit var listAdapter: ArrayAdapter<AccountLogin>
 
@@ -35,7 +35,6 @@ class AccountLoginDialogFragment: AppCompatDialogFragment()  {
     }
 
     private val editAccountClickListener = { dialog: DialogInterface, position: Int ->
-        println("HELLO WORLD")
         AccountEditDialogFragment.newInstance().show(parentFragmentManager,"");
 
     }
@@ -50,10 +49,12 @@ class AccountLoginDialogFragment: AppCompatDialogFragment()  {
         val dialog =  MaterialAlertDialogBuilder(requireContext())
             .setTitle("Accounts")
             .setPositiveButton("Add Account",   addAccountClickListener)
-            .setNeutralButton("Edit", editAccountClickListener)
+//            .setNeutralButton("Edit", editAccountClickListener)
             .setSingleChoiceItems(listAdapter, 0) { dialog, position ->
                 listAdapter.getItem(position)?.account?.let {
-                    viewModel.onAccountSwitch(it)
+                    println("HELLO IS THIS ANONYMOUS ${it.username},${it.refreshToken},${it.accessToken}")
+                    //viewModel.onAccountSwitch(it.username,it.refreshToken,it.accessToken)
+                    viewModel.onAccountSwitch(it.username,it.refreshToken,it.accessToken)
                 }
                 dialog.dismiss()
             }
@@ -79,30 +80,33 @@ class AccountLoginDialogFragment: AppCompatDialogFragment()  {
                     listAdapter.clear()
                     listAdapter.addAll(
                         accounts.map { account ->
-                            AccountLogin(account, account.username)
+                            AccountLogin(account, getAccountUsername(account))
                         }
                     )
-
+                    updateCurrentAccount(viewModel.currentUsername.value)
                 }
             }
         }
 
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-
+                viewModel.currentUsername.collect {
+                    updateCurrentAccount(it)
+                }
             }
         }
-
-
     }
 
+    //sets the current logged in account's ischeck to true
+    private fun updateCurrentAccount(selectedAccount: String?) {
+        val selectedPosition = (0 until listAdapter.count).indexOfFirst { index ->
+            listAdapter.getItem(index)?.account?.username == selectedAccount
+        }
+        (dialog as AlertDialog).listView.setItemChecked(selectedPosition, true)
+    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-
-
-
+    private fun getAccountUsername(account: Account): String {
+       return account.username
     }
 
 

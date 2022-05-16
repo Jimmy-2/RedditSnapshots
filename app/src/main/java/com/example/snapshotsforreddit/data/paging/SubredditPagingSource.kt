@@ -15,7 +15,6 @@ class SubredditPagingSource(
     private val searchType: String?,
     private val includeNSFW: Int?
 ) : PagingSource<String, SubredditChildrenObject>() {
-    private val TAG: String = "SubredditPagingSource"
 
     override fun getRefreshKey(state: PagingState<String, SubredditChildrenObject>): String? {
         return state.anchorPosition?.let { anchorPosition ->

@@ -43,6 +43,7 @@ class SubscribedFragment : Fragment(R.layout.fragment_subscribed), SubscribedAda
 
         //whenever authFlow is changed (getting new accesstoken/refreshtoken), we will refresh the subscribed subreddits list
         viewModel.authFlow.observe(viewLifecycleOwner) { authFlowValues ->
+            println("HELLO SUBSCRIBED ${authFlowValues.username}, ${authFlowValues.accessToken}, ${authFlowValues.refreshToken}")
             viewModel.checkIfAccessTokenChanged(authFlowValues.accessToken)
         }
 

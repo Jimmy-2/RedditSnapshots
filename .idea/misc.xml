@@ -173,6 +173,9 @@
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/menu/menu_fragment_account_overview.xml" value="0.203125" />
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/menu/menu_fragment_reddit_page.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/menu/menu_fragment_subscribed_subreddits.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/fragment_inbox.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/fragment_user_overview.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layouts/search/drawable/ic_inbox.xml" value="0.2935" />
       </map>
     </option>
   </component>
