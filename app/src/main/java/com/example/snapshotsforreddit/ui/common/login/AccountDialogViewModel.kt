@@ -46,9 +46,9 @@ class AccountDialogViewModel @Inject constructor(
     }
 
 
-    fun onAccountsDelete(username: String) = viewModelScope.launch {
-        accountDao.deleteAccount(username)
-    }
+//    fun onAccountsDelete(username: String) = viewModelScope.launch {
+//        accountDao.deleteAccount(username)
+//    }
 
     fun onLogoutClicked() = viewModelScope.launch {
 //        Log.v(TAG, "HELLO Clearing user login data")

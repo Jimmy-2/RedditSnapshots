@@ -22,9 +22,13 @@ class AccountEditDialogFragment(private val accountsArray: Array<String>) : AppC
     //TODO delete by id
 
     private fun deleteAccountsClickListener(accountsToRemove: ArrayList<String>) = { dialog: DialogInterface, position: Int ->
-        for (accountUsername in accountsToRemove) {
-            viewModel.onAccountsDelete(accountUsername)
+        if(accountsToRemove.size > 0) {
+            AccountConfirmationDialogFragment.newInstance(accountsToRemove).show(parentFragmentManager,"")
         }
+
+//        for (accountUsername in accountsToRemove) {
+//            viewModel.onAccountsDelete(accountUsername)
+//        }
     }
     
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

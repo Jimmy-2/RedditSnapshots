@@ -33,10 +33,8 @@ class LoginDialogFragment : BottomSheetDialogFragment() {
 
             buttonLogout2.setOnClickListener {
                 viewModel.onLogoutClicked()
-
                 //findNavController().navigateUp()
             }
-
         }
         //TODO: Use onlyt 1 button and have a ENUM class to change text and function of the button instead of using 2
         //observe the login state of the user so we can hide the sign in or the logout buttons depending on the login state
@@ -56,8 +54,6 @@ class LoginDialogFragment : BottomSheetDialogFragment() {
 
 
     }
-
-
 
 
     override fun onCreateView(
