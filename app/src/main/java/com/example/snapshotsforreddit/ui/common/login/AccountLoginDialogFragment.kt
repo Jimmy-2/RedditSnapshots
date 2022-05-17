@@ -14,7 +14,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.snapshotsforreddit.data.room.Account
-import com.example.snapshotsforreddit.ui.tabs.account.overview.AccountOverviewViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -28,6 +27,9 @@ class AccountLoginDialogFragment: AppCompatDialogFragment()  {
 
     private lateinit var listAdapter: ArrayAdapter<AccountLogin>
 
+    private lateinit var accountList: ArrayList<String>
+
+
     private val addAccountClickListener = { dialog: DialogInterface, position: Int ->
         val intent = Uri.parse(viewModel.authSignInURL.value)
         val actionView = Intent(Intent.ACTION_VIEW, intent)
@@ -35,8 +37,8 @@ class AccountLoginDialogFragment: AppCompatDialogFragment()  {
     }
 
     private val editAccountClickListener = { dialog: DialogInterface, position: Int ->
-        AccountEditDialogFragment.newInstance().show(parentFragmentManager,"");
-
+        val accountsArray = accountList.toTypedArray()
+        AccountEditDialogFragment.newInstance(accountsArray).show(parentFragmentManager,"")
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -45,13 +47,14 @@ class AccountLoginDialogFragment: AppCompatDialogFragment()  {
             requireContext(),
             R.layout.simple_list_item_single_choice
         )
+        accountList = ArrayList()
 
         val dialog =  MaterialAlertDialogBuilder(requireContext())
             .setTitle("Accounts")
             .setPositiveButton("Add Account",   addAccountClickListener)
-//            .setNeutralButton("Edit", editAccountClickListener)
-            .setSingleChoiceItems(listAdapter, 0) { dialog, position ->
-                listAdapter.getItem(position)?.account?.let {
+            .setNeutralButton("Edit", editAccountClickListener)
+            .setSingleChoiceItems(listAdapter, 0) { dialog, which ->
+                listAdapter.getItem(which)?.account?.let {
                     println("HELLO IS THIS ANONYMOUS ${it.username},${it.refreshToken},${it.accessToken}")
                     //viewModel.onAccountSwitch(it.username,it.refreshToken,it.accessToken)
                     viewModel.onAccountSwitch(it.username,it.refreshToken,it.accessToken)
@@ -83,6 +86,13 @@ class AccountLoginDialogFragment: AppCompatDialogFragment()  {
                             AccountLogin(account, getAccountUsername(account))
                         }
                     )
+                    accountList.clear()
+                    accountList.addAll(
+                        accounts.map { account ->
+                            account.username
+                        }
+                    )
+
                     updateCurrentAccount(viewModel.currentUsername.value)
                 }
             }

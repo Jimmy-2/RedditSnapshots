@@ -46,6 +46,10 @@ class AccountDialogViewModel @Inject constructor(
     }
 
 
+    fun onAccountsDelete(username: String) = viewModelScope.launch {
+        accountDao.deleteAccount(username)
+    }
+
     fun onLogoutClicked() = viewModelScope.launch {
 //        Log.v(TAG, "HELLO Clearing user login data")
 
@@ -55,10 +59,7 @@ class AccountDialogViewModel @Inject constructor(
         } catch (e: Exception) {
 
         }
-        authDataStoreRepository.updateAccessToken("")
-        authDataStoreRepository.updateRefreshToken("")
-        authDataStoreRepository.updateUsername("")
-        authDataStoreRepository.updateLoginState(false)
+        authDataStoreRepository.updateCurrentAccount("","","",false)
 
     }
 

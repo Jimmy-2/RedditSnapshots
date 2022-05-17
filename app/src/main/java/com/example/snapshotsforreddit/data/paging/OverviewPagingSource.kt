@@ -19,7 +19,6 @@ class OverviewPagingSource(
 ) : PagingSource<String, RedditChildrenObject>() {
 
 
-
     override fun getRefreshKey(state: PagingState<String, RedditChildrenObject>): String? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey
@@ -30,17 +29,14 @@ class OverviewPagingSource(
         return try {
             val userInfo =
                 redditApiService.getUserInfo(RedditApiRepository.USER_AGENT, username).data
-            val username = userInfo?.name
 
-            val responseData =
-                username?.let {
-                    redditApiService.getUserHistory(
-                        "snapshots-for-reddit", username = it,
+            val responseData = redditApiService.getUserHistory(
+                        "snapshots-for-reddit", username = username,
                         after = if (params is LoadParams.Append) params.key else null,
                         before = if (params is LoadParams.Prepend) params.key else null,
                         historyType = historyType
                     ).data
-                }
+
 
 
             val overviewItems = if (params.key == null && historyType == "overview") {

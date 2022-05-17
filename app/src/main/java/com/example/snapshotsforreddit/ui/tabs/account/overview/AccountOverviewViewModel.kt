@@ -126,12 +126,17 @@ class AccountOverviewViewModel @Inject constructor(
             authDataStoreRepository.updateLoginState(true)
             redditApiRepository.getUsername().name?.let {
                 //CHECK IF USER EXISTS THEN ADD ACCOUNT OTHERWISE UPDATE
-                val newLoggedInAccount = Account(
-                    username = it,
-                    refreshToken = refreshToken,
-                    accessToken = accessToken
-                )
-                addAccountToApp(newLoggedInAccount)
+                val accountExist = accountDao.exists(it)
+                if(accountExist) {
+                    updateAccount(refreshToken, it)
+                }else {
+                    val newLoggedInAccount = Account(
+                        username = it,
+                        refreshToken = refreshToken,
+                        accessToken = accessToken
+                    )
+                    addAccountToApp(newLoggedInAccount)
+                }
                 authDataStoreRepository.updateUsername(
                     it
                 )
@@ -141,6 +146,11 @@ class AccountOverviewViewModel @Inject constructor(
             Log.v(TAG, "Log in fail")
         }
     }
+
+    private fun updateAccount(newRefreshToken:String, username: String) = viewModelScope.launch {
+        accountDao.updateLoggedIn(newRefreshToken, username)
+    }
+
 
     private fun addAccountToApp(account: Account) = viewModelScope.launch {
         accountDao.insert(account)
