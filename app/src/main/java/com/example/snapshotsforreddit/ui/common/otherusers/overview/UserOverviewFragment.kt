@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.ui.common.user.overview
+package com.example.snapshotsforreddit.ui.common.otherusers.overview
 
 import android.os.Bundle
 import android.view.View
@@ -7,8 +7,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentUserOverviewBinding
+import com.example.snapshotsforreddit.network.responses.Defaults
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
 import com.example.snapshotsforreddit.ui.common.loadstate.RedditLoadStateAdapter
+import com.example.snapshotsforreddit.ui.tabs.account.overview.OverviewAdapter
 import com.example.snapshotsforreddit.util.changeViewOnLoadState
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -80,9 +82,10 @@ class UserOverviewFragment : Fragment(R.layout.fragment_user_overview),
         TODO("Not yet implemented")
     }
 
-    override fun onHistoryClick(historyType: String?, username: String?) {
+    override fun onHistoryClick(userDefaults: Defaults?) {
         TODO("Not yet implemented")
     }
+
 
     override fun onPostCommentClick(overviewItem: RedditChildrenObject, type: Int) {
         TODO("Not yet implemented")

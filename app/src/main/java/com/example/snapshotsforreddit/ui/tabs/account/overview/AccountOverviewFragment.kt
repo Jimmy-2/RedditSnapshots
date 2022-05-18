@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -15,10 +16,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentAccountOverviewBinding
+import com.example.snapshotsforreddit.network.responses.Defaults
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
 import com.example.snapshotsforreddit.ui.common.loadstate.RedditLoadStateAdapter
 import com.example.snapshotsforreddit.ui.common.login.AccountLoginDialogFragment
-import com.example.snapshotsforreddit.ui.common.user.overview.OverviewAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -48,6 +49,7 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Ove
             }
         }
 
+
         binding.apply {
             recyclerviewAccountOverview.setHasFixedSize(true)
             recyclerviewAccountOverview.adapter = accountOverviewAdapter.withLoadStateHeaderAndFooter(
@@ -62,6 +64,7 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Ove
             if(authFlowValues.username == "") {
                 binding.recyclerviewAccountOverview.visibility = View.GONE
             }else {
+                //TODO display a log in to check account info dialog
                 binding.recyclerviewAccountOverview.visibility = View.VISIBLE
             }
             viewModel.checkIfUsernameChanged(authFlowValues.username)
@@ -74,9 +77,12 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Ove
 
         viewModel.accountOverviewItems.observe(viewLifecycleOwner) {
             //connect data to adapter
+            (activity as AppCompatActivity).supportActionBar?.title = viewModel.username.value
             accountOverviewAdapter.submitData(viewLifecycleOwner.lifecycle, it)
 
         }
+
+
 
         //depending on the load state of the adapter (list of items) (error, loading, no results), we will display the necessary view for the user to see
         accountOverviewAdapter.addLoadStateListener { loadState ->
@@ -92,6 +98,7 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Ove
 //                    textviewAccountOverviewEmpty,
 //                    refreshAccountOverview
 //                )
+
                 progressbarAccountOverview.isVisible = loadState.source.refresh is LoadState.Loading
                 refreshAccountOverview.isRefreshing = loadState.mediator?.refresh is LoadState.Loading
                 //add a login button
@@ -99,12 +106,16 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Ove
             }
         }
 
+
         setHasOptionsMenu(true)
     }
 
 
     override fun onResume() {
         super.onResume()
+
+        (activity as AppCompatActivity).supportActionBar?.title = viewModel.username.value
+
         //on successful authentication
         if (requireActivity().intent != null && requireActivity().intent.action == Intent.ACTION_VIEW) {
             val uri: Uri? = requireActivity().intent.data
@@ -125,19 +136,16 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Ove
         //when statement for each of the menu items
         return when(item.itemId) {
             R.id.action_accounts_dialog -> {
-                findNavController().navigate(
-                    AccountOverviewFragmentDirections.actionAccountOverviewFragmentToLoginDialogFragment()
-                )
-                true
-            }
-            R.id.test_dialog -> {
                 viewModel.onAccountsClicked()
-                //viewModel.onEditButtonClicked()
+//                findNavController().navigate(
+//                    AccountOverviewFragmentDirections.actionAccountOverviewFragmentToLoginDialogFragment()
+//                )
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
+
 
 
 
@@ -151,10 +159,10 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Ove
         TODO("Not yet implemented")
     }
 
-    override fun onHistoryClick(historyType: String?, username: String?) {
-        println("HELLO $historyType")
-        if(historyType != null && username != null) {
-            findNavController().navigate(AccountOverviewFragmentDirections.actionAccountOverviewFragmentToAccountHistoryFragment(historyType, username))
+    override fun onHistoryClick(userDefaults: Defaults?) {
+
+        if(userDefaults?.type != null && userDefaults.text != null && userDefaults.userInfo?.name != null) {
+            findNavController().navigate(AccountOverviewFragmentDirections.actionAccountOverviewFragmentToAccountHistoryFragment(userDefaults.type, userDefaults.text, userDefaults.userInfo.name))
         }
     }
 

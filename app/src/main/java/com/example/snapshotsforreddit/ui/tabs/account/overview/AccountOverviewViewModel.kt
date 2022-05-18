@@ -57,7 +57,7 @@ class AccountOverviewViewModel @Inject constructor(
 
 
 
-    private val username = MutableLiveData("")
+    val username = MutableLiveData("")
     private val userData = MutableLiveData<UserInfo?>()
     private val isCompact = MutableLiveData<Boolean?>()
 
@@ -78,7 +78,7 @@ class AccountOverviewViewModel @Inject constructor(
             userData.value = redditApiRepository.getUserInfoData(username).data
             this@AccountOverviewViewModel.username.value = userData.value?.name
         } catch (e: Exception) {
-
+            this@AccountOverviewViewModel.username.value = ""
         }
     }
 

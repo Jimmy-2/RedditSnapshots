@@ -3,6 +3,7 @@ package com.example.snapshotsforreddit.ui.common.viewholders
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -16,7 +17,8 @@ import com.example.snapshotsforreddit.util.getShortenedValue
 class PostViewHolder(
     private val adapter: PagingDataAdapter<RedditChildrenObject, RecyclerView.ViewHolder>,
     private val onClickListener: OnItemClickListener,
-    private val binding: ItemPostBinding
+    private val binding: ItemPostBinding,
+    private val isOverview: Boolean? = null,
 ) : RecyclerView.ViewHolder(binding.root) {
     private var post: RedditChildrenObject? = null
     init {
@@ -67,6 +69,10 @@ class PostViewHolder(
         //TODO FIX CODE HERE : REFORMAT STATEMENTS
         binding.apply {
             if (currentPost != null) {
+                if(isOverview == true) {
+                    layoutPost.setBackgroundColor(ContextCompat.getColor(layoutPost.context ,R.color.post_background_overview))
+
+                }
                 //Subreddit icon
                 val currIconUrl = currentPost.sr_detail?.community_icon.toString()
                 val iconUrl: String =

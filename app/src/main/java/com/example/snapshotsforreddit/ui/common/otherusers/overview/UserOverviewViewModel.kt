@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.ui.common.user.overview
+package com.example.snapshotsforreddit.ui.common.otherusers.overview
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

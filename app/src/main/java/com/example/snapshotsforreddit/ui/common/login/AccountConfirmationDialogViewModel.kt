@@ -32,5 +32,4 @@ class AccountConfirmationDialogViewModel @Inject constructor(
         }
     }
 
-
 }

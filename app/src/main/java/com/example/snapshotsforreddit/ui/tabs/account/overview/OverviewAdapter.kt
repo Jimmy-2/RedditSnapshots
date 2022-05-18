@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.ui.common.user.overview
+package com.example.snapshotsforreddit.ui.tabs.account.overview
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.*
+import com.example.snapshotsforreddit.network.responses.Defaults
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
 import com.example.snapshotsforreddit.ui.common.viewholders.PostCompactViewHolder
 import com.example.snapshotsforreddit.ui.common.viewholders.PostViewHolder
@@ -34,12 +35,14 @@ class OverviewAdapter(private val onClickListener: OnItemClickListener) :
             POST -> PostViewHolder(
                 this@OverviewAdapter,
                 onClickListener,
-                ItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                ItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+                true,
             )
             POST_COMPACT -> PostCompactViewHolder(
                 this@OverviewAdapter,
                 onClickListener,
-                ItemPostCompactBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                ItemPostCompactBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+                true
             )
             USER_INFO -> UserInfoViewHolder(
                 ItemAccountUserInfoBinding.inflate(
@@ -171,8 +174,7 @@ class OverviewAdapter(private val onClickListener: OnItemClickListener) :
                     val item = getItem(position)
                     if (item != null) {
                         onClickListener.onHistoryClick(
-                            item.defaults?.type,
-                            item.defaults?.userInfo?.name
+                            item.defaults
                         )
                     }
                 }
@@ -244,7 +246,7 @@ class OverviewAdapter(private val onClickListener: OnItemClickListener) :
     interface OnItemClickListener : PostViewHolder.OnItemClickListener,
         PostCompactViewHolder.OnItemClickListener {
         fun onInfoClick(infoItem: RedditChildrenObject, type: Int)
-        fun onHistoryClick(historyType: String?, username: String?)
+        fun onHistoryClick(userDefaults: Defaults?)
         fun onPostCommentClick(overviewItem: RedditChildrenObject, type: Int)
     }
 

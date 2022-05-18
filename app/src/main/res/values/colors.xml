@@ -4,6 +4,7 @@
     <color name="alt_background_1">#f2f3f8</color>
     <color name="alt_background_2">#f2f3f8</color>
     <color name="post_background">#FFFFFFFF</color>
+    <color name="post_background_overview">#FFFFFFFF</color>
     <color name="item_background">#FFFFFFFF</color>
     <color name="text_color_1">#FF000000</color>
     <color name="purple_500">#FF6200EE</color>

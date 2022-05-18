@@ -173,9 +173,15 @@
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/menu/menu_fragment_account_overview.xml" value="0.203125" />
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/menu/menu_fragment_reddit_page.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/kingl/StudioProjects/RedditSnapshots/app/src/main/res/menu/menu_fragment_subscribed_subreddits.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/fragment_account_overview.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/fragment_inbox.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/fragment_user_overview.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/item_account_default.xml" value="0.17798913043478262" />
+        <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/item_post.xml" value="0.17798913043478262" />
+        <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/item_post_compact.xml" value="0.17798913043478262" />
+        <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/test.xml" value="0.1778115501519757" />
         <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layouts/search/drawable/ic_inbox.xml" value="0.2935" />
+        <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/menu/menu_fragment_account_overview.xml" value="0.32916666666666666" />
       </map>
     </option>
   </component>

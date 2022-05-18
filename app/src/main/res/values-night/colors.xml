@@ -5,6 +5,7 @@
     <color name="alt_background_1">#1b1b1b</color>
     <color name="alt_background_2">#FF000000</color>
     <color name="post_background">#FF000000</color>
+    <color name="post_background_overview">#141517</color>
     <color name="item_background">#141517</color>
     <color name="text_color_1">#FFFFFFFF</color>
     <color name="purple_500">#FF6200EE</color>

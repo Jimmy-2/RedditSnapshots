@@ -18,10 +18,10 @@ class AccountConfirmationDialogFragment(private val accountsToRemove: ArrayList<
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Confirm deletion")
-            .setMessage("Do you really want to remove selected accounts?")
+            .setTitle("Confirm deletion?")
+//            .setMessage("Do you really want to remove selected accounts?")
             .setNeutralButton("Cancel", null)
-            .setPositiveButton("Yes") { _, _ ->
+            .setPositiveButton("Confirm") { _, _ ->
                 for (account in accountsToRemove) {
                     viewModel.onConfirmDelete(account, currentAccountUsername)
                 }

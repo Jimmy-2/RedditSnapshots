@@ -7,9 +7,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentAccountHistoryBinding
+import com.example.snapshotsforreddit.network.responses.Defaults
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
 import com.example.snapshotsforreddit.ui.common.loadstate.RedditLoadStateAdapter
-import com.example.snapshotsforreddit.ui.common.user.overview.OverviewAdapter
+import com.example.snapshotsforreddit.ui.tabs.account.overview.OverviewAdapter
 import com.example.snapshotsforreddit.util.changeViewOnLoadState
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -79,9 +80,10 @@ class AccountHistoryFragment : Fragment(R.layout.fragment_account_history), Over
         TODO("Not yet implemented")
     }
 
-    override fun onHistoryClick(historyType: String?, username: String?) {
+    override fun onHistoryClick(userDefaults: Defaults?) {
         TODO("Not yet implemented")
     }
+
 
     override fun onPostCommentClick(overviewItem: RedditChildrenObject, type: Int) {
         TODO("Not yet implemented")

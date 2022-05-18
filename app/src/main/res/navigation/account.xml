@@ -9,9 +9,6 @@
         android:id="@+id/accountOverviewFragment"
         android:name="com.example.snapshotsforreddit.ui.tabs.account.overview.AccountOverviewFragment"
         android:label="@string/title_account">
-        <action
-            android:id="@+id/action_accountOverviewFragment_to_loginDialogFragment"
-            app:destination="@id/loginDialogFragment" />
         <deepLink
             android:id="@+id/signInRedirectDeepLink"
             app:uri="http://www.snapshotstempaddress.com/random_redirect" />
@@ -19,18 +16,16 @@
             android:id="@+id/action_accountOverviewFragment_to_accountHistoryFragment"
             app:destination="@id/accountHistoryFragment" />
     </fragment>
-    <dialog
-        android:id="@+id/loginDialogFragment"
-        android:name="com.example.snapshotsforreddit.ui.common.login.LoginDialogFragment"
-        android:label="fragment_login_dialog"
-        tools:layout="@layout/fragment_login_dialog" />
     <fragment
         android:id="@+id/accountHistoryFragment"
         android:name="com.example.snapshotsforreddit.ui.tabs.account.history.AccountHistoryFragment"
-        android:label="Title: {historyType}"
+        android:label="{historyName}"
         tools:layout="@layout/fragment_account_history" >
         <argument
             android:name="historyType"
+            app:argType="string" />
+        <argument
+            android:name="historyName"
             app:argType="string" />
         <argument
             android:name="username"

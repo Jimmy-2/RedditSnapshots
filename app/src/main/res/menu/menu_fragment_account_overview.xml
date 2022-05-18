@@ -6,8 +6,4 @@
         android:title="@string/menu_accounts"
         app:showAsAction="always|collapseActionView" />
 
-    <item
-        android:id="@+id/test_dialog"
-        android:title="Test"
-        app:showAsAction="always|collapseActionView" />
 </menu>

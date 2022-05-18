@@ -35,7 +35,7 @@
     </fragment>
     <fragment
         android:id="@+id/userOverviewFragment"
-        android:name="com.example.snapshotsforreddit.ui.common.user.overview.UserOverviewFragment"
+        android:name="com.example.snapshotsforreddit.ui.common.otherusers.overview.UserOverviewFragment"
         android:label="fragment_user_overview"
         tools:layout="@layout/fragment_user_overview" >
         <argument
