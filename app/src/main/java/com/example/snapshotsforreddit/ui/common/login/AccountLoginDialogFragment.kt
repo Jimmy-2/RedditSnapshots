@@ -18,17 +18,18 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-data class AccountLogin(val account: Account, val username: String) {
+data class AccountUsername(val account: Account, val username: String) {
     override fun toString(): String = username
 }
 @AndroidEntryPoint
 class AccountLoginDialogFragment: AppCompatDialogFragment()  {
     private val viewModel: AccountDialogViewModel by viewModels()
 
-    private lateinit var listAdapter: ArrayAdapter<AccountLogin>
+    private lateinit var listAdapter: ArrayAdapter<AccountUsername>
 
-    private lateinit var accountList: ArrayList<String>
+    private lateinit var accountsList: ArrayList<Account>
 
+    private var currentAccountUsername: String? = null
 
     private val addAccountClickListener = { dialog: DialogInterface, position: Int ->
         val intent = Uri.parse(viewModel.authSignInURL.value)
@@ -37,8 +38,8 @@ class AccountLoginDialogFragment: AppCompatDialogFragment()  {
     }
 
     private val editAccountClickListener = { dialog: DialogInterface, position: Int ->
-        val accountsArray = accountList.toTypedArray()
-        AccountEditDialogFragment.newInstance(accountsArray).show(parentFragmentManager,"")
+        val accountsArray = accountsList.toTypedArray()
+        AccountEditDialogFragment.newInstance(accountsArray, currentAccountUsername).show(parentFragmentManager,"")
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -47,7 +48,8 @@ class AccountLoginDialogFragment: AppCompatDialogFragment()  {
             requireContext(),
             R.layout.simple_list_item_single_choice
         )
-        accountList = ArrayList()
+
+        accountsList = ArrayList()
 
         val dialog =  MaterialAlertDialogBuilder(requireContext())
             .setTitle("Accounts")
@@ -83,16 +85,13 @@ class AccountLoginDialogFragment: AppCompatDialogFragment()  {
                     listAdapter.clear()
                     listAdapter.addAll(
                         accounts.map { account ->
-                            AccountLogin(account, getAccountUsername(account))
+                            AccountUsername(account, getAccountUsername(account))
                         }
                     )
-                    accountList.clear()
-                    accountList.addAll(
-                        accounts.map { account ->
-                            account.username
-                        }
+                    accountsList.clear()
+                    accountsList.addAll(
+                        accounts
                     )
-
                     updateCurrentAccount(viewModel.currentUsername.value)
                 }
             }
@@ -109,6 +108,7 @@ class AccountLoginDialogFragment: AppCompatDialogFragment()  {
 
     //sets the current logged in account's ischeck to true
     private fun updateCurrentAccount(selectedAccount: String?) {
+        currentAccountUsername = selectedAccount
         val selectedPosition = (0 until listAdapter.count).indexOfFirst { index ->
             listAdapter.getItem(index)?.account?.username == selectedAccount
         }
