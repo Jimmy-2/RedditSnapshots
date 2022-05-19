@@ -5,7 +5,8 @@ import com.example.snapshotsforreddit.network.responses.postimage.ImagePreview
 import com.example.snapshotsforreddit.network.responses.postvideo.RedditPageMedia
 import com.example.snapshotsforreddit.network.responses.subreddit.SubscribedChildrenData
 import com.squareup.moshi.JsonClass
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
+
 
 //Contains everything relevant to a single post.
 //Will not be using a majority of the keys in the json.

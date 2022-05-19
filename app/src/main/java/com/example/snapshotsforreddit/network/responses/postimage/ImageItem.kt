@@ -1,7 +1,7 @@
 package com.example.snapshotsforreddit.network.responses.postimage
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 //contains a source object and a list of resolution objects
