@@ -1,11 +1,8 @@
 package com.example.snapshotsforreddit.network.responses
 
-import android.os.Parcelable
 import com.example.snapshotsforreddit.network.responses.postimage.ImagePreview
 import com.example.snapshotsforreddit.network.responses.postvideo.RedditPageMedia
 import com.example.snapshotsforreddit.network.responses.subreddit.SubscribedChildrenData
-import com.squareup.moshi.JsonClass
-import kotlinx.parcelize.Parcelize
 
 
 //Contains everything relevant to a single post.
@@ -36,88 +33,96 @@ data class RedditChildrenData(
 
  */
 //Parcelize so that we can pass this object through safe args.
-@Parcelize
-@JsonClass(generateAdapter = true)
+//@Entity(tableName = "redditChildrenObjects")
+
+
 data class RedditChildrenData(
-    val subreddit: String?,
 
-    val selftext: String?,
+    //DEFAULTS
+    val dataKind: String? = null,
+    val isCompact: Boolean? = null,
 
-    val saved: Boolean?,
 
-    val title: String?,
 
-    val subreddit_name_prefixed: String?,
 
-    val is_reddit_media_domain: Boolean?,
+    //FROM API RESPONSE
+    val subreddit: String? = null,
 
-    val score: Int?,
+    val selftext: String? = null,
 
-    //use preview for higher res. and if thumbnail == "" or "self", display text instead
-    val thumbnail: String?,
+    val saved: Boolean? = null,
+
+    //true = post upvoted, false = post downvoted, null = neither
+    //declare as var since we need to update its value when upvoting/downvoting on client side without having to recall api to fetch new changes
+    var likes: Boolean? = null,
+
+    val title: String? = null,
+
+    val subreddit_name_prefixed: String? = null,
+
+    val is_reddit_media_domain: Boolean? = null,
+
+    val score: Int? = null,
+
+//    //use preview for higher res. and if thumbnail == "" or "self", display text instead
+//    val thumbnail: String?,
 
     //tells us if post is an image, gif, video, or text post
     //hint == 'hosted:video' #reddit hosted video
     //hint == 'rich:video' # i.e. youtube
     //however some text only subreddits do not have post_hint
-    val post_hint: String?,
+//    val post_hint: String?,
 
     //if true, the post is a text post
-    val is_self: Boolean?,
-
-    //true = post upvoted, false = post downvoted, null = neither
-    //declare as var since we need to update its value when upvoting/downvoting on client side without having to recall api to fetch new changes
-    var likes: Boolean?,
-
+    val is_self: Boolean? = null,
 
     //url to image if post is only image
-    val url_overridden_by_dest: String?,
+    val url_overridden_by_dest: String? = null,
 
 
-    val archived: Boolean?,
+    val archived: Boolean? = null,
 
-    val no_follow: Boolean?,
+    val no_follow: Boolean? = null,
 
-    val is_crosspostable: Boolean?,
+    val is_crosspostable: Boolean? = null,
 
-    val over_18: Boolean?,
+    val over_18: Boolean? = null,
 
     //This object contains the high res images/thumbnails
-    val preview: ImagePreview?,
+    val preview: ImagePreview? = null,
 
     //used to get post details information
-    val id: String?,
+    val id: String? = null,
 
     //kind+  id
-    val name: String?,
+    val name: String? = null,
 
     //author of post
-    val author: String?,
+    val author: String? = null,
 
 
-    val num_comments: Int?,
+    val num_comments: Int? = null,
 
     //contains media items related to video/gif
-    val media: RedditPageMedia?,
+    val media: RedditPageMedia? = null,
 
     //contains data that you can get from a subreddit's /about endpoint
     //use this to get subreddit icon
-    val sr_detail: SubscribedChildrenData?,
+    val sr_detail: SubscribedChildrenData? = null,
 
     //not used atm
-    val permalink: String?,
+    val permalink: String? = null,
 
 
-    val is_video: Boolean?,
+    val is_video: Boolean? = null,
 
-    val body: String?,
+    val body: String? = null,
 
-    val link_title: String?,
-
-
-    val created_utc: Long?,
+    val link_title: String? = null,
 
 
+    val created_utc: Long? = null,
 
-    ) : Parcelable
+
+    )
 

@@ -84,7 +84,6 @@ class AccountHistoryFragment : Fragment(R.layout.fragment_account_history), Over
         TODO("Not yet implemented")
     }
 
-
     override fun onPostCommentClick(overviewItem: RedditChildrenObject, type: Int) {
         TODO("Not yet implemented")
     }

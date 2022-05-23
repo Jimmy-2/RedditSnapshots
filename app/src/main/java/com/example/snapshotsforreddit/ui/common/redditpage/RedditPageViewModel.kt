@@ -1,12 +1,10 @@
 package com.example.snapshotsforreddit.ui.common.redditpage
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.paging.cachedIn
-import com.example.snapshotsforreddit.data.PreferencesDataStoreRepository
+import com.example.snapshotsforreddit.data.datastore.PreferencesDataStoreRepository
 import com.example.snapshotsforreddit.network.RedditApiRepository
+import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
 import com.example.snapshotsforreddit.util.MonitorTriple
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +19,10 @@ class RedditPageViewModel @Inject constructor(
 
     //read and update isCompact value
     val preferencesFlow = preferencesDataStoreRepository.preferencesFlow
-    val subredditName = MutableLiveData<String>()
+
+    private val _subredditName = MutableLiveData<String>()
+    val subredditName: LiveData<String> = _subredditName
+
     private val subredditType = MutableLiveData<String>()
     private val isCompact = MutableLiveData<Boolean?>()
     private val sortOrder = MutableLiveData<String?>()
@@ -32,8 +33,14 @@ class RedditPageViewModel @Inject constructor(
 //    }
 
     //if isCompact or sortOrder value changes, we will update the screen
-    val redditPagePosts = Transformations.switchMap(MonitorTriple(isCompact, sortOrder, subredditName)) {
-        redditApiRepository.getSubredditPostsList(
+//    val redditPagePosts = Transformations.switchMap(MonitorTriple(isCompact, sortOrder, subredditName)) {
+//        redditApiRepository.getSubredditPostsList(
+//            it.third!!, subredditType.value!!,
+//            it.second, it.first).cachedIn(viewModelScope)
+//    }
+
+    val redditPagePosts = Transformations.switchMap(MonitorTriple(isCompact, sortOrder, _subredditName)) {
+        redditApiRepository.getSubredditPostsListTest(
             it.third!!, subredditType.value!!,
             it.second, it.first).cachedIn(viewModelScope)
     }
@@ -43,9 +50,15 @@ class RedditPageViewModel @Inject constructor(
             post.data?.name?.let { redditApiRepository.voteOnThing(typeOfVote, it) }
         }
         catch (e: Exception) {
-
         }
+    }
 
+    fun onVoteOnPost(typeOfVote: Int, post: RedditChildrenData) = viewModelScope.launch {
+        try {
+            post.name?.let { redditApiRepository.voteOnThing(typeOfVote, it) }
+        }
+        catch (e: Exception) {
+        }
     }
 
     fun onSortOrderSelected(newSortOrder: String) {
@@ -53,37 +66,33 @@ class RedditPageViewModel @Inject constructor(
             sortOrder.value = newSortOrder
         }
     }
+
     fun onCompactViewClicked(isCompactView: Boolean) = viewModelScope.launch{
         //update isCompactView in datastore on compact button clicked
         preferencesDataStoreRepository.updateIsCompactView(isCompactView)
         checkIsCompact(isCompactView)
-
     }
 
     fun checkIsCompact(newVal : Boolean) {
         if(isCompact.value != newVal) {
             isCompact.value = newVal
         }
-
     }
 
     fun loadRedditPage(redditPageName: String, redditPageType: String) {
-        if(subredditName.value == null || subredditName.value == "") {
-            subredditName.value = redditPageName
+        if(_subredditName.value == null || _subredditName.value == "") {
+            _subredditName.value = redditPageName
             subredditType.value = redditPageType
         }
-
-
     }
 
     fun changeRedditPage(redditPageName: String, redditPageType: String) {
-        if(subredditName.value != redditPageName) {
-            subredditName.value = redditPageName
+        if(_subredditName.value != redditPageName) {
+            _subredditName.value = redditPageName
         }
         if(subredditType.value != redditPageType) {
             subredditType.value = redditPageType
         }
     }
-
 
 }

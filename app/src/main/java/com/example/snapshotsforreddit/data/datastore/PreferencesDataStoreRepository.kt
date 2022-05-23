@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.data
+package com.example.snapshotsforreddit.data.datastore
 
 import android.content.Context
 import android.util.Log
@@ -7,7 +7,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.example.snapshotsforreddit.data.PreferencesDataStoreRepository.PreferencesKeys.APP_THEME
+import com.example.snapshotsforreddit.data.datastore.PreferencesDataStoreRepository.PreferencesKeys.APP_THEME
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map

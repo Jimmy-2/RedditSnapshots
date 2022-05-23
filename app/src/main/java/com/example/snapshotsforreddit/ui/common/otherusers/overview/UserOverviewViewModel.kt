@@ -5,8 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.example.snapshotsforreddit.data.AuthDataStoreRepository
-import com.example.snapshotsforreddit.network.AuthApiRepository
 import com.example.snapshotsforreddit.network.RedditApiRepository
 import com.example.snapshotsforreddit.network.responses.account.UserInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,8 +13,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserOverviewViewModel @Inject constructor(
-    private val authDataStoreRepository: AuthDataStoreRepository,
-    private val authApiRepository: AuthApiRepository,
     private val redditApiRepository: RedditApiRepository
 ) : ViewModel() {
 

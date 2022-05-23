@@ -124,6 +124,9 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Ove
         //clear intent after successful retrieval of uri
         requireActivity().intent = null
 
+        //TODO REFRESH ON RESUME
+
+
     }
 
     //inflate/activate options menu

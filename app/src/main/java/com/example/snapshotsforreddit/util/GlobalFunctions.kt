@@ -3,7 +3,7 @@ package com.example.snapshotsforreddit.util
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import com.example.snapshotsforreddit.data.AppTheme
+import com.example.snapshotsforreddit.data.datastore.AppTheme
 import kotlinx.coroutines.channels.SendChannel
 import java.time.*
 
@@ -25,18 +25,6 @@ fun getShortenedValue(value: Int?): String {
     }
 }
 
-fun <E> SendChannel<E>.tryOffer(element: E): Boolean = try {
-    trySend(element).isSuccess
-} catch (t: Throwable) {
-    false
-}
-
-@SuppressLint("WrongConstant")
-fun AppCompatActivity.updateForTheme(theme: String) = when (theme) {
-    AppTheme.DARK.name -> delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_YES
-    AppTheme.LIGHT.name  -> delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_NO
-    else -> delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-}
 
 fun calculateAgeDifferenceLocalDateTime(epoch: Long, type: Int): String {
     val createdOn =
@@ -80,4 +68,17 @@ fun calculateAgeDifferenceLocalDateTime(epoch: Long, type: Int): String {
             }y"
         }
     }
+}
+
+fun <E> SendChannel<E>.tryOffer(element: E): Boolean = try {
+    trySend(element).isSuccess
+} catch (t: Throwable) {
+    false
+}
+
+@SuppressLint("WrongConstant")
+fun AppCompatActivity.updateForTheme(theme: String) = when (theme) {
+    AppTheme.DARK.name -> delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_YES
+    AppTheme.LIGHT.name  -> delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_NO
+    else -> delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
 }

@@ -2,7 +2,7 @@ package com.example.snapshotsforreddit.ui.common.searchresults.posts
 
 import androidx.lifecycle.*
 import androidx.paging.cachedIn
-import com.example.snapshotsforreddit.data.PreferencesDataStoreRepository
+import com.example.snapshotsforreddit.data.datastore.PreferencesDataStoreRepository
 import com.example.snapshotsforreddit.network.RedditApiRepository
 import com.example.snapshotsforreddit.util.MonitorPair
 import dagger.hilt.android.lifecycle.HiltViewModel

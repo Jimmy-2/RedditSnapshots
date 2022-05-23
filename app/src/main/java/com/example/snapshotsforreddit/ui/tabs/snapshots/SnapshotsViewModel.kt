@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.snapshotsforreddit.data.PreferencesDataStoreRepository
-import com.example.snapshotsforreddit.data.SortOrder
-import com.example.snapshotsforreddit.data.room.Post
-import com.example.snapshotsforreddit.data.room.PostDao
+import com.example.snapshotsforreddit.data.datastore.PreferencesDataStoreRepository
+import com.example.snapshotsforreddit.data.datastore.SortOrder
+import com.example.snapshotsforreddit.data.room.snapshots.Snapshot
+import com.example.snapshotsforreddit.data.room.snapshots.SnapshotDao
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
@@ -16,8 +16,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DownloadedPostsViewModel @Inject constructor(
-    private val postDao: PostDao,
+class SnapshotsViewModel @Inject constructor(
+    private val snapshotDao: SnapshotDao,
     private val preferencesDataStoreRepository: PreferencesDataStoreRepository
 ): ViewModel() {
     //holds a single value like mutable live data which holds a string of values
@@ -33,7 +33,7 @@ class DownloadedPostsViewModel @Inject constructor(
         query, filterPreferences -> Pair(query, filterPreferences)
     }.flatMapLatest {
         //whenever searchQuery or sortOrder value changes, we execute the following
-        postDao.getDownloadedPosts(it.first, it.second.sortOrder) //it is the searchQuery and sortOrder combine value
+        snapshotDao.getSnapshots(it.first, it.second.sortOrder) //it is the searchQuery and sortOrder combine value
         //once we run postDao.getDownloadedPosts on the searchQuery and sortOrder, we assign the returned value to postsFlow
     }
 
@@ -41,7 +41,7 @@ class DownloadedPostsViewModel @Inject constructor(
 
     //automatically get new data from this flow if any changes occur to database
     //val downloadedPosts: LiveData<List<Post>> = postDao.getDownloadedPosts().asLiveData()
-    val downloadedPosts: LiveData<List<Post>> = postsFlow.asLiveData()
+    val downloadedPosts: LiveData<List<Snapshot>> = postsFlow.asLiveData()
 
     //with suspend functions, we need coroutines to run them
     fun onSortOrderSelected(sortOrder: SortOrder) = viewModelScope.launch {
@@ -54,12 +54,12 @@ class DownloadedPostsViewModel @Inject constructor(
         preferencesDataStoreRepository.updateIsCompactView(isCompactView)
     }
 
-    fun onPostSelected(post: Post) {
+    fun onPostSelected(snapshot: Snapshot) {
 
     }
 
-    fun onPostSwiped(post: Post) = viewModelScope.launch {
-        postDao.delete(post)
+    fun onPostSwiped(snapshot: Snapshot) = viewModelScope.launch {
+        snapshotDao.delete(snapshot)
     }
 
 

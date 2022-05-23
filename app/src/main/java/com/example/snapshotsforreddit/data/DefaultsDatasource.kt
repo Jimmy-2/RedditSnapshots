@@ -2,6 +2,7 @@ package com.example.snapshotsforreddit.data
 
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.network.responses.Defaults
+import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
 import com.example.snapshotsforreddit.network.responses.account.UserInfo
 import com.example.snapshotsforreddit.network.responses.subreddit.SubredditChildrenObject
@@ -62,7 +63,7 @@ class DefaultsDatasource {
 
     fun addHeader(): List<RedditChildrenObject> {
         return listOf(
-            RedditChildrenObject(kind = "header", data = null, defaults = null)
+            RedditChildrenObject(kind = "header", data = RedditChildrenData(), defaults = null)
         )
     }
 
@@ -70,8 +71,17 @@ class DefaultsDatasource {
         return listOf(
             RedditChildrenObject(
                 kind = "search",
-                data = null,
+                data = RedditChildrenData(),
                 defaults = Defaults(subreddit, null, null, null, isCompact)
+            ),
+        )
+    }
+    fun addSearchBarTest(subreddit: String, isCompact: Boolean): List<RedditChildrenData> {
+        return listOf(
+            RedditChildrenData(
+                dataKind = "search",
+                subreddit = subreddit,
+                isCompact = isCompact
             ),
         )
     }
@@ -80,27 +90,27 @@ class DefaultsDatasource {
         return listOf(
             RedditChildrenObject(
                 kind = "userInfo",
-                data = null,
+                data = RedditChildrenData(),
                 defaults = Defaults(null, null, userInfo, null, isCompact)
             ),
             RedditChildrenObject(
                 kind = "defaultTop",
-                data = null,
+                data = RedditChildrenData(),
                 defaults = Defaults("submitted", "Posts", userInfo, R.drawable.ic_post_temp)
             ),
             RedditChildrenObject(
                 kind = "default",
-                data = null,
+                data = RedditChildrenData(),
                 defaults = Defaults("comments", "Comments", userInfo, R.drawable.ic_comment)
             ),
 //            RedditChildrenObject(
 //                kind = "default",
-//                data = null,
+//                data = com.example.snapshotsforreddit.network.responses.RedditChildrenData(),
 //                defaults = Defaults(null, "Multireddits", userInfo)
 //            ),
             RedditChildrenObject(
                 kind = "defaultBottom",
-                data = null,
+                data = RedditChildrenData(),
                 defaults = Defaults(null, "Trophies", userInfo, R.drawable.ic_trophies)
             ),
         )
@@ -111,47 +121,47 @@ class DefaultsDatasource {
         return listOf(
             RedditChildrenObject(
                 kind = "userInfo",
-                data = null,
+                data = RedditChildrenData(),
                 defaults = Defaults(null, null, userInfo,null, isCompact)
             ),
             RedditChildrenObject(
                 kind = "defaultTop",
-                data = null,
+                data = RedditChildrenData(),
                 defaults = Defaults("submitted", "Posts", userInfo, R.drawable.ic_post_temp)
             ),
             RedditChildrenObject(
                 kind = "default",
-                data = null,
+                data = RedditChildrenData(),
                 defaults = Defaults("comments", "Comments", userInfo,R.drawable.ic_comment)
             ),
             RedditChildrenObject(
                 kind = "default",
-                data = null,
+                data = RedditChildrenData(),
                 defaults = Defaults("saved", "Saved", userInfo,R.drawable.ic_save)
             ),
 //            RedditChildrenObject(
 //                kind = "default",
-//                data = null,
+//                data = com.example.snapshotsforreddit.network.responses.RedditChildrenData(),
 //                defaults = Defaults(null, "Friends", userInfo)
 //            ),
             RedditChildrenObject(
                 kind = "default",
-                data = null,
+                data = RedditChildrenData(),
                 defaults = Defaults("upvoted", "Upvoted", userInfo,R.drawable.ic_up_arrow_null)
             ),
             RedditChildrenObject(
                 kind = "default",
-                data = null,
+                data = RedditChildrenData(),
                 defaults = Defaults("downvoted", "Downvoted", userInfo,R.drawable.ic_down_arrow_null)
             ),
             RedditChildrenObject(
                 kind = "default",
-                data = null,
+                data = RedditChildrenData(),
                 defaults = Defaults("hidden", "Hidden", userInfo,R.drawable.ic_hidden)
             ),
             RedditChildrenObject(
                 kind = "defaultBottom",
-                data = null,
+                data = RedditChildrenData(),
                 defaults = Defaults(null, "Trophies", userInfo,R.drawable.ic_trophies)
             )
         )

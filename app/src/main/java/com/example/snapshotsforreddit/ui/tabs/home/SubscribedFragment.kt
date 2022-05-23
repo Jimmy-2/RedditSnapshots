@@ -88,7 +88,7 @@ class SubscribedFragment : Fragment(R.layout.fragment_subscribed), SubscribedAda
             val action = when {
                 subreddit.data.display_name_prefixed == "Home" -> {
                     SubscribedFragmentDirections.actionSubscribedFragmentToRedditPageFragment(
-                        "", ""
+                        "Home", "r"
                     )
                 }
                 subreddit.data.subreddit_type == "user" -> {

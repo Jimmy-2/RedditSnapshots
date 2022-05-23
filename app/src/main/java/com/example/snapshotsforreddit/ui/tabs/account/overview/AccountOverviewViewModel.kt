@@ -6,22 +6,17 @@ import android.util.Log
 import androidx.lifecycle.*
 import androidx.paging.cachedIn
 import com.example.snapshotsforreddit.BuildConfig
-import com.example.snapshotsforreddit.data.AppTheme
-import com.example.snapshotsforreddit.data.AuthDataStoreRepository
-import com.example.snapshotsforreddit.data.PreferencesDataStoreRepository
-import com.example.snapshotsforreddit.data.TestDataStoreRepository
-import com.example.snapshotsforreddit.data.room.Account
-import com.example.snapshotsforreddit.data.room.AccountDao
-import com.example.snapshotsforreddit.di.ApplicationScope
+import com.example.snapshotsforreddit.data.datastore.AuthDataStoreRepository
+import com.example.snapshotsforreddit.data.datastore.PreferencesDataStoreRepository
+import com.example.snapshotsforreddit.data.room.loggedinaccounts.Account
+import com.example.snapshotsforreddit.data.room.loggedinaccounts.AccountDao
 import com.example.snapshotsforreddit.network.AuthApiRepository
 import com.example.snapshotsforreddit.network.RedditApiRepository
 import com.example.snapshotsforreddit.network.responses.TokenResponse
 import com.example.snapshotsforreddit.network.responses.account.UserInfo
-import com.example.snapshotsforreddit.ui.tabs.settings.themeFromPreferences
 import com.example.snapshotsforreddit.util.MonitorPair
 import com.example.snapshotsforreddit.util.tryOffer
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -33,7 +28,6 @@ class AccountOverviewViewModel @Inject constructor(
     private val authDataStoreRepository: AuthDataStoreRepository,
     private val authApiRepository: AuthApiRepository,
     private val redditApiRepository: RedditApiRepository,
-    private val testDataStoreRepository: TestDataStoreRepository,
     private val preferencesDataStoreRepository: PreferencesDataStoreRepository,
     private val accountDao: AccountDao,
 ) : ViewModel() {
@@ -46,7 +40,8 @@ class AccountOverviewViewModel @Inject constructor(
         emitAll(refreshSignal)
     }
 
-    private val _navigationActions = Channel<AccountOverviewNavigationAction>(capacity = Channel.CONFLATED)
+    private val _navigationActions =
+        Channel<AccountOverviewNavigationAction>(capacity = Channel.CONFLATED)
 
     val navigationActions = _navigationActions.receiveAsFlow()
 
@@ -56,34 +51,36 @@ class AccountOverviewViewModel @Inject constructor(
     val preferencesFlow = preferencesDataStoreRepository.preferencesFlow.asLiveData()
 
 
+    private val _username = MutableLiveData("")
+    val username: LiveData<String> = _username
 
-    val username = MutableLiveData("")
     private val userData = MutableLiveData<UserInfo?>()
     private val isCompact = MutableLiveData<Boolean?>()
 
-    val accountOverviewItems = Transformations.switchMap(MonitorPair(username,isCompact)) { pair ->
+    val accountOverviewItems = Transformations.switchMap(MonitorPair(_username, isCompact)) { pair ->
         redditApiRepository.getUserOverviewList(pair.first, 0, pair.second).cachedIn(viewModelScope)
 
     }
 
     fun checkIfUsernameChanged(username: String) {
         //only if accessToken changes do we update subreddits
-        if (this.username.value != username) {
+        if (this._username.value != username) {
             //_username.value = username
             getLoggedInUserData(username)
         }
     }
+
     private fun getLoggedInUserData(username: String) = viewModelScope.launch {
         try {
             userData.value = redditApiRepository.getUserInfoData(username).data
-            this@AccountOverviewViewModel.username.value = userData.value?.name
+            this@AccountOverviewViewModel._username.value = userData.value?.name
         } catch (e: Exception) {
-            this@AccountOverviewViewModel.username.value = ""
+            this@AccountOverviewViewModel._username.value = ""
         }
     }
 
-    fun checkIsCompact(newVal : Boolean) {
-        if(isCompact.value != newVal) {
+    fun checkIsCompact(newVal: Boolean) {
+        if (isCompact.value != newVal) {
             isCompact.value = newVal
         }
     }
@@ -127,9 +124,9 @@ class AccountOverviewViewModel @Inject constructor(
             redditApiRepository.getUsername().name?.let {
                 //CHECK IF USER EXISTS THEN ADD ACCOUNT OTHERWISE UPDATE
                 val accountExist = accountDao.exists(it)
-                if(accountExist) {
+                if (accountExist) {
                     updateAccount(refreshToken, it)
-                }else {
+                } else {
                     val newLoggedInAccount = Account(
                         username = it,
                         refreshToken = refreshToken,
@@ -147,7 +144,7 @@ class AccountOverviewViewModel @Inject constructor(
         }
     }
 
-    private fun updateAccount(newRefreshToken:String, username: String) = viewModelScope.launch {
+    private fun updateAccount(newRefreshToken: String, username: String) = viewModelScope.launch {
         accountDao.updateLoggedIn(newRefreshToken, username)
     }
 

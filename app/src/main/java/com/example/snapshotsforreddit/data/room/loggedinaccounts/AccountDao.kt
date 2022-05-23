@@ -1,8 +1,7 @@
-package com.example.snapshotsforreddit.data.room
+package com.example.snapshotsforreddit.data.room.loggedinaccounts
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
-import okhttp3.internal.concurrent.Task
 
 @Dao
 interface AccountDao {

@@ -17,12 +17,8 @@ import javax.inject.Singleton
 object AppModule {
     //life time is as long as app is alive
 
-
     //we only ever need 1 instance of our dao and database throughout the app
     //so we annotate with singleton
-
-
-
     @ApplicationScope
     @Provides
     @Singleton

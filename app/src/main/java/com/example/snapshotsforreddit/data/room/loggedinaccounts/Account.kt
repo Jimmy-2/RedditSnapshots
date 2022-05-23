@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.data.room
+package com.example.snapshotsforreddit.data.room.loggedinaccounts
 
 import android.os.Parcelable
 import androidx.room.Entity

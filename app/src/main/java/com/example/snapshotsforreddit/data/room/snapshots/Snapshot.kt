@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.data.room
+package com.example.snapshotsforreddit.data.room.snapshots
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo
@@ -8,9 +8,9 @@ import kotlinx.parcelize.Parcelize
 import java.text.DateFormat
 
 
-@Entity(tableName = "post_database")
+@Entity(tableName = "snapshot_database")
 @Parcelize
-data class Post(
+data class Snapshot(
 
     @ColumnInfo(name = "title")
     val title: String,
@@ -22,11 +22,7 @@ data class Post(
 
     val important: Boolean = false,
 
-
-
     //list of comment objects
-
-
 
     val added: Long = System.currentTimeMillis(),
 

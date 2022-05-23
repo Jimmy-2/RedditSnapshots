@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.snapshotsforreddit.R
-import com.example.snapshotsforreddit.data.SortOrder
-import com.example.snapshotsforreddit.data.room.Post
-import com.example.snapshotsforreddit.databinding.FragmentDownloadedPostsBinding
+import com.example.snapshotsforreddit.data.datastore.SortOrder
+import com.example.snapshotsforreddit.data.room.snapshots.Snapshot
+import com.example.snapshotsforreddit.databinding.FragmentSnapshotsBinding
 import com.example.snapshotsforreddit.util.onQueryTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
@@ -25,8 +25,8 @@ import kotlinx.coroutines.launch
 //literalkly down every single comment and then sort then based on their
 //jsonobjects
 @AndroidEntryPoint
-class DownloadedPostsFragment: Fragment(R.layout.fragment_downloaded_posts), DownloadedPostsAdapter.OnItemClickListener {
-    private val viewModel: DownloadedPostsViewModel by viewModels()
+class SnapshotsFragment: Fragment(R.layout.fragment_snapshots), SnapshotsAdapter.OnItemClickListener {
+    private val viewModel: SnapshotsViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -36,13 +36,13 @@ class DownloadedPostsFragment: Fragment(R.layout.fragment_downloaded_posts), Dow
         _binding = FragmentDownloadedPostsBinding.inflate(inflater, container, false)
         return binding.root
          */
-        val binding = FragmentDownloadedPostsBinding.bind(view)
+        val binding = FragmentSnapshotsBinding.bind(view)
 
-        val downloadedPostsAdapter = DownloadedPostsAdapter(this)
+        val snapshotsAdapter = SnapshotsAdapter(this)
 
         binding.apply {
-            recyclerViewPosts.apply {
-                adapter = downloadedPostsAdapter
+            recyclerViewSnapshots.apply {
+                adapter = snapshotsAdapter
                 layoutManager = LinearLayoutManager(this.context)
                 setHasFixedSize(true) // optimization for recyclerview if it doesnt change size in screen
             }//basically same as
@@ -65,13 +65,13 @@ class DownloadedPostsFragment: Fragment(R.layout.fragment_downloaded_posts), Dow
 
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                     //get current post item
-                    val post = downloadedPostsAdapter.currentList[viewHolder.adapterPosition]
+                    val post = snapshotsAdapter.currentList[viewHolder.adapterPosition]
 
                     viewModel.onPostSwiped(post)
 
                 }
 
-            }).attachToRecyclerView(recyclerViewPosts)
+            }).attachToRecyclerView(recyclerViewSnapshots)
 
 
 
@@ -80,7 +80,7 @@ class DownloadedPostsFragment: Fragment(R.layout.fragment_downloaded_posts), Dow
         viewModel.downloadedPosts.observe(viewLifecycleOwner) {
             //lambda function tells us what to do when changes/updates occur
             //we can decide what to do such as updating the adapter
-            downloadedPostsAdapter.submitList(it)
+            snapshotsAdapter.submitList(it)
             //diffutil will do the other logic such as calcualting the differences, etc
         }
 
@@ -88,8 +88,8 @@ class DownloadedPostsFragment: Fragment(R.layout.fragment_downloaded_posts), Dow
     }
 
     //go to details screen on item clicked
-    override fun onItemClick(post: Post) {
-        viewModel.onPostSelected(post)
+    override fun onItemClick(snapshot: Snapshot) {
+        viewModel.onPostSelected(snapshot)
     }
 
 

@@ -5,14 +5,16 @@ import androidx.paging.PagingConfig
 import androidx.paging.liveData
 import com.example.snapshotsforreddit.BuildConfig
 import com.example.snapshotsforreddit.data.paging.*
-import com.example.snapshotsforreddit.network.responses.account.UserInfo
 import com.example.snapshotsforreddit.network.services.RedditApiService
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class RedditApiRepository @Inject constructor(private val redditApiService: RedditApiService) {
-
+class RedditApiRepository @Inject constructor(
+    private val redditApiService: RedditApiService,
+//    private val redditChildrenObjectDatabase: RedditChildrenObjectDatabase
+) {
+//    private val redditChildrenObjectDao = redditChildrenObjectDatabase.redditChildrenObjectDao()
     //TODO CHANGE PAGING SIZE AFTER ADDING CACHING TO PAGINATION
 
     fun getSubscribedSubredditsList() = Pager(
@@ -20,6 +22,23 @@ class RedditApiRepository @Inject constructor(private val redditApiService: Redd
     ) {
         SubredditPagingSource(redditApiService, null, null, null)
     }.liveData
+
+
+//    fun getRedditPagePosts() = networkBoundResource(
+//        query = {
+//            redditChildrenObjectDao.getRedditChildrenObjects()
+//        },
+//        fetch = {
+//            delay(2000)
+//            redditApiService.getRestaurants()
+//        },
+//        saveFetchResult = { restaurants ->
+//            db.withTransaction {
+//                restaurantDao.deleteAllRestaurants()
+//                restaurantDao.insertRestaurants(restaurants)
+//            }
+//        }
+//    )
 
     fun getSubredditPostsList(
         subredditName: String,
@@ -32,6 +51,19 @@ class RedditApiRepository @Inject constructor(private val redditApiService: Redd
         ) {
             RedditPagePagingSource(redditApiService, subredditName, subredditType, sort, isCompact)
         }.liveData
+
+    fun getSubredditPostsListTest(
+        subredditName: String,
+        subredditType: String,
+        sort: String?,
+        isCompact: Boolean?
+    ) =
+        Pager(
+            PagingConfig(count)
+        ) {
+            RedditPagePagingSourceTest(redditApiService, subredditName, subredditType, sort, isCompact)
+        }.liveData
+
 
     fun getSearchResultsList(
         subredditName: String?,
@@ -83,7 +115,7 @@ class RedditApiRepository @Inject constructor(private val redditApiService: Redd
 //        )
 //    }.liveData
 
-        fun getUserOverviewList(
+    fun getUserOverviewList(
         username: String?,
         accountType: Int,
         isCompact: Boolean?

@@ -1,10 +1,9 @@
 package com.example.snapshotsforreddit.ui.common.login
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.snapshotsforreddit.data.AuthDataStoreRepository
-import com.example.snapshotsforreddit.data.room.Account
-import com.example.snapshotsforreddit.data.room.AccountDao
+import com.example.snapshotsforreddit.data.datastore.AuthDataStoreRepository
+import com.example.snapshotsforreddit.data.room.loggedinaccounts.Account
+import com.example.snapshotsforreddit.data.room.loggedinaccounts.AccountDao
 import com.example.snapshotsforreddit.di.ApplicationScope
 import com.example.snapshotsforreddit.network.AuthApiRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

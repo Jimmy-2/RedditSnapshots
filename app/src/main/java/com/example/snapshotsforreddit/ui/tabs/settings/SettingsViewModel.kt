@@ -20,8 +20,8 @@
 package com.example.snapshotsforreddit.ui.tabs.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.snapshotsforreddit.data.AppTheme
-import com.example.snapshotsforreddit.data.PreferencesDataStoreRepository
+import com.example.snapshotsforreddit.data.datastore.AppTheme
+import com.example.snapshotsforreddit.data.datastore.PreferencesDataStoreRepository
 import com.example.snapshotsforreddit.util.tryOffer
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel

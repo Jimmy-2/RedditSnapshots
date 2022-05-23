@@ -1,12 +1,12 @@
 package com.example.snapshotsforreddit.ui.common.login
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.snapshotsforreddit.BuildConfig
-import com.example.snapshotsforreddit.data.AuthDataStoreRepository
-import com.example.snapshotsforreddit.data.PreferencesDataStoreRepository
-import com.example.snapshotsforreddit.data.TestDataStoreRepository
-import com.example.snapshotsforreddit.data.room.AccountDao
-import com.example.snapshotsforreddit.network.RedditApiRepository
+import com.example.snapshotsforreddit.data.datastore.AuthDataStoreRepository
+import com.example.snapshotsforreddit.data.room.loggedinaccounts.AccountDao
 import com.example.snapshotsforreddit.ui.tabs.settings.WhileViewSubscribed
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*

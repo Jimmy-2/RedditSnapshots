@@ -58,8 +58,8 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    viewModel.selectedTheme.collect { flow ->
-                        updateForTheme(flow)
+                    viewModel.selectedTheme.collect { theme ->
+                        updateForTheme(theme)
                     }
                 }
             }

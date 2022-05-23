@@ -12,7 +12,6 @@ interface RedditApiService {
         const val OAUTH_URL = "https://oauth.reddit.com"
 
     }
-
     @GET("/subreddits/mine/subscriber")
     suspend fun getSubscribedSubreddits(
         //@Header("Authorization") Authorization: String?,
@@ -20,6 +19,7 @@ interface RedditApiService {
         @Query("after") after: String? = null,
         @Query("before") before: String? = null,
     ): SubredditJsonResponse
+
 
     @GET("/{sort}/?sr_detail=1")
     suspend fun getHomePosts(

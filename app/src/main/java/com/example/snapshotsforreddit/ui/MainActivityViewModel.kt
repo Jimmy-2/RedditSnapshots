@@ -1,13 +1,10 @@
 package com.example.snapshotsforreddit.ui
 
 import androidx.lifecycle.ViewModel
-import com.example.snapshotsforreddit.data.AppTheme
-import com.example.snapshotsforreddit.data.PreferencesDataStoreRepository
+import com.example.snapshotsforreddit.data.datastore.PreferencesDataStoreRepository
 import com.example.snapshotsforreddit.di.ApplicationScope
-import com.example.snapshotsforreddit.ui.tabs.settings.themeFromPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel

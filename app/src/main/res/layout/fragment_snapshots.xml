@@ -3,10 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context = ".ui.tabs.snapshots.DownloadedPostsFragment">
+    tools:context = ".ui.tabs.snapshots.SnapshotsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_posts"
+        android:id="@+id/recycler_view_snapshots"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

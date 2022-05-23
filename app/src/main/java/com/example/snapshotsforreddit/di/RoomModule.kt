@@ -2,8 +2,9 @@ package com.example.snapshotsforreddit.di
 
 import android.app.Application
 import androidx.room.Room
-import com.example.snapshotsforreddit.data.room.AccountRoomDatabase
-import com.example.snapshotsforreddit.data.room.PostRoomDatabase
+import com.example.snapshotsforreddit.data.room.loggedinaccounts.AccountRoomDatabase
+import com.example.snapshotsforreddit.data.room.snapshots.SnapshotRoomDatabase
+
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,25 +15,28 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object RoomModule {
 
-    //dagger will create and provide the post database
+    //snapshots
+    //dagger will create and provide the snapshot database
     @Provides
     @Singleton
-    fun providePostDatabase(
+    fun provideSnapshotDatabase(
         app: Application,
-        callback: PostRoomDatabase.Callback
+        callback: SnapshotRoomDatabase.Callback
 
-    ) = Room.databaseBuilder(app, PostRoomDatabase::class.java, "post_database")
+    ) = Room.databaseBuilder(app, SnapshotRoomDatabase::class.java, "snapshot_database")
         .fallbackToDestructiveMigration()
         .addCallback(callback)
         .build()
 
-    //create the actual post dao object we need to make database operation
+    //create the actual snapshot dao object we need to make database operation
     @Provides
     @Singleton
-    fun providePostDao(db: PostRoomDatabase) = db.postDao()
+    fun provideSnapshotDao(db: SnapshotRoomDatabase) = db.snapshotDao()
 
 
 
+
+    // Accounts
     @Provides
     @Singleton
     fun provideAccountDatabase(
@@ -46,6 +50,18 @@ object RoomModule {
     @Provides
     @Singleton
     fun provideAccountDao(db: AccountRoomDatabase) = db.accountDao()
+
+
+//    // Posts caching
+//    @Provides
+//    @Singleton
+//    fun provideRedditChildrenObjectDatabase(app: Application): RedditChildrenObjectDatabase =
+//        Room.databaseBuilder(app, RedditChildrenObjectDatabase::class.java, "redditChildrenObject_database")
+//        .build()
+
+//    @Provides
+//    @Singleton
+//    fun provideRedditChildrenObjectDao(db: RedditChildrenObjectDatabase) = db.redditChildrenObjectDao()
 
 
 }

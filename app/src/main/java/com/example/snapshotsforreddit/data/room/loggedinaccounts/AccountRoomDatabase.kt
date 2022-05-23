@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.data.room
+package com.example.snapshotsforreddit.data.room.loggedinaccounts
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
