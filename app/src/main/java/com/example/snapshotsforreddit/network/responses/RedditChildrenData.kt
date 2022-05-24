@@ -2,7 +2,7 @@ package com.example.snapshotsforreddit.network.responses
 
 import com.example.snapshotsforreddit.network.responses.postimage.ImagePreview
 import com.example.snapshotsforreddit.network.responses.postvideo.RedditPageMedia
-import com.example.snapshotsforreddit.network.responses.subreddit.SubscribedChildrenData
+import com.example.snapshotsforreddit.network.responses.subreddit.SubredditChildrenData
 
 
 //Contains everything relevant to a single post.
@@ -30,8 +30,8 @@ data class RedditChildrenData(
     val is_video: Boolean?
 )
 
+*/
 
- */
 //Parcelize so that we can pass this object through safe args.
 //@Entity(tableName = "redditChildrenObjects")
 
@@ -108,7 +108,7 @@ data class RedditChildrenData(
 
     //contains data that you can get from a subreddit's /about endpoint
     //use this to get subreddit icon
-    val sr_detail: SubscribedChildrenData? = null,
+    val sr_detail: SubredditChildrenData? = null,
 
     //not used atm
     val permalink: String? = null,
@@ -122,6 +122,29 @@ data class RedditChildrenData(
 
 
     val created_utc: Long? = null,
+
+
+
+
+
+
+
+
+    //DEFAULTS
+    val history_type : String? = null,
+    val history_name: String? = null,
+    val icon:Int? = null,
+
+    //userinfo
+    val user_name: String?= null,
+    val link_karma: Int?= null,
+    val comment_karma: Int?= null,
+    val total_karma: Int?= null,
+    val user_created_utc: Long? = null
+
+
+
+
 
 
     )

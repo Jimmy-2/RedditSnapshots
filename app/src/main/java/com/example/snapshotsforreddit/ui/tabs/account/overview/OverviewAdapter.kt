@@ -10,15 +10,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.*
-import com.example.snapshotsforreddit.network.responses.Defaults
-import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
-import com.example.snapshotsforreddit.ui.common.viewholders.PostCompactViewHolder
-import com.example.snapshotsforreddit.ui.common.viewholders.PostViewHolder
+import com.example.snapshotsforreddit.network.responses.RedditChildrenData
+import com.example.snapshotsforreddit.ui.common.viewholders.PostCompactViewHolderTest
+import com.example.snapshotsforreddit.ui.common.viewholders.PostViewHolderTest
 import com.example.snapshotsforreddit.util.calculateAgeDifferenceLocalDateTime
 import com.example.snapshotsforreddit.util.getShortenedValue
 
 class OverviewAdapter(private val onClickListener: OnItemClickListener) :
-    PagingDataAdapter<RedditChildrenObject, RecyclerView.ViewHolder>(
+    PagingDataAdapter<RedditChildrenData, RecyclerView.ViewHolder>(
         POST_COMPARATOR
     ) {
     //TODO: Instead of 1 item layout for a post, have 2 different layouts, 1 for text only post vs image/video/gif post
@@ -32,13 +31,13 @@ class OverviewAdapter(private val onClickListener: OnItemClickListener) :
                     ), parent, false
                 )
             )
-            POST -> PostViewHolder(
+            POST -> PostViewHolderTest(
                 this@OverviewAdapter,
                 onClickListener,
                 ItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false),
                 true,
             )
-            POST_COMPACT -> PostCompactViewHolder(
+            POST_COMPACT -> PostCompactViewHolderTest(
                 this@OverviewAdapter,
                 onClickListener,
                 ItemPostCompactBinding.inflate(LayoutInflater.from(parent.context), parent, false),
@@ -88,8 +87,8 @@ class OverviewAdapter(private val onClickListener: OnItemClickListener) :
         if (currentItem != null) {
             when (holder) {
                 is CommentViewHolder -> holder.bind(currentItem)
-                is PostViewHolder -> holder.bind(currentItem)
-                is PostCompactViewHolder -> holder.bind(currentItem)
+                is PostViewHolderTest -> holder.bind(currentItem)
+                is PostCompactViewHolderTest -> holder.bind(currentItem)
                 is UserInfoViewHolder -> holder.bind(currentItem)
                 is DefaultViewHolder -> holder.bind(currentItem)
                 is HeaderViewHolder -> holder.bind(currentItem)
@@ -99,44 +98,45 @@ class OverviewAdapter(private val onClickListener: OnItemClickListener) :
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (getItem(position)?.kind) {
-            "t1" -> COMMENT
-            "t3" -> when(getItem(0)?.defaults?.isCompact) {
-                true -> POST_COMPACT
-                else -> POST
-            }
+        return when (getItem(position)?.dataKind) {
             "userInfo" -> USER_INFO
             "default" -> DEFAULT
             "defaultTop" -> DEFAULT_TOP
             "defaultBottom" -> DEFAULT_BOTTOM
             "header" -> HEADER
-            else -> ERROR
+            else ->
+                when (getItem(position)?.name?.take(2)) {
+                    "t1" -> COMMENT
+                    "t3" -> when (getItem(0)?.isCompact) {
+                        true -> POST_COMPACT
+                        else -> POST
+                    }
+                    else -> ERROR
+                }
         }
-
     }
 
     inner class CommentViewHolder(val binding: ItemAccountCommentBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(postObject: RedditChildrenObject) {
-            val currentPost = postObject.data
+        fun bind(post: RedditChildrenData) {
             binding.apply {
-                textviewAccountCommentAuthor.text = currentPost?.author
-                textviewAccountCommentBody.text = currentPost?.body
-                textviewAccountCommentPostTitle.text = currentPost?.link_title
-                textviewAccountCommentPostSubreddit.text = currentPost?.subreddit
-                textviewUpvoteCount.text = getShortenedValue(currentPost?.score)
-                when {
-                    currentPost?.likes == null -> {
+                textviewAccountCommentAuthor.text = post.author
+                textviewAccountCommentBody.text = post.body
+                textviewAccountCommentPostTitle.text = post.link_title
+                textviewAccountCommentPostSubreddit.text = post.subreddit
+                textviewUpvoteCount.text = getShortenedValue(post.score)
+                when (post.likes) {
+                    null -> {
                         imageArrow.setImageResource(R.drawable.ic_up_arrow_null)
                     }
-                    currentPost.likes == true -> {
+                    true -> {
                         imageArrow.setImageResource(R.drawable.ic_upvote_arrow)
                     }
                     else -> {
                         imageArrow.setImageResource(R.drawable.ic_downvote_arrow)
                     }
                 }
-                val epoch = currentPost?.created_utc
+                val epoch = post.created_utc
                 if (epoch != null) {
                     textviewCommentAge.text = calculateAgeDifferenceLocalDateTime(epoch, 0)
                 }
@@ -144,20 +144,18 @@ class OverviewAdapter(private val onClickListener: OnItemClickListener) :
         }
     }
 
+
     inner class UserInfoViewHolder(val binding: ItemAccountUserInfoBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(postObject: RedditChildrenObject) {
-            val currentPost = postObject.defaults
+        fun bind(post: RedditChildrenData) {
             binding.apply {
-                if (currentPost != null) {
-                    textviewCommentKarma.text =
-                        getShortenedValue(currentPost.userInfo?.comment_karma)
-                    textviewPostKarma.text = getShortenedValue(currentPost.userInfo?.link_karma)
-                    val epoch = currentPost.userInfo?.created_utc
+                textviewCommentKarma.text =
+                    getShortenedValue(post.comment_karma)
+                textviewPostKarma.text = getShortenedValue(post.link_karma)
+                val epoch = post.user_created_utc
 
-                    if (epoch != null) {
-                        textviewAccountAge.text = calculateAgeDifferenceLocalDateTime(epoch, 1)
-                    }
+                if (epoch != null) {
+                    textviewAccountAge.text = calculateAgeDifferenceLocalDateTime(epoch, 1)
                 }
             }
         }
@@ -173,61 +171,54 @@ class OverviewAdapter(private val onClickListener: OnItemClickListener) :
                 if (position != RecyclerView.NO_POSITION) {
                     val item = getItem(position)
                     if (item != null) {
-                        onClickListener.onHistoryClick(
-                            item.defaults
-                        )
+                        onClickListener.onHistoryClick(item.history_type,item.history_name,item.user_name)
                     }
                 }
             }
         }
 
         @SuppressLint("ResourceAsColor")
-        fun bind(postObject: RedditChildrenObject) {
-            val currentPost = postObject.defaults
+        fun bind(post: RedditChildrenData) {
             binding.apply {
-                if (currentPost != null) {
-                    println(postObject.kind)
-                    val leftIcon = currentPost.icon
-                    when (postObject.kind) {
-                        "default" -> {
-                            layoutAccountDefault.setBackgroundColor(Color.WHITE)
-                            cardDefaultMid.visibility = View.VISIBLE
-                            textviewDefaultMid.text = currentPost.text
-                            leftIcon?.let {
-                                textviewDefaultMid.setCompoundDrawablesWithIntrinsicBounds(
-                                    it, 0, R.drawable.ic_right_arrow, 0
-                                )
-                                textviewDefaultMid.compoundDrawables[0].setTint(Color.parseColor("#3895e8"))
-
-                            }
-                        }
-                        "defaultTop" -> {
-                            cardDefaultTop.visibility = View.VISIBLE
-                            textviewDefaultTop.text = currentPost.text
-                            leftIcon?.let {
-                                textviewDefaultTop.setCompoundDrawablesWithIntrinsicBounds(
-                                    it, 0, R.drawable.ic_right_arrow, 0
-                                )
-                                textviewDefaultTop.compoundDrawables[0].setTint(Color.parseColor("#3895e8"))
-                            }
-                        }
-                        "defaultBottom" -> {
-                            cardDefaultBottom.visibility = View.VISIBLE
-                            textviewDefaultBottom.text = currentPost.text
-                            leftIcon?.let {
-                                textviewDefaultBottom.setCompoundDrawablesWithIntrinsicBounds(
-                                    it, 0, R.drawable.ic_right_arrow, 0
-                                )
-                                textviewDefaultBottom.compoundDrawables[0].setTint(
-                                    Color.parseColor(
-                                        "#3895e8"
-                                    )
-                                )
-                            }
+                val leftIcon = post.icon
+                when (post.dataKind) {
+                    "default" -> {
+                        layoutAccountDefault.setBackgroundColor(Color.WHITE)
+                        cardDefaultMid.visibility = View.VISIBLE
+                        textviewDefaultMid.text = post.history_name
+                        leftIcon?.let {
+                            textviewDefaultMid.setCompoundDrawablesWithIntrinsicBounds(
+                                it, 0, R.drawable.ic_right_arrow, 0
+                            )
+                            textviewDefaultMid.compoundDrawables[0].setTint(Color.parseColor("#3895e8"))
                         }
                     }
-
+                    "defaultTop" -> {
+                        cardDefaultTop.visibility = View.VISIBLE
+                        textviewDefaultTop.text = post.history_name
+                        leftIcon?.let {
+                            textviewDefaultTop.setCompoundDrawablesWithIntrinsicBounds(
+                                it, 0, R.drawable.ic_right_arrow, 0
+                            )
+                            textviewDefaultTop.compoundDrawables[0].setTint(Color.parseColor("#3895e8"))
+                        }
+                    }
+                    "defaultBottom" -> {
+                        cardDefaultBottom.visibility = View.VISIBLE
+                        textviewDefaultBottom.text = post.history_name
+                        leftIcon?.let {
+                            textviewDefaultBottom.setCompoundDrawablesWithIntrinsicBounds(
+                                it, 0, R.drawable.ic_right_arrow, 0
+                            )
+                            textviewDefaultBottom.compoundDrawables[0].setTint(
+                                Color.parseColor(
+                                    "#3895e8"
+                                )
+                            )
+                        }
+                    }
                 }
+
             }
         }
     }
@@ -235,7 +226,7 @@ class OverviewAdapter(private val onClickListener: OnItemClickListener) :
 
     inner class HeaderViewHolder(val binding: ItemHeaderBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(postObject: RedditChildrenObject) {
+        fun bind(post: RedditChildrenData) {
             binding.apply {
                 textviewHeaderOverview.visibility = View.VISIBLE
                 textviewHeaderOverview.text = "OVERVIEW"
@@ -243,11 +234,10 @@ class OverviewAdapter(private val onClickListener: OnItemClickListener) :
         }
     }
 
-    interface OnItemClickListener : PostViewHolder.OnItemClickListener,
-        PostCompactViewHolder.OnItemClickListener {
-        fun onInfoClick(infoItem: RedditChildrenObject, type: Int)
-        fun onHistoryClick(userDefaults: Defaults?)
-        fun onPostCommentClick(overviewItem: RedditChildrenObject, type: Int)
+    interface OnItemClickListener : PostCompactViewHolderTest.OnItemClickListener, PostViewHolderTest.OnItemClickListener {
+        fun onInfoClick(infoItem: RedditChildrenData, type: Int)
+        fun onHistoryClick(historyType: String?, historyName: String?, userName: String?)
+        fun onPostCommentClick(overviewItem: RedditChildrenData, type: Int)
     }
 
 
@@ -265,20 +255,19 @@ class OverviewAdapter(private val onClickListener: OnItemClickListener) :
         private const val ERROR = 9
 
 
-
         private val POST_COMPARATOR =
-            object : DiffUtil.ItemCallback<RedditChildrenObject>() {
+            object : DiffUtil.ItemCallback<RedditChildrenData>() {
                 override fun areItemsTheSame(
-                    oldItem: RedditChildrenObject,
-                    newItem: RedditChildrenObject
+                    oldItem: RedditChildrenData,
+                    newItem: RedditChildrenData
                 ): Boolean {
                     //CHANGE THIS TO data.name LATER SO WE DO NOT HAVE TO UPDATE EVEN IF SUBSCRIPTION COUNT CHANGES
-                    return oldItem.data.toString() == newItem.data.toString()
+                    return oldItem.name == newItem.name
                 }
 
                 override fun areContentsTheSame(
-                    oldItem: RedditChildrenObject,
-                    newItem: RedditChildrenObject
+                    oldItem: RedditChildrenData,
+                    newItem: RedditChildrenData
                 ): Boolean {
                     return oldItem == newItem
                 }

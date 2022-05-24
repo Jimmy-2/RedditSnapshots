@@ -14,10 +14,10 @@ import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.ItemHeaderBinding
 import com.example.snapshotsforreddit.databinding.ItemSubscribedBinding
 import com.example.snapshotsforreddit.databinding.ItemSubscribedDefaultBinding
-import com.example.snapshotsforreddit.network.responses.subreddit.SubredditChildrenObject
+import com.example.snapshotsforreddit.network.responses.subreddit.SubredditChildrenData
 
 class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
-    PagingDataAdapter<SubredditChildrenObject, RecyclerView.ViewHolder>(
+    PagingDataAdapter<SubredditChildrenData, RecyclerView.ViewHolder>(
         SUBREDDIT_COMPARATOR
     ) {
 
@@ -60,19 +60,16 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
                 is HeaderViewHolder -> holder.bind(currentItem)
             }
         }
-
     }
 
     override fun getItemViewType(position: Int): Int {
 
-        return when (getItem(position)?.kind) {
+        return when (getItem(position)?.dataKind) {
             "default" -> DEFAULT
-            "t5" -> SUBREDDIT
             "header" -> HEADER
-            else -> ERROR
+            else -> SUBREDDIT
         }
     }
-
 
     inner class DefaultSubscribedSubredditViewHolder(val binding: ItemSubscribedDefaultBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -88,20 +85,19 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
             }
         }
 
-        fun bind(subredditObject: SubredditChildrenObject) {
+        fun bind(subreddit: SubredditChildrenData) {
             //TODO FIX CODE HERE : REFORMAT STATEMENTS
             binding.apply {
-                if (subredditObject.data != null) {
-                    val iconBackgroundColor = subredditObject.data.icon_img
-                    val icon = subredditObject.data.subscribers
+                if (subreddit != null) {
+                    val iconBackgroundColor = subreddit.icon_img
+                    val icon = subreddit.subscribers
                     cardSubredditItem.setCardBackgroundColor(Color.parseColor(iconBackgroundColor))
                     icon?.let { imageSubredditItem.setImageResource(it) }
-                    textviewDefaultSubredditItemTitle.text = subredditObject.data.display_name
+                    textviewDefaultSubredditItemTitle.text = subreddit.display_name
                     textviewDefaultSubredditItemDescription.text =
-                        subredditObject.data.public_description
+                        subreddit.public_description
 
                 }
-
             }
         }
     }
@@ -120,17 +116,17 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
             }
         }
 
-        fun bind(subredditObject: SubredditChildrenObject) {
+        fun bind(subreddit: SubredditChildrenData) {
             val removePart = "amp;"
             //TODO FIX CODE HERE : REFORMAT STATEMENTS
             binding.apply {
-                if (subredditObject.data != null) {
-                    val currIconUrl = subredditObject.data.community_icon
+                if (subreddit!= null) {
+                    val currIconUrl = subreddit.community_icon
                     val iconUrl: String =
-                        if (subredditObject.data.community_icon == null && subredditObject.data.icon_img == null) {
+                        if (subreddit.community_icon == null && subreddit.icon_img == null) {
                             ""
                         } else if (currIconUrl == "") {
-                            subredditObject.data.icon_img!!.replace(removePart, "")
+                            subreddit.icon_img!!.replace(removePart, "")
                         } else {
                             currIconUrl!!.replace(removePart, "")
                         }
@@ -141,10 +137,8 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
                         .error(R.drawable.ic_error)
                         .into(imageSubredditItem)
 
-
-
-                    textviewSubredditItemTitle.text = subredditObject.data.display_name_prefixed
-                    favoriteSubredditItem.isVisible = subredditObject.data.user_has_favorited!!
+                    textviewSubredditItemTitle.text = subreddit.display_name_prefixed
+                    favoriteSubredditItem.isVisible = subreddit.user_has_favorited!!
                 }
 
             }
@@ -154,7 +148,7 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
     inner class HeaderViewHolder(val binding: ItemHeaderBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(subredditObject: SubredditChildrenObject) {
+        fun bind(subredditObject: SubredditChildrenData) {
             binding.apply {
                 textviewHeaderSubscribed.visibility = View.VISIBLE
                 textviewHeaderSubscribed.text = "FOLLOWING"
@@ -165,7 +159,7 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
 
 
     interface OnItemClickListener {
-        fun onItemClick(subreddit: SubredditChildrenObject)
+        fun onItemClick(subreddit: SubredditChildrenData)
     }
 
     companion object {
@@ -175,18 +169,18 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
         private const val ERROR = 3
 
         private val SUBREDDIT_COMPARATOR =
-            object : DiffUtil.ItemCallback<SubredditChildrenObject>() {
+            object : DiffUtil.ItemCallback<SubredditChildrenData>() {
                 override fun areItemsTheSame(
-                    oldItem: SubredditChildrenObject,
-                    newItem: SubredditChildrenObject
+                    oldItem: SubredditChildrenData,
+                    newItem: SubredditChildrenData
                 ): Boolean {
                     //CHANGE THIS TO data.name LATER SO WE DO NOT HAVE TO UPDATE EVEN IF SUBSCRIPTION COUNT CHANGES
-                    return oldItem.data == newItem.data
+                    return oldItem.name == newItem.name
                 }
 
                 override fun areContentsTheSame(
-                    oldItem: SubredditChildrenObject,
-                    newItem: SubredditChildrenObject
+                    oldItem: SubredditChildrenData,
+                    newItem: SubredditChildrenData
                 ): Boolean {
                     return oldItem == newItem
                 }

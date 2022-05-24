@@ -5,15 +5,14 @@ import com.example.snapshotsforreddit.network.responses.Defaults
 import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
 import com.example.snapshotsforreddit.network.responses.account.UserInfo
-import com.example.snapshotsforreddit.network.responses.subreddit.SubredditChildrenObject
-import com.example.snapshotsforreddit.network.responses.subreddit.SubscribedChildrenData
+import com.example.snapshotsforreddit.network.responses.subreddit.SubredditChildrenData
 
 class DefaultsDatasource {
-    fun loadDefaultSubreddits(): List<SubredditChildrenObject> {
+
+    fun loadDefaultSubreddits(): List<SubredditChildrenData> {
         return listOf(
-            SubredditChildrenObject(
-                kind = "default",
-                data = SubscribedChildrenData(
+            SubredditChildrenData(
+                    "default",
                     "Home",
                     "Home",
                     R.drawable.ic_home,
@@ -22,12 +21,13 @@ class DefaultsDatasource {
                     "#f80e5f",
                     null,
                     true,
-                    "Posts from your subscribed subreddits"
-                )
+                    "Posts from your subscribed subreddits",
+                null
+
             ),
-            SubredditChildrenObject(
-                kind = "default",
-                data = SubscribedChildrenData(
+            SubredditChildrenData(
+
+                    "default",
                     "Popular Posts",
                     "r/Popular",
                     R.drawable.ic_popular,
@@ -36,12 +36,11 @@ class DefaultsDatasource {
                     "#0091ff",
                     "r",
                     true,
-                    "Popular recommended posts from Reddit"
-                )
+                    "Popular recommended posts from Reddit",null
+
             ),
-            SubredditChildrenObject(
-                kind = "default",
-                data = SubscribedChildrenData(
+            SubredditChildrenData(
+                    "default",
                     "All Posts",
                     "r/All",
                     R.drawable.ic_all,
@@ -50,20 +49,28 @@ class DefaultsDatasource {
                     "#0cd23c",
                     "r",
                     true,
-                    "Most active posts from all of Reddit"
-                )
-            ),
+                    "Most active posts from all of Reddit",null
+                ),
 
-            SubredditChildrenObject(
-                kind = "header",
-                data = null
+
+            SubredditChildrenData(
+                "header",
+                "All Posts",
+                "r/All",
+                R.drawable.ic_all,
+                null,
+                null,
+                "#0cd23c",
+                "r",
+                true,
+                "Most active posts from all of Reddit",null
             ),
         )
     }
 
-    fun addHeader(): List<RedditChildrenObject> {
+    fun addHeader(): List<RedditChildrenData> {
         return listOf(
-            RedditChildrenObject(kind = "header", data = RedditChildrenData(), defaults = null)
+            RedditChildrenData(dataKind = "header")
         )
     }
 
@@ -76,6 +83,7 @@ class DefaultsDatasource {
             ),
         )
     }
+
     fun addSearchBarTest(subreddit: String, isCompact: Boolean): List<RedditChildrenData> {
         return listOf(
             RedditChildrenData(
@@ -86,84 +94,74 @@ class DefaultsDatasource {
         )
     }
 
-    fun loadDefaultUserItems(userInfo: UserInfo?, isCompact: Boolean): List<RedditChildrenObject> {
+    fun loadDefaultUserItems(userInfo: UserInfo?, isCompact: Boolean): List<RedditChildrenData> {
         return listOf(
-            RedditChildrenObject(
-                kind = "userInfo",
-                data = RedditChildrenData(),
-                defaults = Defaults(null, null, userInfo, null, isCompact)
-            ),
-            RedditChildrenObject(
-                kind = "defaultTop",
-                data = RedditChildrenData(),
-                defaults = Defaults("submitted", "Posts", userInfo, R.drawable.ic_post_temp)
-            ),
-            RedditChildrenObject(
-                kind = "default",
-                data = RedditChildrenData(),
-                defaults = Defaults("comments", "Comments", userInfo, R.drawable.ic_comment)
-            ),
-//            RedditChildrenObject(
-//                kind = "default",
-//                data = com.example.snapshotsforreddit.network.responses.RedditChildrenData(),
-//                defaults = Defaults(null, "Multireddits", userInfo)
-//            ),
-            RedditChildrenObject(
-                kind = "defaultBottom",
-                data = RedditChildrenData(),
-                defaults = Defaults(null, "Trophies", userInfo, R.drawable.ic_trophies)
-            ),
+            RedditChildrenData(dataKind = "userInfo", isCompact = isCompact,
+                user_name = userInfo?.name, link_karma = userInfo?.link_karma,
+                comment_karma = userInfo?.comment_karma,
+                total_karma = userInfo?.total_karma, user_created_utc = userInfo?.created_utc),
+
+
+            RedditChildrenData(dataKind = "defaultTop", history_type = "posts", history_name = "Posts", icon = R.drawable.ic_post_temp,
+                user_name = userInfo?.name, link_karma = userInfo?.link_karma,
+                comment_karma = userInfo?.comment_karma,
+                total_karma = userInfo?.total_karma, user_created_utc = userInfo?.created_utc),
+
+            RedditChildrenData(dataKind = "default", history_type = "comments", history_name = "Comments", icon = R.drawable.ic_comment,
+                user_name = userInfo?.name, link_karma = userInfo?.link_karma,
+                comment_karma = userInfo?.comment_karma,
+                total_karma = userInfo?.total_karma, user_created_utc = userInfo?.created_utc),
+
+            RedditChildrenData(dataKind = "defaultBottom", history_type = "null", history_name = "Trophies", icon = R.drawable.ic_trophies,
+                user_name = userInfo?.name, link_karma = userInfo?.link_karma,
+                comment_karma = userInfo?.comment_karma,
+                total_karma = userInfo?.total_karma, user_created_utc = userInfo?.created_utc),
+
+
         )
     }
 
 
-    fun loadDefaultAccountItems(userInfo: UserInfo?, isCompact: Boolean): List<RedditChildrenObject> {
+    fun loadDefaultAccountItems(userInfo: UserInfo?, isCompact: Boolean): List<RedditChildrenData> {
         return listOf(
-            RedditChildrenObject(
-                kind = "userInfo",
-                data = RedditChildrenData(),
-                defaults = Defaults(null, null, userInfo,null, isCompact)
-            ),
-            RedditChildrenObject(
-                kind = "defaultTop",
-                data = RedditChildrenData(),
-                defaults = Defaults("submitted", "Posts", userInfo, R.drawable.ic_post_temp)
-            ),
-            RedditChildrenObject(
-                kind = "default",
-                data = RedditChildrenData(),
-                defaults = Defaults("comments", "Comments", userInfo,R.drawable.ic_comment)
-            ),
-            RedditChildrenObject(
-                kind = "default",
-                data = RedditChildrenData(),
-                defaults = Defaults("saved", "Saved", userInfo,R.drawable.ic_save)
-            ),
-//            RedditChildrenObject(
-//                kind = "default",
-//                data = com.example.snapshotsforreddit.network.responses.RedditChildrenData(),
-//                defaults = Defaults(null, "Friends", userInfo)
-//            ),
-            RedditChildrenObject(
-                kind = "default",
-                data = RedditChildrenData(),
-                defaults = Defaults("upvoted", "Upvoted", userInfo,R.drawable.ic_up_arrow_null)
-            ),
-            RedditChildrenObject(
-                kind = "default",
-                data = RedditChildrenData(),
-                defaults = Defaults("downvoted", "Downvoted", userInfo,R.drawable.ic_down_arrow_null)
-            ),
-            RedditChildrenObject(
-                kind = "default",
-                data = RedditChildrenData(),
-                defaults = Defaults("hidden", "Hidden", userInfo,R.drawable.ic_hidden)
-            ),
-            RedditChildrenObject(
-                kind = "defaultBottom",
-                data = RedditChildrenData(),
-                defaults = Defaults(null, "Trophies", userInfo,R.drawable.ic_trophies)
-            )
+            RedditChildrenData(dataKind = "userInfo", isCompact = isCompact,
+                user_name = userInfo?.name, link_karma = userInfo?.link_karma,
+                comment_karma = userInfo?.comment_karma,
+                total_karma = userInfo?.total_karma, user_created_utc = userInfo?.created_utc),
+
+
+            RedditChildrenData(dataKind = "defaultTop", history_type = "posts", history_name = "Posts", icon = R.drawable.ic_post_temp,
+                user_name = userInfo?.name, link_karma = userInfo?.link_karma,
+                comment_karma = userInfo?.comment_karma,
+                total_karma = userInfo?.total_karma, user_created_utc = userInfo?.created_utc),
+
+            RedditChildrenData(dataKind = "default", history_type = "comments", history_name = "Comments", icon = R.drawable.ic_comment,
+                user_name = userInfo?.name, link_karma = userInfo?.link_karma,
+                comment_karma = userInfo?.comment_karma,
+                total_karma = userInfo?.total_karma, user_created_utc = userInfo?.created_utc),
+
+            RedditChildrenData(dataKind = "default", history_type = "saved", history_name = "Saved", icon = R.drawable.ic_save,
+                user_name = userInfo?.name, link_karma = userInfo?.link_karma,
+                comment_karma = userInfo?.comment_karma,
+                total_karma = userInfo?.total_karma, user_created_utc = userInfo?.created_utc),
+
+            RedditChildrenData(dataKind = "default", history_type = "upvoted", history_name = "Upvoted", icon = R.drawable.ic_up_arrow_null,
+                user_name = userInfo?.name, link_karma = userInfo?.link_karma,
+                comment_karma = userInfo?.comment_karma,
+                total_karma = userInfo?.total_karma, user_created_utc = userInfo?.created_utc),
+
+            RedditChildrenData(dataKind = "default", history_type = "downvoted", history_name = "Downvoted", icon = R.drawable.ic_down_arrow_null,
+                user_name = userInfo?.name, link_karma = userInfo?.link_karma,
+                comment_karma = userInfo?.comment_karma,
+                total_karma = userInfo?.total_karma, user_created_utc = userInfo?.created_utc),
+            RedditChildrenData(dataKind = "default", history_type = "hidden", history_name = "Hidden", icon = R.drawable.ic_hidden,
+                user_name = userInfo?.name, link_karma = userInfo?.link_karma,
+                comment_karma = userInfo?.comment_karma,
+                total_karma = userInfo?.total_karma, user_created_utc = userInfo?.created_utc),
+            RedditChildrenData(dataKind = "defaultBottom", history_type = "null", history_name = "Trophies", icon = R.drawable.ic_trophies,
+                user_name = userInfo?.name, link_karma = userInfo?.link_karma,
+                comment_karma = userInfo?.comment_karma,
+                total_karma = userInfo?.total_karma, user_created_utc = userInfo?.created_utc),
         )
     }
 }

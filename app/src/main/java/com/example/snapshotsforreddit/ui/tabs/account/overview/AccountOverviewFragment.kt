@@ -16,8 +16,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentAccountOverviewBinding
-import com.example.snapshotsforreddit.network.responses.Defaults
-import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
+import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 import com.example.snapshotsforreddit.ui.common.loadstate.RedditLoadStateAdapter
 import com.example.snapshotsforreddit.ui.common.login.AccountLoginDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -158,26 +157,27 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Ove
     }
 
 
-    override fun onInfoClick(infoItem: RedditChildrenObject, type: Int) {
+    override fun onInfoClick(infoItem: RedditChildrenData, type: Int) {
         TODO("Not yet implemented")
     }
 
-    override fun onHistoryClick(userDefaults: Defaults?) {
+    override fun onHistoryClick(historyType: String?, historyName: String?, userName: String?) {
 
-        if(userDefaults?.type != null && userDefaults.text != null && userDefaults.userInfo?.name != null) {
-            findNavController().navigate(AccountOverviewFragmentDirections.actionAccountOverviewFragmentToAccountHistoryFragment(userDefaults.type, userDefaults.text, userDefaults.userInfo.name))
+        if(historyType != null && historyName != null && userName != null) {
+            findNavController().navigate(AccountOverviewFragmentDirections.actionAccountOverviewFragmentToAccountHistoryFragment(historyType, historyName, userName))
         }
     }
 
-    override fun onPostCommentClick(overviewItem: RedditChildrenObject, type: Int) {
+    override fun onPostCommentClick(overviewItem: RedditChildrenData, type: Int) {
         TODO("Not yet implemented")
     }
 
-    override fun onItemClick(post: RedditChildrenObject) {
+    override fun onItemClick(post: RedditChildrenData) {
         TODO("Not yet implemented")
     }
 
-    override fun onVoteClick(post: RedditChildrenObject, type: Int) {
+
+    override fun onVoteClick(post: RedditChildrenData, type: Int) {
         TODO("Not yet implemented")
     }
 }

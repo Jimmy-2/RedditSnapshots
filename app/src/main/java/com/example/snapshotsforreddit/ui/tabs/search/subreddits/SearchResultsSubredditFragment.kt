@@ -8,7 +8,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentSearchResultsSubredditBinding
-import com.example.snapshotsforreddit.network.responses.subreddit.SubredditChildrenObject
+import com.example.snapshotsforreddit.network.responses.subreddit.SubredditChildrenData
 import com.example.snapshotsforreddit.util.changeViewOnLoadState
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -69,23 +69,23 @@ class SearchResultsSubredditFragment : Fragment(R.layout.fragment_search_results
         _binding = null
     }
 
-    override fun onItemClick(subreddit: SubredditChildrenObject) {
+    override fun onItemClick(subreddit: SubredditChildrenData) {
         //TODO PUT LOGIC INTO VIEWMODEL NOT FRAGMENT
-        if(subreddit.data?.display_name_prefixed != null) {
+        if(subreddit.display_name_prefixed != null) {
             val action = when {
-                subreddit.data.display_name_prefixed == "Home" -> {
+                subreddit.display_name_prefixed == "Home" -> {
                     SearchResultsSubredditFragmentDirections.actionSearchResultsSubredditFragmentToRedditPageFragment2(
                         "", ""
                     )
                 }
-                subreddit.data.subreddit_type == "user" -> {
+                subreddit.subreddit_type == "user" -> {
                     SearchResultsSubredditFragmentDirections.actionSearchResultsSubredditFragmentToRedditPageFragment2(
-                        subreddit.data.display_name_prefixed.substring(2), "user"
+                        subreddit.display_name_prefixed.substring(2), "user"
                     )
                 }
                 else -> {
                     SearchResultsSubredditFragmentDirections.actionSearchResultsSubredditFragmentToRedditPageFragment2(
-                        subreddit.data.display_name_prefixed.substring(2), "r")
+                        subreddit.display_name_prefixed.substring(2), "r")
                 }
             }
             findNavController().navigate(action)

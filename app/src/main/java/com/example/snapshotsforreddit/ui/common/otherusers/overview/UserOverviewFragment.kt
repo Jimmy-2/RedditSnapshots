@@ -7,8 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentUserOverviewBinding
-import com.example.snapshotsforreddit.network.responses.Defaults
-import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
+import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 import com.example.snapshotsforreddit.ui.common.loadstate.RedditLoadStateAdapter
 import com.example.snapshotsforreddit.ui.tabs.account.overview.OverviewAdapter
 import com.example.snapshotsforreddit.util.changeViewOnLoadState
@@ -78,24 +77,23 @@ class UserOverviewFragment : Fragment(R.layout.fragment_user_overview),
         _binding = null
     }
 
-    override fun onInfoClick(infoItem: RedditChildrenObject, type: Int) {
+    override fun onInfoClick(infoItem: RedditChildrenData, type: Int) {
         TODO("Not yet implemented")
     }
 
-    override fun onHistoryClick(userDefaults: Defaults?) {
+    override fun onHistoryClick(historyType: String?, historyName: String?, userName: String?) {
         TODO("Not yet implemented")
     }
 
-
-    override fun onPostCommentClick(overviewItem: RedditChildrenObject, type: Int) {
+    override fun onPostCommentClick(overviewItem: RedditChildrenData, type: Int) {
         TODO("Not yet implemented")
     }
 
-    override fun onItemClick(post: RedditChildrenObject) {
+    override fun onItemClick(post: RedditChildrenData) {
         TODO("Not yet implemented")
     }
 
-    override fun onVoteClick(post: RedditChildrenObject, type: Int) {
+    override fun onVoteClick(post: RedditChildrenData, type: Int) {
         TODO("Not yet implemented")
     }
 

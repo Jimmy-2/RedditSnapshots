@@ -46,9 +46,6 @@ class RedditPagePagingSourceTest (
             }
 
             //TODO MAP KIND INTO NEXT VARS
-
-
-            //TODO MAP KIND INTO NEXT VARS
             val posts = if (params.key == null) {
                 DefaultsDatasource().addSearchBarTest(subredditName!!, isCompact?: false) + responseData!!.children.map { it.data }
             } else {

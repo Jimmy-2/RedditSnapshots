@@ -57,7 +57,6 @@ class AccountLoginDialogFragment: AppCompatDialogFragment()  {
             .setNeutralButton("Edit", editAccountClickListener)
             .setSingleChoiceItems(listAdapter, 0) { dialog, which ->
                 listAdapter.getItem(which)?.account?.let {
-                    println("HELLO IS THIS ANONYMOUS ${it.username},${it.refreshToken},${it.accessToken}")
                     //viewModel.onAccountSwitch(it.username,it.refreshToken,it.accessToken)
                     viewModel.onAccountSwitch(it.username,it.refreshToken,it.accessToken)
                 }

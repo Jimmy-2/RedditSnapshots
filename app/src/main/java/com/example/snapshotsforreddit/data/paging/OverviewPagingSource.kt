@@ -4,8 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.snapshotsforreddit.data.DefaultsDatasource
 import com.example.snapshotsforreddit.network.RedditApiRepository
-import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
-import com.example.snapshotsforreddit.network.responses.account.UserInfo
+import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 import com.example.snapshotsforreddit.network.services.RedditApiService
 import retrofit2.HttpException
 import java.io.IOException
@@ -16,16 +15,16 @@ class OverviewPagingSource(
     private val historyType: String,
     private val accountType: Int?,
     private val isCompact: Boolean?
-) : PagingSource<String, RedditChildrenObject>() {
+) : PagingSource<String, RedditChildrenData>() {
 
 
-    override fun getRefreshKey(state: PagingState<String, RedditChildrenObject>): String? {
+    override fun getRefreshKey(state: PagingState<String, RedditChildrenData>): String? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey
         }
     }
 
-    override suspend fun load(params: LoadParams<String>): LoadResult<String, RedditChildrenObject> {
+    override suspend fun load(params: LoadParams<String>): LoadResult<String, RedditChildrenData> {
         return try {
             val userInfo =
                 redditApiService.getUserInfo(RedditApiRepository.USER_AGENT, username).data
@@ -43,32 +42,22 @@ class OverviewPagingSource(
                 //DefaultsDatasource().emptyRedditChildrenData(kind = "userData", userData = userData) +
                 if (responseData?.children!!.isEmpty()) {
                     when (accountType) {
-                        0 -> DefaultsDatasource().loadDefaultAccountItems(
-                            userInfo,
-                            isCompact ?: false
-                        ) + responseData.children
-                        else -> DefaultsDatasource().loadDefaultUserItems(
-                            userInfo,
-                            isCompact ?: false
-                        ) + responseData.children
+                        0 -> DefaultsDatasource().loadDefaultAccountItems(userInfo, isCompact ?: false) + responseData.children.map { it.data }
+
+                        else -> DefaultsDatasource().loadDefaultUserItems(userInfo, isCompact ?: false) + responseData.children.map { it.data }
                     }
 
                 } else {
                     when (accountType) {
-                        0 -> DefaultsDatasource().loadDefaultAccountItems(
-                            userInfo,
-                            isCompact ?: false
-                        ) + DefaultsDatasource().addHeader() + responseData.children
-                        else -> DefaultsDatasource().loadDefaultUserItems(
-                            userInfo,
-                            isCompact ?: false
-                        ) + DefaultsDatasource().addHeader() + responseData.children
+                        0 -> DefaultsDatasource().loadDefaultAccountItems(userInfo, isCompact ?: false) + DefaultsDatasource().addHeader() + responseData.children.map { it.data }
+
+                        else -> DefaultsDatasource().loadDefaultUserItems(userInfo, isCompact ?: false) + DefaultsDatasource().addHeader() + responseData.children.map { it.data }
                     }
                 }
 
 
             } else {
-                responseData!!.children
+                responseData!!.children.map { it.data }
             }
 
             LoadResult.Page(
