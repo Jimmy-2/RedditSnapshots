@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.*
 import com.example.snapshotsforreddit.network.responses.RedditChildrenData
-import com.example.snapshotsforreddit.ui.common.viewholders.PostCompactViewHolderTest
-import com.example.snapshotsforreddit.ui.common.viewholders.PostViewHolderTest
+import com.example.snapshotsforreddit.ui.common.viewholders.PostCompactViewHolder
+import com.example.snapshotsforreddit.ui.common.viewholders.PostViewHolder
 import com.example.snapshotsforreddit.util.calculateAgeDifferenceLocalDateTime
 import com.example.snapshotsforreddit.util.getShortenedValue
 
@@ -31,13 +31,13 @@ class OverviewAdapter(private val onClickListener: OnItemClickListener) :
                     ), parent, false
                 )
             )
-            POST -> PostViewHolderTest(
+            POST -> PostViewHolder(
                 this@OverviewAdapter,
                 onClickListener,
                 ItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false),
                 true,
             )
-            POST_COMPACT -> PostCompactViewHolderTest(
+            POST_COMPACT -> PostCompactViewHolder(
                 this@OverviewAdapter,
                 onClickListener,
                 ItemPostCompactBinding.inflate(LayoutInflater.from(parent.context), parent, false),
@@ -87,8 +87,8 @@ class OverviewAdapter(private val onClickListener: OnItemClickListener) :
         if (currentItem != null) {
             when (holder) {
                 is CommentViewHolder -> holder.bind(currentItem)
-                is PostViewHolderTest -> holder.bind(currentItem)
-                is PostCompactViewHolderTest -> holder.bind(currentItem)
+                is PostViewHolder -> holder.bind(currentItem)
+                is PostCompactViewHolder -> holder.bind(currentItem)
                 is UserInfoViewHolder -> holder.bind(currentItem)
                 is DefaultViewHolder -> holder.bind(currentItem)
                 is HeaderViewHolder -> holder.bind(currentItem)
@@ -147,13 +147,44 @@ class OverviewAdapter(private val onClickListener: OnItemClickListener) :
 
     inner class UserInfoViewHolder(val binding: ItemAccountUserInfoBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.layoutCommentKarma.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val item = getItem(position)
+                    if (item != null) {
+                        onClickListener.onInfoClick(item,0)
+                    }
+                }
+            }
+            binding.layoutPostKarma.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val item = getItem(position)
+                    if (item != null) {
+                        onClickListener.onInfoClick(item,1)
+                    }
+                }
+            }
+            binding.layoutAccountAge.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val item = getItem(position)
+                    if (item != null) {
+                        onClickListener.onInfoClick(item,2)
+                    }
+                }
+            }
+        }
+
+
+
         fun bind(post: RedditChildrenData) {
             binding.apply {
                 textviewCommentKarma.text =
                     getShortenedValue(post.comment_karma)
                 textviewPostKarma.text = getShortenedValue(post.link_karma)
                 val epoch = post.user_created_utc
-
                 if (epoch != null) {
                     textviewAccountAge.text = calculateAgeDifferenceLocalDateTime(epoch, 1)
                 }
@@ -234,7 +265,7 @@ class OverviewAdapter(private val onClickListener: OnItemClickListener) :
         }
     }
 
-    interface OnItemClickListener : PostCompactViewHolderTest.OnItemClickListener, PostViewHolderTest.OnItemClickListener {
+    interface OnItemClickListener : PostCompactViewHolder.OnItemClickListener, PostViewHolder.OnItemClickListener {
         fun onInfoClick(infoItem: RedditChildrenData, type: Int)
         fun onHistoryClick(historyType: String?, historyName: String?, userName: String?)
         fun onPostCommentClick(overviewItem: RedditChildrenData, type: Int)

@@ -40,7 +40,7 @@ class RedditPageViewModel @Inject constructor(
 //    }
 
     val redditPagePosts = Transformations.switchMap(MonitorTriple(isCompact, sortOrder, _subredditName)) {
-        redditApiRepository.getSubredditPostsListTest(
+        redditApiRepository.getSubredditPostsList(
             it.third!!, subredditType.value!!,
             it.second, it.first).cachedIn(viewModelScope)
     }

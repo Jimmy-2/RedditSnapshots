@@ -1,9 +1,7 @@
 package com.example.snapshotsforreddit.data
 
 import com.example.snapshotsforreddit.R
-import com.example.snapshotsforreddit.network.responses.Defaults
 import com.example.snapshotsforreddit.network.responses.RedditChildrenData
-import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
 import com.example.snapshotsforreddit.network.responses.account.UserInfo
 import com.example.snapshotsforreddit.network.responses.subreddit.SubredditChildrenData
 
@@ -74,17 +72,7 @@ class DefaultsDatasource {
         )
     }
 
-    fun addSearchBar(subreddit: String, isCompact: Boolean): List<RedditChildrenObject> {
-        return listOf(
-            RedditChildrenObject(
-                kind = "search",
-                data = RedditChildrenData(),
-                defaults = Defaults(subreddit, null, null, null, isCompact)
-            ),
-        )
-    }
-
-    fun addSearchBarTest(subreddit: String, isCompact: Boolean): List<RedditChildrenData> {
+    fun addSearchBar(subreddit: String, isCompact: Boolean): List<RedditChildrenData> {
         return listOf(
             RedditChildrenData(
                 dataKind = "search",
@@ -98,8 +86,8 @@ class DefaultsDatasource {
         return listOf(
             RedditChildrenData(dataKind = "userInfo", isCompact = isCompact,
                 user_name = userInfo?.name, link_karma = userInfo?.link_karma,
-                comment_karma = userInfo?.comment_karma,
-                total_karma = userInfo?.total_karma, user_created_utc = userInfo?.created_utc),
+                comment_karma = userInfo?.comment_karma, total_karma = userInfo?.total_karma, awarder_karma = userInfo?.awarder_karma,
+                awardee_karma = userInfo?.awardee_karma, user_created_utc = userInfo?.created_utc),
 
 
             RedditChildrenData(dataKind = "defaultTop", history_type = "posts", history_name = "Posts", icon = R.drawable.ic_post_temp,
@@ -126,8 +114,8 @@ class DefaultsDatasource {
         return listOf(
             RedditChildrenData(dataKind = "userInfo", isCompact = isCompact,
                 user_name = userInfo?.name, link_karma = userInfo?.link_karma,
-                comment_karma = userInfo?.comment_karma,
-                total_karma = userInfo?.total_karma, user_created_utc = userInfo?.created_utc),
+                comment_karma = userInfo?.comment_karma, total_karma = userInfo?.total_karma, awarder_karma = userInfo?.awarder_karma,
+                awardee_karma = userInfo?.awardee_karma, user_created_utc = userInfo?.created_utc),
 
 
             RedditChildrenData(dataKind = "defaultTop", history_type = "posts", history_name = "Posts", icon = R.drawable.ic_post_temp,

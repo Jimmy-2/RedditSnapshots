@@ -4,7 +4,10 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.liveData
 import com.example.snapshotsforreddit.BuildConfig
-import com.example.snapshotsforreddit.data.paging.*
+import com.example.snapshotsforreddit.data.paging.OverviewPagingSource
+import com.example.snapshotsforreddit.data.paging.RedditPagePagingSource
+import com.example.snapshotsforreddit.data.paging.SearchResultsPagingSource
+import com.example.snapshotsforreddit.data.paging.SubredditPagingSource
 import com.example.snapshotsforreddit.network.services.RedditApiService
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -40,6 +43,7 @@ class RedditApiRepository @Inject constructor(
 //        }
 //    )
 
+
     fun getSubredditPostsList(
         subredditName: String,
         subredditType: String,
@@ -50,18 +54,6 @@ class RedditApiRepository @Inject constructor(
             PagingConfig(count)
         ) {
             RedditPagePagingSource(redditApiService, subredditName, subredditType, sort, isCompact)
-        }.liveData
-
-    fun getSubredditPostsListTest(
-        subredditName: String,
-        subredditType: String,
-        sort: String?,
-        isCompact: Boolean?
-    ) =
-        Pager(
-            PagingConfig(count)
-        ) {
-            RedditPagePagingSourceTest(redditApiService, subredditName, subredditType, sort, isCompact)
         }.liveData
 
 
@@ -89,7 +81,7 @@ class RedditApiRepository @Inject constructor(
             )
         }.liveData
 
-    fun getSearchResultsSubredditList(query: String?, searchType: String?, includeNSFW: Int?) =
+    fun getSearchResultsSubreddit(query: String?, searchType: String?, includeNSFW: Int?) =
         Pager(
             PagingConfig(50)
         ) {

@@ -2,7 +2,7 @@ package com.example.snapshotsforreddit.data.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
+import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 import com.example.snapshotsforreddit.network.services.RedditApiService
 import retrofit2.HttpException
 import java.io.IOException
@@ -16,15 +16,15 @@ class SearchResultsPagingSource(
     private val includeNSFW: String?,
     private val sort: String?,
     private val isCompact: Boolean?,
-    ) : PagingSource<String, RedditChildrenObject>() {
+    ) : PagingSource<String, RedditChildrenData>() {
 
-    override fun getRefreshKey(state: PagingState<String, RedditChildrenObject>): String? {
+    override fun getRefreshKey(state: PagingState<String, RedditChildrenData>): String? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey
         }
     }
 
-    override suspend fun load(params: LoadParams<String>): LoadResult<String, RedditChildrenObject> {
+    override suspend fun load(params: LoadParams<String>): LoadResult<String, RedditChildrenData> {
         return try {
             val responseData =
                 redditApiService.getSearchResults(
@@ -41,7 +41,7 @@ class SearchResultsPagingSource(
                     sort = sort ?: "relevance", sr_detail = 1
                 ).data
 
-            val searchResults = responseData!!.children
+            val searchResults = responseData!!.children.map{it.data}
             
             LoadResult.Page(
                 data = searchResults,

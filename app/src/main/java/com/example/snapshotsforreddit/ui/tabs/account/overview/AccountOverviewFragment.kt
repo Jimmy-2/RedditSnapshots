@@ -42,8 +42,14 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Ove
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationActions.collect {
                 if (it is AccountOverviewNavigationAction.NavigateToAccountSelector) {
-                    AccountLoginDialogFragment.newInstance()
-                        .show(parentFragmentManager, null)
+                    AccountLoginDialogFragment.newInstance().show(parentFragmentManager, null)
+
+                }else if(it is AccountOverviewNavigationAction.NavigateToUserInfo) {
+                    if(viewModel.userInfo.value != null && viewModel.infoType.value != null) {
+                        UserInfoDialogFragment.newInstance(viewModel.userInfo.value!!,
+                            viewModel.infoType.value!!
+                        ).show(parentFragmentManager, null)
+                    }
                 }
             }
         }
@@ -158,7 +164,7 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Ove
 
 
     override fun onInfoClick(infoItem: RedditChildrenData, type: Int) {
-        TODO("Not yet implemented")
+        viewModel.onInfoClicked(infoItem, type)
     }
 
     override fun onHistoryClick(historyType: String?, historyName: String?, userName: String?) {

@@ -10,17 +10,17 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.ItemPostBinding
-import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
+import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 import com.example.snapshotsforreddit.util.calculateAgeDifferenceLocalDateTime
 import com.example.snapshotsforreddit.util.getShortenedValue
 
 class PostViewHolder(
-    private val adapter: PagingDataAdapter<RedditChildrenObject, RecyclerView.ViewHolder>,
+    private val adapter: PagingDataAdapter<RedditChildrenData, RecyclerView.ViewHolder>,
     private val onClickListener: OnItemClickListener,
     private val binding: ItemPostBinding,
     private val isOverview: Boolean? = null,
 ) : RecyclerView.ViewHolder(binding.root) {
-    private var post: RedditChildrenObject? = null
+    private var post: RedditChildrenData? = null
     init {
         binding.root.setOnClickListener {
             if (post != null) {
@@ -32,11 +32,11 @@ class PostViewHolder(
             val position = bindingAdapterPosition
             if (position != RecyclerView.NO_POSITION) {
                 if (post != null) {
-                    if (post!!.data?.likes == true) {
-                        post!!.data?.likes = null
+                    if (post!!.likes == true) {
+                        post!!.likes = null
                         onClickListener.onVoteClick(post!!, 0)
                     } else {
-                        post!!.data?.likes = true
+                        post!!.likes = true
                         onClickListener.onVoteClick(post!!, 1)
                     }
                     adapter.notifyItemChanged(position)
@@ -48,11 +48,11 @@ class PostViewHolder(
             val position = bindingAdapterPosition
             if (position != RecyclerView.NO_POSITION) {
                 if (post != null) {
-                    if (post!!.data?.likes == false) {
-                        post!!.data?.likes = null
+                    if (post!!.likes == false) {
+                        post!!.likes = null
                         onClickListener.onVoteClick(post!!, 0)
                     } else {
-                        post!!.data?.likes = false
+                        post!!.likes = false
                         onClickListener.onVoteClick(post!!, -1)
                     }
                     adapter.notifyItemChanged(position)
@@ -63,14 +63,14 @@ class PostViewHolder(
     }
 
     @SuppressLint("ResourceAsColor")
-    fun bind(postObject: RedditChildrenObject) {
+    fun bind(postObject: RedditChildrenData) {
         this.post = postObject
-        val currentPost = postObject.data
+        val currentPost = postObject
         //TODO FIX CODE HERE : REFORMAT STATEMENTS
         binding.apply {
             if (currentPost != null) {
                 if(isOverview == true) {
-                    layoutPost.setBackgroundColor(ContextCompat.getColor(layoutPost.context ,R.color.post_background_overview))
+                    layoutPost.setBackgroundColor(ContextCompat.getColor(layoutPost.context , R.color.post_background_overview))
 
                 }
                 //Subreddit icon
@@ -91,7 +91,7 @@ class PostViewHolder(
                     .error(R.drawable.ic_error)
                     .into(imageviewSubredditIcon)
 
-                when (post?.data?.is_self) {
+                when (post?.is_self) {
                     true -> {
                         imageviewPostItem.visibility = View.GONE
                         if (currentPost.selftext == "") {
@@ -143,8 +143,8 @@ class PostViewHolder(
     }
 
     interface OnItemClickListener {
-        fun onItemClick(post: RedditChildrenObject)
-        fun onVoteClick(post: RedditChildrenObject, type: Int)
+        fun onItemClick(post: RedditChildrenData)
+        fun onVoteClick(post: RedditChildrenData, type: Int)
 
     }
 

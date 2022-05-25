@@ -33,6 +33,7 @@
                 android:paddingTop="4dp"
                 android:paddingRight="16dp"
                 android:paddingBottom="4dp">
+
                 <TextView
                     android:id="@+id/textview_default_top"
                     android:layout_width="match_parent"
@@ -40,11 +41,12 @@
                     android:drawableLeft="@drawable/ic_error"
                     android:drawableRight="@drawable/ic_right_arrow"
                     android:drawablePadding="16dp"
+                    android:gravity="center"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Posts" />
+                    tools:text="sadddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 

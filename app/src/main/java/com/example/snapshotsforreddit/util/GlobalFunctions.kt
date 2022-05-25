@@ -70,6 +70,13 @@ fun calculateAgeDifferenceLocalDateTime(epoch: Long, type: Int): String {
     }
 }
 
+fun calculateAge(createdOn: LocalDateTime) {
+    val daysAge = Duration.between(createdOn, LocalDateTime.now()).toDays()
+    val age = daysAge/365
+}
+
+
+
 fun <E> SendChannel<E>.tryOffer(element: E): Boolean = try {
     trySend(element).isSuccess
 } catch (t: Throwable) {

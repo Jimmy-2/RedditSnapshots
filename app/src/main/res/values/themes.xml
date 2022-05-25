@@ -30,8 +30,10 @@
         <item name="actionBarTheme">@style/ThemeOverlay.Actionbar</item>
 
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.MaterialAlertDialog</item>
+<!--        <item name="materialAlertDialogTheme">@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog.Centered</item>-->
 
-<!--        <item name="android:navigationBarColor">@android:color/transparent</item>-->
+
+        <!--        <item name="android:navigationBarColor">@android:color/transparent</item>-->
 
     </style>
 

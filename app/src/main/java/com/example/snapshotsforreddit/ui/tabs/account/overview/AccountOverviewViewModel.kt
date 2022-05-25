@@ -12,6 +12,7 @@ import com.example.snapshotsforreddit.data.room.loggedinaccounts.Account
 import com.example.snapshotsforreddit.data.room.loggedinaccounts.AccountDao
 import com.example.snapshotsforreddit.network.AuthApiRepository
 import com.example.snapshotsforreddit.network.RedditApiRepository
+import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 import com.example.snapshotsforreddit.network.responses.TokenResponse
 import com.example.snapshotsforreddit.network.responses.account.UserInfo
 import com.example.snapshotsforreddit.util.MonitorPair
@@ -49,7 +50,6 @@ class AccountOverviewViewModel @Inject constructor(
 
     //read and update isCompact value
     val preferencesFlow = preferencesDataStoreRepository.preferencesFlow.asLiveData()
-
 
     private val _username = MutableLiveData("")
     val username: LiveData<String> = _username
@@ -117,7 +117,6 @@ class AccountOverviewViewModel @Inject constructor(
         val accessToken = tokenResponse.access_token
         val refreshToken = tokenResponse.refresh_token
         if (accessToken != null && refreshToken != null) {
-
             authDataStoreRepository.updateAccessToken(accessToken)
             authDataStoreRepository.updateRefreshToken(refreshToken)
             authDataStoreRepository.updateLoginState(true)
@@ -138,7 +137,6 @@ class AccountOverviewViewModel @Inject constructor(
                     it
                 )
             }
-
         } else {
             Log.v(TAG, "Log in fail")
         }
@@ -148,7 +146,6 @@ class AccountOverviewViewModel @Inject constructor(
         accountDao.updateLoggedIn(newRefreshToken, username)
     }
 
-
     private fun addAccountToApp(account: Account) = viewModelScope.launch {
         accountDao.insert(account)
     }
@@ -156,8 +153,21 @@ class AccountOverviewViewModel @Inject constructor(
     fun onAccountsClicked() {
         _navigationActions.tryOffer(AccountOverviewNavigationAction.NavigateToAccountSelector)
     }
+
+    private val _infoType = MutableLiveData<Int>()
+    val infoType: LiveData<Int> = _infoType
+
+    private val _userInfo = MutableLiveData<RedditChildrenData>()
+    val userInfo: LiveData<RedditChildrenData> = _userInfo
+
+    fun onInfoClicked(infoItem: RedditChildrenData, type: Int) {
+        _userInfo.value = infoItem
+        _infoType.value = type
+        _navigationActions.tryOffer(AccountOverviewNavigationAction.NavigateToUserInfo)
+    }
 }
 
 sealed class AccountOverviewNavigationAction {
     object NavigateToAccountSelector : AccountOverviewNavigationAction()
+    object NavigateToUserInfo : AccountOverviewNavigationAction()
 }

@@ -1,7 +1,6 @@
 package com.example.snapshotsforreddit.ui.common.viewholders
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.graphics.Color
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -11,17 +10,17 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.ItemPostCompactBinding
-import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
+import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 import com.example.snapshotsforreddit.util.calculateAgeDifferenceLocalDateTime
 import com.example.snapshotsforreddit.util.getShortenedValue
 
-class PostCompactViewHolder(
-    private val adapter: PagingDataAdapter<RedditChildrenObject, RecyclerView.ViewHolder>,
+class PostCompactViewHolder (
+    private val adapter: PagingDataAdapter<RedditChildrenData, RecyclerView.ViewHolder>,
     private val onClickListener: OnItemClickListener,
     private val binding: ItemPostCompactBinding,
     private val isOverview: Boolean? = null,
 ) : RecyclerView.ViewHolder(binding.root) {
-    private var post: RedditChildrenObject? = null
+    private var post: RedditChildrenData? = null
 
     init {
         binding.root.setOnClickListener {
@@ -34,11 +33,11 @@ class PostCompactViewHolder(
             val position = bindingAdapterPosition
             if (position != RecyclerView.NO_POSITION) {
                 if (post != null) {
-                    if (post!!.data?.likes == true) {
-                        post!!.data?.likes = null
+                    if (post!!.likes == true) {
+                        post!!.likes = null
                         onClickListener.onVoteClick(post!!, 0)
                     } else {
-                        post!!.data?.likes = true
+                        post!!.likes = true
                         onClickListener.onVoteClick(post!!, 1)
                     }
                     adapter.notifyItemChanged(position)
@@ -49,11 +48,11 @@ class PostCompactViewHolder(
             val position = bindingAdapterPosition
             if (position != RecyclerView.NO_POSITION) {
                 if (post != null) {
-                    if (post!!.data?.likes == false) {
-                        post!!.data?.likes = null
+                    if (post!!.likes == false) {
+                        post!!.likes = null
                         onClickListener.onVoteClick(post!!, 0)
                     } else {
-                        post!!.data?.likes = false
+                        post!!.likes = false
                         onClickListener.onVoteClick(post!!, -1)
                     }
                     adapter.notifyItemChanged(position)
@@ -64,14 +63,16 @@ class PostCompactViewHolder(
     }
 
     @SuppressLint("ResourceAsColor")
-    fun bind(postObject: RedditChildrenObject) {
-        this.post = postObject
-        val currentPost = postObject.data
+    fun bind(post: RedditChildrenData) {
+        this.post = post
+        val currentPost = post
         //TODO FIX CODE HERE : REFORMAT STATEMENTS
         binding.apply {
             if (currentPost != null) {
                 if(isOverview == true) {
-                    layoutPostCompact.setBackgroundColor(ContextCompat.getColor(layoutPostCompact.context ,R.color.post_background_overview))
+                    layoutPostCompact.setBackgroundColor(
+                        ContextCompat.getColor(layoutPostCompact.context ,
+                            R.color.post_background_overview))
 
                 }
                 //Subreddit icon
@@ -94,7 +95,7 @@ class PostCompactViewHolder(
 
 
                 imageviewPostItem.visibility = View.VISIBLE
-                when (post?.data?.is_self) {
+                when (post?.is_self) {
                     true -> {
                         imageviewPostItem.setImageResource(R.drawable.ic_text)
                     }
@@ -148,8 +149,8 @@ class PostCompactViewHolder(
     }
 
     interface OnItemClickListener {
-        fun onItemClick(post: RedditChildrenObject)
-        fun onVoteClick(post: RedditChildrenObject, type: Int)
+        fun onItemClick(post: RedditChildrenData)
+        fun onVoteClick(post: RedditChildrenData, type: Int)
 
     }
 

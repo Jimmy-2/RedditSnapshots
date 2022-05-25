@@ -15,7 +15,7 @@ class SearchResultsSubredditViewModel @Inject constructor(private val redditApiR
     private val currentSearch = MutableLiveData<String>()
 
     val searchResults = currentSearch.switchMap { search ->
-        redditApiRepository.getSearchResultsSubredditList(
+        redditApiRepository.getSearchResultsSubreddit(
             search,
             "sr",
             null,

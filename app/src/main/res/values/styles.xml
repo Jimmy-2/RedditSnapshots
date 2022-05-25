@@ -50,13 +50,19 @@
 
     <!-- Material Dialog -->
     <style name="ThemeOverlay.MaterialAlertDialog" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
-
+        <!-- Title -->
+        <item name="materialAlertDialogTitlePanelStyle">@style/Title.Center</item>
+<!--        <item name="materialAlertDialogBodyTextStyle">@style/Message.Center</item>-->
+        <item name = "materialAlertDialogTitleTextStyle">@style/BodyTextAppearance.MaterialComponents.Title</item>
         <!-- Body -->
         <item name="materialAlertDialogBodyTextStyle">@style/BodyTextAppearance.MaterialComponents.Body2</item>
+
+
 
         <!-- Buttons -->
         <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
         <item name="buttonBarNeutralButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="buttonBarNegativeButtonStyle">@style/PositiveButtonStyle</item>
     </style>
 
 
@@ -66,19 +72,43 @@
     </style>
 
     <style name="BodyTextAppearance.MaterialComponents.Body2" parent="@style/MaterialAlertDialog.MaterialComponents.Body.Text">
-<!--        <item name="android:textColor">@color/menu_blue</item>-->
+        <item name="android:gravity">center_horizontal</item>
+
+        <!--        <item name="android:textColor">@color/menu_blue</item>-->
 <!--        <item name="android:textSize">20sp</item>-->
 <!--        <item name="android:textStyle">bold</item>-->
 <!--        <item name="android:textAllCaps">true</item>-->
 <!--        <item name="fontFamily">sans-serif-condensed-light</item>-->
     </style>
 
+    <style name="BodyTextAppearance.MaterialComponents.Title" parent="@style/MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textSize">18sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
 
 
 
-    <style name="Widget.SnapshotsForReddit" parent="@android:style/Widget.Material" />
+    </style>
+
+
+    <style name="Title.Center" parent="MaterialAlertDialog.MaterialComponents.Title.Panel">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+
+    </style>
+
+
+
+
+
+
+
+
 
     <!-- Settings -->
+    <style name="Widget.SnapshotsForReddit" parent="@android:style/Widget.Material" />
+
+
     <style name="Widget.SnapshotsForReddit.Button.Retry" parent="">
         <item name="android:backgroundTint">@color/orange</item>
         <item name="android:textColor">@color/white</item>

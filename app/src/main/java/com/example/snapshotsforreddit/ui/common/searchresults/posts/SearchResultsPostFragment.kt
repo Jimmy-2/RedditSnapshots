@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentSearchResultsPostBinding
+import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
 import com.example.snapshotsforreddit.util.changeViewOnLoadState
 import dagger.hilt.android.AndroidEntryPoint
@@ -74,14 +75,13 @@ class SearchResultsPostFragment : Fragment(R.layout.fragment_search_results_post
         _binding = null
     }
 
-    override fun onItemClick(post: RedditChildrenObject) {
-
+    override fun onItemClick(post: RedditChildrenData) {
+        TODO("Not yet implemented")
     }
 
-    override fun onVoteClick(post: RedditChildrenObject, type: Int) {
-
+    override fun onVoteClick(post: RedditChildrenData, type: Int) {
+        TODO("Not yet implemented")
     }
-
 
 
 }

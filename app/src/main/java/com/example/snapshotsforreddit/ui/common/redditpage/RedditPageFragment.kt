@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RedditPageFragment : Fragment(R.layout.fragment_reddit_page),
-    RedditPageAdapterTest.OnItemClickListener {
+    RedditPageAdapter.OnItemClickListener {
     private val navigationArgs: RedditPageFragmentArgs by navArgs()
     private val viewModel: RedditPageViewModel by viewModels()
 
@@ -36,7 +36,7 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page),
 
         _binding = FragmentRedditPageBinding.bind(view)
 
-        val redditPageAdapter = RedditPageAdapterTest(this)
+        val redditPageAdapter = RedditPageAdapter(this)
 
         binding.apply {
             recyclerviewPosts.setHasFixedSize(true)

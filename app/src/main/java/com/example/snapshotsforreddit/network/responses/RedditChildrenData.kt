@@ -136,10 +136,12 @@ data class RedditChildrenData(
     val icon:Int? = null,
 
     //userinfo
-    val user_name: String?= null,
-    val link_karma: Int?= null,
-    val comment_karma: Int?= null,
-    val total_karma: Int?= null,
+    val user_name: String? = null,
+    val link_karma: Int? = null,
+    val comment_karma: Int? = null,
+    val total_karma: Int? = null,
+    val awarder_karma: Int? = null,
+    val awardee_karma: Int? = null,
     val user_created_utc: Long? = null
 
 
