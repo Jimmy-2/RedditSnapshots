@@ -168,7 +168,6 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Ove
     }
 
     override fun onHistoryClick(historyType: String?, historyName: String?, userName: String?) {
-
         if(historyType != null && historyName != null && userName != null) {
             findNavController().navigate(AccountOverviewFragmentDirections.actionAccountOverviewFragmentToAccountHistoryFragment(historyType, historyName, userName))
         }

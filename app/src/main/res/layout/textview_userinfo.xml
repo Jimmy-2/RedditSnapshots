@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center_horizontal"
+    android:maxLines="3"
+    android:padding="@dimen/abc_dialog_padding_top_material"
+    android:singleLine="false"
+    android:textSize="18sp"
+    android:textColor="@color/text_color_1"
+    tools:text="Account is 50 years, 11 months, 21 days old" />

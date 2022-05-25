@@ -83,8 +83,11 @@
 
     <style name="BodyTextAppearance.MaterialComponents.Title" parent="@style/MaterialAlertDialog.MaterialComponents.Title.Text">
         <item name="android:textSize">18sp</item>
-        <item name="android:gravity">center</item>
-        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:maxLines">3</item>
+        <item name="android:singleLine">false</item>
+        <item name="android:paddingTop">@dimen/abc_dialog_padding_top_material</item>
 
 
 
@@ -92,8 +95,10 @@
 
 
     <style name="Title.Center" parent="MaterialAlertDialog.MaterialComponents.Title.Panel">
-        <item name="android:gravity">center</item>
-        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:paddingTop">@dimen/abc_dialog_padding_top_material</item>
+
 
     </style>
 

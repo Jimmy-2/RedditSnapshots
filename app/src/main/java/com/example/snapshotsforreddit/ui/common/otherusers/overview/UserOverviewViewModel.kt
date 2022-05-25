@@ -1,13 +1,14 @@
 package com.example.snapshotsforreddit.ui.common.otherusers.overview
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.switchMap
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.paging.cachedIn
 import com.example.snapshotsforreddit.network.RedditApiRepository
+import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 import com.example.snapshotsforreddit.network.responses.account.UserInfo
+import com.example.snapshotsforreddit.util.tryOffer
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,6 +16,17 @@ import javax.inject.Inject
 class UserOverviewViewModel @Inject constructor(
     private val redditApiRepository: RedditApiRepository
 ) : ViewModel() {
+    private val refreshSignal = MutableSharedFlow<Unit>()
+
+    private val loadDataSignal: Flow<Unit> = flow {
+        emit(Unit)
+        emitAll(refreshSignal)
+    }
+
+    private val _navigationActions =
+        Channel<UserOverviewNavigationAction>(capacity = Channel.CONFLATED)
+
+    val navigationActions = _navigationActions.receiveAsFlow()
 
     private val currentUser = MutableLiveData("")
     private val _userData = MutableLiveData<UserInfo?>()
@@ -40,5 +52,21 @@ class UserOverviewViewModel @Inject constructor(
         }
     }
 
+    private val _infoType = MutableLiveData<Int>()
+    val infoType: LiveData<Int> = _infoType
 
+    private val _userInfo = MutableLiveData<RedditChildrenData>()
+    val userInfo: LiveData<RedditChildrenData> = _userInfo
+
+    fun onInfoClicked(infoItem: RedditChildrenData, type: Int) {
+        _userInfo.value = infoItem
+        _infoType.value = type
+        _navigationActions.tryOffer(UserOverviewNavigationAction.NavigateToUserInfo)
+    }
+
+
+}
+
+sealed class UserOverviewNavigationAction {
+    object NavigateToUserInfo : UserOverviewNavigationAction()
 }

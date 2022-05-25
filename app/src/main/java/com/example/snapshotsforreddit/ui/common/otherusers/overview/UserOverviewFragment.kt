@@ -4,14 +4,18 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentUserOverviewBinding
 import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 import com.example.snapshotsforreddit.ui.common.loadstate.RedditLoadStateAdapter
+import com.example.snapshotsforreddit.ui.tabs.account.overview.AccountOverviewNavigationAction
 import com.example.snapshotsforreddit.ui.tabs.account.overview.OverviewAdapter
+import com.example.snapshotsforreddit.ui.tabs.account.overview.UserInfoDialogFragment
 import com.example.snapshotsforreddit.util.changeViewOnLoadState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class UserOverviewFragment : Fragment(R.layout.fragment_user_overview),
@@ -28,6 +32,18 @@ class UserOverviewFragment : Fragment(R.layout.fragment_user_overview),
         _binding = FragmentUserOverviewBinding.bind(view)
 
         val userOverviewAdapter = OverviewAdapter(this)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.navigationActions.collect {
+                if(it is UserOverviewNavigationAction.NavigateToUserInfo) {
+                    if(viewModel.userInfo.value != null && viewModel.infoType.value != null) {
+                        UserInfoDialogFragment.newInstance(viewModel.userInfo.value!!,
+                            viewModel.infoType.value!!
+                        ).show(parentFragmentManager, null)
+                    }
+                }
+            }
+        }
 
         binding.apply {
             recyclerviewUserOverview.setHasFixedSize(true)
@@ -78,7 +94,8 @@ class UserOverviewFragment : Fragment(R.layout.fragment_user_overview),
     }
 
     override fun onInfoClick(infoItem: RedditChildrenData, type: Int) {
-        TODO("Not yet implemented")
+        viewModel.onInfoClicked(infoItem, type)
+
     }
 
     override fun onHistoryClick(historyType: String?, historyName: String?, userName: String?) {
