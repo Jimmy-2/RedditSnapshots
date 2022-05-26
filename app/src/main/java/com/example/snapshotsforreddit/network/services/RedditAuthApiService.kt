@@ -1,7 +1,7 @@
 package com.example.snapshotsforreddit.network.services
 
-import com.example.snapshotsforreddit.network.responses.TokenResponse
 import com.example.snapshotsforreddit.network.responses.PostRequestResponse
+import com.example.snapshotsforreddit.network.responses.TokenResponse
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -34,8 +34,6 @@ interface RedditAuthApiService {
         @Field("refresh_token") refresh_token: String?,
     ): Call<TokenResponse>
 
-
-    //TODO use this in logout dialog fragment
     @FormUrlEncoded
     @POST("/api/v1/revoke_token")
     suspend fun revokeTokens(

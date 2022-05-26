@@ -16,10 +16,23 @@
         <item name="shapeAppearanceOverlay">@style/CardView_Bottom_Corners</item>
     </style>
 
+    <style name="CardViewRoundedCorners" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/CardView_All_Corners</item>
+    </style>
+
+
     <style name="CardView_Bottom_Corners" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeBottomLeft">10dp</item>
         <item name="cornerSizeBottomRight">10dp</item>
+    </style>
+
+    <style name="CardView_All_Corners" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeBottomLeft">10dp</item>
+        <item name="cornerSizeBottomRight">10dp</item>
+        <item name="cornerSizeTopLeft">10dp</item>
+        <item name="cornerSizeTopRight">10dp</item>
     </style>
 
 

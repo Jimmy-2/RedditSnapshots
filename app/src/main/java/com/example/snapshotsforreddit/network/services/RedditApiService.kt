@@ -10,8 +10,8 @@ import retrofit2.http.*
 interface RedditApiService {
     companion object {
         const val OAUTH_URL = "https://oauth.reddit.com"
-
     }
+
     @GET("/subreddits/mine/subscriber")
     suspend fun getSubscribedSubreddits(
         //@Header("Authorization") Authorization: String?,
@@ -76,6 +76,16 @@ interface RedditApiService {
         @Query("before") before: String? = null,
     ): SubredditJsonResponse
 
+    @GET("/message/{inboxType}/")
+    suspend fun getInbox(
+        @Header("User-Agent") User_Agent: String?,
+        @Path("inboxType") inboxType: String,
+        @Query("after") after: String? = null,
+        @Query("before") before: String? = null,
+    ): RedditJsonResponse
+
+
+
 
 
     @GET("/api/v1/me")
@@ -109,40 +119,11 @@ interface RedditApiService {
         @Header("User-Agent") User_Agent: String?,
         @Path("q") q: String
     ): User
-    /*
-    after
-fullname of a thing
 
-before
-fullname of a thing
 
-count
-a positive integer (default: 0)
 
-limit
-the maximum number of items desired (default: 25, maximum: 100)
 
-q
-a search query
 
-search_query_id
-a uuid
-
-show
-(optional) the string all
-
-show_users
-boolean value
-
-sort
-one of (relevance, activity)
-
-sr_detail
-(optional) expand subreddits
-
-typeahead_active
-boolean value or None
-     */
 
 
 //    POST requests

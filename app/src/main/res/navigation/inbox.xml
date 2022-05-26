@@ -6,5 +6,17 @@
     <fragment
         android:id="@+id/inboxFragment"
         android:name="com.example.snapshotsforreddit.ui.tabs.inbox.InboxFragment"
-        android:label="@string/title_boxes" />
+        android:label="@string/title_boxes" >
+        <action
+            android:id="@+id/action_inboxFragment_to_inboxItemsFragment"
+            app:destination="@id/inboxItemsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/inboxItemsFragment"
+        android:name="com.example.snapshotsforreddit.ui.tabs.inbox.InboxItemsFragment"
+        android:label="InboxItemsFragment" >
+        <argument
+            android:name="inboxType"
+            app:argType="string" />
+    </fragment>
 </navigation>

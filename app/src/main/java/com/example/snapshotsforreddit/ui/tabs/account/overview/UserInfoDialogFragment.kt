@@ -61,7 +61,7 @@ class UserInfoDialogFragment(private val infoItem: RedditChildrenData, private v
 
 
         return if(type == 2) {
-            val titleView = layoutInflater.inflate(com.example.snapshotsforreddit.R.layout.textview_userinfo, null) as TextView?
+            val titleView = layoutInflater.inflate(com.example.snapshotsforreddit.R.layout.textview_user_info, null) as TextView?
             titleView?.text = title
             titleView?.gravity = Gravity.CENTER
             titleView?.setTextAppearance(com.example.snapshotsforreddit.R.style.BodyTextAppearance_MaterialComponents_Title)

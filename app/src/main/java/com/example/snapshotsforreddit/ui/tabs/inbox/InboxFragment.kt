@@ -1,26 +1,56 @@
 package com.example.snapshotsforreddit.ui.tabs.inbox
+
+
 import android.os.Bundle
-import android.view.*
+import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentInboxBinding
-
-
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class InboxFragment : Fragment(R.layout.fragment_inbox){
+class InboxFragment : Fragment(R.layout.fragment_inbox) {
+    private val viewModel: InboxViewModel by viewModels()
 
     private var _binding: FragmentInboxBinding? = null
     private val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         _binding  = FragmentInboxBinding.bind(view)
+
+        binding.apply {
+
+            buttonInbox.setOnClickListener{
+                findNavController().navigate(InboxFragmentDirections.actionInboxFragmentToInboxItemsFragment("inbox"))
+            }
+
+            buttonUnread.setOnClickListener{
+                findNavController().navigate(InboxFragmentDirections.actionInboxFragmentToInboxItemsFragment("unread"))
+            }
+
+            buttonMessages.setOnClickListener{
+                findNavController().navigate(InboxFragmentDirections.actionInboxFragmentToInboxItemsFragment("messages"))
+            }
+
+            buttonCommentReplies.setOnClickListener{
+                findNavController().navigate(InboxFragmentDirections.actionInboxFragmentToInboxItemsFragment("comments"))
+            }
+
+            buttonPostReplies.setOnClickListener{
+                findNavController().navigate(InboxFragmentDirections.actionInboxFragmentToInboxItemsFragment("selfreply"))
+            }
+
+            buttonMentions.setOnClickListener{
+                findNavController().navigate(InboxFragmentDirections.actionInboxFragmentToInboxItemsFragment("mentions"))
+            }
+        }
+
     }
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+//    override fun onDestroyView() {
+//        super.onDestroyView()
+//        _binding = null
+//    }
 }

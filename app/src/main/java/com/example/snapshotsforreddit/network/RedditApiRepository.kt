@@ -4,10 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.liveData
 import com.example.snapshotsforreddit.BuildConfig
-import com.example.snapshotsforreddit.data.paging.OverviewPagingSource
-import com.example.snapshotsforreddit.data.paging.RedditPagePagingSource
-import com.example.snapshotsforreddit.data.paging.SearchResultsPagingSource
-import com.example.snapshotsforreddit.data.paging.SubredditPagingSource
+import com.example.snapshotsforreddit.data.paging.*
 import com.example.snapshotsforreddit.network.services.RedditApiService
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -55,6 +52,12 @@ class RedditApiRepository @Inject constructor(
         ) {
             RedditPagePagingSource(redditApiService, subredditName, subredditType, sort, isCompact)
         }.liveData
+
+    fun getInboxList(inboxType: String) = Pager(
+    PagingConfig(count)
+    ) {
+        InboxPagingSource(redditApiService, inboxType)
+    }.liveData
 
 
     fun getSearchResultsList(
