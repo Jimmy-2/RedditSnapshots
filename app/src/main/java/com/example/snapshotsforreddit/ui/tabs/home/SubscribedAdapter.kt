@@ -150,8 +150,8 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
 
         fun bind(subredditObject: SubredditChildrenData) {
             binding.apply {
-                textviewHeaderSubscribed.visibility = View.VISIBLE
-                textviewHeaderSubscribed.text = "FOLLOWING"
+                textviewHeader.visibility = View.VISIBLE
+                textviewHeader.text = "FOLLOWING"
             }
         }
     }

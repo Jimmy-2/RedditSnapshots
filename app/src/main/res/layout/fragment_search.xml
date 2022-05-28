@@ -40,124 +40,170 @@
 
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/button_search_post"
-            style="@style/CardViewTopCorners"
+            tools:visibility="visible"
+            android:id="@+id/search_buttons"
+            android:visibility="gone"
+            app:cardElevation="0dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:visibility="gone"
-            app:cardBackgroundColor="@color/item_background"
-            app:cardElevation="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:cardCornerRadius="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible">
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/textview_search_post"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:drawableLeft="@drawable/ic_search"
-                android:drawableRight="@drawable/ic_right_arrow"
-                android:drawablePadding="16dp"
-                android:paddingLeft="16dp"
-                android:paddingTop="4dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="4dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Posts" />
+                android:orientation="vertical">
 
-
-        </com.google.android.material.card.MaterialCardView>
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/button_search_subreddit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="@color/item_background"
-            android:visibility="gone"
-            tools:visibility="visible">
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_default_mid"
-                style="@style/CardViewTopCorners"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/item_background"
-                app:cardElevation="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="visible">
-
-                <TextView
-                    android:id="@+id/textview_search_subreddit"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/button_search_post"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:drawableLeft="@drawable/ic_search"
-                    android:drawableRight="@drawable/ic_right_arrow"
-                    android:drawablePadding="16dp"
-                    android:paddingLeft="16dp"
-                    android:paddingTop="4dp"
-                    android:paddingRight="16dp"
-                    android:paddingBottom="4dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Posts" />
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:padding="8dp"
+                        android:id="@+id/search_post_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_search">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/textview_search_post"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+
+                        android:drawablePadding="16dp"
+                        android:gravity="center_vertical"
+
+                        android:paddingEnd="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/search_post_image"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Posts"
+                        app:drawableRightCompat="@drawable/ic_right_arrow" />
 
 
-            </com.google.android.material.card.MaterialCardView>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:background="@color/round_view_borders"
+                        app:layout_constraintStart_toEndOf="@+id/search_post_image"
+                        app:layout_constraintTop_toBottomOf="@+id/search_post_image"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/button_search_subreddit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:padding="8dp"
+                        android:id="@+id/search_subreddit_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_search">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/textview_search_subreddit"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+
+                        android:drawablePadding="16dp"
+                        android:gravity="center_vertical"
+
+                        android:paddingEnd="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/search_subreddit_image"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Subreddits"
+                        app:drawableRightCompat="@drawable/ic_right_arrow" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:background="@color/round_view_borders"
+                        app:layout_constraintStart_toEndOf="@+id/search_subreddit_image"
+                        app:layout_constraintTop_toBottomOf="@+id/search_subreddit_image"
+                        app:layout_constraintEnd_toEndOf="parent"/>
 
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/button_search_user"
-            style="@style/CardViewBottomCorners"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:visibility="gone"
-            app:cardBackgroundColor="@color/item_background"
-            app:cardElevation="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible">
 
-            <TextView
-                android:id="@+id/textview_search_user"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:drawableLeft="@drawable/ic_user"
-                android:drawableRight="@drawable/ic_right_arrow"
-                android:drawablePadding="16dp"
-                android:paddingLeft="16dp"
-                android:paddingTop="4dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="4dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Posts" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/button_search_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:padding="8dp"
+                        android:id="@+id/search_user_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_user">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/textview_search_user"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+
+                        android:drawablePadding="16dp"
+                        android:gravity="center_vertical"
+
+                        android:paddingEnd="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/search_user_image"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Subreddits"
+                        app:drawableRightCompat="@drawable/ic_right_arrow" />
+
+
+
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:background="@android:color/transparent"
+                        app:layout_constraintStart_toEndOf="@+id/search_user_image"
+                        app:layout_constraintTop_toBottomOf="@+id/search_user_image"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+            </LinearLayout>
 
 
         </com.google.android.material.card.MaterialCardView>

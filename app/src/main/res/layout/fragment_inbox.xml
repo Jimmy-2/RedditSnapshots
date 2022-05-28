@@ -13,228 +13,357 @@
         android:orientation="vertical">
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/button_inbox"
-            style="@style/CardViewTopCorners"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
-            app:cardBackgroundColor="@color/item_background"
-            app:cardElevation="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/textview_inbox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:drawableLeft="@drawable/ic_search"
-                android:drawableRight="@drawable/ic_right_arrow"
-                android:drawablePadding="16dp"
-                android:paddingLeft="16dp"
-                android:paddingTop="4dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="4dp"
-                android:text="Inbox (All)"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/button_unread"
-            style="@style/CardViewBottomCorners"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginBottom="32dp"
-            app:cardBackgroundColor="@color/item_background"
             app:cardElevation="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/textview_unread"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:drawableLeft="@drawable/ic_user"
-                android:drawableRight="@drawable/ic_right_arrow"
-                android:drawablePadding="16dp"
-                android:paddingLeft="16dp"
-                android:paddingTop="4dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="4dp"
-                android:text="Unread"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-        </com.google.android.material.card.MaterialCardView>
-
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/button_post_replies"
-            style="@style/CardViewTopCorners"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            app:cardBackgroundColor="@color/item_background"
-            app:cardElevation="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:cardCornerRadius="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/textview_post_replies"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:drawableLeft="@drawable/ic_post_temp"
-                android:drawableRight="@drawable/ic_right_arrow"
-                android:drawablePadding="16dp"
-                android:paddingLeft="16dp"
-                android:paddingTop="4dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="4dp"
-                android:text="Post Replies"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:orientation="vertical">
 
-        </com.google.android.material.card.MaterialCardView>
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/button_comment_replies"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="@color/item_background">
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_comment_replies"
-                style="@style/CardViewTopCorners"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/item_background"
-                app:cardElevation="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    android:id="@+id/textview_comment_replies"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/button_inbox"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:drawableLeft="@drawable/ic_search"
-                    android:drawableRight="@drawable/ic_right_arrow"
-                    android:drawablePadding="16dp"
-                    android:paddingLeft="16dp"
-                    android:paddingTop="4dp"
-                    android:paddingRight="16dp"
-                    android:paddingBottom="4dp"
-                    android:text="Comment Replies"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:padding="8dp"
+                        android:id="@+id/image_inbox_all"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_inbox_all">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/textview_inbox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+
+                        android:drawablePadding="16dp"
+                        android:gravity="center_vertical"
+
+                        android:paddingEnd="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/image_inbox_all"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:text="Inbox (All)"
+                        app:drawableRightCompat="@drawable/ic_right_arrow" />
 
 
-            </com.google.android.material.card.MaterialCardView>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:background="@color/round_view_borders"
+                        app:layout_constraintStart_toEndOf="@+id/image_inbox_all"
+                        app:layout_constraintTop_toBottomOf="@+id/image_inbox_all"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/button_unread"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:padding="8dp"
+                        android:id="@+id/image_unread"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_unread">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/textview_unread"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+
+                        android:drawablePadding="16dp"
+                        android:gravity="center_vertical"
+
+                        android:paddingEnd="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/image_unread"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:text="Unread"
+                        app:drawableRightCompat="@drawable/ic_right_arrow" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:background="@android:color/transparent"
+                        app:layout_constraintStart_toEndOf="@+id/image_unread"
+                        app:layout_constraintTop_toBottomOf="@+id/image_unread"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/button_mentions"
-            style="@style/CardViewBottomCorners"
+            app:cardElevation="0dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
+            app:cardCornerRadius="12dp"
             android:layout_marginBottom="32dp"
-            app:cardBackgroundColor="@color/item_background"
-            app:cardElevation="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/textview_mentions"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:drawableLeft="@drawable/ic_user"
-                android:drawableRight="@drawable/ic_right_arrow"
-                android:drawablePadding="16dp"
-                android:paddingLeft="16dp"
-                android:paddingTop="4dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="4dp"
-                android:text="Mentions"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:orientation="vertical">
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/button_post_replies"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:padding="8dp"
+                        android:id="@+id/image_post_replies"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_post_temp">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/textview_post_replies"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+
+                        android:drawablePadding="16dp"
+                        android:gravity="center_vertical"
+
+                        android:paddingEnd="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/image_post_replies"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:text="Post Replies"
+                        app:drawableRightCompat="@drawable/ic_right_arrow" />
+
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:background="@color/round_view_borders"
+                        app:layout_constraintStart_toEndOf="@+id/image_post_replies"
+                        app:layout_constraintTop_toBottomOf="@+id/image_post_replies"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/button_comment_replies"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:padding="8dp"
+                        android:id="@+id/image_comment_replies"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_comment">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/textview_comment_replies"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+
+                        android:drawablePadding="16dp"
+                        android:gravity="center_vertical"
+
+                        android:paddingEnd="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/image_comment_replies"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:text="Comment replies"
+                        app:drawableRightCompat="@drawable/ic_right_arrow" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:background="@color/round_view_borders"
+                        app:layout_constraintStart_toEndOf="@+id/image_comment_replies"
+                        app:layout_constraintTop_toBottomOf="@+id/image_comment_replies"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/button_mentions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:padding="8dp"
+                        android:id="@+id/image_mentions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_user">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/textview_mentions"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+
+                        android:drawablePadding="16dp"
+                        android:gravity="center_vertical"
+
+                        android:paddingEnd="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/image_mentions"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:text="Mentions"
+                        app:drawableRightCompat="@drawable/ic_right_arrow" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:background="@android:color/transparent"
+                        app:layout_constraintStart_toEndOf="@+id/image_mentions"
+                        app:layout_constraintTop_toBottomOf="@+id/image_mentions"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
 
 
+
+
+
+
+
+
+
+
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/button_messages"
-            style="@style/CardViewRoundedCorners"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            app:cardElevation="0dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            app:cardBackgroundColor="@color/item_background"
-            app:cardElevation="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:cardCornerRadius="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/textview_messages"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:drawableLeft="@drawable/ic_user"
-                android:drawableRight="@drawable/ic_right_arrow"
-                android:drawablePadding="16dp"
-                android:paddingLeft="16dp"
-                android:paddingTop="4dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="4dp"
-                android:text="Messages"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:orientation="vertical">
 
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/button_messages"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:padding="8dp"
+                        android:id="@+id/image_messages"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_messages">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/textview_messages"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+
+                        android:drawablePadding="16dp"
+                        android:gravity="center_vertical"
+
+                        android:paddingEnd="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/image_messages"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:text="Messages"
+                        app:drawableRightCompat="@drawable/ic_right_arrow" />
+
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:background="@android:color/transparent"
+                        app:layout_constraintStart_toEndOf="@+id/image_messages"
+                        app:layout_constraintTop_toBottomOf="@+id/image_messages"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
+
+
+
 
     </LinearLayout>
 

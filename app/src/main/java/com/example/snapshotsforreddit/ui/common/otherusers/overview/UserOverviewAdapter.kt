@@ -1,7 +1,5 @@
-package com.example.snapshotsforreddit.ui.tabs.account.overview
+package com.example.snapshotsforreddit.ui.common.otherusers.overview
 
-import android.annotation.SuppressLint
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +14,7 @@ import com.example.snapshotsforreddit.ui.common.viewholders.PostViewHolder
 import com.example.snapshotsforreddit.util.calculateAgeDifferenceLocalDateTime
 import com.example.snapshotsforreddit.util.getShortenedValue
 
-class OverviewAdapter(private val onClickListener: OnItemClickListener) :
+class UserOverviewAdapter(private val onClickListener: OnItemClickListener) :
     PagingDataAdapter<RedditChildrenData, RecyclerView.ViewHolder>(
         POST_COMPARATOR
     ) {
@@ -32,13 +30,13 @@ class OverviewAdapter(private val onClickListener: OnItemClickListener) :
                 )
             )
             POST -> PostViewHolder(
-                this@OverviewAdapter,
+                this@UserOverviewAdapter,
                 onClickListener,
                 ItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false),
                 true,
             )
             POST_COMPACT -> PostCompactViewHolder(
-                this@OverviewAdapter,
+                this@UserOverviewAdapter,
                 onClickListener,
                 ItemPostCompactBinding.inflate(LayoutInflater.from(parent.context), parent, false),
                 true
@@ -50,22 +48,8 @@ class OverviewAdapter(private val onClickListener: OnItemClickListener) :
                     ), parent, false
                 )
             )
-            DEFAULT -> DefaultViewHolder(
-                ItemAccountDefaultBinding.inflate(
-                    LayoutInflater.from(
-                        parent.context
-                    ), parent, false
-                )
-            )
-            DEFAULT_TOP -> DefaultViewHolder(
-                ItemAccountDefaultBinding.inflate(
-                    LayoutInflater.from(
-                        parent.context
-                    ), parent, false
-                )
-            )
-            DEFAULT_BOTTOM -> DefaultViewHolder(
-                ItemAccountDefaultBinding.inflate(
+            HISTORY -> DefaultViewHolder(
+                ItemUserHistoryBinding.inflate(
                     LayoutInflater.from(
                         parent.context
                     ), parent, false
@@ -100,9 +84,7 @@ class OverviewAdapter(private val onClickListener: OnItemClickListener) :
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)?.dataKind) {
             "userInfo" -> USER_INFO
-            "default" -> DEFAULT
-            "defaultTop" -> DEFAULT_TOP
-            "defaultBottom" -> DEFAULT_BOTTOM
+            "history" -> HISTORY
             "header" -> HEADER
             else ->
                 when (getItem(position)?.name?.take(2)) {
@@ -194,62 +176,53 @@ class OverviewAdapter(private val onClickListener: OnItemClickListener) :
 
 
     //USER HISTORY
-    inner class DefaultViewHolder(val binding: ItemAccountDefaultBinding) :
+    inner class DefaultViewHolder(val binding: ItemUserHistoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
-            binding.root.setOnClickListener {
+            binding.buttonPostsHistory.setOnClickListener {
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val item = getItem(position)
                     if (item != null) {
-                        onClickListener.onHistoryClick(item.history_type,item.history_name,item.user_name)
+                        onClickListener.onHistoryClick("submitted","Posts", item.user_name)
                     }
                 }
             }
-        }
-
-        @SuppressLint("ResourceAsColor")
-        fun bind(post: RedditChildrenData) {
-            binding.apply {
-                val leftIcon = post.icon
-                when (post.dataKind) {
-                    "default" -> {
-                        layoutAccountDefault.setBackgroundColor(Color.WHITE)
-                        cardDefaultMid.visibility = View.VISIBLE
-                        textviewDefaultMid.text = post.history_name
-                        leftIcon?.let {
-                            textviewDefaultMid.setCompoundDrawablesWithIntrinsicBounds(
-                                it, 0, R.drawable.ic_right_arrow, 0
-                            )
-                            textviewDefaultMid.compoundDrawables[0].setTint(Color.parseColor("#3895e8"))
-                        }
-                    }
-                    "defaultTop" -> {
-                        cardDefaultTop.visibility = View.VISIBLE
-                        textviewDefaultTop.text = post.history_name
-                        leftIcon?.let {
-                            textviewDefaultTop.setCompoundDrawablesWithIntrinsicBounds(
-                                it, 0, R.drawable.ic_right_arrow, 0
-                            )
-                            textviewDefaultTop.compoundDrawables[0].setTint(Color.parseColor("#3895e8"))
-                        }
-                    }
-                    "defaultBottom" -> {
-                        cardDefaultBottom.visibility = View.VISIBLE
-                        textviewDefaultBottom.text = post.history_name
-                        leftIcon?.let {
-                            textviewDefaultBottom.setCompoundDrawablesWithIntrinsicBounds(
-                                it, 0, R.drawable.ic_right_arrow, 0
-                            )
-                            textviewDefaultBottom.compoundDrawables[0].setTint(
-                                Color.parseColor(
-                                    "#3895e8"
-                                )
-                            )
-                        }
+            binding.buttonCommentsHistory.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val item = getItem(position)
+                    if (item != null) {
+                        onClickListener.onHistoryClick("comments","Comments",item.user_name)
                     }
                 }
+            }
+            binding.buttonTrophiesHistory.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val item = getItem(position)
+                    if (item != null) {
+                        onClickListener.onHistoryClick(null,"Trophies",item.user_name)
+                    }
+                }
+            }
 
+
+
+//            binding.root.setOnClickListener {
+//                val position = bindingAdapterPosition
+//                if (position != RecyclerView.NO_POSITION) {
+//                    val item = getItem(position)
+//                    if (item != null) {
+//                        onClickListener.onHistoryClick(item.history_type,item.history_name,item.user_name)
+//                    }
+//                }
+//            }
+        }
+
+
+        fun bind(post: RedditChildrenData) {
+            binding.apply {
             }
         }
     }
@@ -259,8 +232,8 @@ class OverviewAdapter(private val onClickListener: OnItemClickListener) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(post: RedditChildrenData) {
             binding.apply {
-                textviewHeaderOverview.visibility = View.VISIBLE
-                textviewHeaderOverview.text = "OVERVIEW"
+                textviewHeader.visibility = View.VISIBLE
+                textviewHeader.text = "OVERVIEW"
             }
         }
     }
@@ -278,12 +251,10 @@ class OverviewAdapter(private val onClickListener: OnItemClickListener) :
         private const val POST = 1
         private const val POST_COMPACT = 2
         private const val USER_INFO = 3
-        private const val DEFAULT = 4
-        private const val DEFAULT_TOP = 5
-        private const val DEFAULT_BOTTOM = 6
-        private const val HEADER = 7
-        private const val LOADING = 8
-        private const val ERROR = 9
+        private const val HISTORY = 4
+        private const val HEADER = 5
+        private const val LOADING = 6
+        private const val ERROR = 7
 
 
         private val POST_COMPARATOR =

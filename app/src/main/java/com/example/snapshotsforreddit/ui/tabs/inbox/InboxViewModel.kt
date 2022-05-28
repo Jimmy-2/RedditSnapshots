@@ -3,6 +3,8 @@ package com.example.snapshotsforreddit.ui.tabs.inbox
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
+import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import com.example.snapshotsforreddit.network.RedditApiRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -21,7 +23,7 @@ class InboxViewModel @Inject constructor(
     }
 
     val inboxItems = currentInboxType.switchMap {
-        redditApiRepository.getInboxList(it)
+        redditApiRepository.getInboxList(it).cachedIn(viewModelScope)
     }
 
 

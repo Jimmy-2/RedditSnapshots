@@ -6,20 +6,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/post_background"
-    android:layout_marginBottom="8dp">
+    android:layout_marginBottom="2dp">
 
 
 
 
     <LinearLayout
-        android:id="@+id/layout_post_details"
+        android:id="@+id/layout_inbox_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textview_inbox_post_replies_title"
+            android:id="@+id/textview_inbox_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -33,7 +33,7 @@
             tools:text="Title" />
 
         <TextView
-            android:id="@+id/textview_inbox_post_replies_body"
+            android:id="@+id/textview_inbox_body"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
@@ -44,12 +44,12 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_inbox_post_replies_info"
+            android:id="@+id/layout_inbox_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/textview_inbox_post_replies_author"
+                android:id="@+id/textview_inbox_author"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -64,11 +64,11 @@
             </TextView>
 
             <TextView
-                android:id="@+id/textview_item_inbox_post_replies_in"
+                android:id="@+id/textview_item_inbox_in"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textview_inbox_post_replies_author"
+                app:layout_constraintStart_toEndOf="@+id/textview_inbox_author"
                 app:layout_constraintTop_toTopOf="parent"
                 android:text="in"
                 android:paddingTop="8dp"
@@ -78,11 +78,11 @@
             </TextView>
 
             <TextView
-                android:id="@+id/textview_inbox_post_replies_subreddit"
+                android:id="@+id/textview_inbox_subreddit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textview_item_inbox_post_replies_in"
+                app:layout_constraintStart_toEndOf="@+id/textview_item_inbox_in"
                 app:layout_constraintTop_toTopOf="parent"
                 android:padding="8dp"
                 tools:text="Subreddit">
@@ -90,7 +90,7 @@
 
 
             <TextView
-                android:id="@+id/textview_inbox_post_replies_age"
+                android:id="@+id/textview_inbox_age"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"

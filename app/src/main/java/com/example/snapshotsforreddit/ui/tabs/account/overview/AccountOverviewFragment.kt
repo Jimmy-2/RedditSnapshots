@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), OverviewAdapter.OnItemClickListener {
+class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), AccountOverviewAdapter.OnItemClickListener {
     private val viewModel: AccountOverviewViewModel by viewModels()
 
     private var _binding: FragmentAccountOverviewBinding? = null
@@ -35,7 +35,7 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Ove
 
         _binding  = FragmentAccountOverviewBinding.bind(view)
 
-        val accountOverviewAdapter = OverviewAdapter (this)
+        val accountOverviewAdapter = AccountOverviewAdapter (this)
 
         //(requireActivity() as AppCompatActivity).supportActionBar?.title = TODO: username
 

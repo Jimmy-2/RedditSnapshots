@@ -62,7 +62,7 @@
         tools:text="1" />
 
     <LinearLayout
-        android:id="@+id/layout_post_details"
+        android:id="@+id/layout_inbox_item"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -137,7 +137,7 @@
         android:layout_marginStart="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_post_details">
+        app:layout_constraintTop_toBottomOf="@+id/layout_inbox_item">
 
 
         <ImageView
@@ -178,7 +178,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/layout_upvote_count"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toEndOf="@+id/layout_upvote_count"
-        app:layout_constraintTop_toBottomOf="@+id/layout_post_details"
+        app:layout_constraintTop_toBottomOf="@+id/layout_inbox_item"
         app:srcCompat="@drawable/ic_comment"
         tools:srcCompat="@drawable/ic_comment" />
 
@@ -193,7 +193,7 @@
         android:paddingBottom="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/image_comment"
         app:layout_constraintStart_toEndOf="@+id/image_comment"
-        app:layout_constraintTop_toBottomOf="@+id/layout_post_details"
+        app:layout_constraintTop_toBottomOf="@+id/layout_inbox_item"
         tools:text="300" />
 
 
@@ -206,7 +206,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/layout_upvote_count"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toEndOf="@+id/textview_post_item_comment_count"
-        app:layout_constraintTop_toBottomOf="@+id/layout_post_details"
+        app:layout_constraintTop_toBottomOf="@+id/layout_inbox_item"
         app:srcCompat="@drawable/ic_clock"
         tools:srcCompat="@drawable/ic_clock" />
 
@@ -220,7 +220,7 @@
         android:paddingBottom="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/image_age"
         app:layout_constraintStart_toEndOf="@+id/image_age"
-        app:layout_constraintTop_toBottomOf="@+id/layout_post_details"
+        app:layout_constraintTop_toBottomOf="@+id/layout_inbox_item"
         tools:text="300" />
 
 
@@ -232,7 +232,7 @@
         app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/card_downvote_button"
-        app:layout_constraintTop_toBottomOf="@+id/layout_post_details">
+        app:layout_constraintTop_toBottomOf="@+id/layout_inbox_item">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -263,7 +263,7 @@
         app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_post_details">
+        app:layout_constraintTop_toBottomOf="@+id/layout_inbox_item">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

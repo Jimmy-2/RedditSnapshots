@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.snapshotsforreddit.databinding.ItemInboxPostRepliesBinding
+import com.example.snapshotsforreddit.databinding.ItemInboxBinding
 import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 
 
@@ -13,7 +13,7 @@ class InboxAdapter () :
     PagingDataAdapter<RedditChildrenData, InboxAdapter.InboxItemViewHolder>(INBOX_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InboxItemViewHolder {
-        val binding = ItemInboxPostRepliesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemInboxBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return InboxItemViewHolder(binding)
     }
 
@@ -28,7 +28,7 @@ class InboxAdapter () :
 
 
 
-    inner class InboxItemViewHolder(private val binding: ItemInboxPostRepliesBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class InboxItemViewHolder(private val binding: ItemInboxBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener {
 
@@ -38,12 +38,12 @@ class InboxAdapter () :
         fun bind(inboxItem : RedditChildrenData) {
             binding.apply {
                 if(inboxItem != null) {
-                    textviewInboxPostRepliesTitle.text = inboxItem.link_title
-                    textviewInboxPostRepliesBody.text = inboxItem.body
+                    textviewInboxTitle.text = inboxItem.link_title
+                    textviewInboxBody.text = inboxItem.body
                     //TODO textviewInboxPostRepliesBody.text = inboxItem.body_html
-                    textviewInboxPostRepliesSubreddit.text = inboxItem.subreddit
-                    textviewInboxPostRepliesAuthor.text = inboxItem.author
-                    textviewInboxPostRepliesAge.text = inboxItem.created_utc.toString()
+                    textviewInboxSubreddit.text = inboxItem.subreddit
+                    textviewInboxAuthor.text = inboxItem.author
+                    textviewInboxAge.text = inboxItem.created_utc.toString()
                 }
             }
         }

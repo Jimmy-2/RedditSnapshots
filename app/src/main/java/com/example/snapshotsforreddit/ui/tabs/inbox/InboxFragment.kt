@@ -21,31 +21,34 @@ class InboxFragment : Fragment(R.layout.fragment_inbox) {
         super.onViewCreated(view, savedInstanceState)
         _binding  = FragmentInboxBinding.bind(view)
 
+
+        //TODO CHANGE THE ROUNDED SHAPES IN INBOX, SEARCH AND ACCOUNT TO 1 BIG ROUNDED VIEW WITH TEXTVIEWS INSIDE
         binding.apply {
 
             buttonInbox.setOnClickListener{
-                findNavController().navigate(InboxFragmentDirections.actionInboxFragmentToInboxItemsFragment("inbox"))
+                findNavController().navigate(InboxFragmentDirections.actionInboxFragmentToInboxItemsFragment("inbox","Inbox"))
             }
 
             buttonUnread.setOnClickListener{
-                findNavController().navigate(InboxFragmentDirections.actionInboxFragmentToInboxItemsFragment("unread"))
-            }
-
-            buttonMessages.setOnClickListener{
-                findNavController().navigate(InboxFragmentDirections.actionInboxFragmentToInboxItemsFragment("messages"))
-            }
-
-            buttonCommentReplies.setOnClickListener{
-                findNavController().navigate(InboxFragmentDirections.actionInboxFragmentToInboxItemsFragment("comments"))
+                findNavController().navigate(InboxFragmentDirections.actionInboxFragmentToInboxItemsFragment("unread","Unread"))
             }
 
             buttonPostReplies.setOnClickListener{
-                findNavController().navigate(InboxFragmentDirections.actionInboxFragmentToInboxItemsFragment("selfreply"))
+                findNavController().navigate(InboxFragmentDirections.actionInboxFragmentToInboxItemsFragment("selfreply", "Post Replies"))
+            }
+
+            buttonCommentReplies.setOnClickListener{
+                findNavController().navigate(InboxFragmentDirections.actionInboxFragmentToInboxItemsFragment("comments","Comment Replies"))
             }
 
             buttonMentions.setOnClickListener{
-                findNavController().navigate(InboxFragmentDirections.actionInboxFragmentToInboxItemsFragment("mentions"))
+                findNavController().navigate(InboxFragmentDirections.actionInboxFragmentToInboxItemsFragment("mentions", "Mentions"))
             }
+
+            buttonMessages.setOnClickListener{
+                findNavController().navigate(InboxFragmentDirections.actionInboxFragmentToInboxItemsFragment("messages","Messages"))
+            }
+
         }
 
     }

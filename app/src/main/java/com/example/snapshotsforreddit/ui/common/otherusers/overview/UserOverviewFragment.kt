@@ -10,8 +10,7 @@ import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentUserOverviewBinding
 import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 import com.example.snapshotsforreddit.ui.common.loadstate.RedditLoadStateAdapter
-import com.example.snapshotsforreddit.ui.tabs.account.overview.AccountOverviewNavigationAction
-import com.example.snapshotsforreddit.ui.tabs.account.overview.OverviewAdapter
+import com.example.snapshotsforreddit.ui.tabs.account.overview.AccountOverviewAdapter
 import com.example.snapshotsforreddit.ui.tabs.account.overview.UserInfoDialogFragment
 import com.example.snapshotsforreddit.util.changeViewOnLoadState
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,7 +18,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class UserOverviewFragment : Fragment(R.layout.fragment_user_overview),
-    OverviewAdapter.OnItemClickListener {
+    AccountOverviewAdapter.OnItemClickListener, UserOverviewAdapter.OnItemClickListener {
     private val navigationArgs: UserOverviewFragmentArgs by navArgs()
     private val viewModel: UserOverviewViewModel by viewModels()
 
@@ -31,7 +30,7 @@ class UserOverviewFragment : Fragment(R.layout.fragment_user_overview),
 
         _binding = FragmentUserOverviewBinding.bind(view)
 
-        val userOverviewAdapter = OverviewAdapter(this)
+        val userOverviewAdapter = UserOverviewAdapter(this)
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationActions.collect {
@@ -56,6 +55,7 @@ class UserOverviewFragment : Fragment(R.layout.fragment_user_overview),
         }
 
         val currentUserQuery = navigationArgs.username
+
         viewModel.changeUserQuery(currentUserQuery)
 
 

@@ -3,7 +3,6 @@ package com.example.snapshotsforreddit.ui.tabs.search
 import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
-import android.view.View.VISIBLE
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -49,18 +48,17 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 override fun onQueryTextChange(newText: String?): Boolean {
                     if (newText != null && newText != "") {
                         viewModel.searchQuery.value = newText
-                        buttonSearchPost.visibility=VISIBLE
+
+                        searchButtons.visibility= View.VISIBLE
+
                         textviewSearchPost.text = "Posts with \"${viewModel.searchQuery.value}\""
 
-                        buttonSearchSubreddit.visibility=VISIBLE
                         textviewSearchSubreddit.text = "Subreddits with \"${viewModel.searchQuery.value}\""
 
-                        buttonSearchUser.visibility=VISIBLE
                         textviewSearchUser.text = "Go to User \"${viewModel.searchQuery.value}\""
                     }else {
-                        buttonSearchPost.visibility= GONE
-                        buttonSearchSubreddit.visibility=GONE
-                        buttonSearchUser.visibility=GONE
+                        searchButtons.visibility=GONE
+
                     }
                     return true
                 }

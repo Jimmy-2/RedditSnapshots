@@ -41,22 +41,16 @@ class OverviewPagingSource(
             val overviewItems = if (params.key == null && historyType == "overview") {
                 //DefaultsDatasource().emptyRedditChildrenData(kind = "userData", userData = userData) +
                 if (responseData?.children!!.isEmpty()) {
-                    when (accountType) {
-                        0 -> DefaultsDatasource().loadDefaultAccountItems(userInfo, isCompact ?: false) +
+
+                        DefaultsDatasource().loadDefaultAccountItems(userInfo, isCompact ?: false) +
                                 responseData.children.map { it.data }
 
-                        else -> DefaultsDatasource().loadDefaultUserItems(userInfo, isCompact ?: false) +
-                                responseData.children.map { it.data }
-                    }
+
+
 
                 } else {
-                    when (accountType) {
-                        0 -> DefaultsDatasource().loadDefaultAccountItems(userInfo, isCompact ?: false) +
+                    DefaultsDatasource().loadDefaultAccountItems(userInfo, isCompact ?: false) +
                                 DefaultsDatasource().addHeader() + responseData.children.map { it.data }
-
-                        else -> DefaultsDatasource().loadDefaultUserItems(userInfo, isCompact ?: false) +
-                                DefaultsDatasource().addHeader() + responseData.children.map { it.data }
-                    }
                 }
 
 

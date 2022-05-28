@@ -14,9 +14,12 @@
     <fragment
         android:id="@+id/inboxItemsFragment"
         android:name="com.example.snapshotsforreddit.ui.tabs.inbox.InboxItemsFragment"
-        android:label="InboxItemsFragment" >
+        android:label="{inboxName}" >
         <argument
             android:name="inboxType"
+            app:argType="string" />
+        <argument
+            android:name="inboxName"
             app:argType="string" />
     </fragment>
 </navigation>
