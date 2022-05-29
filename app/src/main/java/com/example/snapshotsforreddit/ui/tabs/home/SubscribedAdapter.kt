@@ -1,6 +1,5 @@
 package com.example.snapshotsforreddit.ui.tabs.home
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -74,30 +73,33 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
     inner class DefaultSubscribedSubredditViewHolder(val binding: ItemSubscribedDefaultBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
-            binding.root.setOnClickListener {
-                val position = bindingAdapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    val item = getItem(position)
-                    if (item != null) {
-                        onClickListener.onItemClick(item)
-                    }
+
+            binding.buttonSubredditHome.setOnClickListener {
+                navigateToSubreddit("Home")
+            }
+            binding.buttonSubredditPopular.setOnClickListener {
+                navigateToSubreddit("popular")
+            }
+            binding.buttonSubredditAll.setOnClickListener {
+                navigateToSubreddit("all")
+            }
+        }
+
+        private fun navigateToSubreddit(defaultName: String) {
+            val position = bindingAdapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                val item = getItem(position)
+                if (item != null) {
+                    onClickListener.onDefaultClick(defaultName)
                 }
             }
         }
 
-        fun bind(subreddit: SubredditChildrenData) {
-            //TODO FIX CODE HERE : REFORMAT STATEMENTS
-            binding.apply {
-                if (subreddit != null) {
-                    val iconBackgroundColor = subreddit.icon_img
-                    val icon = subreddit.subscribers
-                    cardSubredditItem.setCardBackgroundColor(Color.parseColor(iconBackgroundColor))
-                    icon?.let { imageSubredditItem.setImageResource(it) }
-                    textviewDefaultSubredditItemTitle.text = subreddit.display_name
-                    textviewDefaultSubredditItemDescription.text =
-                        subreddit.public_description
 
-                }
+        fun bind(subreddit: SubredditChildrenData) {
+
+            binding.apply {
+
             }
         }
     }
@@ -110,7 +112,7 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
                 if (position != RecyclerView.NO_POSITION) {
                     val item = getItem(position)
                     if (item != null) {
-                        onClickListener.onItemClick(item)
+                        onClickListener.onSubredditClick(item)
                     }
                 }
             }
@@ -159,7 +161,8 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
 
 
     interface OnItemClickListener {
-        fun onItemClick(subreddit: SubredditChildrenData)
+        fun onDefaultClick(defaultName: String)
+        fun onSubredditClick(subreddit: SubredditChildrenData)
     }
 
     companion object {

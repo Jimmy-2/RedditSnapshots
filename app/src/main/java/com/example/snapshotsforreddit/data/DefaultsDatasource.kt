@@ -1,6 +1,5 @@
 package com.example.snapshotsforreddit.data
 
-import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 import com.example.snapshotsforreddit.network.responses.account.UserInfo
 import com.example.snapshotsforreddit.network.responses.subreddit.SubredditChildrenData
@@ -11,57 +10,31 @@ class DefaultsDatasource {
         return listOf(
             SubredditChildrenData(
                     "default",
-                    "Home",
-                    "Home",
-                    R.drawable.ic_home,
-                    null,
-                    null,
-                    "#f80e5f",
-                    null,
-                    true,
-                    "Posts from your subscribed subreddits",
-                null
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                true,
+                null,null
 
             ),
-            SubredditChildrenData(
 
-                    "default",
-                    "Popular Posts",
-                    "r/Popular",
-                    R.drawable.ic_popular,
-                    null,
-                    null,
-                    "#0091ff",
-                    "r",
-                    true,
-                    "Popular recommended posts from Reddit",null
-
-            ),
-            SubredditChildrenData(
-                    "default",
-                    "All Posts",
-                    "r/All",
-                    R.drawable.ic_all,
-                    null,
-                    null,
-                    "#0cd23c",
-                    "r",
-                    true,
-                    "Most active posts from all of Reddit",null
-                ),
 
 
             SubredditChildrenData(
                 "header",
-                "All Posts",
-                "r/All",
-                R.drawable.ic_all,
                 null,
                 null,
-                "#0cd23c",
-                "r",
+                null,
+                null,
+                null,
+                null,
+                null,
                 true,
-                "Most active posts from all of Reddit",null
+                null,null
             ),
         )
     }

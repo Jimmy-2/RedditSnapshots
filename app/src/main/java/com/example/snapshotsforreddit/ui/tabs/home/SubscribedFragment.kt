@@ -82,16 +82,19 @@ class SubscribedFragment : Fragment(R.layout.fragment_subscribed), SubscribedAda
         _binding = null
     }
 
-    override fun onItemClick(subreddit: SubredditChildrenData) {
+    override fun onDefaultClick(defaultName: String) {
+        val action = SubscribedFragmentDirections.actionSubscribedFragmentToRedditPageFragment(
+            defaultName, "r"
+        )
+
+        findNavController().navigate(action)
+    }
+
+    override fun onSubredditClick(subreddit: SubredditChildrenData) {
         //TODO PUT LOGIC INTO VIEWMODEL NOT FRAGMENT
         if(subreddit?.display_name_prefixed != null) {
-            val action = when {
-                subreddit.display_name_prefixed == "Home" -> {
-                    SubscribedFragmentDirections.actionSubscribedFragmentToRedditPageFragment(
-                        "Home", "r"
-                    )
-                }
-                subreddit.subreddit_type == "user" -> {
+            val action = when (subreddit.subreddit_type) {
+                "user" -> {
                     SubscribedFragmentDirections.actionSubscribedFragmentToRedditPageFragment(
                         subreddit.display_name_prefixed.substring(2), "user"
                     )

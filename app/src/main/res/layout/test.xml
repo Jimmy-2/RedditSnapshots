@@ -4,299 +4,79 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/alt_background_2">
+    android:background="?colorOnPrimary">
 
 
-    <com.google.android.material.card.MaterialCardView
-        app:cardElevation="0dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        app:cardCornerRadius="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/button_posts_history"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/image_posts_history"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_post_temp"
-                    app:tint="@color/menu_blue">
-
-                </ImageView>
-
-                <TextView
-                    android:id="@+id/textview_posts_history"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-
-                    android:drawableRight="@drawable/ic_right_arrow"
-                    android:drawablePadding="16dp"
-                    android:gravity="center_vertical"
-
-                    android:paddingRight="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/image_posts_history"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:text="Posts" />
-
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:background="@color/round_view_borders"
-                    app:layout_constraintStart_toEndOf="@+id/image_posts_history"
-                    app:layout_constraintTop_toBottomOf="@+id/image_posts_history"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/button_comments_history"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/button_subreddit_home"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    app:tint="@color/menu_blue"
-                    android:padding="8dp"
-                    android:id="@+id/image_comments_history"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/image_default_subreddit_home"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_comment">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
-                </ImageView>
+                    <com.google.android.material.card.MaterialCardView
+                        app:cardCornerRadius="50dp"
+                        app:cardElevation="0dp"
+                        android:backgroundTint="#f80e5f"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent">
+
+
+                        <ImageView
+                            android:padding="2dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_home">
+
+                        </ImageView>
+                    </com.google.android.material.card.MaterialCardView>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                 <TextView
-                    android:id="@+id/textview_comments_history"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-
-                    android:drawablePadding="16dp"
-                    android:gravity="center_vertical"
-
-                    android:paddingEnd="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/image_comments_history"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:text="Comments"
-                    app:drawableRightCompat="@drawable/ic_right_arrow" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:background="@color/round_view_borders"
-                    app:layout_constraintStart_toEndOf="@+id/image_comments_history"
-                    app:layout_constraintTop_toBottomOf="@+id/image_comments_history"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/button_saved_history"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    app:tint="@color/menu_blue"
-                    android:padding="8dp"
-                    android:id="@+id/image_saved_history"
+                    android:id="@+id/textview_subreddit_item_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_save">
-
-                </ImageView>
-
-                <TextView
-                    android:id="@+id/textview_saved_history"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:drawablePadding="16dp"
+                    android:layout_alignParentStart="true"
+                    android:ellipsize="end"
                     android:gravity="center_vertical"
-                    android:paddingEnd="8dp"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                    android:textColor="@color/text_color_1"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/image_saved_history"
+                    app:layout_constraintStart_toEndOf="@+id/image_default_subreddit_home"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:text="Saved"
-                    app:drawableRightCompat="@drawable/ic_right_arrow" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:background="@color/round_view_borders"
-                    app:layout_constraintStart_toEndOf="@+id/image_saved_history"
-                    app:layout_constraintTop_toBottomOf="@+id/image_saved_history"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/button_upvoted_history"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                    tools:text="Example item" />
 
                 <ImageView
-                    app:tint="@color/menu_blue"
-                    android:padding="8dp"
-                    android:id="@+id/image_upvoted_history"
+                    android:id="@+id/favorite_subreddit_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_up_arrow_null">
-
-                </ImageView>
-
-                <TextView
-                    android:id="@+id/textview_upvoted_history"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-
-                    android:drawablePadding="16dp"
-                    android:gravity="center_vertical"
-
-                    android:paddingEnd="8dp"
+                    android:layout_marginEnd="8dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/image_upvoted_history"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:text="Upvoted"
-                    app:drawableRightCompat="@drawable/ic_right_arrow" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:background="@color/round_view_borders"
-                    app:layout_constraintStart_toEndOf="@+id/image_upvoted_history"
-                    app:layout_constraintTop_toBottomOf="@+id/image_upvoted_history"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                    app:srcCompat="@android:drawable/star_off" />
 
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/button_downvoted_history"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    app:tint="@color/menu_blue"
-                    android:padding="8dp"
-                    android:id="@+id/image_downvoted_history"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_down_arrow_null">
-
-                </ImageView>
-
-                <TextView
-                    android:id="@+id/textview_downvoted_history"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-
-                    android:drawablePadding="16dp"
-                    android:gravity="center_vertical"
-
-                    android:paddingEnd="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/image_downvoted_history"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:text="Downvoted"
-                    app:drawableRightCompat="@drawable/ic_right_arrow" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:background="@color/round_view_borders"
-                    app:layout_constraintStart_toEndOf="@+id/image_downvoted_history"
-                    app:layout_constraintTop_toBottomOf="@+id/image_downvoted_history"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/button_hidden_history"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    app:tint="@color/menu_blue"
-                    android:padding="8dp"
-                    android:id="@+id/image_hidden_history"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_hidden">
-
-                </ImageView>
-
-                <TextView
-                    android:id="@+id/textview_hidden_history"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:drawablePadding="16dp"
-                    android:gravity="center_vertical"
-                    android:paddingEnd="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/image_hidden_history"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:text="Hidden"
-                    app:drawableRightCompat="@drawable/ic_right_arrow" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:background="@color/round_view_borders"
-                    app:layout_constraintStart_toEndOf="@+id/image_hidden_history"
-                    app:layout_constraintTop_toBottomOf="@+id/image_hidden_history"
-                    app:layout_constraintEnd_toEndOf="parent"/>
 
 
 
@@ -305,53 +85,9 @@
 
 
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/button_trophies_history"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    app:tint="@color/menu_blue"
-                    android:padding="8dp"
-                    android:id="@+id/image_trophies_history"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_trophies">
-
-                </ImageView>
-
-                <TextView
-                    android:id="@+id/textview_trophies_history"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-
-                    android:drawablePadding="16dp"
-                    android:gravity="center_vertical"
-
-                    android:paddingEnd="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/image_trophies_history"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:text="Trophies"
-                    app:drawableRightCompat="@drawable/ic_right_arrow" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:background="@android:color/transparent"
-                    app:layout_constraintStart_toEndOf="@+id/image_trophies_history"
-                    app:layout_constraintTop_toBottomOf="@+id/image_trophies_history"
-                    app:layout_constraintEnd_toEndOf="parent"/>
 
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

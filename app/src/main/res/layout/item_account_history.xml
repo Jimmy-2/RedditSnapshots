@@ -53,7 +53,7 @@
                     android:gravity="center_vertical"
 
                     android:paddingRight="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/view_line_posts"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/image_posts_history"
                     app:layout_constraintTop_toTopOf="parent"
@@ -61,11 +61,12 @@
 
 
                 <View
+                    android:id="@+id/view_line_posts"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:background="@color/round_view_borders"
                     app:layout_constraintStart_toEndOf="@+id/image_posts_history"
-                    app:layout_constraintTop_toBottomOf="@+id/image_posts_history"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -99,7 +100,7 @@
                     android:gravity="center_vertical"
 
                     android:paddingEnd="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/view_line_history"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/image_comments_history"
                     app:layout_constraintTop_toTopOf="parent"
@@ -107,11 +108,12 @@
                     app:drawableRightCompat="@drawable/ic_right_arrow" />
 
                 <View
+                    android:id="@+id/view_line_history"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:background="@color/round_view_borders"
                     app:layout_constraintStart_toEndOf="@+id/image_comments_history"
-                    app:layout_constraintTop_toBottomOf="@+id/image_comments_history"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
 
@@ -145,7 +147,7 @@
                     android:drawablePadding="16dp"
                     android:gravity="center_vertical"
                     android:paddingEnd="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/view_line_saved"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/image_saved_history"
                     app:layout_constraintTop_toTopOf="parent"
@@ -153,11 +155,12 @@
                     app:drawableRightCompat="@drawable/ic_right_arrow" />
 
                 <View
+                    android:id="@+id/view_line_saved"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:background="@color/round_view_borders"
                     app:layout_constraintStart_toEndOf="@+id/image_saved_history"
-                    app:layout_constraintTop_toBottomOf="@+id/image_saved_history"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
 
@@ -192,7 +195,7 @@
                     android:gravity="center_vertical"
 
                     android:paddingEnd="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/view_line_upvoted"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/image_upvoted_history"
                     app:layout_constraintTop_toTopOf="parent"
@@ -200,11 +203,12 @@
                     app:drawableRightCompat="@drawable/ic_right_arrow" />
 
                 <View
+                    android:id="@+id/view_line_upvoted"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:background="@color/round_view_borders"
                     app:layout_constraintStart_toEndOf="@+id/image_upvoted_history"
-                    app:layout_constraintTop_toBottomOf="@+id/image_upvoted_history"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
 
@@ -239,7 +243,7 @@
                     android:gravity="center_vertical"
 
                     android:paddingEnd="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/view_line_downvoted"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/image_downvoted_history"
                     app:layout_constraintTop_toTopOf="parent"
@@ -247,11 +251,13 @@
                     app:drawableRightCompat="@drawable/ic_right_arrow" />
 
                 <View
+                    android:id="@+id/view_line_downvoted"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:background="@color/round_view_borders"
+
                     app:layout_constraintStart_toEndOf="@+id/image_downvoted_history"
-                    app:layout_constraintTop_toBottomOf="@+id/image_downvoted_history"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
 
@@ -284,7 +290,7 @@
                     android:drawablePadding="16dp"
                     android:gravity="center_vertical"
                     android:paddingEnd="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/view_line_hidden"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/image_hidden_history"
                     app:layout_constraintTop_toTopOf="parent"
@@ -292,11 +298,12 @@
                     app:drawableRightCompat="@drawable/ic_right_arrow" />
 
                 <View
+                    android:id="@+id/view_line_hidden"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:background="@color/round_view_borders"
                     app:layout_constraintStart_toEndOf="@+id/image_hidden_history"
-                    app:layout_constraintTop_toBottomOf="@+id/image_hidden_history"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
 
@@ -334,19 +341,21 @@
                     android:gravity="center_vertical"
 
                     android:paddingEnd="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/image_trophies_history"
-                    app:layout_constraintTop_toTopOf="parent"
                     android:text="Trophies"
-                    app:drawableRightCompat="@drawable/ic_right_arrow" />
+                    app:drawableRightCompat="@drawable/ic_right_arrow"
+                    app:layout_constraintBottom_toTopOf="@+id/view_line_trophies"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/image_trophies_history"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <View
+                    android:id="@+id/view_line_trophies"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:background="@android:color/transparent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/image_trophies_history"
-                    app:layout_constraintTop_toBottomOf="@+id/image_trophies_history"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
 

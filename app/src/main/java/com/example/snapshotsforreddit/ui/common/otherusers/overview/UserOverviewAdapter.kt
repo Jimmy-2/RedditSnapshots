@@ -48,7 +48,7 @@ class UserOverviewAdapter(private val onClickListener: OnItemClickListener) :
                     ), parent, false
                 )
             )
-            HISTORY -> DefaultViewHolder(
+            HISTORY -> HistoryViewHolder(
                 ItemUserHistoryBinding.inflate(
                     LayoutInflater.from(
                         parent.context
@@ -74,7 +74,7 @@ class UserOverviewAdapter(private val onClickListener: OnItemClickListener) :
                 is PostViewHolder -> holder.bind(currentItem)
                 is PostCompactViewHolder -> holder.bind(currentItem)
                 is UserInfoViewHolder -> holder.bind(currentItem)
-                is DefaultViewHolder -> holder.bind(currentItem)
+                is HistoryViewHolder -> holder.bind(currentItem)
                 is HeaderViewHolder -> holder.bind(currentItem)
             }
         }
@@ -130,35 +130,22 @@ class UserOverviewAdapter(private val onClickListener: OnItemClickListener) :
     inner class UserInfoViewHolder(val binding: ItemAccountUserInfoBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
-            binding.layoutCommentKarma.setOnClickListener {
-                val position = bindingAdapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    val item = getItem(position)
-                    if (item != null) {
-                        onClickListener.onInfoClick(item,0)
-                    }
-                }
-            }
-            binding.layoutPostKarma.setOnClickListener {
-                val position = bindingAdapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    val item = getItem(position)
-                    if (item != null) {
-                        onClickListener.onInfoClick(item,1)
-                    }
-                }
-            }
-            binding.layoutAccountAge.setOnClickListener {
-                val position = bindingAdapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    val item = getItem(position)
-                    if (item != null) {
-                        onClickListener.onInfoClick(item,2)
-                    }
+            binding.layoutCommentKarma.setOnClickListener { userInfoClicked(0) }
+
+            binding.layoutPostKarma.setOnClickListener { userInfoClicked(1) }
+
+            binding.layoutAccountAge.setOnClickListener { userInfoClicked(2) }
+        }
+
+        private fun userInfoClicked(type: Int) {
+            val position = bindingAdapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                val item = getItem(position)
+                if (item != null) {
+                    onClickListener.onInfoClick(item, type)
                 }
             }
         }
-
 
 
         fun bind(post: RedditChildrenData) {
@@ -172,41 +159,24 @@ class UserOverviewAdapter(private val onClickListener: OnItemClickListener) :
                 }
             }
         }
+
+
     }
 
 
     //USER HISTORY
-    inner class DefaultViewHolder(val binding: ItemUserHistoryBinding) :
+    inner class HistoryViewHolder(val binding: ItemUserHistoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.buttonPostsHistory.setOnClickListener {
-                val position = bindingAdapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    val item = getItem(position)
-                    if (item != null) {
-                        onClickListener.onHistoryClick("submitted","Posts", item.user_name)
-                    }
-                }
+                navigateToHistory("submitted", "Posts")
             }
             binding.buttonCommentsHistory.setOnClickListener {
-                val position = bindingAdapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    val item = getItem(position)
-                    if (item != null) {
-                        onClickListener.onHistoryClick("comments","Comments",item.user_name)
-                    }
-                }
+                navigateToHistory("comments", "Comments")
             }
             binding.buttonTrophiesHistory.setOnClickListener {
-                val position = bindingAdapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    val item = getItem(position)
-                    if (item != null) {
-                        onClickListener.onHistoryClick(null,"Trophies",item.user_name)
-                    }
-                }
+                navigateToHistory(null, "Trophies")
             }
-
 
 
 //            binding.root.setOnClickListener {
@@ -218,6 +188,16 @@ class UserOverviewAdapter(private val onClickListener: OnItemClickListener) :
 //                    }
 //                }
 //            }
+        }
+
+        private fun navigateToHistory(historyType: String?, historyName: String) {
+            val position = bindingAdapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                val item = getItem(position)
+                if (item != null) {
+                    onClickListener.onHistoryClick(historyType, historyName, item.user_name)
+                }
+            }
         }
 
 
@@ -238,7 +218,8 @@ class UserOverviewAdapter(private val onClickListener: OnItemClickListener) :
         }
     }
 
-    interface OnItemClickListener : PostCompactViewHolder.OnItemClickListener, PostViewHolder.OnItemClickListener {
+    interface OnItemClickListener : PostCompactViewHolder.OnItemClickListener,
+        PostViewHolder.OnItemClickListener {
         fun onInfoClick(infoItem: RedditChildrenData, type: Int)
         fun onHistoryClick(historyType: String?, historyName: String?, userName: String?)
         fun onPostCommentClick(overviewItem: RedditChildrenData, type: Int)
