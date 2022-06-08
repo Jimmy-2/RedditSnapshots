@@ -68,7 +68,7 @@
                         android:id="@+id/search_post_image"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_posts_search"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_search">
@@ -80,12 +80,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
-
                         android:drawablePadding="16dp"
                         android:gravity="center_vertical"
-
                         android:paddingEnd="8dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_posts_search"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/search_post_image"
                         app:layout_constraintTop_toTopOf="parent"
@@ -94,11 +92,12 @@
 
 
                     <View
+                        android:id="@+id/view_line_posts_search"
                         android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:background="@color/round_view_borders"
                         app:layout_constraintStart_toEndOf="@+id/search_post_image"
-                        app:layout_constraintTop_toBottomOf="@+id/search_post_image"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -114,7 +113,7 @@
                         android:id="@+id/search_subreddit_image"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_subreddits_search"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_search">
@@ -126,12 +125,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
-
                         android:drawablePadding="16dp"
                         android:gravity="center_vertical"
-
                         android:paddingEnd="8dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_subreddits_search"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/search_subreddit_image"
                         app:layout_constraintTop_toTopOf="parent"
@@ -139,11 +136,12 @@
                         app:drawableRightCompat="@drawable/ic_right_arrow" />
 
                     <View
+                        android:id="@+id/view_line_subreddits_search"
                         android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:background="@color/round_view_borders"
                         app:layout_constraintStart_toEndOf="@+id/search_subreddit_image"
-                        app:layout_constraintTop_toBottomOf="@+id/search_subreddit_image"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"/>
 
 
@@ -161,7 +159,7 @@
                         android:id="@+id/search_user_image"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_user_search"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_user">
@@ -173,27 +171,26 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
-
                         android:drawablePadding="16dp"
                         android:gravity="center_vertical"
-
                         android:paddingEnd="8dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_user_search"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/search_user_image"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:text="Subreddits"
+                        tools:text="User"
                         app:drawableRightCompat="@drawable/ic_right_arrow" />
 
 
 
 
                     <View
+                        android:id="@+id/view_line_user_search"
                         android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:background="@android:color/transparent"
                         app:layout_constraintStart_toEndOf="@+id/search_user_image"
-                        app:layout_constraintTop_toBottomOf="@+id/search_user_image"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

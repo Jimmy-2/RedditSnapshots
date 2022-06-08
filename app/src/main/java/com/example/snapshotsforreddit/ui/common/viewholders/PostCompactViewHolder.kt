@@ -68,81 +68,100 @@ class PostCompactViewHolder (
         val currentPost = post
         //TODO FIX CODE HERE : REFORMAT STATEMENTS
         binding.apply {
-            if (currentPost != null) {
-                if(isOverview == true) {
-                    layoutPostCompact.setBackgroundColor(
-                        ContextCompat.getColor(layoutPostCompact.context ,
-                            R.color.post_background_overview))
+            if(isOverview == true) {
+                layoutPostCompact.setBackgroundColor(
+                    ContextCompat.getColor(layoutPostCompact.context ,
+                        R.color.post_background_overview))
 
-                }
-                //Subreddit icon
-                val currIconUrl = currentPost.sr_detail?.community_icon.toString()
+            }
+            //Subreddit icon
+            val subreddit = post.sr_detail
+            if(subreddit != null) {
                 val iconUrl: String =
-                    if (currentPost.sr_detail?.community_icon == null && currentPost.sr_detail?.icon_img == null) {
-                        ""
-                    } else if (currIconUrl == "null") {
-
-                        currentPost.sr_detail.icon_img!!.replace(removePart, "")
+                    if (subreddit.community_icon != "" && subreddit.community_icon != null) {
+                        subreddit.community_icon.replace(removePart, "")
+                    } else if (subreddit.icon_img != "" && subreddit.icon_img != null) {
+                        subreddit.icon_img.replace(removePart, "")
                     } else {
-                        currIconUrl.replace(removePart, "")
+                        ""
                     }
                 Glide.with(itemView)
                     .load(iconUrl)
                     .centerCrop()
                     .transition(DrawableTransitionOptions.withCrossFade())
-                    .error(R.drawable.ic_error)
+                    .error(R.drawable.ic_blank)
                     .into(imageviewSubredditIcon)
 
+                if(subreddit.primary_color != null && subreddit.primary_color != "") {
+                    imageviewSubredditIcon.setBackgroundColor(Color.parseColor(subreddit.primary_color))
+                }
+            }
 
-                imageviewPostItem.visibility = View.VISIBLE
-                when (post?.is_self) {
-                    true -> {
-                        imageviewPostItem.setImageResource(R.drawable.ic_text)
-                    }
-                    else -> {
 
-                        if (currentPost.preview?.images?.get(0)?.source?.url != null) {
-                            val imageUrl =
-                                currentPost.preview.images[0].source!!.url?.replace(
-                                    removePart, ""
-                                )
-                            Glide.with(itemView)
-                                .load(imageUrl)
-                                .centerCrop()
-                                .transition(DrawableTransitionOptions.withCrossFade())
-                                .error(R.drawable.ic_error)
-                                .into(imageviewPostItem)
-                        }
+            imageviewPostItem.visibility = View.VISIBLE
+            if (post.is_self == true ||  post.preview == null) {
+                    imageviewPostItem.setImageResource(R.drawable.ic_text)
+                }
+                else {
+                    if (currentPost.preview?.images?.get(0)?.source?.url != null) {
+                        val imageUrl =
+                            currentPost.preview.images[0].source!!.url?.replace(
+                                removePart, ""
+                            )
+                        Glide.with(itemView)
+                            .load(imageUrl)
+                            .centerCrop()
+                            .transition(DrawableTransitionOptions.withCrossFade())
+                            .error(R.drawable.ic_error)
+                            .into(imageviewPostItem)
                     }
                 }
 
 
+            textviewPostItemSubreddit.text =
+                currentPost.subreddit.toString().replaceFirstChar { it.uppercase() }
+            textviewPostItemTitle.text = currentPost.title
+            textviewPostItemScore.text = getShortenedValue(currentPost.score)
+            textviewPostItemCommentCount.text =
+                getShortenedValue(currentPost.num_comments)
+            val epoch = currentPost.created_utc
+            if (epoch != null) {
+                textviewPostItemAge.text = calculateAgeDifferenceLocalDateTime(epoch, 1)
+            }
+            if(currentPost.saved == true) {
+                imageSaved.visibility = View.VISIBLE
+            }else {
+                imageSaved.visibility = View.GONE
+            }
+            when (currentPost.likes) {
+                true -> {
+                    imageUpvoteLayout.setBackgroundColor(Color.parseColor(upvoteColor))
+                    imageUpvoteButton.setImageResource(R.drawable.ic_up_arrow_white)
+
+                    imageDownvoteButton.setImageResource(R.drawable.ic_down_arrow_null)
+                    imageDownvoteLayout.setBackgroundColor(Color.TRANSPARENT)
 
 
-
-                textviewPostItemSubreddit.text =
-                    currentPost.subreddit.toString().replaceFirstChar { it.uppercase() }
-                textviewPostItemTitle.text = currentPost.title
-                textviewPostItemScore.text = getShortenedValue(currentPost.score)
-                textviewPostItemCommentCount.text =
-                    getShortenedValue(currentPost.num_comments)
-                val epoch = currentPost.created_utc
-                if (epoch != null) {
-                    textviewPostItemAge.text = calculateAgeDifferenceLocalDateTime(epoch, 1)
+                    textviewPostItemScore.setTextColor(Color.parseColor(upvoteColor))
+                    imageArrow.setImageResource(R.drawable.ic_upvote_arrow)
                 }
-                when (currentPost.likes) {
-                    true -> {
-                        textviewPostItemScore.setTextColor(Color.parseColor(upvoteColor))
-                        imageArrow.setImageResource(R.drawable.ic_upvote_arrow)
-                    }
-                    false -> {
-                        textviewPostItemScore.setTextColor(Color.parseColor(downvoteColor))
-                        imageArrow.setImageResource(R.drawable.ic_downvote_arrow)
-                    }
-                    null -> {
-                        textviewPostItemScore.setTextColor(coil.base.R.color.androidx_core_secondary_text_default_material_light)
-                        imageArrow.setImageResource(R.drawable.ic_up_arrow_null)
-                    }
+                false -> {
+                    imageDownvoteLayout.setBackgroundColor(Color.parseColor(downvoteColor))
+                    imageDownvoteButton.setImageResource(R.drawable.ic_down_arrow_white)
+
+                    imageUpvoteButton.setImageResource(R.drawable.ic_up_arrow_null)
+                    imageUpvoteLayout.setBackgroundColor(Color.TRANSPARENT)
+
+                    textviewPostItemScore.setTextColor(Color.parseColor(downvoteColor))
+                    imageArrow.setImageResource(R.drawable.ic_downvote_arrow)
+                }
+                null -> {
+                    imageUpvoteLayout.setBackgroundColor(Color.TRANSPARENT)
+                    imageDownvoteLayout.setBackgroundColor(Color.TRANSPARENT)
+                    textviewPostItemScore.setTextAppearance(androidx.appcompat.R.style.TextAppearance_AppCompat_Small)
+                    imageArrow.setImageResource(R.drawable.ic_up_arrow_null)
+                    imageUpvoteButton.setImageResource(R.drawable.ic_up_arrow_null)
+                    imageDownvoteButton.setImageResource(R.drawable.ic_down_arrow_null)
                 }
             }
         }

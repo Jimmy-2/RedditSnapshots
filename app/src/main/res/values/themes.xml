@@ -33,6 +33,8 @@
 <!--        <item name="materialAlertDialogTheme">@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog.Centered</item>-->
 
 
+
+
         <!--        <item name="android:navigationBarColor">@android:color/transparent</item>-->
 
     </style>

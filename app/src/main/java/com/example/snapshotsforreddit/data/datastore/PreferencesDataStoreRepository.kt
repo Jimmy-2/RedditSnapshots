@@ -71,7 +71,7 @@ class PreferencesDataStoreRepository @Inject constructor(@ApplicationContext con
     }
 
     suspend fun updateAppTheme(theme: AppTheme) {
-        println("HELLO UPDATING THEME ${theme.name}")
+
         preferencesDataStore.edit { preferences ->
             preferences[PreferencesKeys.APP_THEME] = theme.name
         }

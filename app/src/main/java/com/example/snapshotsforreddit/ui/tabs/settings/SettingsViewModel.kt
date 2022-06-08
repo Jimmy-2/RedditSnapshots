@@ -65,7 +65,6 @@ class SettingsViewModel @Inject constructor(
 
 
     fun onThemeSelected(theme: AppTheme) = viewModelScope.launch{
-
         preferencesDataStoreRepository.updateAppTheme(theme)
     }
 

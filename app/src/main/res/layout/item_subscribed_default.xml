@@ -43,8 +43,8 @@
 
                     <ImageView
                         android:padding="2dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
                         app:srcCompat="@drawable/ic_home">
 
                     </ImageView>
@@ -139,8 +139,8 @@
 
                     <ImageView
                         android:padding="2dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
                         app:srcCompat="@drawable/ic_popular">
 
                     </ImageView>
@@ -236,8 +236,8 @@
 
                     <ImageView
                         android:padding="2dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
                         app:srcCompat="@drawable/ic_all">
 
                     </ImageView>

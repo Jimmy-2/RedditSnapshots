@@ -66,7 +66,6 @@ class ThemeDialogFragment : AppCompatDialogFragment() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.theme.collect {
-                    println("HELLO DIALOG REPEAT ${it}")
                     updateSelectedTheme(it)
                 }
             }

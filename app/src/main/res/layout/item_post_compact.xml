@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout_post_compact"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_post_compact"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="2dp"
@@ -64,8 +64,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        app:cardCornerRadius="16dp"
         app:cardBackgroundColor="?colorSecondaryVariant"
+        app:cardCornerRadius="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/card_subreddit_icon">
 
@@ -212,10 +212,12 @@
         android:layout_marginEnd="8dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="0dp"
+        app:cardBackgroundColor="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/image_upvote_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -242,10 +244,12 @@
         android:layout_marginEnd="8dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="0dp"
+        app:cardBackgroundColor="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/card_upvote_button">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/image_downvote_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -265,6 +269,16 @@
 
 
     </com.google.android.material.card.MaterialCardView>
+
+    <ImageView
+        android:id="@+id/image_saved"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_saved_triangle"
+        tools:visibility="visible" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

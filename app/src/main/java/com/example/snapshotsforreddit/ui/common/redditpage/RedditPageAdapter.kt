@@ -99,7 +99,7 @@ class RedditPageAdapter (
                     oldItem: RedditChildrenData,
                     newItem: RedditChildrenData
                 ): Boolean {
-                    //TODO compare more variables than just name
+                    //TODO image duplicating glitch with non image/text only posts (such as vids/gifs and multiple images)
                     return oldItem.name == newItem.name
                 }
 

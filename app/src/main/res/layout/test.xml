@@ -6,9 +6,6 @@
     android:layout_height="wrap_content"
     android:background="?colorOnPrimary">
 
-
-
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -28,7 +25,6 @@
                     <com.google.android.material.card.MaterialCardView
                         app:cardCornerRadius="50dp"
                         app:cardElevation="0dp"
-                        android:backgroundTint="#f80e5f"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="16dp"
@@ -37,12 +33,10 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintEnd_toEndOf="parent">
 
-
                         <ImageView
-                            android:padding="2dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/ic_home">
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            tools:srcCompat="@tools:sample/avatars" >
 
                         </ImageView>
                     </com.google.android.material.card.MaterialCardView>
@@ -53,7 +47,7 @@
 
                 <TextView
                     android:id="@+id/textview_subreddit_item_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:ellipsize="end"
@@ -61,6 +55,7 @@
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                     android:textColor="@color/text_color_1"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/favorite_subreddit_item"
                     app:layout_constraintStart_toEndOf="@+id/image_default_subreddit_home"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Example item" />

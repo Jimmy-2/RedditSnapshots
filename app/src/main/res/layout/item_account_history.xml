@@ -9,12 +9,12 @@
 
 
     <com.google.android.material.card.MaterialCardView
-        app:cardElevation="0dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -34,7 +34,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/view_line_posts"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_post_temp"
@@ -53,11 +53,11 @@
                     android:gravity="center_vertical"
 
                     android:paddingRight="8dp"
+                    android:text="Posts"
                     app:layout_constraintBottom_toTopOf="@+id/view_line_posts"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/image_posts_history"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:text="Posts" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
                 <View
@@ -65,9 +65,9 @@
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:background="@color/round_view_borders"
-                    app:layout_constraintStart_toEndOf="@+id/image_posts_history"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/image_posts_history" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -78,15 +78,15 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    app:tint="@color/menu_blue"
-                    android:padding="8dp"
                     android:id="@+id/image_comments_history"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:padding="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/view_line_history"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_comment">
+                    app:srcCompat="@drawable/ic_comment"
+                    app:tint="@color/menu_blue">
 
                 </ImageView>
 
@@ -95,27 +95,24 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-
                     android:drawablePadding="16dp"
                     android:gravity="center_vertical"
-
                     android:paddingEnd="8dp"
+                    android:text="Comments"
+                    app:drawableRightCompat="@drawable/ic_right_arrow"
                     app:layout_constraintBottom_toTopOf="@+id/view_line_history"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/image_comments_history"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:text="Comments"
-                    app:drawableRightCompat="@drawable/ic_right_arrow" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <View
                     android:id="@+id/view_line_history"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:background="@color/round_view_borders"
-                    app:layout_constraintStart_toEndOf="@+id/image_comments_history"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/image_comments_history" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -127,15 +124,15 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    app:tint="@color/menu_blue"
-                    android:padding="8dp"
                     android:id="@+id/image_saved_history"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:padding="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/view_line_saved"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_save">
+                    app:srcCompat="@drawable/ic_save"
+                    app:tint="@color/menu_blue">
 
                 </ImageView>
 
@@ -147,22 +144,21 @@
                     android:drawablePadding="16dp"
                     android:gravity="center_vertical"
                     android:paddingEnd="8dp"
+                    android:text="Saved"
+                    app:drawableRightCompat="@drawable/ic_right_arrow"
                     app:layout_constraintBottom_toTopOf="@+id/view_line_saved"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/image_saved_history"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:text="Saved"
-                    app:drawableRightCompat="@drawable/ic_right_arrow" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <View
                     android:id="@+id/view_line_saved"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:background="@color/round_view_borders"
-                    app:layout_constraintStart_toEndOf="@+id/image_saved_history"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/image_saved_history" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -173,15 +169,15 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    app:tint="@color/menu_blue"
-                    android:padding="8dp"
                     android:id="@+id/image_upvoted_history"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:padding="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/view_line_upvoted"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_up_arrow_null">
+                    app:srcCompat="@drawable/ic_up_arrow_null"
+                    app:tint="@color/menu_blue">
 
                 </ImageView>
 
@@ -190,27 +186,24 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-
                     android:drawablePadding="16dp"
                     android:gravity="center_vertical"
-
                     android:paddingEnd="8dp"
+                    android:text="Upvoted"
+                    app:drawableRightCompat="@drawable/ic_right_arrow"
                     app:layout_constraintBottom_toTopOf="@+id/view_line_upvoted"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/image_upvoted_history"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:text="Upvoted"
-                    app:drawableRightCompat="@drawable/ic_right_arrow" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <View
                     android:id="@+id/view_line_upvoted"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:background="@color/round_view_borders"
-                    app:layout_constraintStart_toEndOf="@+id/image_upvoted_history"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/image_upvoted_history" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -221,15 +214,15 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    app:tint="@color/menu_blue"
-                    android:padding="8dp"
                     android:id="@+id/image_downvoted_history"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:padding="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/view_line_downvoted"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_down_arrow_null">
+                    app:srcCompat="@drawable/ic_down_arrow_null"
+                    app:tint="@color/menu_blue">
 
                 </ImageView>
 
@@ -238,17 +231,15 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-
                     android:drawablePadding="16dp"
                     android:gravity="center_vertical"
-
                     android:paddingEnd="8dp"
+                    android:text="Downvoted"
+                    app:drawableRightCompat="@drawable/ic_right_arrow"
                     app:layout_constraintBottom_toTopOf="@+id/view_line_downvoted"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/image_downvoted_history"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:text="Downvoted"
-                    app:drawableRightCompat="@drawable/ic_right_arrow" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <View
                     android:id="@+id/view_line_downvoted"
@@ -256,10 +247,9 @@
                     android:layout_height="1dp"
                     android:background="@color/round_view_borders"
 
-                    app:layout_constraintStart_toEndOf="@+id/image_downvoted_history"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/image_downvoted_history" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -270,15 +260,15 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    app:tint="@color/menu_blue"
-                    android:padding="8dp"
                     android:id="@+id/image_hidden_history"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:padding="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/view_line_hidden"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_hidden">
+                    app:srcCompat="@drawable/ic_hidden"
+                    app:tint="@color/menu_blue">
 
                 </ImageView>
 
@@ -290,27 +280,24 @@
                     android:drawablePadding="16dp"
                     android:gravity="center_vertical"
                     android:paddingEnd="8dp"
+                    android:text="Hidden"
+                    app:drawableRightCompat="@drawable/ic_right_arrow"
                     app:layout_constraintBottom_toTopOf="@+id/view_line_hidden"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/image_hidden_history"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:text="Hidden"
-                    app:drawableRightCompat="@drawable/ic_right_arrow" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <View
                     android:id="@+id/view_line_hidden"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:background="@color/round_view_borders"
-                    app:layout_constraintStart_toEndOf="@+id/image_hidden_history"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/image_hidden_history" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -319,15 +306,15 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    app:tint="@color/menu_blue"
-                    android:padding="8dp"
                     android:id="@+id/image_trophies_history"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:padding="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/view_line_trophies"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_trophies">
+                    app:srcCompat="@drawable/ic_trophies"
+                    app:tint="@color/menu_blue">
 
                 </ImageView>
 
@@ -336,10 +323,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-
                     android:drawablePadding="16dp"
                     android:gravity="center_vertical"
-
                     android:paddingEnd="8dp"
                     android:text="Trophies"
                     app:drawableRightCompat="@drawable/ic_right_arrow"
@@ -355,9 +340,8 @@
                     android:layout_height="1dp"
                     android:background="@android:color/transparent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/image_trophies_history"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/image_trophies_history" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

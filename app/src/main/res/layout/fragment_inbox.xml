@@ -13,14 +13,14 @@
         android:orientation="vertical">
 
         <com.google.android.material.card.MaterialCardView
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="32dp"
-            app:cardElevation="0dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="32dp"
             app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -36,11 +36,11 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:padding="8dp"
                         android:id="@+id/image_inbox_all"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:padding="8dp"
+                        app:layout_constraintBottom_toTopOf="@+id/line_view_inbox"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_inbox_all">
@@ -52,30 +52,27 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
-
                         android:drawablePadding="16dp"
                         android:gravity="center_vertical"
-
                         android:paddingEnd="8dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:text="Inbox (All)"
+                        app:drawableRightCompat="@drawable/ic_right_arrow"
+                        app:layout_constraintBottom_toTopOf="@+id/line_view_inbox"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/image_inbox_all"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:text="Inbox (All)"
-                        app:drawableRightCompat="@drawable/ic_right_arrow" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
                     <View
+                        android:id="@+id/line_view_inbox"
                         android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:background="@color/round_view_borders"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/image_inbox_all"
-                        app:layout_constraintTop_toBottomOf="@+id/image_inbox_all"
-                        app:layout_constraintEnd_toEndOf="parent"/>
+                        app:layout_constraintBottom_toBottomOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -84,11 +81,11 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:padding="8dp"
                         android:id="@+id/image_unread"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:padding="8dp"
+                        app:layout_constraintBottom_toTopOf="@+id/line_view_unread"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_unread">
@@ -100,25 +97,24 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
-
                         android:drawablePadding="16dp"
                         android:gravity="center_vertical"
-
                         android:paddingEnd="8dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:text="Unread"
+                        app:drawableRightCompat="@drawable/ic_right_arrow"
+                        app:layout_constraintBottom_toTopOf="@+id/line_view_unread"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/image_unread"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:text="Unread"
-                        app:drawableRightCompat="@drawable/ic_right_arrow" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <View
+                        android:id="@+id/line_view_unread"
                         android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:background="@android:color/transparent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/image_unread"
-                        app:layout_constraintTop_toBottomOf="@+id/image_unread"
-                        app:layout_constraintEnd_toEndOf="parent"/>
+                        app:layout_constraintBottom_toBottomOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -128,13 +124,13 @@
 
 
         <com.google.android.material.card.MaterialCardView
-            app:cardElevation="0dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            app:cardCornerRadius="12dp"
             android:layout_marginBottom="32dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -150,11 +146,11 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:padding="8dp"
                         android:id="@+id/image_post_replies"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:padding="8dp"
+                        app:layout_constraintBottom_toTopOf="@+id/line_view_post_replies"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_post_temp">
@@ -166,26 +162,25 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
-
                         android:drawablePadding="16dp"
                         android:gravity="center_vertical"
-
                         android:paddingEnd="8dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:text="Post Replies"
+                        app:drawableRightCompat="@drawable/ic_right_arrow"
+                        app:layout_constraintBottom_toTopOf="@+id/line_view_post_replies"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/image_post_replies"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:text="Post Replies"
-                        app:drawableRightCompat="@drawable/ic_right_arrow" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
                     <View
+                        android:id="@+id/line_view_post_replies"
                         android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:background="@color/round_view_borders"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/image_post_replies"
-                        app:layout_constraintTop_toBottomOf="@+id/image_post_replies"
-                        app:layout_constraintEnd_toEndOf="parent"/>
+                        app:layout_constraintBottom_toBottomOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -196,11 +191,11 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:padding="8dp"
                         android:id="@+id/image_comment_replies"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:padding="8dp"
+                        app:layout_constraintBottom_toTopOf="@+id/line_view_comment_replies"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_comment">
@@ -212,26 +207,24 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
-
                         android:drawablePadding="16dp"
                         android:gravity="center_vertical"
-
                         android:paddingEnd="8dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:text="Comment replies"
+                        app:drawableRightCompat="@drawable/ic_right_arrow"
+                        app:layout_constraintBottom_toTopOf="@+id/line_view_comment_replies"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/image_comment_replies"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:text="Comment replies"
-                        app:drawableRightCompat="@drawable/ic_right_arrow" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <View
+                        android:id="@+id/line_view_comment_replies"
                         android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:background="@color/round_view_borders"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/image_comment_replies"
-                        app:layout_constraintTop_toBottomOf="@+id/image_comment_replies"
-                        app:layout_constraintEnd_toEndOf="parent"/>
-
+                        app:layout_constraintBottom_toBottomOf="parent" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -243,11 +236,11 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:padding="8dp"
                         android:id="@+id/image_mentions"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:padding="8dp"
+                        app:layout_constraintBottom_toTopOf="@+id/line_view_mentions"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_user">
@@ -259,25 +252,24 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
-
                         android:drawablePadding="16dp"
                         android:gravity="center_vertical"
-
                         android:paddingEnd="8dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:text="Mentions"
+                        app:drawableRightCompat="@drawable/ic_right_arrow"
+                        app:layout_constraintBottom_toTopOf="@+id/line_view_mentions"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/image_mentions"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:text="Mentions"
-                        app:drawableRightCompat="@drawable/ic_right_arrow" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <View
+                        android:id="@+id/line_view_mentions"
                         android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:background="@android:color/transparent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/image_mentions"
-                        app:layout_constraintTop_toBottomOf="@+id/image_mentions"
-                        app:layout_constraintEnd_toEndOf="parent"/>
+                        app:layout_constraintBottom_toBottomOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -286,23 +278,15 @@
         </com.google.android.material.card.MaterialCardView>
 
 
-
-
-
-
-
-
-
-
         <com.google.android.material.card.MaterialCardView
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="32dp"
-            app:cardElevation="0dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="32dp"
             app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -319,11 +303,11 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:padding="8dp"
                         android:id="@+id/image_messages"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:padding="8dp"
+                        app:layout_constraintBottom_toTopOf="@+id/line_view_messages"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_messages">
@@ -335,34 +319,31 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
-
                         android:drawablePadding="16dp"
                         android:gravity="center_vertical"
-
                         android:paddingEnd="8dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:text="Messages"
+                        app:drawableRightCompat="@drawable/ic_right_arrow"
+                        app:layout_constraintBottom_toTopOf="@+id/line_view_messages"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/image_messages"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:text="Messages"
-                        app:drawableRightCompat="@drawable/ic_right_arrow" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
                     <View
+                        android:id="@+id/line_view_messages"
                         android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:background="@android:color/transparent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/image_messages"
-                        app:layout_constraintTop_toBottomOf="@+id/image_messages"
-                        app:layout_constraintEnd_toEndOf="parent"/>
+                        app:layout_constraintBottom_toBottomOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
-
-
 
 
     </LinearLayout>

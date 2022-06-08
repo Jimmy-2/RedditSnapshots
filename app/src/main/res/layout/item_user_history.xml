@@ -9,12 +9,12 @@
 
 
     <com.google.android.material.card.MaterialCardView
-        app:cardElevation="0dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -34,7 +34,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/view_line_posts"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_post_temp"
@@ -47,17 +47,15 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-
                     android:drawableRight="@drawable/ic_right_arrow"
                     android:drawablePadding="16dp"
                     android:gravity="center_vertical"
-
                     android:paddingRight="8dp"
+                    android:text="Posts"
                     app:layout_constraintBottom_toTopOf="@+id/view_line_posts"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/image_posts_history"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:text="Posts" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
                 <View
@@ -65,9 +63,9 @@
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:background="@color/round_view_borders"
-                    app:layout_constraintStart_toEndOf="@+id/image_posts_history"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/image_posts_history" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -78,15 +76,15 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    app:tint="@color/menu_blue"
-                    android:padding="8dp"
                     android:id="@+id/image_comments_history"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:padding="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/view_line_history"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_comment">
+                    app:srcCompat="@drawable/ic_comment"
+                    app:tint="@color/menu_blue">
 
                 </ImageView>
 
@@ -95,27 +93,24 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-
                     android:drawablePadding="16dp"
                     android:gravity="center_vertical"
-
                     android:paddingEnd="8dp"
+                    android:text="Comments"
+                    app:drawableRightCompat="@drawable/ic_right_arrow"
                     app:layout_constraintBottom_toTopOf="@+id/view_line_history"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/image_comments_history"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:text="Comments"
-                    app:drawableRightCompat="@drawable/ic_right_arrow" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <View
                     android:id="@+id/view_line_history"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:background="@color/round_view_borders"
-                    app:layout_constraintStart_toEndOf="@+id/image_comments_history"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/image_comments_history" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -128,15 +123,15 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    app:tint="@color/menu_blue"
-                    android:padding="8dp"
                     android:id="@+id/image_trophies_history"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:padding="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/view_line_trophies"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_trophies">
+                    app:srcCompat="@drawable/ic_trophies"
+                    app:tint="@color/menu_blue">
 
                 </ImageView>
 
@@ -145,10 +140,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-
                     android:drawablePadding="16dp"
                     android:gravity="center_vertical"
-
                     android:paddingEnd="8dp"
                     android:text="Trophies"
                     app:drawableRightCompat="@drawable/ic_right_arrow"
@@ -164,9 +157,8 @@
                     android:layout_height="1dp"
                     android:background="@android:color/transparent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/image_trophies_history"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/image_trophies_history" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,6 +5,8 @@ import com.example.snapshotsforreddit.data.datastore.PreferencesDataStoreReposit
 import com.example.snapshotsforreddit.di.ApplicationScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
@@ -14,19 +16,16 @@ class MainActivityViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-//    private val refreshSignal = MutableSharedFlow<Unit>()
-//
-//    private val loadDataSignal: Flow<Unit> = flow {
-//        emit(Unit)
-//        emitAll(refreshSignal)
-//    }
-//
-//    val currentTheme: AppTheme = {
-//
-//    }
-//
+    fun getSelectedTheme(): String = runBlocking{ preferencesDataStoreRepository.selectedTheme.first() }
 
     val selectedTheme = preferencesDataStoreRepository.selectedTheme
+
+
+
+
+
+
+
 
 //    val theme: StateFlow<AppTheme> = loadDataSignal.mapLatest {
 //        getTheme()
@@ -40,3 +39,4 @@ class MainActivityViewModel @Inject constructor(
 
 
 }
+

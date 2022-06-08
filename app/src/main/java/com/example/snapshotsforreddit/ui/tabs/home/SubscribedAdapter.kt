@@ -1,5 +1,6 @@
 package com.example.snapshotsforreddit.ui.tabs.home
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -120,28 +121,29 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
 
         fun bind(subreddit: SubredditChildrenData) {
             val removePart = "amp;"
-            //TODO FIX CODE HERE : REFORMAT STATEMENTS
             binding.apply {
-                if (subreddit!= null) {
-                    val currIconUrl = subreddit.community_icon
-                    val iconUrl: String =
-                        if (subreddit.community_icon == null && subreddit.icon_img == null) {
-                            ""
-                        } else if (currIconUrl == "") {
-                            subreddit.icon_img!!.replace(removePart, "")
-                        } else {
-                            currIconUrl!!.replace(removePart, "")
-                        }
-                    Glide.with(itemView)
-                        .load(iconUrl)
-                        .centerCrop()
-                        .transition(DrawableTransitionOptions.withCrossFade())
-                        .error(R.drawable.ic_error)
-                        .into(imageSubredditItem)
+                val iconUrl: String =
+                    if (subreddit.community_icon != "" && subreddit.community_icon != null) {
+                        subreddit.community_icon.replace(removePart, "")
+                    } else if (subreddit.icon_img != "" && subreddit.icon_img != null) {
+                        subreddit.icon_img.replace(removePart, "")
+                    } else {
+                        ""
+                    }
+                Glide.with(itemView)
+                    .load(iconUrl)
+                    .centerCrop()
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .error(R.drawable.ic_blank)
+                    .into(imageSubredditIcon)
 
-                    textviewSubredditItemTitle.text = subreddit.display_name_prefixed
-                    favoriteSubredditItem.isVisible = subreddit.user_has_favorited!!
+
+                if(subreddit.primary_color != null && subreddit.primary_color != "") {
+                    imageSubredditIcon.setBackgroundColor(Color.parseColor(subreddit.primary_color))
                 }
+
+                textviewSubredditItemTitle.text = subreddit.display_name_prefixed
+                favoriteSubredditItem.isVisible = subreddit.user_has_favorited!!
 
             }
         }
@@ -177,7 +179,6 @@ class SubscribedAdapter(private val onClickListener: OnItemClickListener) :
                     oldItem: SubredditChildrenData,
                     newItem: SubredditChildrenData
                 ): Boolean {
-                    //CHANGE THIS TO data.name LATER SO WE DO NOT HAVE TO UPDATE EVEN IF SUBSCRIPTION COUNT CHANGES
                     return oldItem.name == newItem.name
                 }
 
