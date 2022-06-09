@@ -26,6 +26,7 @@ class RedditPageViewModel @Inject constructor(
     private val subredditType = MutableLiveData<String>()
     private val isCompact = MutableLiveData<Boolean?>()
     private val sortOrder = MutableLiveData<String?>()
+    private val isDefault = MutableLiveData<Boolean?>()
 
 
 //    val redditPagePosts = subredditInfo.switchMap {
@@ -41,7 +42,7 @@ class RedditPageViewModel @Inject constructor(
 
     val redditPagePosts = Transformations.switchMap(MonitorTriple(isCompact, sortOrder, _subredditName)) {
         redditApiRepository.getSubredditPostsList(
-            it.third!!, subredditType.value!!,
+            it.third!!, subredditType.value!!, isDefault.value,
             it.second, it.first).cachedIn(viewModelScope)
     }
 
@@ -79,10 +80,11 @@ class RedditPageViewModel @Inject constructor(
         }
     }
 
-    fun loadRedditPage(redditPageName: String, redditPageType: String) {
+    fun loadRedditPage(redditPageName: String, redditPageType: String, default: Boolean) {
         if(_subredditName.value == null || _subredditName.value == "") {
             _subredditName.value = redditPageName
             subredditType.value = redditPageType
+            isDefault.value = default
         }
     }
 

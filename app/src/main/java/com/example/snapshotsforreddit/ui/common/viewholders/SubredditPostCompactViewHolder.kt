@@ -9,15 +9,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.snapshotsforreddit.R
-import com.example.snapshotsforreddit.databinding.ItemPostCompactBinding
+
+import com.example.snapshotsforreddit.databinding.ItemSubredditPostCompactBinding
 import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 import com.example.snapshotsforreddit.util.calculateAgeDifferenceLocalDateTime
 import com.example.snapshotsforreddit.util.getShortenedValue
 
-class PostCompactViewHolder (
+class SubredditPostCompactViewHolder(
     private val adapter: PagingDataAdapter<RedditChildrenData, RecyclerView.ViewHolder>,
     private val onClickListener: OnItemClickListener,
-    private val binding: ItemPostCompactBinding,
+    private val binding: ItemSubredditPostCompactBinding,
     private val isOverview: Boolean? = null,
 ) : RecyclerView.ViewHolder(binding.root) {
     private var post: RedditChildrenData? = null
@@ -68,58 +69,38 @@ class PostCompactViewHolder (
         val post = post
         //TODO FIX CODE HERE : REFORMAT STATEMENTS
         binding.apply {
-            if(isOverview == true) {
+            if (isOverview == true) {
                 layoutPostCompact.setBackgroundColor(
-                    ContextCompat.getColor(layoutPostCompact.context ,
-                        R.color.post_background_overview))
+                    ContextCompat.getColor(
+                        layoutPostCompact.context,
+                        R.color.post_background_overview
+                    )
+                )
 
-            }
-            //Subreddit icon
-            val subreddit = post.sr_detail
-            if(subreddit != null) {
-                val iconUrl: String =
-                    if (subreddit.community_icon != "" && subreddit.community_icon != null) {
-                        subreddit.community_icon.replace(removePart, "")
-                    } else if (subreddit.icon_img != "" && subreddit.icon_img != null) {
-                        subreddit.icon_img.replace(removePart, "")
-                    } else {
-                        ""
-                    }
-                Glide.with(itemView)
-                    .load(iconUrl)
-                    .centerCrop()
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .error(R.drawable.ic_blank)
-                    .into(imageviewSubredditIcon)
-
-                if(subreddit.primary_color != null && subreddit.primary_color != "") {
-                    imageviewSubredditIcon.setBackgroundColor(Color.parseColor(subreddit.primary_color))
-                }
             }
 
 
             imageviewPostItem.visibility = View.VISIBLE
-            if (post.is_self == true ||  post.preview == null) {
-                    imageviewPostItem.setImageResource(R.drawable.ic_text)
+            if (post.is_self == true || post.preview == null) {
+                imageviewPostItem.setImageResource(R.drawable.ic_text)
+            } else {
+                if (post.preview?.images?.get(0)?.source?.url != null) {
+                    val imageUrl =
+                        post.preview.images[0].source!!.url?.replace(
+                            removePart, ""
+                        )
+                    Glide.with(itemView)
+                        .load(imageUrl)
+                        .centerCrop()
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .error(R.drawable.ic_error)
+                        .into(imageviewPostItem)
                 }
-                else {
-                    if (post.preview?.images?.get(0)?.source?.url != null) {
-                        val imageUrl =
-                            post.preview.images[0].source!!.url?.replace(
-                                removePart, ""
-                            )
-                        Glide.with(itemView)
-                            .load(imageUrl)
-                            .centerCrop()
-                            .transition(DrawableTransitionOptions.withCrossFade())
-                            .error(R.drawable.ic_error)
-                            .into(imageviewPostItem)
-                    }
-                }
+            }
 
 
-            textviewPostItemSubreddit.text =
-                post.subreddit.toString().replaceFirstChar { it.uppercase() }
+            textviewPostAuthor.text = post.author
+
             textviewPostItemTitle.text = post.title
             textviewPostItemScore.text = getShortenedValue(post.score)
             textviewPostItemCommentCount.text =
@@ -128,9 +109,9 @@ class PostCompactViewHolder (
             if (epoch != null) {
                 textviewPostItemAge.text = calculateAgeDifferenceLocalDateTime(epoch, 1)
             }
-            if(post.saved == true) {
+            if (post.saved == true) {
                 imageSaved.visibility = View.VISIBLE
-            }else {
+            } else {
                 imageSaved.visibility = View.GONE
             }
             when (post.likes) {

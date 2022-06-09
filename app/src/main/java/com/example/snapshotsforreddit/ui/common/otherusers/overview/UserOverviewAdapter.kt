@@ -131,9 +131,7 @@ class UserOverviewAdapter(private val onClickListener: OnItemClickListener) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.layoutCommentKarma.setOnClickListener { userInfoClicked(0) }
-
             binding.layoutPostKarma.setOnClickListener { userInfoClicked(1) }
-
             binding.layoutAccountAge.setOnClickListener { userInfoClicked(2) }
         }
 
@@ -147,7 +145,6 @@ class UserOverviewAdapter(private val onClickListener: OnItemClickListener) :
             }
         }
 
-
         fun bind(post: RedditChildrenData) {
             binding.apply {
                 textviewCommentKarma.text =
@@ -159,10 +156,7 @@ class UserOverviewAdapter(private val onClickListener: OnItemClickListener) :
                 }
             }
         }
-
-
     }
-
 
     //USER HISTORY
     inner class HistoryViewHolder(val binding: ItemUserHistoryBinding) :

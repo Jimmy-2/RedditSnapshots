@@ -51,8 +51,9 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page),
 
         val redditPageName = navigationArgs.redditPageName
         val redditPageType = navigationArgs.redditPageType
+        val isDefaults = navigationArgs.isDefaults
         //only load this once
-        viewModel.loadRedditPage(redditPageName, redditPageType)
+        viewModel.loadRedditPage(redditPageName, redditPageType, isDefaults)
 
         viewModel.redditPagePosts.observe(viewLifecycleOwner) {
             //connect data to adapter

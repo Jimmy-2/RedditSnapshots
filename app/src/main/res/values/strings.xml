@@ -13,4 +13,10 @@
     <string name="hint_search_fragment">Search Posts, Subreddits, Users</string>
     <string name="menu_accounts">Accounts</string>
     <string name="title_boxes">Boxes</string>
+    <string name="subreddit_icon">Subreddit Icon</string>
+    <string name="subreddit_name">Subreddit Name</string>
+    <string name="post_image_or_video">Post image or video</string>
+    <string name="button_to_upvote_post">Button to upvote post</string>
+    <string name="button_to_downvote_post">Button to downvote post</string>
+    <string name="more_options">More options</string>
 </resources>

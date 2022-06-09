@@ -107,6 +107,11 @@ class AccountOverviewAdapter(private val onClickListener: OnItemClickListener) :
                 textviewAccountCommentPostTitle.text = post.link_title
                 textviewAccountCommentPostSubreddit.text = post.subreddit
                 textviewUpvoteCount.text = getShortenedValue(post.score)
+                if(post.saved == true) {
+                    imageSaved.visibility = View.VISIBLE
+                }else {
+                    imageSaved.visibility = View.GONE
+                }
                 when (post.likes) {
                     null -> {
                         imageArrow.setImageResource(R.drawable.ic_up_arrow_null)

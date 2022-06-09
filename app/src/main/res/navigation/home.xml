@@ -23,6 +23,9 @@
         <argument
             android:name="redditPageType"
             app:argType="string" />
+        <argument
+            android:name="isDefaults"
+            app:argType="boolean" />
         <action
             android:id="@+id/action_redditPageFragment_to_searchResultsPostFragment"
             app:destination="@id/searchResultsPostFragment" />

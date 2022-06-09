@@ -13,6 +13,7 @@ class RedditPagePagingSource (
     private val redditApiService: RedditApiService,
     private val subredditName: String?,
     private val subredditType: String?,
+    private val isDefault: Boolean?,
     private val sort: String?,
     private val isCompact: Boolean?
 ) : PagingSource<String, RedditChildrenData>() {
@@ -47,7 +48,7 @@ class RedditPagePagingSource (
 
             //TODO MAP KIND INTO NEXT VARS
             val posts = if (params.key == null) {
-                DefaultsDatasource().addSearchBar(subredditName!!, isCompact?: false) + responseData!!.children.map { it.data }
+                DefaultsDatasource().addSearchBar(subredditName!!, isDefault?: false, isCompact?: false) + responseData!!.children.map { it.data }
             } else {
                 responseData!!.children.map { it.data }
             }

@@ -133,10 +133,21 @@ class PostViewHolder(
             textviewPostItemTitle.text = post.title
             textviewPostItemScore.text = getShortenedValue(post.score)
             textviewPostItemCommentCount.text = getShortenedValue(post.num_comments)
+
             val epoch = post.created_utc
             if (epoch != null) {
                 textviewPostItemAge.text = calculateAgeDifferenceLocalDateTime(epoch, 1)
             }
+
+
+
+            if(post.saved == true) {
+                imageSaved.visibility = View.VISIBLE
+            }else {
+                imageSaved.visibility = View.INVISIBLE
+            }
+
+
             when (post.likes) {
                 true -> {
                     imageUpvoteLayout.setBackgroundColor(Color.parseColor(upvoteColor))

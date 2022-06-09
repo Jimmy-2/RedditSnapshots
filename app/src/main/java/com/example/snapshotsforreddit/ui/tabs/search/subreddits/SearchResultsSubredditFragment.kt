@@ -75,17 +75,17 @@ class SearchResultsSubredditFragment : Fragment(R.layout.fragment_search_results
             val action = when {
                 subreddit.display_name_prefixed == "Home" -> {
                     SearchResultsSubredditFragmentDirections.actionSearchResultsSubredditFragmentToRedditPageFragment2(
-                        "", ""
+                        "", "", false
                     )
                 }
                 subreddit.subreddit_type == "user" -> {
                     SearchResultsSubredditFragmentDirections.actionSearchResultsSubredditFragmentToRedditPageFragment2(
-                        subreddit.display_name_prefixed.substring(2), "user"
+                        subreddit.display_name_prefixed.substring(2), "user", false
                     )
                 }
                 else -> {
                     SearchResultsSubredditFragmentDirections.actionSearchResultsSubredditFragmentToRedditPageFragment2(
-                        subreddit.display_name_prefixed.substring(2), "r")
+                        subreddit.display_name_prefixed.substring(2), "r", false)
                 }
             }
             findNavController().navigate(action)

@@ -44,13 +44,14 @@ class RedditApiRepository @Inject constructor(
     fun getSubredditPostsList(
         subredditName: String,
         subredditType: String,
+        isDefault: Boolean?,
         sort: String?,
         isCompact: Boolean?
     ) =
         Pager(
             PagingConfig(count)
         ) {
-            RedditPagePagingSource(redditApiService, subredditName, subredditType, sort, isCompact)
+            RedditPagePagingSource(redditApiService, subredditName, subredditType, isDefault, sort, isCompact)
         }.liveData
 
     fun getInboxList(inboxType: String) = Pager(

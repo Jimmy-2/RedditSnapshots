@@ -40,6 +40,7 @@ data class RedditChildrenData(
 
     //DEFAULTS
     val dataKind: String? = null,
+    val isDefault: Boolean? = null,
     val isCompact: Boolean? = null,
 
 

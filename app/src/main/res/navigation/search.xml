@@ -52,6 +52,9 @@
         <argument
             android:name="redditPageType"
             app:argType="string" />
+        <argument
+            android:name="isDefaults"
+            app:argType="boolean" />
     </fragment>
 
     <fragment

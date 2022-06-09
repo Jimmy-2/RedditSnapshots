@@ -9,55 +9,19 @@
     android:background="@color/post_background">
 
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card_subreddit_icon"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        app:cardCornerRadius="50dp"
-        app:cardElevation="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textview_post_item_subreddit"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintStart_toEndOf="@+id/card_post_image"
-        app:layout_constraintTop_toTopOf="@+id/textview_post_item_subreddit">
 
-        <ImageView
-            android:id="@+id/imageview_subreddit_icon"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars"
-            android:contentDescription="@string/subreddit_icon" />
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <TextView
-        android:id="@+id/textview_post_item_subreddit"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:drawablePadding="4dp"
-        android:gravity="start"
-        android:padding="8dp"
-        android:text="@string/subreddit_name"
-        app:layout_constraintEnd_toStartOf="@+id/card_upvote_button"
-        app:layout_constraintStart_toEndOf="@+id/card_subreddit_icon"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textview_post_item_title"
         android:layout_width="0dp"
+        android:layout_marginTop="8dp"
         android:layout_height="wrap_content"
         android:gravity="center|start"
         android:padding="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         app:layout_constraintEnd_toStartOf="@+id/card_downvote_button"
         app:layout_constraintStart_toEndOf="@+id/card_post_image"
-        app:layout_constraintTop_toBottomOf="@+id/textview_post_item_subreddit"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="random textrandom textrandom textrandom textrandom textrandom textrandom textrandom textrandom textrandom textrandom textrandom textrandom textrandom textrandom textrandom textrandom text" />
 
     <com.google.android.material.card.MaterialCardView
@@ -65,10 +29,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
         app:cardBackgroundColor="?colorSecondaryVariant"
         app:cardCornerRadius="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/card_subreddit_icon">
+        app:layout_constraintTop_toTopOf="@+id/textview_post_item_title">
 
         <ImageView
             android:id="@+id/imageview_post_item"
@@ -83,16 +48,26 @@
 
     </com.google.android.material.card.MaterialCardView>
 
+    <TextView
+        android:id="@+id/textview_post_author"
+        android:layout_width="wrap_content"
 
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/textview_post_item_title"
+        app:layout_constraintStart_toEndOf="@+id/card_post_image"
+        app:layout_constraintBottom_toTopOf="@id/layout_post_stats"
+        tools:text="Username"/>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_upvote_count"
+        android:id="@+id/layout_post_stats"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginStart="4dp"
         app:layout_constraintStart_toEndOf="@+id/card_post_image"
-        app:layout_constraintTop_toBottomOf="@+id/textview_post_item_title"
+        app:layout_constraintTop_toBottomOf="@+id/textview_post_author"
         app:layout_constraintBottom_toBottomOf="parent">
 
 

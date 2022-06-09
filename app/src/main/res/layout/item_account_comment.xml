@@ -6,10 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@color/item_background"
     android:layout_marginBottom="8dp"
-    android:paddingBottom="16dp"
-    android:paddingTop="8dp"
-    android:paddingRight="8dp"
-    android:paddingLeft="8dp">
+>
 
 
     <TextView
@@ -17,15 +14,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawablePadding="4dp"
+        android:layout_marginTop="8dp"
         android:paddingTop="8dp"
         android:paddingLeft="8dp"
         android:paddingBottom="8dp"
+        android:layout_marginStart="8dp"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Username" />
 
     <TextView
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:id="@+id/textview_account_comment_body"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -38,20 +39,29 @@
         tools:text="Hello wow what a great post you have there!" />
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_comment_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        app:cardCornerRadius="5dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         app:cardBackgroundColor="#efeff6"
-        app:layout_constraintTop_toBottomOf="@+id/textview_account_comment_body">
+        app:cardCornerRadius="5dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textview_account_comment_body"
+        tools:layout_editor_absoluteX="16dp">
 
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?colorTertiary"
             android:orientation="vertical">
 
             <TextView
+
                 android:id="@+id/textview_account_comment_post_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -113,13 +123,25 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
+        android:layout_marginTop="8dp"
         android:id="@+id/textview_comment_age"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="4d" />
 
+    <ImageView
+        android:id="@+id/image_saved"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toEndOf="@+id/card_comment_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_saved_triangle"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

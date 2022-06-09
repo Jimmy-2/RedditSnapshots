@@ -9,15 +9,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.snapshotsforreddit.R
-import com.example.snapshotsforreddit.databinding.ItemPostCompactBinding
+
+import com.example.snapshotsforreddit.databinding.ItemSubredditPostBinding
 import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 import com.example.snapshotsforreddit.util.calculateAgeDifferenceLocalDateTime
 import com.example.snapshotsforreddit.util.getShortenedValue
 
-class PostCompactViewHolder (
+class SubredditPostViewHolder (
     private val adapter: PagingDataAdapter<RedditChildrenData, RecyclerView.ViewHolder>,
     private val onClickListener: OnItemClickListener,
-    private val binding: ItemPostCompactBinding,
+    private val binding: ItemSubredditPostBinding,
     private val isOverview: Boolean? = null,
 ) : RecyclerView.ViewHolder(binding.root) {
     private var post: RedditChildrenData? = null
@@ -44,6 +45,7 @@ class PostCompactViewHolder (
                 }
             }
         }
+
         binding.cardDownvoteButton.setOnClickListener {
             val position = bindingAdapterPosition
             if (position != RecyclerView.NO_POSITION) {
@@ -65,74 +67,63 @@ class PostCompactViewHolder (
     @SuppressLint("ResourceAsColor")
     fun bind(post: RedditChildrenData) {
         this.post = post
-        val post = post
         //TODO FIX CODE HERE : REFORMAT STATEMENTS
         binding.apply {
-            if(isOverview == true) {
-                layoutPostCompact.setBackgroundColor(
-                    ContextCompat.getColor(layoutPostCompact.context ,
-                        R.color.post_background_overview))
+            if (isOverview == true) {
+                layoutPost.setBackgroundColor(
+                    ContextCompat.getColor(
+                        layoutPost.context,
+                        R.color.post_background_overview
+                    )
+                )
 
             }
-            //Subreddit icon
-            val subreddit = post.sr_detail
-            if(subreddit != null) {
-                val iconUrl: String =
-                    if (subreddit.community_icon != "" && subreddit.community_icon != null) {
-                        subreddit.community_icon.replace(removePart, "")
-                    } else if (subreddit.icon_img != "" && subreddit.icon_img != null) {
-                        subreddit.icon_img.replace(removePart, "")
-                    } else {
-                        ""
-                    }
-                Glide.with(itemView)
-                    .load(iconUrl)
-                    .centerCrop()
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .error(R.drawable.ic_blank)
-                    .into(imageviewSubredditIcon)
 
-                if(subreddit.primary_color != null && subreddit.primary_color != "") {
-                    imageviewSubredditIcon.setBackgroundColor(Color.parseColor(subreddit.primary_color))
+            //Image
+            if (this@SubredditPostViewHolder.post?.is_self == true || this@SubredditPostViewHolder.post?.preview == null) {
+
+                imageviewPostItem.visibility = View.GONE
+                if (post.selftext == "") {
+                    textviewPostItemText.visibility = View.GONE
+                } else {
+                    textviewPostItemText.text = post.selftext
+                    textviewPostItemText.visibility = View.VISIBLE
+                }
+            } else {
+                textviewPostItemText.visibility = View.GONE
+                imageviewPostItem.visibility = View.VISIBLE
+                if (post.preview?.images?.get(0)?.source?.url != null) {
+                    val imageUrl =
+                        post.preview.images[0].source!!.url?.replace(
+                            removePart, ""
+                        )
+                    Glide.with(itemView)
+                        .load(imageUrl)
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .error(R.drawable.ic_error)
+                        .into(imageviewPostItem)
                 }
             }
 
 
-            imageviewPostItem.visibility = View.VISIBLE
-            if (post.is_self == true ||  post.preview == null) {
-                    imageviewPostItem.setImageResource(R.drawable.ic_text)
-                }
-                else {
-                    if (post.preview?.images?.get(0)?.source?.url != null) {
-                        val imageUrl =
-                            post.preview.images[0].source!!.url?.replace(
-                                removePart, ""
-                            )
-                        Glide.with(itemView)
-                            .load(imageUrl)
-                            .centerCrop()
-                            .transition(DrawableTransitionOptions.withCrossFade())
-                            .error(R.drawable.ic_error)
-                            .into(imageviewPostItem)
-                    }
-                }
-
-
-            textviewPostItemSubreddit.text =
-                post.subreddit.toString().replaceFirstChar { it.uppercase() }
+            textviewPostAuthor.text = "By ${post.author}"
             textviewPostItemTitle.text = post.title
             textviewPostItemScore.text = getShortenedValue(post.score)
-            textviewPostItemCommentCount.text =
-                getShortenedValue(post.num_comments)
+            textviewPostItemCommentCount.text = getShortenedValue(post.num_comments)
+
             val epoch = post.created_utc
             if (epoch != null) {
                 textviewPostItemAge.text = calculateAgeDifferenceLocalDateTime(epoch, 1)
             }
+
+
             if(post.saved == true) {
                 imageSaved.visibility = View.VISIBLE
             }else {
-                imageSaved.visibility = View.GONE
+                imageSaved.visibility = View.INVISIBLE
             }
+
+
             when (post.likes) {
                 true -> {
                     imageUpvoteLayout.setBackgroundColor(Color.parseColor(upvoteColor))
@@ -140,7 +131,6 @@ class PostCompactViewHolder (
 
                     imageDownvoteButton.setImageResource(R.drawable.ic_down_arrow_null)
                     imageDownvoteLayout.setBackgroundColor(Color.TRANSPARENT)
-
 
                     textviewPostItemScore.setTextColor(Color.parseColor(upvoteColor))
                     imageArrow.setImageResource(R.drawable.ic_upvote_arrow)
@@ -163,6 +153,7 @@ class PostCompactViewHolder (
                     imageUpvoteButton.setImageResource(R.drawable.ic_up_arrow_null)
                     imageDownvoteButton.setImageResource(R.drawable.ic_down_arrow_null)
                 }
+
             }
         }
     }

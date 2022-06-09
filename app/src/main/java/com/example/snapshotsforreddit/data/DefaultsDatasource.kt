@@ -45,11 +45,12 @@ class DefaultsDatasource {
         )
     }
 
-    fun addSearchBar(subreddit: String, isCompact: Boolean): List<RedditChildrenData> {
+    fun addSearchBar(subredditName: String, isDefault: Boolean , isCompact: Boolean): List<RedditChildrenData> {
         return listOf(
             RedditChildrenData(
                 dataKind = "search",
-                subreddit = subreddit,
+                subreddit = subredditName,
+                isDefault = isDefault,
                 isCompact = isCompact
             ),
         )

@@ -84,7 +84,7 @@ class SubscribedFragment : Fragment(R.layout.fragment_subscribed), SubscribedAda
 
     override fun onDefaultClick(defaultName: String) {
         val action = SubscribedFragmentDirections.actionSubscribedFragmentToRedditPageFragment(
-            defaultName, "r"
+            defaultName, "r", true
         )
 
         findNavController().navigate(action)
@@ -96,12 +96,12 @@ class SubscribedFragment : Fragment(R.layout.fragment_subscribed), SubscribedAda
             val action = when (subreddit.subreddit_type) {
                 "user" -> {
                     SubscribedFragmentDirections.actionSubscribedFragmentToRedditPageFragment(
-                        subreddit.display_name_prefixed.substring(2), "user"
+                        subreddit.display_name_prefixed.substring(2), "user" , false
                     )
                 }
                 else -> {
                     SubscribedFragmentDirections.actionSubscribedFragmentToRedditPageFragment(
-                        subreddit.display_name_prefixed.substring(2), "r")
+                        subreddit.display_name_prefixed.substring(2), "r", false)
                 }
             }
             findNavController().navigate(action)

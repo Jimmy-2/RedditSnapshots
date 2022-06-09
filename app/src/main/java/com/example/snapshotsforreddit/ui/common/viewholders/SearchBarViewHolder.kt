@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.snapshotsforreddit.databinding.ItemSearchBarBinding
 import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 
-class SearchBarViewHolder(
+class SearchBarViewHolder  (
     private val onClickListener: OnItemClickListener,
     private val binding: ItemSearchBarBinding) : RecyclerView.ViewHolder(binding.root) {
 
