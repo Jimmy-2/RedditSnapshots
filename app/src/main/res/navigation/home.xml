@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_redditPageFragment_to_searchResultsPostFragment"
             app:destination="@id/searchResultsPostFragment" />
+        <action
+            android:id="@+id/action_redditPageFragment_to_moreOptionsDialogFragment"
+            app:destination="@id/moreOptionsDialogFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchResultsPostFragment"
@@ -43,5 +46,9 @@
             app:argType="string"
             app:nullable="true" />
     </fragment>
+    <dialog
+        android:id="@+id/moreOptionsDialogFragment"
+        android:name="com.example.snapshotsforreddit.ui.common.moreoptions.MoreOptionsDialogFragment"
+        android:label="MoreOptionsDialogFragment" />
 
 </navigation>

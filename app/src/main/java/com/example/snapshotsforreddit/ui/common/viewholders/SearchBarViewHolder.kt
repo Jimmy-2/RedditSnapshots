@@ -43,5 +43,6 @@ class SearchBarViewHolder  (
     interface OnItemClickListener {
         fun onItemClick(post: RedditChildrenData)
         fun onSearchSubmit(query: String?, subredditName: String)
+
     }
 }

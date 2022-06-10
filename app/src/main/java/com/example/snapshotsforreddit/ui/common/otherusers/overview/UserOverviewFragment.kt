@@ -114,5 +114,9 @@ class UserOverviewFragment : Fragment(R.layout.fragment_user_overview),
         TODO("Not yet implemented")
     }
 
+    override fun onMoreClick(post: RedditChildrenData, type: Int) {
+        TODO("Not yet implemented")
+    }
+
 
 }

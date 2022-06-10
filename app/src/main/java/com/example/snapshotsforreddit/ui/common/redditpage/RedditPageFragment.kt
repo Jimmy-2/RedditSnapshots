@@ -1,5 +1,6 @@
 package com.example.snapshotsforreddit.ui.common.redditpage
 
+
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -20,6 +21,7 @@ import com.example.snapshotsforreddit.util.changeViewOnLoadState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class RedditPageFragment : Fragment(R.layout.fragment_reddit_page),
@@ -84,9 +86,9 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page),
 
     //inflate/activate options menu
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_fragment_reddit_page, menu)
+        inflater.inflate(com.example.snapshotsforreddit.R.menu.menu_fragment_reddit_page, menu)
         //reference to SearchView
-        val searchPost = menu.findItem(R.id.action_search_subreddits)
+        val searchPost = menu.findItem(com.example.snapshotsforreddit.R.id.action_search_subreddits)
 
         viewModel.subredditName.observe(viewLifecycleOwner) {
             searchPost.title = (it + downArrow).replaceFirstChar { it.uppercase() }
@@ -116,7 +118,7 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page),
 
         viewLifecycleOwner.lifecycleScope.launch {
             val isChecked = viewModel.preferencesFlow.first().isCompactView
-            menu.findItem(R.id.action_compact).isChecked = isChecked
+            menu.findItem(com.example.snapshotsforreddit.R.id.action_compact).isChecked = isChecked
             viewModel.checkIsCompact(isChecked)
 
         }
@@ -128,30 +130,33 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page),
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         //when statement for each of the menu items
         return when (item.itemId) {
-            R.id.action_compact -> {
+
+            //TODO BOTTOM SHEET DIALOG FOR OPTIONS SELECTED
+
+            com.example.snapshotsforreddit.R.id.action_compact -> {
                 val newVal = !item.isChecked
                 item.isChecked = newVal //set to opposite selected
                 viewModel.onCompactViewClicked(newVal)
                 return true
             }
             //TODO add ischecked to the menu items
-            R.id.action_sort_by_best -> {
+            com.example.snapshotsforreddit.R.id.action_sort_by_best -> {
                 viewModel.onSortOrderSelected("best")
                 return true
             }
-            R.id.action_sort_by_hot -> {
+            com.example.snapshotsforreddit.R.id.action_sort_by_hot -> {
                 viewModel.onSortOrderSelected("hot")
                 return true
             }
-            R.id.action_sort_by_new -> {
+            com.example.snapshotsforreddit.R.id.action_sort_by_new -> {
                 viewModel.onSortOrderSelected("new")
                 return true
             }
-            R.id.action_sort_by_rising -> {
+            com.example.snapshotsforreddit.R.id.action_sort_by_rising -> {
                 viewModel.onSortOrderSelected("rising")
                 return true
             }
-            R.id.action_sort_by_top -> {
+            com.example.snapshotsforreddit.R.id.action_sort_by_top -> {
                 return true
             }
             else -> super.onOptionsItemSelected(item)
@@ -203,6 +208,11 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page),
             0 -> viewModel.onVoteOnPost(0, post)
             1 -> viewModel.onVoteOnPost(1, post)
         }
+    }
+
+    override fun onMoreClick(post: RedditChildrenData, type: Int) {
+        findNavController().navigate(RedditPageFragmentDirections.actionRedditPageFragmentToMoreOptionsDialogFragment())
+
     }
 
 

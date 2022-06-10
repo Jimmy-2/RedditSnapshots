@@ -19,4 +19,10 @@
     <string name="button_to_upvote_post">Button to upvote post</string>
     <string name="button_to_downvote_post">Button to downvote post</string>
     <string name="more_options">More options</string>
+    <string name="upvote">Upvote</string>
+    <string name="downvote">Downvote</string>
+    <string name="save">Save</string>
+    <string name="reply">Reply</string>
+    <string name="hide">Hide</string>
+    <string name="cancel">Cancel</string>
 </resources>

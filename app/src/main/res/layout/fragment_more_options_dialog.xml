@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?colorSecondaryVariant"
+
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
@@ -11,13 +11,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+
         <com.google.android.material.card.MaterialCardView
+            app:cardBackgroundColor="@color/item_background"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
             app:cardCornerRadius="12dp"
             app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -30,238 +30,214 @@
                 android:orientation="vertical">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/button_inbox"
+                    android:id="@+id/button_upvote"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <ImageView
-
-                        android:id="@+id/image_inbox_all"
-
+                        android:id="@+id/image_upvote_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="12dp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-                        app:layout_constraintBottom_toTopOf="@+id/line_view_inbox"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_posts"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_inbox_all"
-                        app:tint="@color/menu_blue">
+                        app:srcCompat="@drawable/ic_up_arrow_null"
+                        app:tint="@color/menu_blue" />
 
-                    </ImageView>
 
                     <TextView
-                        android:id="@+id/textview_inbox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
                         android:drawablePadding="16dp"
                         android:gravity="center_vertical"
                         android:paddingEnd="8dp"
-                        android:text="Inbox (All)"
-                        app:drawableRightCompat="@drawable/ic_right_arrow"
-                        app:layout_constraintBottom_toTopOf="@+id/line_view_inbox"
+                        android:text="@string/upvote"
+
+                        android:textColor="@color/menu_blue"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_posts"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/image_inbox_all"
+                        app:layout_constraintStart_toEndOf="@+id/image_upvote_button"
                         app:layout_constraintTop_toTopOf="parent" />
 
 
                     <View
-                        android:id="@+id/line_view_inbox"
+                        android:id="@+id/view_line_posts"
                         android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:background="@color/round_view_borders"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/image_inbox_all" />
+                        app:layout_constraintStart_toEndOf="@+id/image_upvote_button" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/button_unread"
+                    android:id="@+id/button_downvote"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/image_unread"
+                        android:id="@+id/image_downvote_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="12dp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-                        app:layout_constraintBottom_toTopOf="@+id/line_view_unread"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_history"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_unread"
+                        app:srcCompat="@drawable/ic_down_arrow_null"
                         app:tint="@color/menu_blue">
 
                     </ImageView>
 
                     <TextView
-                        android:id="@+id/textview_unread"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
                         android:drawablePadding="16dp"
                         android:gravity="center_vertical"
                         android:paddingEnd="8dp"
-                        android:text="Unread"
-                        app:drawableRightCompat="@drawable/ic_right_arrow"
-                        app:layout_constraintBottom_toTopOf="@+id/line_view_unread"
+                        android:text="@string/downvote"
+                        android:textColor="@color/menu_blue"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_history"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/image_unread"
+                        app:layout_constraintStart_toEndOf="@+id/image_downvote_button"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <View
-                        android:id="@+id/line_view_unread"
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:background="@android:color/transparent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/image_unread" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="32dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/button_post_replies"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/image_post_replies"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="12dp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-                        app:layout_constraintBottom_toTopOf="@+id/line_view_post_replies"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_post_temp"
-                        app:tint="@color/menu_blue">
-
-                    </ImageView>
-
-                    <TextView
-                        android:id="@+id/textview_post_replies"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:drawablePadding="16dp"
-                        android:gravity="center_vertical"
-                        android:paddingEnd="8dp"
-                        android:text="Post Replies"
-                        app:drawableRightCompat="@drawable/ic_right_arrow"
-                        app:layout_constraintBottom_toTopOf="@+id/line_view_post_replies"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/image_post_replies"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-
-                    <View
-                        android:id="@+id/line_view_post_replies"
+                        android:id="@+id/view_line_history"
                         android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:background="@color/round_view_borders"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/image_post_replies" />
+                        app:layout_constraintStart_toEndOf="@+id/image_downvote_button" />
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/button_comment_replies"
+                    android:id="@+id/button_save"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/image_comment_replies"
+                        android:id="@+id/image_save_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
-                        android:paddingStart="12dp"
-                        android:paddingEnd="12dp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-                        app:layout_constraintBottom_toTopOf="@+id/line_view_comment_replies"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_saved"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_comment"
+                        app:srcCompat="@drawable/ic_save"
                         app:tint="@color/menu_blue">
 
                     </ImageView>
 
                     <TextView
-                        android:id="@+id/textview_comment_replies"
+                        android:id="@+id/textview_save_button"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
                         android:drawablePadding="16dp"
                         android:gravity="center_vertical"
                         android:paddingEnd="8dp"
-                        android:text="Comment replies"
-                        app:drawableRightCompat="@drawable/ic_right_arrow"
-                        app:layout_constraintBottom_toTopOf="@+id/line_view_comment_replies"
+                        android:text="@string/save"
+                        android:textColor="@color/menu_blue"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_saved"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/image_comment_replies"
+                        app:layout_constraintStart_toEndOf="@+id/image_save_button"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <View
-                        android:id="@+id/line_view_comment_replies"
+                        android:id="@+id/view_line_saved"
                         android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:background="@color/round_view_borders"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/image_comment_replies" />
+                        app:layout_constraintStart_toEndOf="@+id/image_save_button" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/button_mentions"
+                    android:id="@+id/button_reply"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/image_mentions"
+                        android:id="@+id/image_reply_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="12dp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-                        app:layout_constraintBottom_toTopOf="@+id/line_view_mentions"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_upvoted"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_reply"
+                        app:tint="@color/menu_blue">
+
+                    </ImageView>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:drawablePadding="16dp"
+                        android:gravity="center_vertical"
+                        android:paddingEnd="8dp"
+                        android:text="@string/reply"
+                        android:textColor="@color/menu_blue"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_upvoted"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/image_reply_button"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/view_line_upvoted"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:background="@color/round_view_borders"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/image_reply_button" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/button_author"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/image_author_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_downvoted"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_user"
@@ -270,109 +246,116 @@
                     </ImageView>
 
                     <TextView
-                        android:id="@+id/textview_mentions"
+                        android:id="@+id/textview_post_author"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
                         android:drawablePadding="16dp"
                         android:gravity="center_vertical"
                         android:paddingEnd="8dp"
-                        android:text="Mentions"
-                        app:drawableRightCompat="@drawable/ic_right_arrow"
-                        app:layout_constraintBottom_toTopOf="@+id/line_view_mentions"
+                        android:text="User"
+                        android:textColor="@color/menu_blue"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_downvoted"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/image_mentions"
+                        app:layout_constraintStart_toEndOf="@+id/image_author_button"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <View
-                        android:id="@+id/line_view_mentions"
+                        android:id="@+id/view_line_downvoted"
                         android:layout_width="0dp"
                         android:layout_height="1dp"
-                        android:background="@android:color/transparent"
+                        android:background="@color/round_view_borders"
+
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/image_mentions" />
+                        app:layout_constraintStart_toEndOf="@+id/image_author_button" />
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </LinearLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/button_hide"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
+                    <ImageView
+                        android:id="@+id/image_hide_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_hidden"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_hidden"
+                        app:tint="@color/menu_blue">
+
+                    </ImageView>
+
+                    <TextView
+
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:drawablePadding="16dp"
+                        android:gravity="center_vertical"
+                        android:paddingEnd="8dp"
+                        android:text="@string/hide"
+                        android:textColor="@color/menu_blue"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_hidden"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/image_hide_button"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/view_line_hidden"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:background="@color/round_view_borders"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/image_hide_button" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-
         <com.google.android.material.card.MaterialCardView
+            app:cardBackgroundColor="@color/item_background"
+            android:id="@+id/card_cancel_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="8dp"
             app:cardCornerRadius="12dp"
             app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:background="@android:color/transparent"
+                android:drawablePadding="16dp"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="@string/cancel"
+                android:textColor="@color/menu_blue"
+                android:textSize="18sp" />
 
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/button_messages"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/image_messages"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="12dp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-
-                        app:layout_constraintBottom_toTopOf="@+id/line_view_messages"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_messages"
-                        app:tint="@color/menu_blue">
-
-                    </ImageView>
-
-                    <TextView
-                        android:id="@+id/textview_messages"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:drawablePadding="16dp"
-                        android:gravity="center_vertical"
-                        android:paddingEnd="8dp"
-                        android:text="Messages"
-                        app:drawableRightCompat="@drawable/ic_right_arrow"
-                        app:layout_constraintBottom_toTopOf="@+id/line_view_messages"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/image_messages"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-
-                    <View
-                        android:id="@+id/line_view_messages"
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:background="@android:color/transparent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/image_messages" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
-
-
     </LinearLayout>
 
 

@@ -61,6 +61,15 @@ class SubredditPostCompactViewHolder(
             }
         }
 
+        binding.imageMoreButton.setOnClickListener{
+            val position = bindingAdapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                if (post != null) {
+                    onClickListener.onMoreClick(post!!, 0)
+                }
+            }
+        }
+
     }
 
     @SuppressLint("ResourceAsColor")
@@ -151,6 +160,7 @@ class SubredditPostCompactViewHolder(
     interface OnItemClickListener {
         fun onItemClick(post: RedditChildrenData)
         fun onVoteClick(post: RedditChildrenData, type: Int)
+        fun onMoreClick(post: RedditChildrenData, type: Int)
 
     }
 

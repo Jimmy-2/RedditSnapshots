@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.snapshotsforreddit.databinding.ItemInboxBinding
 import com.example.snapshotsforreddit.network.responses.RedditChildrenData
+import com.example.snapshotsforreddit.util.calculateAgeDifferenceLocalDateTime
 
 
 class InboxAdapter () :
@@ -43,7 +44,10 @@ class InboxAdapter () :
                     //TODO textviewInboxPostRepliesBody.text = inboxItem.body_html
                     textviewInboxSubreddit.text = inboxItem.subreddit
                     textviewInboxAuthor.text = inboxItem.author
-                    textviewInboxAge.text = inboxItem.created_utc.toString()
+                    if(inboxItem.created_utc != null) {
+                        textviewInboxAge.text = calculateAgeDifferenceLocalDateTime(inboxItem.created_utc, 0)
+                    }
+
                 }
             }
         }

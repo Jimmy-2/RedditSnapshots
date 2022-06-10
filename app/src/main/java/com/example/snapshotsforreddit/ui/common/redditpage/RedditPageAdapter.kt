@@ -102,10 +102,14 @@ class RedditPageAdapter(
     }
 
 
-    interface OnItemClickListener : PostViewHolder.OnItemClickListener,
-        SearchBarViewHolder.OnItemClickListener, PostCompactViewHolder.OnItemClickListener,
+    interface OnItemClickListener :
+
+        SearchBarViewHolder.OnItemClickListener,
+        PostViewHolder.OnItemClickListener,
+        PostCompactViewHolder.OnItemClickListener,
         SubredditPostViewHolder.OnItemClickListener,
         SubredditPostCompactViewHolder.OnItemClickListener {
+
         override fun onSearchSubmit(query: String?, subredditName: String)
         override fun onItemClick(post: RedditChildrenData)
         override fun onVoteClick(post: RedditChildrenData, type: Int)

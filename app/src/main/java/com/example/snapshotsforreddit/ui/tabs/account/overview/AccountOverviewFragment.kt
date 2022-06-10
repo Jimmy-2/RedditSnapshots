@@ -185,5 +185,9 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Acc
     override fun onVoteClick(post: RedditChildrenData, type: Int) {
         TODO("Not yet implemented")
     }
+
+    override fun onMoreClick(post: RedditChildrenData, type: Int) {
+        TODO("Not yet implemented")
+    }
 }
 
