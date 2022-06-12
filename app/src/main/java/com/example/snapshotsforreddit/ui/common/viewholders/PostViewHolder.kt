@@ -70,6 +70,16 @@ class PostViewHolder(
             }
         }
 
+        binding.layoutSubreddit.setOnClickListener {
+            val position = bindingAdapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                if (post != null) {
+                    onClickListener.onSubredditClick(post!!)
+                }
+            }
+
+        }
+
     }
 
     @SuppressLint("ResourceAsColor")
@@ -195,6 +205,7 @@ class PostViewHolder(
         fun onItemClick(post: RedditChildrenData)
         fun onVoteClick(post: RedditChildrenData, type: Int)
         fun onMoreClick(post: RedditChildrenData, type: Int)
+        fun onSubredditClick(post: RedditChildrenData)
     }
 
 

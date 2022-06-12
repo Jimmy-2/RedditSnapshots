@@ -62,7 +62,7 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
-                android:text="REDDIT SETTINGS"
+                android:text="@string/reddit_settings"
                 android:textStyle="bold" />
 
             <View
@@ -75,7 +75,7 @@
                 style="@style/Widget.SnapshotsForReddit.Settings.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Configure NSFW settings"
+                android:text="@string/configure_feed_settings"
                 android:textColor="@color/menu_blue" />
 
             <View

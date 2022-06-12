@@ -12,8 +12,6 @@ import com.example.snapshotsforreddit.util.changeViewOnLoadState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-
-//TODO change to RedditChildrenData (not object)
 class SearchResultsPostFragment : Fragment(R.layout.fragment_search_results_post),
     SearchResultsPostAdapter.OnItemClickListener {
     private val navigationArgs: SearchResultsPostFragmentArgs by navArgs()
@@ -83,6 +81,10 @@ class SearchResultsPostFragment : Fragment(R.layout.fragment_search_results_post
     }
 
     override fun onMoreClick(post: RedditChildrenData, type: Int) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onSubredditClick(post: RedditChildrenData) {
         TODO("Not yet implemented")
     }
 

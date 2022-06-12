@@ -215,6 +215,12 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page),
 
     }
 
+    override fun onSubredditClick(post: RedditChildrenData) {
+        if(post.subreddit != null) {
+            findNavController().navigate(RedditPageFragmentDirections.actionRedditPageFragmentSelf(post.subreddit, "r", false))
+        }
+    }
+
 
     companion object {
         const val downArrow = 0x25BC.toChar()

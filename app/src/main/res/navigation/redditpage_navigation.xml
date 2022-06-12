@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/redditpage_navigation"
+    app:startDestination="@id/redditPageFragmentRP">
+
+    <fragment
+        android:id="@+id/redditPageFragmentRP"
+        android:name="com.example.snapshotsforreddit.ui.common.redditpage.RedditPageFragment"
+        android:label="" >
+        <argument
+            android:name="redditPageName"
+            app:argType="string" />
+        <argument
+            android:name="redditPageType"
+            app:argType="string" />
+        <argument
+            android:name="isDefaults"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_redditPageFragmentRP_to_moreOptionsDialogFragmentRP"
+            app:destination="@id/moreOptionsDialogFragmentRP" />
+        <action
+            android:id="@+id/action_redditPageFragmentRP_to_searchResultsPostFragmentRP"
+            app:destination="@id/searchResultsPostFragmentRP" />
+        <action
+            android:id="@+id/action_redditPageFragmentRP_self"
+            app:destination="@id/redditPageFragmentRP" />
+    </fragment>
+    <dialog
+        android:id="@+id/moreOptionsDialogFragmentRP"
+        android:name="com.example.snapshotsforreddit.ui.common.moreoptions.MoreOptionsDialogFragment"
+        android:label="MoreOptionsDialogFragment" />
+    <fragment
+        android:id="@+id/searchResultsPostFragmentRP"
+        android:name="com.example.snapshotsforreddit.ui.common.searchresults.posts.SearchResultsPostFragment"
+        tools:layout="@layout/fragment_search_results_post"
+        android:label="fragment_search_results_post">
+        <argument
+            android:name="searchQuery"
+            app:argType="string" />
+        <argument
+            android:name="subredditName"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+</navigation>

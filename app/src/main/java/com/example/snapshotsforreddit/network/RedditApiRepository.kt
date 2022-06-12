@@ -144,6 +144,7 @@ class RedditApiRepository @Inject constructor(
         )
     }.liveData
 
+    suspend fun getSubscribedSubredditsTest(after: String?) = redditApiService.getSubscribedSubreddits("snapshots-for-reddit",after = after, limit = 100)
 
     suspend fun getUserInfoData(username: String) =
         redditApiService.getUserInfo(USER_AGENT, username)

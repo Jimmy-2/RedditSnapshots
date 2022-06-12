@@ -18,6 +18,7 @@ interface RedditApiService {
         @Header("User-Agent") User_Agent: String?,
         @Query("after") after: String? = null,
         @Query("before") before: String? = null,
+        @Query("limit") limit: Int,
     ): SubredditJsonResponse
 
 

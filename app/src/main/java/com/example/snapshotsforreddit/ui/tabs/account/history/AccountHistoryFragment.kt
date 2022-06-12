@@ -99,7 +99,9 @@ class AccountHistoryFragment : Fragment(R.layout.fragment_account_history), Acco
         TODO("Not yet implemented")
     }
 
-
+    override fun onSubredditClick(post: RedditChildrenData) {
+        TODO("Not yet implemented")
+    }
 
 
 }

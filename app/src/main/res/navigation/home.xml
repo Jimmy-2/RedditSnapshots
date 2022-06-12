@@ -32,6 +32,12 @@
         <action
             android:id="@+id/action_redditPageFragment_to_moreOptionsDialogFragment"
             app:destination="@id/moreOptionsDialogFragment" />
+        <action
+            android:id="@+id/action_redditPageFragment_self"
+            app:destination="@id/redditPageFragment" />
+        <action
+            android:id="@+id/action_redditPageFragment_to_userOverviewFragment2"
+            app:destination="@id/userOverviewFragment2" />
     </fragment>
     <fragment
         android:id="@+id/searchResultsPostFragment"
@@ -45,10 +51,20 @@
             android:name="subredditName"
             app:argType="string"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_searchResultsPostFragment_to_redditPageFragment"
+            app:destination="@id/redditPageFragment" />
+        <action
+            android:id="@+id/action_searchResultsPostFragment_to_userOverviewFragment2"
+            app:destination="@id/userOverviewFragment2" />
     </fragment>
     <dialog
         android:id="@+id/moreOptionsDialogFragment"
         android:name="com.example.snapshotsforreddit.ui.common.moreoptions.MoreOptionsDialogFragment"
         android:label="MoreOptionsDialogFragment" />
+    <fragment
+        android:id="@+id/userOverviewFragment2"
+        android:name="com.example.snapshotsforreddit.ui.common.otherusers.overview.UserOverviewFragment"
+        android:label="UserOverviewFragment" />
 
 </navigation>

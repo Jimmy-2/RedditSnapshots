@@ -192,7 +192,9 @@
         <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/fragment_more_dialog.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/fragment_more_options_dialog.xml" value="0.33" />
         <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/fragment_post_detail.xml" value="0.3302564102564103" />
+        <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/fragment_reddit_page.xml" value="0.24351851851851852" />
         <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/fragment_search.xml" value="0.33" />
+        <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/fragment_search_results_post.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/fragment_settings.xml" value="0.21875" />
         <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/fragment_subscribed.xml" value="0.2033514492753623" />
         <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/fragment_user_overview.xml" value="0.36666666666666664" />
@@ -204,7 +206,8 @@
         <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/item_inbox.xml" value="0.13703703703703704" />
         <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/item_inbox_post_replies.xml" value="0.5" />
         <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/item_post.xml" value="0.4107485604606526" />
-        <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/item_post_compact.xml" value="0.33" />
+        <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/item_post_compact.xml" value="0.5" />
+        <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/item_search_results_subreddit.xml" value="0.31354166666666666" />
         <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/item_subreddit_post.xml" value="0.33" />
         <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/item_subreddit_post_compact.xml" value="0.33" />
         <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/item_subscribed.xml" value="0.5" />
@@ -231,6 +234,7 @@
         <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layouts/search/drawable/ic_up_arrow_null.xml" value="0.162" />
         <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layouts/search/drawable/ic_upvote_arrow.xml" value="0.103" />
         <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/menu/menu_fragment_account_overview.xml" value="0.32916666666666666" />
+        <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/menu/menu_fragment_reddit_page.xml" value="0.33541666666666664" />
       </map>
     </option>
   </component>

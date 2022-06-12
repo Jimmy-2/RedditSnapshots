@@ -118,5 +118,9 @@ class UserOverviewFragment : Fragment(R.layout.fragment_user_overview),
         TODO("Not yet implemented")
     }
 
+    override fun onSubredditClick(post: RedditChildrenData) {
+        TODO("Not yet implemented")
+    }
+
 
 }

@@ -32,6 +32,12 @@
             android:name="subredditName"
             app:argType="string"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_searchResultsPostFragment2_to_redditPageFragment2"
+            app:destination="@id/redditPageFragment2" />
+        <action
+            android:id="@+id/action_searchResultsPostFragment2_to_userInfoDialogFragment"
+            app:destination="@id/userInfoDialogFragment" />
     </fragment>
     <fragment
         android:id="@+id/userOverviewFragment"
@@ -69,4 +75,8 @@
             android:name="searchQuery"
             app:argType="string" />
     </fragment>
+    <dialog
+        android:id="@+id/userInfoDialogFragment"
+        android:name="com.example.snapshotsforreddit.ui.tabs.account.overview.UserInfoDialogFragment"
+        android:label="UserInfoDialogFragment" />
 </navigation>

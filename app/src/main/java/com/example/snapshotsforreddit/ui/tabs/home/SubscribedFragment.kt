@@ -36,7 +36,10 @@ class SubscribedFragment : Fragment(R.layout.fragment_subscribed), SubscribedAda
                 header = RedditLoadStateAdapter {subscribedAdapter .retry()},
                 footer = RedditLoadStateAdapter {subscribedAdapter .retry()}
             )
-            refreshSubscribed.setOnRefreshListener { subscribedAdapter.refresh() }
+            refreshSubscribed.setOnRefreshListener {
+                subscribedAdapter.refresh()
+//                viewModel.recursion()
+            }
             buttonSubscribedRetry.setOnClickListener { subscribedAdapter.retry() }
         }
 

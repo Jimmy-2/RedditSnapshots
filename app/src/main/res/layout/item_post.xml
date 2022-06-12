@@ -9,43 +9,55 @@
     android:background="@color/post_background">
 
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card_subreddit_icon"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        app:cardCornerRadius="50dp"
-        app:cardElevation="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textview_post_item_subreddit"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textview_post_item_subreddit">
-
-        <ImageView
-            android:id="@+id/imageview_subreddit_icon"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars"
-            android:contentDescription="@string/subreddit_icon"/>
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <TextView
-        android:id="@+id/textview_post_item_subreddit"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_subreddit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:layout_marginStart="12dp"
+        app:layout_constraintHorizontal_bias="0.0"
         android:layout_marginTop="8dp"
-        android:drawablePadding="4dp"
-        android:gravity="center|start"
-        android:padding="8dp"
-        android:text="@string/subreddit_name"
-        app:layout_constraintStart_toEndOf="@+id/card_subreddit_icon"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_subreddit_icon"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="50dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textview_post_item_subreddit"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textview_post_item_subreddit">
+
+            <ImageView
+                android:id="@+id/imageview_subreddit_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/subreddit_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/textview_post_item_subreddit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="4dp"
+            android:gravity="center|start"
+            android:padding="8dp"
+            android:text="@string/subreddit_name"
+            app:layout_constraintStart_toEndOf="@+id/card_subreddit_icon"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
     <TextView
         android:id="@+id/textview_post_item_title"
@@ -59,7 +71,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textview_post_item_subreddit"
+        app:layout_constraintTop_toBottomOf="@+id/layout_subreddit"
         tools:text="1" />
 
     <LinearLayout
@@ -226,11 +238,12 @@
             android:id="@+id/textview_post_item_age"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-
+            app:layout_constraintHorizontal_bias="0.0"
             android:gravity="center"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/image_more_button"
             app:layout_constraintStart_toEndOf="@+id/image_age"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="300" />
@@ -240,14 +253,12 @@
             android:id="@+id/image_more_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/more_options"
             android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/card_upvote_button"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/textview_post_item_age"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_more"
-            android:contentDescription="@string/more_options">
+            app:srcCompat="@drawable/ic_more">
 
 
         </ImageView>

@@ -30,8 +30,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintVertical_bias="0"
         app:cardBackgroundColor="?colorSecondaryVariant"
         app:cardCornerRadius="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textview_post_item_title">
 
@@ -39,12 +42,12 @@
             android:id="@+id/imageview_post_item"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:contentDescription="@string/post_image_or_video"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textview_post_item_title"
-            tools:srcCompat="@tools:sample/avatars"
-            android:contentDescription="@string/post_image_or_video" />
+            tools:srcCompat="@tools:sample/avatars" />
 
     </com.google.android.material.card.MaterialCardView>
 
@@ -66,9 +69,11 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginStart="4dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/image_saved"
         app:layout_constraintStart_toEndOf="@+id/card_post_image"
-        app:layout_constraintTop_toBottomOf="@+id/textview_post_author"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/textview_post_author">
 
 
         <ImageView
@@ -102,9 +107,9 @@
             android:id="@+id/image_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
-            android:layout_marginStart="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintStart_toEndOf="@+id/textview_post_item_score"
@@ -131,9 +136,9 @@
             android:id="@+id/image_age"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
-            android:layout_marginStart="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintStart_toEndOf="@+id/textview_post_item_comment_count"
@@ -159,11 +164,12 @@
             android:id="@+id/image_more_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="8dp"
-
             android:layout_marginStart="4dp"
+
             android:contentDescription="@string/more_options"
-            app:layout_constraintBottom_toBottomOf="@+id/layout_upvote_count"
+            android:padding="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/layout_post_stats"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toEndOf="@+id/textview_post_item_age"
             app:layout_constraintTop_toTopOf="parent"
