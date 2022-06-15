@@ -5,7 +5,6 @@ import androidx.paging.cachedIn
 import com.example.snapshotsforreddit.data.datastore.PreferencesDataStoreRepository
 import com.example.snapshotsforreddit.network.RedditApiRepository
 import com.example.snapshotsforreddit.network.responses.RedditChildrenData
-import com.example.snapshotsforreddit.network.responses.RedditChildrenObject
 import com.example.snapshotsforreddit.util.MonitorTriple
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -44,15 +43,10 @@ class RedditPageViewModel @Inject constructor(
         redditApiRepository.getSubredditPostsList(
             it.third!!, subredditType.value!!, isDefault.value,
             it.second, it.first).cachedIn(viewModelScope)
+
+
     }
 
-    fun onVoteOnPost(typeOfVote: Int, post: RedditChildrenObject) = viewModelScope.launch {
-        try {
-            post.data?.name?.let { redditApiRepository.voteOnThing(typeOfVote, it) }
-        }
-        catch (e: Exception) {
-        }
-    }
 
     fun onVoteOnPost(typeOfVote: Int, post: RedditChildrenData) = viewModelScope.launch {
         try {
@@ -89,12 +83,14 @@ class RedditPageViewModel @Inject constructor(
     }
 
     fun changeRedditPage(redditPageName: String, redditPageType: String) {
+        isDefault.value = false
         if(_subredditName.value != redditPageName) {
             _subredditName.value = redditPageName
         }
         if(subredditType.value != redditPageType) {
             subredditType.value = redditPageType
         }
+
     }
 
 }

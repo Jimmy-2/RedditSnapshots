@@ -51,7 +51,7 @@ class AccountDialogViewModel @Inject constructor(
 //    }
 
     fun onLogoutClicked() = viewModelScope.launch {
-//        Log.v(TAG, "HELLO Clearing user login data")
+
 
         try {
             //only need to revoke refresh token to also revoke all access tokens associated to it

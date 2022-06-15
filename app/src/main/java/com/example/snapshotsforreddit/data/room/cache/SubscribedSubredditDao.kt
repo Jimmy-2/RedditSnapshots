@@ -4,18 +4,17 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.snapshotsforreddit.network.responses.subreddit.SubredditChildrenData
 import kotlinx.coroutines.flow.Flow
 
 
 @Dao
 interface SubscribedSubredditDao {
     @Query("SELECT * FROM subscribed_subreddits")
-    fun getSubscribedSubreddits(): Flow<List<SubredditChildrenData>>
+    fun getSubscribedSubreddits(): Flow<List<SubscribedSubreddit>>
 
-    //overwrite results with same primary keys
+    //overwrite results with same primary keys (if object with same primary key exists, it will be replaced)
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertSubscribedSubreddits(subscribedSubredditData: List<SubredditChildrenData>)
+    suspend fun insertSubscribedSubreddits(subscribedSubreddit: List<SubscribedSubreddit>)
 
     //replace and delete previous list of subscribed subreddits
     @Query("DELETE FROM subscribed_subreddits")

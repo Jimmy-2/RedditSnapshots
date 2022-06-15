@@ -1,12 +1,11 @@
-package com.example.snapshotsforreddit.network.responses.subreddit
+package com.example.snapshotsforreddit.data.room.cache
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-
-data class SubredditChildrenData(
-    //defaults
+@Entity(tableName = "subscribed_subreddits")
+data class SubscribedSubreddit (
     val dataKind: String?,
-
-
 
     //from api response
     val display_name: String?,
@@ -31,6 +30,7 @@ data class SubredditChildrenData(
     val public_description: String?,
 
     //unique id
-    val name: String,
+    @PrimaryKey val name: String,
+
 
     )

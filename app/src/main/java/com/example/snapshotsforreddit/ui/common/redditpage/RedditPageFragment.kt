@@ -86,9 +86,9 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page),
 
     //inflate/activate options menu
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(com.example.snapshotsforreddit.R.menu.menu_fragment_reddit_page, menu)
+        inflater.inflate(R.menu.menu_fragment_reddit_page, menu)
         //reference to SearchView
-        val searchPost = menu.findItem(com.example.snapshotsforreddit.R.id.action_search_subreddits)
+        val searchPost = menu.findItem(R.id.action_search_subreddits)
 
         viewModel.subredditName.observe(viewLifecycleOwner) {
             searchPost.title = (it + downArrow).replaceFirstChar { it.uppercase() }
@@ -118,7 +118,7 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page),
 
         viewLifecycleOwner.lifecycleScope.launch {
             val isChecked = viewModel.preferencesFlow.first().isCompactView
-            menu.findItem(com.example.snapshotsforreddit.R.id.action_compact).isChecked = isChecked
+            menu.findItem(R.id.action_compact).isChecked = isChecked
             viewModel.checkIsCompact(isChecked)
 
         }
@@ -133,30 +133,30 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page),
 
             //TODO BOTTOM SHEET DIALOG FOR OPTIONS SELECTED
 
-            com.example.snapshotsforreddit.R.id.action_compact -> {
+            R.id.action_compact -> {
                 val newVal = !item.isChecked
                 item.isChecked = newVal //set to opposite selected
                 viewModel.onCompactViewClicked(newVal)
                 return true
             }
             //TODO add ischecked to the menu items
-            com.example.snapshotsforreddit.R.id.action_sort_by_best -> {
+            R.id.action_sort_by_best -> {
                 viewModel.onSortOrderSelected("best")
                 return true
             }
-            com.example.snapshotsforreddit.R.id.action_sort_by_hot -> {
+            R.id.action_sort_by_hot -> {
                 viewModel.onSortOrderSelected("hot")
                 return true
             }
-            com.example.snapshotsforreddit.R.id.action_sort_by_new -> {
+            R.id.action_sort_by_new -> {
                 viewModel.onSortOrderSelected("new")
                 return true
             }
-            com.example.snapshotsforreddit.R.id.action_sort_by_rising -> {
+            R.id.action_sort_by_rising -> {
                 viewModel.onSortOrderSelected("rising")
                 return true
             }
-            com.example.snapshotsforreddit.R.id.action_sort_by_top -> {
+            R.id.action_sort_by_top -> {
                 return true
             }
             else -> super.onOptionsItemSelected(item)
@@ -167,7 +167,7 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page),
         if (query != null && query != "") {
             //TODO emit these from viewmodel
             findNavController().navigate(
-                RedditPageFragmentDirections.actionRedditPageFragmentToSearchResultsPostFragment(
+                RedditPageFragmentDirections.actionRedditPageFragmentRPToSearchResultsPostFragmentRP(
                     query,
                     subredditName
                 )
@@ -211,13 +211,13 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page),
     }
 
     override fun onMoreClick(post: RedditChildrenData, type: Int) {
-        findNavController().navigate(RedditPageFragmentDirections.actionRedditPageFragmentToMoreOptionsDialogFragment())
+        findNavController().navigate(RedditPageFragmentDirections.actionRedditPageFragmentRPToMoreOptionsDialogFragmentRP())
 
     }
 
     override fun onSubredditClick(post: RedditChildrenData) {
         if(post.subreddit != null) {
-            findNavController().navigate(RedditPageFragmentDirections.actionRedditPageFragmentSelf(post.subreddit, "r", false))
+            findNavController().navigate(RedditPageFragmentDirections.actionRedditPageFragmentRPSelf(post.subreddit, "r", false))
         }
     }
 

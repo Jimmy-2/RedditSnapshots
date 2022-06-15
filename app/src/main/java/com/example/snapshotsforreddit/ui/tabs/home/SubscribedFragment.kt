@@ -4,19 +4,18 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentSubscribedBinding
-import com.example.snapshotsforreddit.network.responses.subreddit.SubredditChildrenData
-import com.example.snapshotsforreddit.ui.common.loadstate.RedditLoadStateAdapter
-import com.example.snapshotsforreddit.util.changeViewOnLoadState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 
 //TODO: TURN THIS TO SIDE SHEET ON LEFT SIDE
 
 @AndroidEntryPoint
-class SubscribedFragment : Fragment(R.layout.fragment_subscribed), SubscribedAdapter.OnItemClickListener{
+class SubscribedFragment : Fragment(R.layout.fragment_subscribed){
     private val viewModel: SubscribedViewModel by viewModels()
 
     private var _binding: FragmentSubscribedBinding? = null
@@ -27,90 +26,110 @@ class SubscribedFragment : Fragment(R.layout.fragment_subscribed), SubscribedAda
 
         _binding  = FragmentSubscribedBinding.bind(view)
 
-        val subscribedAdapter = SubscribedAdapter(this)
+//        val subscribedAdapter = SubscribedAdapter(this)
+//
+//        binding.apply {
+//            recyclerviewSubreddits.itemAnimator = null
+//            recyclerviewSubreddits.setHasFixedSize(true)
+//            recyclerviewSubreddits.adapter = subscribedAdapter.withLoadStateHeaderAndFooter(
+//                header = RedditLoadStateAdapter {subscribedAdapter .retry()},
+//                footer = RedditLoadStateAdapter {subscribedAdapter .retry()}
+//            )
+//            refreshSubscribed.setOnRefreshListener {
+//                subscribedAdapter.refresh()
+////                viewModel.recursion()
+//            }
+//            buttonSubscribedRetry.setOnClickListener { subscribedAdapter.retry() }
+//        }
+//
+//
+//        //whenever authFlow is changed (getting new accesstoken/refreshtoken), we will refresh the subscribed subreddits list
+//        viewModel.authFlow.observe(viewLifecycleOwner) { authFlowValues ->
+//            viewModel.checkIfAccessTokenChanged(authFlowValues.accessToken)
+//        }
+//
+//
+//        //whenever the subscribed subreddits list is changed, we will refresh the recyclerview
+//        viewModel.subreddits.observe(viewLifecycleOwner) {
+//            //connect data to adapter
+//            subscribedAdapter.submitData(viewLifecycleOwner.lifecycle, it)
+//
+//        }
+//
+//
+//
+//        //depending on the load state of the adapter (list of items) (error, loading, no results), we will display the necessary view for the user to see
+//        subscribedAdapter.addLoadStateListener { loadState ->
+//            binding.apply {
+//                changeViewOnLoadState(
+//                    loadState,
+//                    subscribedAdapter.itemCount,
+//                    0,
+//                    progressbarSubscribed,
+//                    recyclerviewSubreddits,
+//                    buttonSubscribedRetry,
+//                    textviewSubscribedError,
+//                    textviewSubscribedEmpty,
+//                    refreshSubscribed
+//                )
+//            }
+//        }
+
+        val subscribedAdapter = SubscribedSubredditAdapter()
 
         binding.apply {
-            recyclerviewSubreddits.itemAnimator = null
-            recyclerviewSubreddits.setHasFixedSize(true)
-            recyclerviewSubreddits.adapter = subscribedAdapter.withLoadStateHeaderAndFooter(
-                header = RedditLoadStateAdapter {subscribedAdapter .retry()},
-                footer = RedditLoadStateAdapter {subscribedAdapter .retry()}
-            )
-            refreshSubscribed.setOnRefreshListener {
-                subscribedAdapter.refresh()
-//                viewModel.recursion()
+            recyclerviewSubreddits.apply {
+                adapter = subscribedAdapter
+                layoutManager = LinearLayoutManager(requireContext())
+                setHasFixedSize(true)
             }
-            buttonSubscribedRetry.setOnClickListener { subscribedAdapter.retry() }
+
+
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel.subscribedSubreddits.collect { subreddits ->
+                    subscribedAdapter.submitList(subreddits)
+                }
+            }
         }
 
-
-        //whenever authFlow is changed (getting new accesstoken/refreshtoken), we will refresh the subscribed subreddits list
         viewModel.authFlow.observe(viewLifecycleOwner) { authFlowValues ->
-            println("HELLO SUBSCRIBED ${authFlowValues.username}, ${authFlowValues.accessToken}, ${authFlowValues.refreshToken}")
             viewModel.checkIfAccessTokenChanged(authFlowValues.accessToken)
         }
 
-
-        //whenever the subscribed subreddits list is changed, we will refresh the recyclerview
-        viewModel.subreddits.observe(viewLifecycleOwner) {
-            //connect data to adapter
-            subscribedAdapter.submitData(viewLifecycleOwner.lifecycle, it)
-
-        }
-
-
-
-        //depending on the load state of the adapter (list of items) (error, loading, no results), we will display the necessary view for the user to see
-        subscribedAdapter.addLoadStateListener { loadState ->
-            binding.apply {
-                changeViewOnLoadState(
-                    loadState,
-                    subscribedAdapter.itemCount,
-                    0,
-                    progressbarSubscribed,
-                    recyclerviewSubreddits,
-                    buttonSubscribedRetry,
-                    textviewSubscribedError,
-                    textviewSubscribedEmpty,
-                    refreshSubscribed
-                )
-            }
-        }
-
     }
 
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    override fun onDefaultClick(defaultName: String) {
-        val action = SubscribedFragmentDirections.actionSubscribedFragmentToRedditPageFragment(
-            defaultName, "r", true
-        )
-
-        findNavController().navigate(action)
-    }
-
-    override fun onSubredditClick(subreddit: SubredditChildrenData) {
-        //TODO PUT LOGIC INTO VIEWMODEL NOT FRAGMENT
-        if(subreddit?.display_name_prefixed != null) {
-            val action = when (subreddit.subreddit_type) {
-                "user" -> {
-                    SubscribedFragmentDirections.actionSubscribedFragmentToRedditPageFragment(
-                        subreddit.display_name_prefixed.substring(2), "user" , false
-                    )
-                }
-                else -> {
-                    SubscribedFragmentDirections.actionSubscribedFragmentToRedditPageFragment(
-                        subreddit.display_name_prefixed.substring(2), "r", false)
-                }
-            }
-            findNavController().navigate(action)
-        }
-
-    }
+//    override fun onDestroyView() {
+//        super.onDestroyView()
+//        _binding = null
+//    }
+//
+//    override fun onDefaultClick(defaultName: String) {
+//        val action = SubscribedFragmentDirections.actionSubscribedFragmentToRedditpageNavigation(
+//            defaultName, "r", true
+//        )
+//
+//        findNavController().navigate(action)
+//    }
+//
+//    override fun onSubredditClick(subreddit: SubredditChildrenData) {
+//        //TODO PUT LOGIC INTO VIEWMODEL NOT FRAGMENT
+//        if(subreddit?.display_name_prefixed != null) {
+//            val action = when (subreddit.subreddit_type) {
+//                "user" -> {
+//                    SubscribedFragmentDirections.actionSubscribedFragmentToRedditpageNavigation(
+//                        subreddit.display_name_prefixed.substring(2), "user" , false
+//                    )
+//                }
+//                else -> {
+//                    SubscribedFragmentDirections.actionSubscribedFragmentToRedditpageNavigation(
+//                        subreddit.display_name_prefixed.substring(2), "r", false)
+//                }
+//            }
+//            findNavController().navigate(action)
+//        }
+//
+//    }
 
 }
 

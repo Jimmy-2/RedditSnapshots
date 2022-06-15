@@ -39,7 +39,7 @@ class UserOverviewViewModel @Inject constructor(
     fun changeUserQuery(currentUserQuery: String) {
 
         if ((currentUser.value?.lowercase() ?: "") != currentUserQuery.lowercase()) {
-            println("HELLO IS IT RELOADING? ${currentUser.value} ${currentUserQuery}")
+
 
             //currentUser.value = currentUserQuery
             getSearchedUserData(currentUserQuery)

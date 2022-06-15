@@ -10,61 +10,22 @@
         android:label="@string/title_subreddits"
         tools:layout="@layout/fragment_subscribed" >
         <action
-            android:id="@+id/action_subscribedFragment_to_redditPageFragment"
-            app:destination="@id/redditPageFragment" />
+            android:id="@+id/action_subscribedFragment_to_redditpage_navigation"
+            app:destination="@id/redditpage_navigation">
+
+            <argument
+                android:name="redditPageName"
+                app:argType="string" />
+            <argument
+                android:name="redditPageType"
+                app:argType="string" />
+            <argument
+                android:name="isDefaults"
+                app:argType="boolean" />
+
+        </action>
+
     </fragment>
-    <fragment
-        android:id="@+id/redditPageFragment"
-        android:name="com.example.snapshotsforreddit.ui.common.redditpage.RedditPageFragment"
-        android:label="">
-        <argument
-            android:name="redditPageName"
-            app:argType="string" />
-        <argument
-            android:name="redditPageType"
-            app:argType="string" />
-        <argument
-            android:name="isDefaults"
-            app:argType="boolean" />
-        <action
-            android:id="@+id/action_redditPageFragment_to_searchResultsPostFragment"
-            app:destination="@id/searchResultsPostFragment" />
-        <action
-            android:id="@+id/action_redditPageFragment_to_moreOptionsDialogFragment"
-            app:destination="@id/moreOptionsDialogFragment" />
-        <action
-            android:id="@+id/action_redditPageFragment_self"
-            app:destination="@id/redditPageFragment" />
-        <action
-            android:id="@+id/action_redditPageFragment_to_userOverviewFragment2"
-            app:destination="@id/userOverviewFragment2" />
-    </fragment>
-    <fragment
-        android:id="@+id/searchResultsPostFragment"
-        android:name="com.example.snapshotsforreddit.ui.common.searchresults.posts.SearchResultsPostFragment"
-        android:label="fragment_search_results_post"
-        tools:layout="@layout/fragment_search_results_post" >
-        <argument
-            android:name="searchQuery"
-            app:argType="string" />
-        <argument
-            android:name="subredditName"
-            app:argType="string"
-            app:nullable="true" />
-        <action
-            android:id="@+id/action_searchResultsPostFragment_to_redditPageFragment"
-            app:destination="@id/redditPageFragment" />
-        <action
-            android:id="@+id/action_searchResultsPostFragment_to_userOverviewFragment2"
-            app:destination="@id/userOverviewFragment2" />
-    </fragment>
-    <dialog
-        android:id="@+id/moreOptionsDialogFragment"
-        android:name="com.example.snapshotsforreddit.ui.common.moreoptions.MoreOptionsDialogFragment"
-        android:label="MoreOptionsDialogFragment" />
-    <fragment
-        android:id="@+id/userOverviewFragment2"
-        android:name="com.example.snapshotsforreddit.ui.common.otherusers.overview.UserOverviewFragment"
-        android:label="UserOverviewFragment" />
+    <include app:graph="@navigation/redditpage_navigation" />
 
 </navigation>

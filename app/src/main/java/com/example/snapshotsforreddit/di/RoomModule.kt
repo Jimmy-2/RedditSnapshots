@@ -2,6 +2,7 @@ package com.example.snapshotsforreddit.di
 
 import android.app.Application
 import androidx.room.Room
+import com.example.snapshotsforreddit.data.room.cache.SubscribedSubredditDatabase
 import com.example.snapshotsforreddit.data.room.loggedinaccounts.AccountRoomDatabase
 import com.example.snapshotsforreddit.data.room.snapshots.SnapshotRoomDatabase
 
@@ -62,6 +63,14 @@ object RoomModule {
 //    @Provides
 //    @Singleton
 //    fun provideRedditChildrenObjectDao(db: RedditChildrenObjectDatabase) = db.redditChildrenObjectDao()
+
+
+    @Provides
+    @Singleton
+    fun provideSubscribedSubredditsDatabase(app: Application): SubscribedSubredditDatabase =
+        Room.databaseBuilder(app, SubscribedSubredditDatabase::class.java, "subscribed_subreddits_database")
+        .fallbackToDestructiveMigration()
+        .build()
 
 
 }
