@@ -6,7 +6,7 @@ data class SubredditChildrenData(
     //defaults
     val dataKind: String?,
 
-
+    val sortPriority: Int = 2,
 
     //from api response
     val display_name: String?,

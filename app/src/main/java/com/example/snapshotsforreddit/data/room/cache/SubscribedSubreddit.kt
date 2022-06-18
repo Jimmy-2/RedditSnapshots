@@ -7,6 +7,8 @@ import androidx.room.PrimaryKey
 data class SubscribedSubreddit (
     val dataKind: String?,
 
+    val sortPriority: Int = 2,
+
     //from api response
     val display_name: String?,
 

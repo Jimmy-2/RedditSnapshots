@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SubscribedSubredditDao {
-    @Query("SELECT * FROM subscribed_subreddits")
+    @Query("SELECT * FROM subscribed_subreddits ORDER BY display_name ASC")
     fun getSubscribedSubreddits(): Flow<List<SubscribedSubreddit>>
 
     //overwrite results with same primary keys (if object with same primary key exists, it will be replaced)
@@ -19,5 +19,6 @@ interface SubscribedSubredditDao {
     //replace and delete previous list of subscribed subreddits
     @Query("DELETE FROM subscribed_subreddits")
     suspend fun deleteSubscribedSubredditsForRefresh()
+
 
 }

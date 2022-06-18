@@ -18,7 +18,7 @@ import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentAccountOverviewBinding
 import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 import com.example.snapshotsforreddit.ui.common.loadstate.RedditLoadStateAdapter
-import com.example.snapshotsforreddit.ui.common.login.AccountLoginDialogFragment
+import com.example.snapshotsforreddit.ui.tabs.account.login.AccountLoginDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

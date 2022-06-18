@@ -5,12 +5,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.snapshotsforreddit.data.datastore.AuthDataStoreRepository
-import com.example.snapshotsforreddit.data.room.cache.SubscribedSubreddit
 import com.example.snapshotsforreddit.data.room.cache.SubscribedSubredditRepository
 import com.example.snapshotsforreddit.network.RedditApiRepository
+import com.example.snapshotsforreddit.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,9 +25,14 @@ class SubscribedViewModel @Inject constructor(
 ) : ViewModel() {
     private val TAG: String = "SubscribedViewModel"
 
+    private val refreshTriggerSignal = Channel<Refresh>()
+    private val refreshTrigger = refreshTriggerSignal.receiveAsFlow()
+
     val authFlow = authDataStoreRepository.authFlow.asLiveData()
 
-    //keeps track of current access token and if it changes,
+
+
+    //keeps track of current access token and if it changes, (due to expiration/account switch/logoff)
     //we know we should update the current subscribed subreddit list to reflect on the data from the new access token
     private val _accessToken = MutableLiveData<String>()
 
@@ -32,34 +40,49 @@ class SubscribedViewModel @Inject constructor(
 //        redditApiRepository.getSubscribedSubredditsList().cachedIn(viewModelScope)
 //    }
 
+    var scrollToTop = MutableLiveData<Boolean>()
 
-    fun checkIfAccessTokenChanged(accessToken: String) = viewModelScope.launch {
+    //every time we send a value to trigger the refreshTrigger,
+    //flatmaplatest and the code inside will be called and the subscribedSubreddits flow will switch to the new flow from getSubscribedSubreddits()
+    val subscribedSubreddits =  refreshTrigger.flatMapLatest {
+         subscribedSubredditRepository.getSubscribedSubreddits(
+            forceRefresh = true
+        )
+
+    }.stateIn(viewModelScope, SharingStarted.Lazily, null)
+
+
+    fun checkIfAccessTokenChanged(accessToken: String) {
         //only if accessToken changes do we update subreddits
         if (_accessToken.value != accessToken) {
             _accessToken.value = accessToken
-            getSubscribedSubredditsList()
+            onRefresh()
         }
     }
 
 
-    private fun getSubscribedSubredditsList() = viewModelScope.launch {
-        val subscribedSubreddits = subscribedSubredditRepository.getSubscribedSubreddits()
-        subscribedSubredditsFlow.value = subscribedSubreddits
+    fun onRefresh() {
+        //do not want to reload if we are already loading data from an ongoing reload
+        if(subscribedSubreddits.value !is Resource.Loading) {
+            if (subscribedSubreddits.value !is Resource.Loading) {
+                viewModelScope.launch {
+//                    scrollToTop = true
+                    refreshTriggerSignal.send(Refresh.FORCE)
+                }
+            }
+        }
+
     }
 
-    private val subscribedSubredditsFlow = MutableStateFlow<List<SubscribedSubreddit>>(emptyList())
-    val subscribedSubreddits: Flow<List<SubscribedSubreddit>> = subscribedSubredditsFlow
 
 
-    init {
-        getSubscribedSubredditsList()
+    enum class Refresh {
+        FORCE, NORMAL
     }
 
-
-
-
-
-
+    sealed class Event {
+        data class ShowErrorMessage(val error: Throwable) : Event()
+    }
 
 
 

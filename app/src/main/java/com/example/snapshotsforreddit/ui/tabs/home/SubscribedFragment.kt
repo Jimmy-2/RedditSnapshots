@@ -2,12 +2,14 @@ package com.example.snapshotsforreddit.ui.tabs.home
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentSubscribedBinding
+import com.example.snapshotsforreddit.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -15,7 +17,7 @@ import kotlinx.coroutines.launch
 //TODO: TURN THIS TO SIDE SHEET ON LEFT SIDE
 
 @AndroidEntryPoint
-class SubscribedFragment : Fragment(R.layout.fragment_subscribed){
+class SubscribedFragment : Fragment(R.layout.fragment_subscribed) {
     private val viewModel: SubscribedViewModel by viewModels()
 
     private var _binding: FragmentSubscribedBinding? = null
@@ -24,7 +26,7 @@ class SubscribedFragment : Fragment(R.layout.fragment_subscribed){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        _binding  = FragmentSubscribedBinding.bind(view)
+        _binding = FragmentSubscribedBinding.bind(view)
 
 //        val subscribedAdapter = SubscribedAdapter(this)
 //
@@ -86,14 +88,37 @@ class SubscribedFragment : Fragment(R.layout.fragment_subscribed){
 
 
             viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.subscribedSubreddits.collect { subreddits ->
-                    subscribedAdapter.submitList(subreddits)
+                viewModel.subscribedSubreddits.collect {
+                    val results = it ?: return@collect
+
+                    //TODO TEST RELOADING WITH NO INTERNET
+                    refreshSubscribed.isRefreshing = results is Resource.Loading
+                    recyclerviewSubreddits.isVisible = !results.data.isNullOrEmpty()
+
+
+                    //TODO removed try catch in order to show error. Change this at end
+                    textviewSubscribedError.isVisible =
+                        results.error != null && results.data.isNullOrEmpty()
+                    buttonSubscribedRetry.isVisible =
+                        results.error != null && results.data.isNullOrEmpty()
+
+                    subscribedAdapter.submitList(results.data)
+
                 }
             }
+
+            refreshSubscribed.setOnRefreshListener {
+                viewModel.onRefresh()
+            }
+            buttonSubscribedRetry.setOnClickListener {
+                viewModel.onRefresh()
+            }
+
         }
 
         viewModel.authFlow.observe(viewLifecycleOwner) { authFlowValues ->
             viewModel.checkIfAccessTokenChanged(authFlowValues.accessToken)
+
         }
 
     }

@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.ui.common.login
+package com.example.snapshotsforreddit.ui.tabs.account.login
 
 import android.app.Dialog
 import android.content.DialogInterface
