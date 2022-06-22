@@ -92,6 +92,7 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Acc
         //depending on the load state of the adapter (list of items) (error, loading, no results), we will display the necessary view for the user to see
         accountOverviewAdapter.addLoadStateListener { loadState ->
             binding.apply {
+                //TODO BUGGED WHEN SWITCHING ACCOUNTS WHILE INTERNET IS DOWN
 //                changeViewOnLoadState(
 //                    loadState,
 //                    accountOverviewAdapter.itemCount,
@@ -106,7 +107,6 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Acc
 
                 progressbarAccountOverview.isVisible = loadState.source.refresh is LoadState.Loading
                 refreshAccountOverview.isRefreshing = loadState.mediator?.refresh is LoadState.Loading
-                //add a login button
 
             }
         }

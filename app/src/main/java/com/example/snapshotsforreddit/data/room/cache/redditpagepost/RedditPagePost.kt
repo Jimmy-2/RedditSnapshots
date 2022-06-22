@@ -1,43 +1,14 @@
-package com.example.snapshotsforreddit.network.responses
+package com.example.snapshotsforreddit.data.room.cache.redditpagepost
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.example.snapshotsforreddit.network.responses.postimage.ImagePreview
 import com.example.snapshotsforreddit.network.responses.postvideo.RedditPageMedia
 import com.example.snapshotsforreddit.network.responses.subreddit.SubredditChildrenData
 
 
-//Contains everything relevant to a single post.
-//Will not be using a majority of the keys in the json.
-//see example in json format https://api.reddit.com/
-
-/*
-
-data class RedditChildrenData(
-    val subreddit: String?,
-    val selftext: String?,
-    val author_fullname: String?,
-    val saved: Boolean,
-    val title: String?,
-    val name: String?,
-    val score: Int?,
-    val thumbnail: String?,
-    val is_self: Boolean,
-    val subreddit_id: String?,
-    val id: String?,
-    val author: String?,
-    val num_comments: Int?,
-    val permalink: String?,
-    val url: String?,
-    val is_video: Boolean?
-)
-
-*/
-
-//Parcelize so that we can pass this object through safe args.
-//@Entity(tableName = "redditChildrenObjects")
-
-
-data class RedditChildrenData(
-
+@Entity(tableName = "reddit_page_posts")
+data class RedditPagePost (
     //DEFAULTS
     val dataKind: String? = null,
     val isDefault: Boolean? = null,
@@ -96,7 +67,7 @@ data class RedditChildrenData(
     val id: String? = null,
 
     //kind+  id
-    val name: String,
+    @PrimaryKey val name: String,
 
     //author of post
     val author: String? = null,
@@ -150,5 +121,4 @@ data class RedditChildrenData(
 
 
 
-    )
-
+)

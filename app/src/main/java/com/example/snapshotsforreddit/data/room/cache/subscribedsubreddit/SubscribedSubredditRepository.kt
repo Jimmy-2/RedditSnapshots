@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.data.room.cache
+package com.example.snapshotsforreddit.data.room.cache.subscribedsubreddit
 
 import androidx.room.withTransaction
 import com.example.snapshotsforreddit.network.responses.subreddit.SubredditChildrenData
@@ -107,7 +107,13 @@ class SubscribedSubredditRepository @Inject constructor(
                     subscribedSubredditDao.insertSubscribedSubreddits(subscribedSubredditsList)
                 }
 
-            }
+            } ,
+//            onFetchFailed = { t ->
+//                if (t !is HttpException && t !is IOException) {
+//                    throw t
+//                }
+//                onFetchFailed(t)
+//            }
 
 
         )

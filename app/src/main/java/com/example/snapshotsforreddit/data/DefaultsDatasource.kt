@@ -1,6 +1,6 @@
 package com.example.snapshotsforreddit.data
 
-import com.example.snapshotsforreddit.data.room.cache.SubscribedSubreddit
+import com.example.snapshotsforreddit.data.room.cache.subscribedsubreddit.SubscribedSubreddit
 import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 import com.example.snapshotsforreddit.network.responses.account.UserInfo
 import com.example.snapshotsforreddit.network.responses.subreddit.SubredditChildrenData

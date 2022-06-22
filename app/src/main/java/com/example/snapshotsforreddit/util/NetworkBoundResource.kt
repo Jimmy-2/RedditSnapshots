@@ -30,6 +30,7 @@ inline fun <ResultType, RequestType> networkBoundResource(
             //return flow of ResultTypes(in our case, the reddit page posts)
             query().collect { send(Resource.Success(it)) }
         } catch (throwable: Throwable) {
+            loading.cancel()
             //helps us display error message and display old cached data
             query().collect { send(Resource.Error(throwable, it)) }
         }

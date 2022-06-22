@@ -8,7 +8,7 @@ import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.snapshotsforreddit.data.datastore.AuthDataStoreRepository.AuthKeys.CURRENT_USERNAME
-import com.example.snapshotsforreddit.data.room.cache.SubscribedSubredditDatabase
+import com.example.snapshotsforreddit.data.room.cache.subscribedsubreddit.SubscribedSubredditDatabase
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -21,7 +21,7 @@ data class FilterAuth(val accessToken: String, val refreshToken: String, val log
 private val Context.dataStore by preferencesDataStore("tokens_datastore")
 
 @Singleton
-class AuthDataStoreRepository @Inject constructor (private val subscribedSubredditDatabase: SubscribedSubredditDatabase , @ApplicationContext context: Context) {
+class AuthDataStoreRepository @Inject constructor (private val subscribedSubredditDatabase: SubscribedSubredditDatabase, @ApplicationContext context: Context) {
     private val TAG: String = "AuthDataStoreRepository"
 
     private val subscribedSubredditDao = subscribedSubredditDatabase.subscribedSubredditDao()

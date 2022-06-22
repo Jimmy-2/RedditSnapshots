@@ -6,6 +6,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentSubscribedBinding
@@ -77,7 +78,33 @@ class SubscribedFragment : Fragment(R.layout.fragment_subscribed) {
 //            }
 //        }
 
-        val subscribedAdapter = SubscribedSubredditAdapter()
+        val subscribedAdapter = SubscribedSubredditAdapter(
+            onSubscribedClick = {subscribedSubreddit ->
+                if(subscribedSubreddit.display_name_prefixed != null) {
+                    val action = when (subscribedSubreddit.subreddit_type) {
+                        "user" -> {
+                            SubscribedFragmentDirections.actionSubscribedFragmentToRedditpageNavigation(
+                                subscribedSubreddit.display_name_prefixed.substring(2), "user" , false
+                            )
+                        }
+                        else -> {
+                            SubscribedFragmentDirections.actionSubscribedFragmentToRedditpageNavigation(
+                                subscribedSubreddit.display_name_prefixed.substring(2), "r", false)
+                        }
+                    }
+                    findNavController().navigate(action)
+        }
+
+            },
+            onDefaultClick = { defaultName ->
+                val action =
+                    SubscribedFragmentDirections.actionSubscribedFragmentToRedditpageNavigation(
+                        defaultName, "r", true
+                    )
+
+                findNavController().navigate(action)
+            }
+        )
 
         binding.apply {
             recyclerviewSubreddits.apply {
@@ -92,7 +119,9 @@ class SubscribedFragment : Fragment(R.layout.fragment_subscribed) {
                     val results = it ?: return@collect
 
                     //TODO TEST RELOADING WITH NO INTERNET
+                    //TODO results keeps on loading and is unstoppable. fix this bug
                     refreshSubscribed.isRefreshing = results is Resource.Loading
+
                     recyclerviewSubreddits.isVisible = !results.data.isNullOrEmpty()
 
 

@@ -6,22 +6,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.snapshotsforreddit.R
-import com.example.snapshotsforreddit.data.room.cache.SubscribedSubreddit
+import com.example.snapshotsforreddit.data.room.cache.subscribedsubreddit.SubscribedSubreddit
 import com.example.snapshotsforreddit.databinding.ItemSubscribedBinding
 
-class SubscribedSubredditViewHolder(val binding: ItemSubscribedBinding) :
+class SubscribedSubredditViewHolder(val binding: ItemSubscribedBinding, private val onSubscribedClick: (Int) -> Unit ) :
     RecyclerView.ViewHolder(binding.root)  {
-//    init {
-//        binding.root.setOnClickListener {
-//            val position = bindingAdapterPosition
-//            if (position != RecyclerView.NO_POSITION) {
-//                val item = getItem(position)
-//                if (item != null) {
-//                    onClickListener.onSubredditClick(item)
-//                }
-//            }
-//        }
-//    }
+    
+    init{
+        binding.apply {
+            root.setOnClickListener{
+                val position = bindingAdapterPosition
+                if(position != RecyclerView.NO_POSITION) {
+                    onSubscribedClick(position)
+                }
+            }
+        }
+    }
 
     fun bind(subreddit: SubscribedSubreddit) {
         val removePart = "amp;"
@@ -52,4 +52,7 @@ class SubscribedSubredditViewHolder(val binding: ItemSubscribedBinding) :
 
         }
     }
+
+
+
 }

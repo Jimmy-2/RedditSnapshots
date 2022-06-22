@@ -1,4 +1,4 @@
-package com.example.snapshotsforreddit.data.room.cache
+package com.example.snapshotsforreddit.data.room.cache.subscribedsubreddit
 
 import androidx.room.Dao
 import androidx.room.Insert

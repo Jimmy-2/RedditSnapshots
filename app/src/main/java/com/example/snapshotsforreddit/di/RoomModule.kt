@@ -2,7 +2,7 @@ package com.example.snapshotsforreddit.di
 
 import android.app.Application
 import androidx.room.Room
-import com.example.snapshotsforreddit.data.room.cache.SubscribedSubredditDatabase
+import com.example.snapshotsforreddit.data.room.cache.subscribedsubreddit.SubscribedSubredditDatabase
 import com.example.snapshotsforreddit.data.room.loggedinaccounts.AccountRoomDatabase
 import com.example.snapshotsforreddit.data.room.snapshots.SnapshotRoomDatabase
 

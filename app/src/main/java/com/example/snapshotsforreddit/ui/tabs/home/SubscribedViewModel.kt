@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.snapshotsforreddit.data.datastore.AuthDataStoreRepository
-import com.example.snapshotsforreddit.data.room.cache.SubscribedSubredditRepository
+import com.example.snapshotsforreddit.data.room.cache.subscribedsubreddit.SubscribedSubredditRepository
 import com.example.snapshotsforreddit.network.RedditApiRepository
 import com.example.snapshotsforreddit.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,7 +31,6 @@ class SubscribedViewModel @Inject constructor(
     val authFlow = authDataStoreRepository.authFlow.asLiveData()
 
 
-
     //keeps track of current access token and if it changes, (due to expiration/account switch/logoff)
     //we know we should update the current subscribed subreddit list to reflect on the data from the new access token
     private val _accessToken = MutableLiveData<String>()
@@ -44,8 +43,8 @@ class SubscribedViewModel @Inject constructor(
 
     //every time we send a value to trigger the refreshTrigger,
     //flatmaplatest and the code inside will be called and the subscribedSubreddits flow will switch to the new flow from getSubscribedSubreddits()
-    val subscribedSubreddits =  refreshTrigger.flatMapLatest {
-         subscribedSubredditRepository.getSubscribedSubreddits(
+    val subscribedSubreddits = refreshTrigger.flatMapLatest {
+        subscribedSubredditRepository.getSubscribedSubreddits(
             forceRefresh = true
         )
 
@@ -63,17 +62,16 @@ class SubscribedViewModel @Inject constructor(
 
     fun onRefresh() {
         //do not want to reload if we are already loading data from an ongoing reload
-        if(subscribedSubreddits.value !is Resource.Loading) {
-            if (subscribedSubreddits.value !is Resource.Loading) {
-                viewModelScope.launch {
+
+        if (subscribedSubreddits.value !is Resource.Loading) {
+            viewModelScope.launch {
 //                    scrollToTop = true
-                    refreshTriggerSignal.send(Refresh.FORCE)
-                }
+                refreshTriggerSignal.send(Refresh.FORCE)
             }
         }
 
-    }
 
+    }
 
 
     enum class Refresh {
@@ -83,39 +81,6 @@ class SubscribedViewModel @Inject constructor(
     sealed class Event {
         data class ShowErrorMessage(val error: Throwable) : Event()
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //    private val subscribedSubreddits = mutableListOf<SubredditChildrenData>()
@@ -156,7 +121,6 @@ class SubscribedViewModel @Inject constructor(
 //
 //
 //    }
-
 
 
 }
