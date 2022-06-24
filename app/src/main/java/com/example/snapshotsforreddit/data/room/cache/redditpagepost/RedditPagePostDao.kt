@@ -1,9 +1,6 @@
 package com.example.snapshotsforreddit.data.room.cache.redditpagepost
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -18,4 +15,7 @@ interface RedditPagePostDao {
     //replace and delete previous list of posts
     @Query("DELETE FROM reddit_page_posts")
     suspend fun deleteRedditPagePostsForRefresh()
+
+    @Update
+    suspend fun updateRedditPagePost(RedditPost: RedditPagePost)
 }

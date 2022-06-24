@@ -1,42 +1,10 @@
 package com.example.snapshotsforreddit.data
 
-import com.example.snapshotsforreddit.data.room.cache.subscribedsubreddit.SubscribedSubreddit
 import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 import com.example.snapshotsforreddit.network.responses.account.UserInfo
 import com.example.snapshotsforreddit.network.responses.subreddit.SubredditChildrenData
 
 class DefaultsDatasource {
-
-    val subscribedSubredditDefaults =
-        SubscribedSubreddit(
-            "default",
-            0,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null, null,
-            true,
-            null, ""
-
-        )
-
-    val subscribedSubredditHeader =
-        SubscribedSubreddit(
-            "header",
-            1,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null, null,
-            true,
-            null, ""
-        )
 
 
     fun loadDefaultSubreddits(): List<SubredditChildrenData> {
@@ -61,7 +29,6 @@ class DefaultsDatasource {
                 "header",
                 2,
                 null,
-
                 null,
                 null,
                 null,
@@ -77,7 +44,7 @@ class DefaultsDatasource {
 
     fun addHeader(): List<RedditChildrenData> {
         return listOf(
-            RedditChildrenData(dataKind = "header")
+            RedditChildrenData(dataKind = "header", name = "")
         )
     }
 
@@ -91,7 +58,8 @@ class DefaultsDatasource {
                 dataKind = "search",
                 subreddit = subredditName,
                 isDefault = isDefault,
-                isCompact = isCompact
+                isCompact = isCompact,
+                name = ""
             ),
         )
     }
@@ -107,10 +75,11 @@ class DefaultsDatasource {
                 total_karma = userInfo?.total_karma,
                 awarder_karma = userInfo?.awarder_karma,
                 awardee_karma = userInfo?.awardee_karma,
-                user_created_utc = userInfo?.created_utc
+                user_created_utc = userInfo?.created_utc,
+                name = ""
             ),
 
-            RedditChildrenData(dataKind = "history", user_name = userInfo?.name)
+            RedditChildrenData(dataKind = "history", user_name = userInfo?.name, name = "")
 
         )
     }
@@ -127,11 +96,12 @@ class DefaultsDatasource {
                 total_karma = userInfo?.total_karma,
                 awarder_karma = userInfo?.awarder_karma,
                 awardee_karma = userInfo?.awardee_karma,
-                user_created_utc = userInfo?.created_utc
+                user_created_utc = userInfo?.created_utc,
+                name = ""
             ),
 
 
-            RedditChildrenData(dataKind = "history", user_name = userInfo?.name)
+            RedditChildrenData(dataKind = "history", user_name = userInfo?.name, name = "")
 
 
         )

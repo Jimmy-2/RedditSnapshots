@@ -1,6 +1,5 @@
 package com.example.snapshotsforreddit.data.room.cache.redditpagepost
 
-import androidx.room.withTransaction
 import com.example.snapshotsforreddit.data.room.cache.subscribedsubreddit.SubscribedSubreddit
 import com.example.snapshotsforreddit.network.responses.subreddit.SubredditChildrenData
 import com.example.snapshotsforreddit.network.services.RedditApiService
@@ -100,11 +99,13 @@ class RedditPagePostRepository @Inject constructor(
                     )
 
 
-                subscribedSubredditDatabase.withTransaction {
-                    subscribedSubredditDao.deleteSubscribedSubredditsForRefresh()
 
-                    subscribedSubredditDao.insertSubscribedSubreddits(subscribedSubredditsList)
-                }
+
+//                subscribedSubredditDatabase.withTransaction {
+//                    subscribedSubredditDao.deleteSubscribedSubredditsForRefresh()
+//
+//                    subscribedSubredditDao.insertSubscribedSubreddits(subscribedSubredditsList)
+//                }
 
             } ,
 //            onFetchFailed = { t ->
@@ -116,4 +117,8 @@ class RedditPagePostRepository @Inject constructor(
 
 
         )
+
+    suspend fun updateRedditPagePage(redditPost: RedditPagePost) {
+        redditPagePostDao.updateRedditPagePost(redditPost)
+    }
 }

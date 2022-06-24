@@ -141,6 +141,11 @@ class PostViewHolder(
                     Glide.with(itemView)
                         .load(imageUrl)
                         .transition(DrawableTransitionOptions.withCrossFade())
+                        .override(
+                            post.preview.images[0].source?.width!!,
+                            post.preview.images[0].source?.height!!
+                        )
+                        .centerCrop()
                         .error(R.drawable.ic_error)
                         .into(imageviewPostItem)
                 }

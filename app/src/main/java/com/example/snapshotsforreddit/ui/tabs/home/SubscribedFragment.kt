@@ -111,6 +111,7 @@ class SubscribedFragment : Fragment(R.layout.fragment_subscribed) {
                 adapter = subscribedAdapter
                 layoutManager = LinearLayoutManager(requireContext())
                 setHasFixedSize(true)
+                itemAnimator?.changeDuration = 0
             }
 
 

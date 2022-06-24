@@ -2,9 +2,6 @@ package com.example.snapshotsforreddit.data.room.cache.redditpagepost
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.snapshotsforreddit.network.responses.postimage.ImagePreview
-import com.example.snapshotsforreddit.network.responses.postvideo.RedditPageMedia
-import com.example.snapshotsforreddit.network.responses.subreddit.SubredditChildrenData
 
 
 @Entity(tableName = "reddit_page_posts")
@@ -26,6 +23,7 @@ data class RedditPagePost (
 
     //true = post upvoted, false = post downvoted, null = neither
     //declare as var since we need to update its value when upvoting/downvoting on client side without having to recall api to fetch new changes
+    //TODO CHANGE TO VAL AFTER CONVERTING TO CACHING
     var likes: Boolean? = null,
 
     val title: String? = null,
@@ -61,7 +59,8 @@ data class RedditPagePost (
     val over_18: Boolean? = null,
 
     //This object contains the high res images/thumbnails
-    val preview: ImagePreview? = null,
+    //TODO
+//    val preview: ImagePreview? = null,
 
     //used to get post details information
     val id: String? = null,
@@ -76,11 +75,13 @@ data class RedditPagePost (
     val num_comments: Int? = null,
 
     //contains media items related to video/gif
-    val media: RedditPageMedia? = null,
+    //TODO: Map values from response into new variables that will be created here
+//    val media: RedditPageMedia? = null,
 
     //contains data that you can get from a subreddit's /about endpoint
     //use this to get subreddit icon
-    val sr_detail: SubredditChildrenData? = null,
+    //TODO
+//    val sr_detail: SubredditChildrenData? = null,
 
     //not used atm
     val permalink: String? = null,

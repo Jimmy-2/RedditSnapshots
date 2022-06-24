@@ -184,6 +184,7 @@
         <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/drawable/preview_window_logo.xml" value="0.1" />
         <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/drawable/splash.xml" value="0.167" />
         <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/drawable/transparent.xml" value="0.1205" />
+        <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/fragment_account_history.xml" value="0.5546875" />
         <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/fragment_account_overview.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/fragment_downloaded_posts.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/fragment_inbox.xml" value="0.33" />
@@ -212,7 +213,7 @@
         <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/item_subreddit_post_compact.xml" value="0.33" />
         <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/item_subscribed.xml" value="0.5" />
         <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/item_subscribed_default.xml" value="0.5" />
-        <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/item_test.xml" value="0.25" />
+        <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/item_test.xml" value="0.5" />
         <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/item_user_history.xml" value="0.4919678714859438" />
         <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/test.xml" value="0.37060041407867494" />
         <entry key="..\:/Users/kingl/StudioProjects/Snapshots/app/src/main/res/layout/textview_userinfo.xml" value="0.33" />

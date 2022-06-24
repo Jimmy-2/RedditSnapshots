@@ -42,6 +42,7 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page),
 
         binding.apply {
             recyclerviewPosts.setHasFixedSize(true)
+            recyclerviewPosts.itemAnimator?.changeDuration = 0
             recyclerviewPosts.adapter = redditPageAdapter.withLoadStateHeaderAndFooter(
                 header = RedditLoadStateAdapter { redditPageAdapter.retry() },
                 footer = RedditLoadStateAdapter { redditPageAdapter.retry() }

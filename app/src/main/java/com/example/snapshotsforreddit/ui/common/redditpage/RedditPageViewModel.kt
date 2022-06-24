@@ -3,6 +3,8 @@ package com.example.snapshotsforreddit.ui.common.redditpage
 import androidx.lifecycle.*
 import androidx.paging.cachedIn
 import com.example.snapshotsforreddit.data.datastore.PreferencesDataStoreRepository
+import com.example.snapshotsforreddit.data.room.cache.redditpagepost.RedditPagePost
+import com.example.snapshotsforreddit.data.room.cache.redditpagepost.RedditPagePostRepository
 import com.example.snapshotsforreddit.network.RedditApiRepository
 import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 import com.example.snapshotsforreddit.util.MonitorTriple
@@ -13,7 +15,8 @@ import javax.inject.Inject
 @HiltViewModel
 class RedditPageViewModel @Inject constructor(
     private val preferencesDataStoreRepository: PreferencesDataStoreRepository,
-    private val redditApiRepository: RedditApiRepository
+    private val redditApiRepository: RedditApiRepository,
+    private val redditPagePostRepository: RedditPagePostRepository
 ) : ViewModel() {
 
     //read and update isCompact value
@@ -92,5 +95,51 @@ class RedditPageViewModel @Inject constructor(
         }
 
     }
+
+    //caching
+
+    fun updatePostAfterClick(updatedRedditPost: RedditPagePost) = viewModelScope.launch {
+        redditPagePostRepository.updateRedditPagePage(updatedRedditPost)
+    }
+
+    fun onVoteClick(redditPost: RedditPagePost, voteType: Int) {
+        val currentVoteState = redditPost.likes
+
+        //0 for upvote clicked, 1 for downvote clicked
+        when (voteType) {
+            0 -> {
+                if (currentVoteState == true) {
+                    val updatedRedditPost = redditPost.copy(likes = null)
+                    updatePostAfterClick(updatedRedditPost)
+                    //TODO THEN POST TO REDDIT API SERVERS
+                    //onClickListener.onVoteClick(post!!, 0)
+                } else {
+                    val updatedRedditPost = redditPost.copy(likes = true)
+                    updatePostAfterClick(updatedRedditPost)
+                    //onClickListener.onVoteClick(post!!, 1)
+                }
+            }
+            1 -> {
+                if (currentVoteState == false) {
+                    val updatedRedditPost = redditPost.copy(likes = null)
+                    updatePostAfterClick(updatedRedditPost)
+                    //onClickListener.onVoteClick(post!!, 0)
+                } else {
+                    val updatedRedditPost = redditPost.copy(likes = false)
+                    updatePostAfterClick(updatedRedditPost)
+                    //onClickListener.onVoteClick(post!!, -1)
+                }
+            }
+        }
+
+    }
+
+    fun onSaveClick(redditPost: RedditPagePost) {
+
+    }
+
+
+
+
 
 }
