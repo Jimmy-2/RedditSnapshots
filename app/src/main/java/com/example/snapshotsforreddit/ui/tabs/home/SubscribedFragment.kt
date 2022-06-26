@@ -79,21 +79,24 @@ class SubscribedFragment : Fragment(R.layout.fragment_subscribed) {
 //        }
 
         val subscribedAdapter = SubscribedSubredditAdapter(
-            onSubscribedClick = {subscribedSubreddit ->
-                if(subscribedSubreddit.display_name_prefixed != null) {
+            onSubscribedClick = { subscribedSubreddit ->
+                if (subscribedSubreddit.display_name_prefixed != null) {
                     val action = when (subscribedSubreddit.subreddit_type) {
                         "user" -> {
                             SubscribedFragmentDirections.actionSubscribedFragmentToRedditpageNavigation(
-                                subscribedSubreddit.display_name_prefixed.substring(2), "user" , false
+                                subscribedSubreddit.display_name_prefixed.substring(2),
+                                "user",
+                                false
                             )
                         }
                         else -> {
                             SubscribedFragmentDirections.actionSubscribedFragmentToRedditpageNavigation(
-                                subscribedSubreddit.display_name_prefixed.substring(2), "r", false)
+                                subscribedSubreddit.display_name_prefixed.substring(2), "r", false
+                            )
                         }
                     }
                     findNavController().navigate(action)
-        }
+                }
 
             },
             onDefaultClick = { defaultName ->

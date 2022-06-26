@@ -66,7 +66,7 @@ data class RedditChildrenData(
     val score: Int? = null,
 
 //    //use preview for higher res. and if thumbnail == "" or "self", display text instead
-//    val thumbnail: String?,
+    val thumbnail: String? = null,
 
     //tells us if post is an image, gif, video, or text post
     //hint == 'hosted:video' #reddit hosted video

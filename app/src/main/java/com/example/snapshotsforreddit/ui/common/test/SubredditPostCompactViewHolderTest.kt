@@ -1,80 +1,68 @@
-package com.example.snapshotsforreddit.ui.common.viewholders
+package com.example.snapshotsforreddit.ui.common.test
 
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.snapshotsforreddit.R
+import com.example.snapshotsforreddit.data.room.cache.redditpagepost.RedditPagePost
 import com.example.snapshotsforreddit.databinding.ItemSubredditPostCompactBinding
-import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 import com.example.snapshotsforreddit.util.calculateAgeDifferenceLocalDateTime
 import com.example.snapshotsforreddit.util.getShortenedValue
 
-class SubredditPostCompactViewHolder(
-    private val adapter: PagingDataAdapter<RedditChildrenData, RecyclerView.ViewHolder>,
-    private val onClickListener: OnItemClickListener,
+class SubredditPostCompactViewHolderTest(
     private val binding: ItemSubredditPostCompactBinding,
+    private val onItemClick: (Int) -> Unit,
+    private val onUpvoteClick: (Int) -> Unit,
+    private val onDownvoteClick: (Int) -> Unit,
+    private val onMoreClick: (Int) -> Unit,
     private val isOverview: Boolean? = null,
 ) : RecyclerView.ViewHolder(binding.root) {
-    private var post: RedditChildrenData? = null
+
 
     init {
-        binding.root.setOnClickListener {
-            if (post != null) {
-                onClickListener.onItemClick(post!!)
+        binding.apply {
+            root.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onItemClick(position)
+                }
             }
+            cardUpvoteButton.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onUpvoteClick(position)
+
+                }
+            }
+
+            cardDownvoteButton.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onDownvoteClick(position)
+
+                }
+            }
+            imageMoreButton.setOnClickListener{
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onMoreClick(position)
+                }
+            }
+
+
+
         }
 
-        binding.cardUpvoteButton.setOnClickListener {
-            val position = bindingAdapterPosition
-            if (position != RecyclerView.NO_POSITION) {
-                if (post != null) {
-                    if (post!!.likes == true) {
-                        post!!.likes = null
-                        onClickListener.onVoteClick(post!!, 0)
-                    } else {
-                        post!!.likes = true
-                        onClickListener.onVoteClick(post!!, 1)
-                    }
-                    adapter.notifyItemChanged(position)
-                }
-            }
-        }
-        binding.cardDownvoteButton.setOnClickListener {
-            val position = bindingAdapterPosition
-            if (position != RecyclerView.NO_POSITION) {
-                if (post != null) {
-                    if (post!!.likes == false) {
-                        post!!.likes = null
-                        onClickListener.onVoteClick(post!!, 0)
-                    } else {
-                        post!!.likes = false
-                        onClickListener.onVoteClick(post!!, -1)
-                    }
-                    adapter.notifyItemChanged(position)
-                }
-            }
-        }
-
-        binding.imageMoreButton.setOnClickListener{
-            val position = bindingAdapterPosition
-            if (position != RecyclerView.NO_POSITION) {
-                if (post != null) {
-                    onClickListener.onMoreClick(post!!, 0)
-                }
-            }
-        }
 
     }
 
     @SuppressLint("ResourceAsColor")
-    fun bind(post: RedditChildrenData) {
-        this.post = post
-        val post = post
+    fun bind(post: RedditPagePost) {
+
         //TODO FIX CODE HERE : REFORMAT STATEMENTS
         binding.apply {
             if (isOverview == true) {
@@ -107,7 +95,7 @@ class SubredditPostCompactViewHolder(
 //            }
 
             imageviewPostItem.visibility = View.VISIBLE
-            if (post.is_self == true || post.preview == null) {
+            if (post.is_self == true || post.previewUrl == null) {
                 imageviewPostItem.setImageResource(R.drawable.ic_text)
             }
             else {
@@ -177,12 +165,6 @@ class SubredditPostCompactViewHolder(
         }
     }
 
-    interface OnItemClickListener {
-        fun onItemClick(post: RedditChildrenData)
-        fun onVoteClick(post: RedditChildrenData, type: Int)
-        fun onMoreClick(post: RedditChildrenData, type: Int)
-
-    }
 
 
     companion object {

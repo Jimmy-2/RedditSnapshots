@@ -14,6 +14,12 @@ data class RedditPagePost (
 
 
 
+    val redditPageSortOrder: String,
+    val redditPageName: String,
+    //val position: Int,
+
+
+
     //FROM API RESPONSE
     val subreddit: String? = null,
 
@@ -34,8 +40,8 @@ data class RedditPagePost (
 
     val score: Int? = null,
 
-//    //use preview for higher res. and if thumbnail == "" or "self", display text instead
-//    val thumbnail: String?,
+    //use preview for higher res. and if thumbnail == "" or "self", display text instead
+    val thumbnail: String?,
 
     //tells us if post is an image, gif, video, or text post
     //hint == 'hosted:video' #reddit hosted video
@@ -66,7 +72,8 @@ data class RedditPagePost (
     val id: String? = null,
 
     //kind+  id
-    @PrimaryKey val name: String,
+    @PrimaryKey
+    val name: String,
 
     //author of post
     val author: String? = null,
@@ -98,9 +105,15 @@ data class RedditPagePost (
 
 
 
+    //mapped content
+    val previewUrl: String? = null,
+    val previewWidth: Int? = null,
+    val previewHeight: Int? = null,
 
+    val sr_community_icon: String? = null,
+    val sr_icon_img: String? = null,
 
-
+//        media: RedditPageMedia
 
 
     //DEFAULTS

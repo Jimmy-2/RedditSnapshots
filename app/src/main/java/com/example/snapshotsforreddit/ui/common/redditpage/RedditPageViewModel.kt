@@ -9,6 +9,10 @@ import com.example.snapshotsforreddit.network.RedditApiRepository
 import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 import com.example.snapshotsforreddit.util.MonitorTriple
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -41,6 +45,42 @@ class RedditPageViewModel @Inject constructor(
 //            it.third!!, subredditType.value!!,
 //            it.second, it.first).cachedIn(viewModelScope)
 //    }
+
+
+    private val isCompactTest2 = MutableStateFlow<Boolean?>(null)
+
+    private val isCompactTest : MutableLiveData<Boolean> = MutableLiveData(true)
+    private val sortOrderTest2 : MutableLiveData<String>  = MutableLiveData("Default value")
+    val subredditNameTest2: MutableLiveData<String> = MutableLiveData("Default value")
+
+
+    val redditPagePostsTest = combine(_subredditName.asFlow(),sortOrder.asFlow(), isCompact.asFlow())
+    { redditPageName, sortOrder, isCompact ->
+        Triple(redditPageName, sortOrder, isCompact)
+    }.flatMapLatest { (redditPageName, sortOrder, isCompact) ->
+        //only executed if redditpage name is not null
+        redditPageName?.let {
+            redditPagePostRepository.getRedditPostsPaged("popular", sortOrder ?: "best")
+        }?: emptyFlow()
+
+    }.cachedIn(viewModelScope)
+
+    private val currentQuery = MutableStateFlow<String?>(null)
+
+    val redditPagePostsTest2 = currentQuery.flatMapLatest { query ->
+        //only executed if redditpage name is not null
+        query ?.let {
+            println("HELLO WORK PLEASE")
+            redditPagePostRepository.getRedditPostsPaged(query, sortOrder.value ?: "best")
+        }?: emptyFlow()
+
+    }.cachedIn(viewModelScope)
+
+
+
+    fun onSearchQuerySubmit(query: String) {
+        currentQuery.value = query
+    }
 
     val redditPagePosts = Transformations.switchMap(MonitorTriple(isCompact, sortOrder, _subredditName)) {
         redditApiRepository.getSubredditPostsList(
@@ -133,6 +173,10 @@ class RedditPageViewModel @Inject constructor(
         }
 
     }
+
+
+
+
 
     fun onSaveClick(redditPost: RedditPagePost) {
 

@@ -6,6 +6,7 @@ import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.ItemLoadStateBinding
 
 class RedditLoadStateAdapter(private val retry: () -> Unit): LoadStateAdapter<RedditLoadStateAdapter.LoadStateItemViewHolder>() {
@@ -34,6 +35,11 @@ class RedditLoadStateAdapter(private val retry: () -> Unit): LoadStateAdapter<Re
                 progressbarLoading.isVisible = loadState is LoadState.Loading
                 buttonLoadingRetry.isVisible = loadState !is LoadState.Loading
                 textviewLoadingError.isVisible = loadState !is LoadState.Loading
+
+                if (loadState is LoadState.Error) {
+                    textviewLoadingError.text = loadState.error.localizedMessage
+                        ?: binding.root.context.getString(R.string.error_with_loading)
+                }
             }
         }
     }

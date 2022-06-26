@@ -12,20 +12,18 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.paging.CombinedLoadStates
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentRedditPageBinding
-import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 import com.example.snapshotsforreddit.ui.common.loadstate.RedditLoadStateAdapter
-import com.example.snapshotsforreddit.util.changeViewOnLoadState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class RedditPageFragment : Fragment(R.layout.fragment_reddit_page),
-    RedditPageAdapter.OnItemClickListener {
+class RedditPageFragment : Fragment(R.layout.fragment_reddit_page){
     private val navigationArgs: RedditPageFragmentArgs by navArgs()
     private val viewModel: RedditPageViewModel by viewModels()
 
@@ -38,50 +36,103 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page),
 
         _binding = FragmentRedditPageBinding.bind(view)
 
-        val redditPageAdapter = RedditPageAdapter(this)
-
-        binding.apply {
-            recyclerviewPosts.setHasFixedSize(true)
-            recyclerviewPosts.itemAnimator?.changeDuration = 0
-            recyclerviewPosts.adapter = redditPageAdapter.withLoadStateHeaderAndFooter(
-                header = RedditLoadStateAdapter { redditPageAdapter.retry() },
-                footer = RedditLoadStateAdapter { redditPageAdapter.retry() }
-            )
-            refreshRedditPage.setOnRefreshListener { redditPageAdapter.refresh() }
-            buttonRedditPageRetry.setOnClickListener { redditPageAdapter.retry() }
-        }
-
+//        val redditPageAdapter = RedditPageAdapter(this)
+//
+//        binding.apply {
+//            recyclerviewPosts.setHasFixedSize(true)
+//            recyclerviewPosts.itemAnimator?.changeDuration = 0
+//            recyclerviewPosts.adapter = redditPageAdapter.withLoadStateHeaderAndFooter(
+//                header = RedditLoadStateAdapter { redditPageAdapter.retry() },
+//                footer = RedditLoadStateAdapter { redditPageAdapter.retry() }
+//            )
+//            refreshRedditPage.setOnRefreshListener { redditPageAdapter.refresh() }
+//            buttonRedditPageRetry.setOnClickListener { redditPageAdapter.retry() }
+//        }
+//
+//
+//        val redditPageName = navigationArgs.redditPageName
+//        val redditPageType = navigationArgs.redditPageType
+//        val isDefaults = navigationArgs.isDefaults
+//        //only load this once
+//        viewModel.loadRedditPage(redditPageName, redditPageType, isDefaults)
+//
+//        viewModel.redditPagePosts.observe(viewLifecycleOwner) {
+//            //connect data to adapter
+//            redditPageAdapter.submitData(viewLifecycleOwner.lifecycle, it)
+//
+//        }
+//
+//        //depending on the load state of the adapter (list of items) (error, loading, no results), we will display the necessary view for the user to see
+//        redditPageAdapter.addLoadStateListener { loadState: CombinedLoadStates ->
+//            binding.apply {
+//                changeViewOnLoadState(
+//                    loadState,
+//                    redditPageAdapter.itemCount,
+//                    1,
+//                    progressbarRedditPage,
+//                    recyclerviewPosts,
+//                    buttonRedditPageRetry,
+//                    textviewRedditPageError,
+//                    textviewRedditPageEmpty,
+//                    refreshRedditPage
+//                )
+//            }
+//        }
 
         val redditPageName = navigationArgs.redditPageName
         val redditPageType = navigationArgs.redditPageType
         val isDefaults = navigationArgs.isDefaults
         //only load this once
+
+        viewModel.onSearchQuerySubmit(redditPageName)
+
         viewModel.loadRedditPage(redditPageName, redditPageType, isDefaults)
 
-        viewModel.redditPagePosts.observe(viewLifecycleOwner) {
-            //connect data to adapter
-            redditPageAdapter.submitData(viewLifecycleOwner.lifecycle, it)
+        val redditPageAdapter = RedditPagePagingAdapter(
+            onItemClick = { redditPagePost->
 
-        }
+            },
+            onVoteClick = {redditPagePost, voteType ->
+                viewModel.onVoteClick(redditPagePost, voteType)
+            },
+            onMoreClick = {redditPagePost, voteType->
+                findNavController().navigate(RedditPageFragmentDirections.actionRedditPageFragmentRPToMoreOptionsDialogFragmentRP())
+            },
+            onSubredditClick = {subredditName ->
+                if(subredditName != null) {
+                    findNavController().navigate(RedditPageFragmentDirections.actionRedditPageFragmentRPSelf(subredditName, "r", false))
 
-        //depending on the load state of the adapter (list of items) (error, loading, no results), we will display the necessary view for the user to see
-        redditPageAdapter.addLoadStateListener { loadState: CombinedLoadStates ->
-            binding.apply {
-                changeViewOnLoadState(
-                    loadState,
-                    redditPageAdapter.itemCount,
-                    1,
-                    progressbarRedditPage,
-                    recyclerviewPosts,
-                    buttonRedditPageRetry,
-                    textviewRedditPageError,
-                    textviewRedditPageEmpty,
-                    refreshRedditPage
+                }
+
+            }
+
+        )
+
+        binding.apply {
+            recyclerviewPosts.apply {
+                adapter = redditPageAdapter.withLoadStateFooter(
+                    RedditLoadStateAdapter(redditPageAdapter::retry)
                 )
+                layoutManager = LinearLayoutManager(requireContext())
+                setHasFixedSize(true)
+                itemAnimator?.changeDuration = 0
+            }
+
+            viewLifecycleOwner.lifecycleScope.launchWhenStarted{
+                viewModel.redditPagePostsTest2.collectLatest { data ->
+
+//                    textViewInstructions.isVisible = false
+                    redditPageAdapter.submitData(data)
+                }
             }
         }
 
         setHasOptionsMenu(true)
+    }
+
+    override fun onStart() {
+        super.onStart()
+
     }
 
 
@@ -164,17 +215,17 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page),
         }
     }
 
-    override fun onSearchSubmit(query: String?, subredditName: String) {
-        if (query != null && query != "") {
-            //TODO emit these from viewmodel
-            findNavController().navigate(
-                RedditPageFragmentDirections.actionRedditPageFragmentRPToSearchResultsPostFragmentRP(
-                    query,
-                    subredditName
-                )
-            )
-        }
-    }
+//    override fun onSearchSubmit(query: String?, subredditName: String) {
+//        if (query != null && query != "") {
+//            //TODO emit these from viewmodel
+//            findNavController().navigate(
+//                RedditPageFragmentDirections.actionRedditPageFragmentRPToSearchResultsPostFragmentRP(
+//                    query,
+//                    subredditName
+//                )
+//            )
+//        }
+//    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -198,29 +249,18 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page),
 //    }
 
 
-    override fun onItemClick(post: RedditChildrenData) {
-        //findNavController().navigate(RedditPageFragmentDirections.actionRedditPageFragmentToPostDetailFragment(post))
-    }
 
-    override fun onVoteClick(post: RedditChildrenData, type: Int) {
-        //pass the post object to the post details screen
-        when (type) {
-            -1 -> viewModel.onVoteOnPost(-1, post)
-            0 -> viewModel.onVoteOnPost(0, post)
-            1 -> viewModel.onVoteOnPost(1, post)
-        }
-    }
 
-    override fun onMoreClick(post: RedditChildrenData, type: Int) {
-        findNavController().navigate(RedditPageFragmentDirections.actionRedditPageFragmentRPToMoreOptionsDialogFragmentRP())
+//    override fun onVoteClick(post: RedditChildrenData, type: Int) {
+//        //pass the post object to the post details screen
+//        when (type) {
+//            -1 -> viewModel.onVoteOnPost(-1, post)
+//            0 -> viewModel.onVoteOnPost(0, post)
+//            1 -> viewModel.onVoteOnPost(1, post)
+//        }
+//    }
 
-    }
 
-    override fun onSubredditClick(post: RedditChildrenData) {
-        if(post.subreddit != null) {
-            findNavController().navigate(RedditPageFragmentDirections.actionRedditPageFragmentRPSelf(post.subreddit, "r", false))
-        }
-    }
 
 
     companion object {

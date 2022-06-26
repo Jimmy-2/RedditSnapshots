@@ -1,90 +1,77 @@
-package com.example.snapshotsforreddit.ui.common.viewholders
+package com.example.snapshotsforreddit.ui.common.test
 
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.snapshotsforreddit.R
+import com.example.snapshotsforreddit.data.room.cache.redditpagepost.RedditPagePost
 import com.example.snapshotsforreddit.databinding.ItemPostBinding
-import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 import com.example.snapshotsforreddit.util.calculateAgeDifferenceLocalDateTime
 import com.example.snapshotsforreddit.util.getShortenedValue
 
-class PostViewHolder(
-    private val adapter: PagingDataAdapter<RedditChildrenData, RecyclerView.ViewHolder>,
-    private val onClickListener: OnItemClickListener,
+class PostViewHolderTest(
+
     private val binding: ItemPostBinding,
+    private val onItemClick: (Int) -> Unit,
+    private val onUpvoteClick: (Int) -> Unit,
+    private val onDownvoteClick: (Int) -> Unit,
+    private val onMoreClick: (Int) -> Unit,
+    private val onSubredditClick: (Int) -> Unit,
     private val isOverview: Boolean? = null,
 ) : RecyclerView.ViewHolder(binding.root) {
-    private var post: RedditChildrenData? = null
+
 
     init {
-        binding.root.setOnClickListener {
-            if (post != null) {
-                onClickListener.onItemClick(post!!)
-            }
-        }
-
-        binding.cardUpvoteButton.setOnClickListener {
-            val position = bindingAdapterPosition
-            if (position != RecyclerView.NO_POSITION) {
-                if (post != null) {
-                    if (post!!.likes == true) {
-                        post!!.likes = null
-                        onClickListener.onVoteClick(post!!, 0)
-                    } else {
-                        post!!.likes = true
-                        onClickListener.onVoteClick(post!!, 1)
-                    }
-                    adapter.notifyItemChanged(position)
+        binding.apply {
+            root.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onItemClick(position)
                 }
             }
-        }
+            cardUpvoteButton.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onUpvoteClick(position)
 
-        binding.cardDownvoteButton.setOnClickListener {
-            val position = bindingAdapterPosition
-            if (position != RecyclerView.NO_POSITION) {
-                if (post != null) {
-                    if (post!!.likes == false) {
-                        post!!.likes = null
-                        onClickListener.onVoteClick(post!!, 0)
-                    } else {
-                        post!!.likes = false
-                        onClickListener.onVoteClick(post!!, -1)
-                    }
-                    adapter.notifyItemChanged(position)
-                }
-            }
-        }
-
-        binding.imageMoreButton.setOnClickListener{
-            val position = bindingAdapterPosition
-            if (position != RecyclerView.NO_POSITION) {
-                if (post != null) {
-                    onClickListener.onMoreClick(post!!, 0)
-                }
-            }
-        }
-
-        binding.layoutSubreddit.setOnClickListener {
-            val position = bindingAdapterPosition
-            if (position != RecyclerView.NO_POSITION) {
-                if (post != null) {
-                    onClickListener.onSubredditClick(post!!)
                 }
             }
 
+            cardDownvoteButton.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onDownvoteClick(position)
+
+                }
+            }
+            imageMoreButton.setOnClickListener{
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onMoreClick(position)
+                }
+            }
+
+            layoutSubreddit.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onSubredditClick(position)
+                }
+
+            }
+
+
         }
+
+
 
     }
 
     @SuppressLint("ResourceAsColor")
-    fun bind(post: RedditChildrenData) {
-        this.post = post
+    fun bind(post: RedditPagePost) {
         //TODO FIX CODE HERE : REFORMAT STATEMENTS
         binding.apply {
             if (isOverview == true) {
@@ -97,31 +84,24 @@ class PostViewHolder(
 
             }
             //Subreddit icon
-            val subreddit = post.sr_detail
-            if (subreddit != null) {
-                val iconUrl: String =
-                    if (subreddit.community_icon != "" && subreddit.community_icon != null) {
-                        subreddit.community_icon.replace(removePart, "")
-                    } else if (subreddit.icon_img != "" && subreddit.icon_img != null) {
-                        subreddit.icon_img.replace(removePart, "")
-                    } else {
-                        ""
-                    }
-                Glide.with(itemView)
-                    .load(iconUrl)
-                    .centerCrop()
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .error(R.drawable.ic_blank)
-                    .into(imageviewSubredditIcon)
-
-                if (subreddit.primary_color != null && subreddit.primary_color != "") {
-                    imageviewSubredditIcon.setBackgroundColor(Color.parseColor(subreddit.primary_color))
+            val iconUrl: String =
+                if (post.sr_community_icon != "" && post.sr_community_icon != null) {
+                    post.sr_community_icon.replace(removePart, "")
+                } else if (post.sr_icon_img != "" && post.sr_icon_img != null) {
+                    post.sr_icon_img.replace(removePart, "")
+                } else {
+                    ""
                 }
-            }
+            Glide.with(itemView)
+                .load(iconUrl)
+                .centerCrop()
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .error(R.drawable.ic_blank)
+                .into(imageviewSubredditIcon)
 
 
             //Image
-            if (this@PostViewHolder.post?.is_self == true || this@PostViewHolder.post?.preview == null) {
+            if (post.is_self == true || post.previewUrl == null) {
 
                 imageviewPostItem.visibility = View.GONE
                 if (post.selftext == "") {
@@ -133,23 +113,21 @@ class PostViewHolder(
             } else {
                 textviewPostItemText.visibility = View.GONE
                 imageviewPostItem.visibility = View.VISIBLE
-                if (post.preview?.images?.get(0)?.source?.url != null) {
-                    val imageUrl =
-                        post.preview.images[0].source!!.url?.replace(
-                            removePart, ""
-                        )
-                    Glide.with(itemView)
-                        .load(imageUrl)
-                        .transition(DrawableTransitionOptions.withCrossFade())
-                        .override(
+                val imageUrl =
+                    post.previewUrl.replace(
+                        removePart, ""
+                    )
+                Glide.with(itemView)
+                    .load(imageUrl)
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .override(
 
-                            post.preview.images[0].source?.width!!,
-                            post.preview.images[0].source?.height!!
-                        )
-                        .centerCrop()
-                        .error(R.drawable.ic_error)
-                        .into(imageviewPostItem)
-                }
+                        post.previewWidth!!,
+                        post.previewHeight!!
+                    )
+                    .centerCrop()
+                    .error(R.drawable.ic_error)
+                    .into(imageviewPostItem)
             }
 
 
@@ -207,12 +185,6 @@ class PostViewHolder(
         }
     }
 
-    interface OnItemClickListener {
-        fun onItemClick(post: RedditChildrenData)
-        fun onVoteClick(post: RedditChildrenData, type: Int)
-        fun onMoreClick(post: RedditChildrenData, type: Int)
-        fun onSubredditClick(post: RedditChildrenData)
-    }
 
 
     companion object {
