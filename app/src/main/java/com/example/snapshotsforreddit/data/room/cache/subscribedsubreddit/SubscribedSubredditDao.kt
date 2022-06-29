@@ -9,7 +9,9 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SubscribedSubredditDao {
-    @Query("SELECT * FROM subscribed_subreddits ORDER BY display_name ASC")
+
+//    @Query("SELECT * FROM subscribed_subreddits ORDER BY display_name ASC")
+    @Query("SELECT * FROM subscribed_subreddits ORDER BY display_name COLLATE NOCASE ASC")
     fun getSubscribedSubreddits(): Flow<List<SubscribedSubreddit>>
 
     //overwrite results with same primary keys (if object with same primary key exists, it will be replaced)

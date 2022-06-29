@@ -65,8 +65,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center|start"
-        android:padding="8dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:paddingBottom="8dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintEnd_toStartOf="@+id/card_downvote_button"
         app:layout_constraintStart_toEndOf="@+id/card_post_image"
         app:layout_constraintTop_toBottomOf="@+id/layout_subreddit"
@@ -81,15 +83,15 @@
         android:layout_marginBottom="16dp"
         app:layout_constraintVertical_bias="0"
         app:cardBackgroundColor="?colorSecondaryVariant"
-        app:cardCornerRadius="16dp"
+        app:cardCornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/layout_subreddit">
 
         <ImageView
             android:id="@+id/imageview_post_item"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:contentDescription="@string/post_image_or_video"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -99,9 +101,20 @@
 
     </com.google.android.material.card.MaterialCardView>
 
+    <TextView
+        android:id="@+id/textview_post_author"
+        android:layout_width="wrap_content"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/textview_post_item_title"
+        app:layout_constraintStart_toEndOf="@+id/card_post_image"
+        app:layout_constraintBottom_toTopOf="@id/layout_post_stats"
+        tools:text="Username"/>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_upvote_count"
+        android:id="@+id/layout_post_stats"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginStart="4dp"
@@ -109,7 +122,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/image_saved"
         app:layout_constraintStart_toEndOf="@+id/card_post_image"
-        app:layout_constraintTop_toBottomOf="@+id/textview_post_item_title">
+        app:layout_constraintTop_toBottomOf="@+id/textview_post_author">
 
 
         <ImageView
@@ -204,7 +217,8 @@
 
             android:contentDescription="@string/more_options"
             android:padding="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/layout_upvote_count"
+            app:layout_constraintBottom_toBottomOf="@+id/layout_post_stats"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toEndOf="@+id/textview_post_item_age"
             app:layout_constraintTop_toTopOf="parent"

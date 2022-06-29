@@ -141,6 +141,7 @@ class PostCompactViewHolderTest(
 
             textviewPostItemSubreddit.text =
                 post.subreddit.toString().replaceFirstChar { it.uppercase() }
+            textviewPostAuthor.text = post.author
             textviewPostItemTitle.text = post.title
             textviewPostItemScore.text = getShortenedValue(post.score)
             textviewPostItemCommentCount.text =

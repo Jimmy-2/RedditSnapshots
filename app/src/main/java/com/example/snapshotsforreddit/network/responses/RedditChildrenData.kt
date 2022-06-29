@@ -55,7 +55,7 @@ data class RedditChildrenData(
 
     //true = post upvoted, false = post downvoted, null = neither
     //declare as var since we need to update its value when upvoting/downvoting on client side without having to recall api to fetch new changes
-    var likes: Boolean? = null,
+    val likes: Boolean? = null,
 
     val title: String? = null,
 

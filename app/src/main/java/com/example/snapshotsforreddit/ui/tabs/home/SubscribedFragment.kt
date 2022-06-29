@@ -157,6 +157,7 @@ class SubscribedFragment : Fragment(R.layout.fragment_subscribed) {
     }
 
 
+
 //    override fun onDestroyView() {
 //        super.onDestroyView()
 //        _binding = null

@@ -2,22 +2,22 @@ package com.example.snapshotsforreddit.ui.common.test
 
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.snapshotsforreddit.data.room.cache.redditpagepost.RedditPagePost
 import com.example.snapshotsforreddit.databinding.ItemSearchBarBinding
-import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 
 class SearchBarViewHolderTest  (
     private val binding: ItemSearchBarBinding,
-    private val onSearchSubmit: (String?, String) -> Unit
+//    private val onSearchSubmit: (String?, String) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
-    private var post: RedditChildrenData? = null
+    private var post: RedditPagePost? = null
     private var currentSubreddit: String? = null
 
     init {
         binding.searchview.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (currentSubreddit != null) {
-                    onSearchSubmit(query, currentSubreddit!!)
+//                    onSearchSubmit(query, currentSubreddit!!)
                 }
                 return true
             }
@@ -28,7 +28,7 @@ class SearchBarViewHolderTest  (
         })
     }
 
-    fun bind(post: RedditChildrenData) {
+    fun bind(post: RedditPagePost) {
         this.post = post
         this.currentSubreddit = post.subreddit
         binding.apply {

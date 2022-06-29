@@ -1,24 +1,20 @@
 package com.example.snapshotsforreddit.data.room.cache.redditpagepost
 
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 
 
-@Entity(tableName = "reddit_page_posts")
-data class RedditPagePost (
+@Entity(tableName = "reddit_page_posts", primaryKeys = ["name", "redditPageNameAndSortOrder"])
+data class RedditPagePost(
     //DEFAULTS
     val dataKind: String? = null,
     val isDefault: Boolean? = null,
     val isCompact: Boolean? = null,
 
 
-
-
+    val redditPageNameAndSortOrder: String,
     val redditPageSortOrder: String,
     val redditPageName: String,
     //val position: Int,
-
-
 
     //FROM API RESPONSE
     val subreddit: String? = null,
@@ -30,7 +26,7 @@ data class RedditPagePost (
     //true = post upvoted, false = post downvoted, null = neither
     //declare as var since we need to update its value when upvoting/downvoting on client side without having to recall api to fetch new changes
     //TODO CHANGE TO VAL AFTER CONVERTING TO CACHING
-    var likes: Boolean? = null,
+    val likes: Boolean? = null,
 
     val title: String? = null,
 
@@ -41,7 +37,7 @@ data class RedditPagePost (
     val score: Int? = null,
 
     //use preview for higher res. and if thumbnail == "" or "self", display text instead
-    val thumbnail: String?,
+    val thumbnail: String? = null,
 
     //tells us if post is an image, gif, video, or text post
     //hint == 'hosted:video' #reddit hosted video
@@ -72,7 +68,7 @@ data class RedditPagePost (
     val id: String? = null,
 
     //kind+  id
-    @PrimaryKey
+
     val name: String,
 
     //author of post
@@ -104,7 +100,6 @@ data class RedditPagePost (
     val created_utc: Long? = null,
 
 
-
     //mapped content
     val previewUrl: String? = null,
     val previewWidth: Int? = null,
@@ -117,9 +112,9 @@ data class RedditPagePost (
 
 
     //DEFAULTS
-    val history_type : String? = null,
+    val history_type: String? = null,
     val history_name: String? = null,
-    val icon:Int? = null,
+    val icon: Int? = null,
 
     //userinfo
     val user_name: String? = null,
@@ -128,11 +123,11 @@ data class RedditPagePost (
     val total_karma: Int? = null,
     val awarder_karma: Int? = null,
     val awardee_karma: Int? = null,
-    val user_created_utc: Long? = null
+    val user_created_utc: Long? = null,
 
 
-
-
+    val queryPosition: Int
+//    var indexInResponse: Int = -1
 
 
 )

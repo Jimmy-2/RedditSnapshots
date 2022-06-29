@@ -101,6 +101,7 @@ class SubscribedSubredditRepository @Inject constructor(
                     )
 
 
+
                 subscribedSubredditDatabase.withTransaction {
                     subscribedSubredditDao.deleteSubscribedSubredditsForRefresh()
 

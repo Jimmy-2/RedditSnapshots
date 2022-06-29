@@ -117,7 +117,6 @@ class SubredditPostCompactViewHolderTest(
 
 
             textviewPostAuthor.text = post.author
-
             textviewPostItemTitle.text = post.title
             textviewPostItemScore.text = getShortenedValue(post.score)
             textviewPostItemCommentCount.text =

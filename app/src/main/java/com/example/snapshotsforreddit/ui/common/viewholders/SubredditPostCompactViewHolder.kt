@@ -34,10 +34,10 @@ class SubredditPostCompactViewHolder(
             if (position != RecyclerView.NO_POSITION) {
                 if (post != null) {
                     if (post!!.likes == true) {
-                        post!!.likes = null
+//                        post!!.likes = null
                         onClickListener.onVoteClick(post!!, 0)
                     } else {
-                        post!!.likes = true
+//                        post!!.likes = true
                         onClickListener.onVoteClick(post!!, 1)
                     }
                     adapter.notifyItemChanged(position)
@@ -49,10 +49,10 @@ class SubredditPostCompactViewHolder(
             if (position != RecyclerView.NO_POSITION) {
                 if (post != null) {
                     if (post!!.likes == false) {
-                        post!!.likes = null
+//                        post!!.likes = null
                         onClickListener.onVoteClick(post!!, 0)
                     } else {
-                        post!!.likes = false
+//                        post!!.likes = false
                         onClickListener.onVoteClick(post!!, -1)
                     }
                     adapter.notifyItemChanged(position)

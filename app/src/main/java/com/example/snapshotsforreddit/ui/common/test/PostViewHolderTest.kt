@@ -37,7 +37,7 @@ class PostViewHolderTest(
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     onUpvoteClick(position)
-
+                    println("upvote")
                 }
             }
 
@@ -45,7 +45,7 @@ class PostViewHolderTest(
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     onDownvoteClick(position)
-
+                    println("downvote")
                 }
             }
             imageMoreButton.setOnClickListener{
@@ -95,6 +95,7 @@ class PostViewHolderTest(
             Glide.with(itemView)
                 .load(iconUrl)
                 .centerCrop()
+                .fitCenter()
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .error(R.drawable.ic_blank)
                 .into(imageviewSubredditIcon)

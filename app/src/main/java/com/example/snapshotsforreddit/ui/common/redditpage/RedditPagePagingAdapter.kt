@@ -6,19 +6,13 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.snapshotsforreddit.data.room.cache.redditpagepost.RedditPagePost
-import com.example.snapshotsforreddit.databinding.ItemPostBinding
-import com.example.snapshotsforreddit.databinding.ItemPostCompactBinding
-import com.example.snapshotsforreddit.databinding.ItemSubredditPostBinding
-import com.example.snapshotsforreddit.databinding.ItemSubredditPostCompactBinding
-import com.example.snapshotsforreddit.ui.common.test.PostCompactViewHolderTest
-import com.example.snapshotsforreddit.ui.common.test.PostViewHolderTest
-import com.example.snapshotsforreddit.ui.common.test.SubredditPostCompactViewHolderTest
-import com.example.snapshotsforreddit.ui.common.test.SubredditPostViewHolderTest
+import com.example.snapshotsforreddit.databinding.*
+import com.example.snapshotsforreddit.ui.common.test.*
 
 class RedditPagePagingAdapter(
 
     private val onItemClick: (RedditPagePost) -> Unit,
-    private val onVoteClick: (RedditPagePost, Int) -> Unit,
+    private val onVoteClick: (RedditPagePost, Boolean?) -> Unit,
     private val onMoreClick: (RedditPagePost, Int) -> Unit,
     private val onSubredditClick: (String?) -> Unit,
 ) : PagingDataAdapter<RedditPagePost, RecyclerView.ViewHolder>(POST_COMPARATOR) {
@@ -33,14 +27,9 @@ class RedditPagePagingAdapter(
 //               }
 
         return when (viewType) {
-//            SEARCH -> SearchBarViewHolder(
-//
-//                ItemSearchBarBinding.inflate(LayoutInflater.from(parent.context), parent, false),
-//                onSearchSubmit = { position ->
-//
-//
-//                }
-//            )
+            SEARCH -> SearchBarViewHolderTest(
+                ItemSearchBarBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            )
             POST -> PostViewHolderTest(
                 ItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false),
                 onItemClick = { position ->
@@ -141,11 +130,11 @@ class RedditPagePagingAdapter(
         val post = getItem(position)
         if (post != null) {
             if (post.likes == true) {
-                post.likes = null
-                onVoteClick(post, 0)
+
+                onVoteClick(post, null)
             } else {
-                post.likes = true
-                onVoteClick(post, 1)
+
+                onVoteClick(post, true)
             }
         }
     }
@@ -154,11 +143,11 @@ class RedditPagePagingAdapter(
         val post: RedditPagePost? = getItem(position)
         if (post != null) {
             if (post.likes == false) {
-                post.likes = null
-                onVoteClick(post, 0)
+
+                onVoteClick(post, null)
             } else {
-                post.likes = false
-                onVoteClick(post, -1)
+
+                onVoteClick(post, false)
             }
 
         }
@@ -182,11 +171,11 @@ class RedditPagePagingAdapter(
         val currentItem = getItem(position)
         if (currentItem != null) {
             when (holder) {
-//                is SearchBarViewHolderTest -> holder.bind(currentItem)
-                is PostViewHolderTest  -> holder.bind(currentItem)
-                is PostCompactViewHolderTest  -> holder.bind(currentItem)
-                is SubredditPostViewHolderTest  -> holder.bind(currentItem)
-                is SubredditPostCompactViewHolderTest  -> holder.bind(currentItem)
+                is SearchBarViewHolderTest -> holder.bind(currentItem)
+                is PostViewHolderTest -> holder.bind(currentItem)
+                is PostCompactViewHolderTest -> holder.bind(currentItem)
+                is SubredditPostViewHolderTest -> holder.bind(currentItem)
+                is SubredditPostCompactViewHolderTest -> holder.bind(currentItem)
             }
         }
     }
@@ -213,7 +202,15 @@ class RedditPagePagingAdapter(
 //    }
 
     override fun getItemViewType(position: Int): Int {
-        return SUBREDDIT_POST
+        return when (getItem(position)?.dataKind) {
+            "searchBar" -> SEARCH
+            else -> {
+                return when (getItem(position)?.isCompact) {
+                    true -> POST_COMPACT
+                    else -> POST
+                }
+            }
+        }
 
 
     }

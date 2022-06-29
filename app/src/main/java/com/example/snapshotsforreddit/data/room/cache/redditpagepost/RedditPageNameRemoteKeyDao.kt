@@ -11,9 +11,9 @@ interface RedditPageNameRemoteKeyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(keys: RedditPageNameRemoteKey)
 
-    @Query("SELECT * FROM reddit_page_remote_keys WHERE redditPageName = :redditPageName AND redditPageSortOrder = :sortOrder")
-    suspend fun getRemoteKeys(redditPageName: String, sortOrder: String): RedditPageNameRemoteKey
+    @Query("SELECT * FROM reddit_page_remote_keys WHERE redditPageNameAndSortOrder = :redditPageNameAndSortOrder")
+    suspend fun getRemoteKeys(redditPageNameAndSortOrder: String): RedditPageNameRemoteKey
 
-    @Query("DELETE FROM reddit_page_remote_keys WHERE redditPageName = :redditPageName AND redditPageSortOrder = :sortOrder")
-    suspend fun deleteByRedditPage(redditPageName: String, sortOrder: String)
+    @Query("DELETE FROM reddit_page_remote_keys WHERE redditPageNameAndSortOrder = :redditPageNameAndSortOrder")
+    suspend fun deleteRemoteKeys(redditPageNameAndSortOrder: String)
 }

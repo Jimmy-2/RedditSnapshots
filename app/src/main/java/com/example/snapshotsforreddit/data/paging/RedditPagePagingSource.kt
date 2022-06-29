@@ -47,7 +47,7 @@ class RedditPagePagingSource (
             }
 
             //TODO MAP KIND INTO NEXT VARS
-            val posts = if (params.key == null) {
+            val posts: List<RedditChildrenData> = if (params.key == null) {
                 DefaultsDatasource().addSearchBar(subredditName!!, isDefault?: false, isCompact?: false) + responseData!!.children.map { it.data }
             } else {
                 responseData!!.children.map { it.data }

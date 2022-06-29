@@ -15,19 +15,26 @@ class RedditPagePostRepository @Inject constructor(
 
     private val redditPagePostDao = redditPagePostDatabase.redditPagePostDao()
 
-    @OptIn(ExperimentalPagingApi::class)
-    fun getRedditPostsPaged(redditPageName: String, sortOrder: String): Flow<PagingData<RedditPagePost>> =
-        Pager(
+    fun getRedditPostsPaged(redditPageName: String,
+                            sortOrder: String,
+                            isCompact: Boolean): Flow<PagingData<RedditPagePost>> {
+        // appending '%' so we can allow other characters to be before and after the query string
 
-            config = PagingConfig(30),
-            remoteMediator = RedditPageRemoteMediator(redditPagePostDatabase, redditApiService, redditPageName, sortOrder),
-        ){
-            println("HELLO WORLD")
-            redditPagePostDao.getRedditPagePosts(redditPageName, sortOrder)
-        }.flow
+        val pagingSourceFactory = { redditPagePostDao.getRedditPagePosts("$redditPageName $sortOrder")}
 
-
-
+        @OptIn(ExperimentalPagingApi::class)
+        return Pager(
+            config = PagingConfig(pageSize = 25, enablePlaceholders = false),
+            remoteMediator = RedditPageRemoteMediator(
+                redditPagePostDatabase,
+                redditApiService,
+                redditPageName,
+                sortOrder,
+                isCompact
+            ),
+            pagingSourceFactory = pagingSourceFactory
+        ).flow
+    }
 
 
     suspend fun updateRedditPagePage(redditPost: RedditPagePost) {

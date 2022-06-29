@@ -1,6 +1,5 @@
 package com.example.snapshotsforreddit.ui.tabs.home
 
-import android.graphics.Color
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -42,9 +41,9 @@ class SubscribedSubredditViewHolder(val binding: ItemSubscribedBinding, private 
                 .into(imageSubredditIcon)
 
 
-            if(subreddit.primary_color != null && subreddit.primary_color != "") {
-                imageSubredditIcon.setBackgroundColor(Color.parseColor(subreddit.primary_color))
-            }
+//            if(subreddit.primary_color != null && subreddit.primary_color != "") {
+//                imageSubredditIcon.setBackgroundColor(Color.parseColor(subreddit.primary_color))
+//            }
 
 //            textviewSubredditItemTitle.text = subreddit.display_name_prefixed
             textviewSubredditItemTitle.text = subreddit.display_name

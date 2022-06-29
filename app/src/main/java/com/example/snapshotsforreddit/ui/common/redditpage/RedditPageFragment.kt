@@ -7,17 +7,21 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.snapshotsforreddit.R
 import com.example.snapshotsforreddit.databinding.FragmentRedditPageBinding
 import com.example.snapshotsforreddit.ui.common.loadstate.RedditLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -84,16 +88,16 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page){
         val isDefaults = navigationArgs.isDefaults
         //only load this once
 
-        viewModel.onSearchQuerySubmit(redditPageName)
+        viewModel.onRedditPageLoad(redditPageName)
 
-        viewModel.loadRedditPage(redditPageName, redditPageType, isDefaults)
+//        viewModel.loadRedditPage(redditPageName, redditPageType, isDefaults)
 
         val redditPageAdapter = RedditPagePagingAdapter(
             onItemClick = { redditPagePost->
 
             },
-            onVoteClick = {redditPagePost, voteType ->
-                viewModel.onVoteClick(redditPagePost, voteType)
+            onVoteClick = {redditPagePost, isUpvote ->
+                viewModel.onVoteClick(redditPagePost, isUpvote)
             },
             onMoreClick = {redditPagePost, voteType->
                 findNavController().navigate(RedditPageFragmentDirections.actionRedditPageFragmentRPToMoreOptionsDialogFragmentRP())
@@ -118,12 +122,110 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page){
                 itemAnimator?.changeDuration = 0
             }
 
+
+
             viewLifecycleOwner.lifecycleScope.launchWhenStarted{
-                viewModel.redditPagePostsTest2.collectLatest { data ->
+                viewModel.redditPagePostsTest2.collectLatest {
 
 //                    textViewInstructions.isVisible = false
-                    redditPageAdapter.submitData(data)
+                    redditPageAdapter.submitData(it)
                 }
+
+            }
+
+
+            //                    redditPageAdapter.itemCount,
+//                    1,
+//                    progressbarRedditPage,
+//                    recyclerviewPosts,
+//                    buttonRedditPageRetry,
+//                    textviewRedditPageError,
+//                    textviewRedditPageEmpty,
+//                    refreshRedditPage
+
+
+            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+                redditPageAdapter.loadStateFlow
+                    .distinctUntilChangedBy { it.source.refresh }
+                    .filter { it.source.refresh is LoadState.NotLoading }
+                    .collect {
+                        if (viewModel.pendingScrollToTopAfterNewQuery) {
+                            recyclerviewPosts.scrollToPosition(0)
+                            viewModel.pendingScrollToTopAfterNewQuery = false
+                        }
+                        if (viewModel.pendingScrollToTopAfterRefresh && it.mediator?.refresh is LoadState.NotLoading) {
+                            recyclerviewPosts.scrollToPosition(0)
+                            viewModel.pendingScrollToTopAfterRefresh = false
+                        }
+                    }
+            }
+
+//            lifecycleScope.launchWhenCreated {
+//                redditPageAdapter.loadStateFlow
+//                    // Use a state-machine to track LoadStates such that we only transition to
+//                    // NotLoading from a RemoteMediator load if it was also presented to UI.
+//                    .asMergedLoadStates()
+//                    // Only emit when REFRESH changes, as we only want to react on loads replacing the
+//                    // list.
+//                    .distinctUntilChangedBy { it.refresh }
+//                    // Only react to cases where REFRESH completes i.e., NotLoading.
+//                    .filter { it.refresh is LoadState.NotLoading }
+//                    // Scroll to top is synchronous with UI updates, even if remote load was triggered.
+//                    .collect { binding.recyclerviewPosts.scrollToPosition(0) }
+//            }
+
+
+            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+                redditPageAdapter.loadStateFlow
+                    .collect { loadState ->
+                        when (val refresh = loadState.mediator?.refresh) {
+                            is LoadState.Loading -> {
+                                textviewRedditPageError.isVisible = false
+                                buttonRedditPageRetry.isVisible = false
+                                refreshRedditPage.isRefreshing = true
+//                                textViewNoResults.isVisible = false
+                                recyclerviewPosts.isVisible = redditPageAdapter.itemCount > 0
+                            }
+                            is LoadState.NotLoading -> {
+                                textviewRedditPageError.isVisible = false
+                                buttonRedditPageRetry.isVisible = false
+                                refreshRedditPage.isRefreshing = false
+                                recyclerviewPosts.isVisible = redditPageAdapter.itemCount > 0
+
+                                val noResults =
+                                    redditPageAdapter.itemCount < 1 && loadState.append.endOfPaginationReached
+                                            && loadState.source.append.endOfPaginationReached
+
+//                                textViewNoResults.isVisible = noResults
+                            }
+                            is LoadState.Error -> {
+                                refreshRedditPage.isRefreshing = false
+//                                textViewNoResults.isVisible = false
+                                recyclerviewPosts.isVisible = redditPageAdapter.itemCount > 0
+
+                                val noCachedResults =
+                                    redditPageAdapter.itemCount < 1 && loadState.source.append.endOfPaginationReached
+
+                                textviewRedditPageError.isVisible = noCachedResults
+                                buttonRedditPageRetry.isVisible = noCachedResults
+
+//                                val errorMessage = getString(
+//                                    R.string.could_not_load_search_results,
+//                                    refresh.error.localizedMessage
+//                                        ?: getString(R.string.unknown_error_occurred)
+//                                )
+//                                textViewError.text = errorMessage
+                            }
+                        }
+                    }
+            }
+
+            refreshRedditPage.setOnRefreshListener { redditPageAdapter.refresh()
+//                recyclerviewPosts.scrollToPosition(0)
+            }
+
+            buttonRedditPageRetry.setOnClickListener { redditPageAdapter.retry()
+//                recyclerviewPosts.scrollToPosition(0)
             }
         }
 
@@ -133,8 +235,12 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page){
     override fun onStart() {
         super.onStart()
 
+
     }
 
+//    override fun onBottomNavigationFragmentReselected() {
+//        binding.recyclerviewPosts.scrollToPosition(0)
+//    }
 
     //inflate/activate options menu
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -229,6 +335,9 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page){
 
     override fun onDestroyView() {
         super.onDestroyView()
+        println("HELLO123 DESTROYING")
+        binding.recyclerviewPosts.adapter = null
+
         _binding = null
     }
 

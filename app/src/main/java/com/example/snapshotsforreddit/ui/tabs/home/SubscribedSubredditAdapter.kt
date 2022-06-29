@@ -73,7 +73,7 @@ class SubscribedSubredditAdapter(
         init {
 
             binding.buttonSubredditHome.setOnClickListener {
-                navigateToSubreddit("Home")
+                navigateToSubreddit("Home Feed")
             }
             binding.buttonSubredditPopular.setOnClickListener {
                 navigateToSubreddit("popular")
