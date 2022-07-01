@@ -125,13 +125,30 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page){
 
 
             viewLifecycleOwner.lifecycleScope.launchWhenStarted{
-                viewModel.redditPagePostsTest2.collectLatest {
+                viewModel.redditPagePostsTest.collectLatest {
 
 //                    textViewInstructions.isVisible = false
                     redditPageAdapter.submitData(it)
                 }
 
+
+
             }
+
+//            viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+//                redditPageAdapter.loadStateFlow
+//                    .distinctUntilChanged { old, new ->
+//                        old.mediator?.prepend?.endOfPaginationReached.isTrue() ==
+//                                new.mediator?.prepend?.endOfPaginationReached.isTrue()
+//                    }
+//                    .filter { it.refresh is LoadState.NotLoading && it.prepend.endOfPaginationReached && !it.append.endOfPaginationReached}
+//                    .collect {
+//                        recyclerviewPosts.scrollToPosition(0)
+//                    }
+//            }
+
+
+
 
 
             //                    redditPageAdapter.itemCount,
@@ -149,14 +166,22 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page){
                     .distinctUntilChangedBy { it.source.refresh }
                     .filter { it.source.refresh is LoadState.NotLoading }
                     .collect {
-                        if (viewModel.pendingScrollToTopAfterNewQuery) {
+
+//                            recyclerviewPosts.scrollToPosition(0)
+
+                        if (viewModel.pendingScrollToTopAfterNewSubreddit) {
                             recyclerviewPosts.scrollToPosition(0)
-                            viewModel.pendingScrollToTopAfterNewQuery = false
+                            viewModel.pendingScrollToTopAfterNewSubreddit = false
                         }
+
+
+
+                        //mediator finished refreshing and paging source turns from loading to not loading
                         if (viewModel.pendingScrollToTopAfterRefresh && it.mediator?.refresh is LoadState.NotLoading) {
                             recyclerviewPosts.scrollToPosition(0)
                             viewModel.pendingScrollToTopAfterRefresh = false
                         }
+
                     }
             }
 
@@ -185,6 +210,9 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page){
                                 refreshRedditPage.isRefreshing = true
 //                                textViewNoResults.isVisible = false
                                 recyclerviewPosts.isVisible = redditPageAdapter.itemCount > 0
+
+                                viewModel.refreshInProgress = true
+                                viewModel.pendingScrollToTopAfterRefresh = true
                             }
                             is LoadState.NotLoading -> {
                                 textviewRedditPageError.isVisible = false
@@ -215,6 +243,9 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page){
 //                                        ?: getString(R.string.unknown_error_occurred)
 //                                )
 //                                textViewError.text = errorMessage
+
+                                viewModel.refreshInProgress = false
+                                viewModel.pendingScrollToTopAfterRefresh = false
                             }
                         }
                     }
@@ -230,12 +261,6 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page){
         }
 
         setHasOptionsMenu(true)
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-
     }
 
 //    override fun onBottomNavigationFragmentReselected() {

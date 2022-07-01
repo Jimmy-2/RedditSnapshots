@@ -48,7 +48,7 @@ class PostViewHolderTest(
                     println("downvote")
                 }
             }
-            imageMoreButton.setOnClickListener{
+            imageMoreButton.setOnClickListener {
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     onMoreClick(position)
@@ -65,7 +65,6 @@ class PostViewHolderTest(
 
 
         }
-
 
 
     }
@@ -121,11 +120,11 @@ class PostViewHolderTest(
                 Glide.with(itemView)
                     .load(imageUrl)
                     .transition(DrawableTransitionOptions.withCrossFade())
-                    .override(
-
-                        post.previewWidth!!,
-                        post.previewHeight!!
-                    )
+//                    .override(
+//
+//                        post.previewWidth!!,
+//                        post.previewHeight!!
+//                    )
                     .centerCrop()
                     .error(R.drawable.ic_error)
                     .into(imageviewPostItem)
@@ -145,9 +144,9 @@ class PostViewHolderTest(
 
 
 
-            if(post.saved == true) {
+            if (post.saved == true) {
                 imageSaved.visibility = View.VISIBLE
-            }else {
+            } else {
                 imageSaved.visibility = View.INVISIBLE
             }
 
@@ -185,7 +184,6 @@ class PostViewHolderTest(
             }
         }
     }
-
 
 
     companion object {

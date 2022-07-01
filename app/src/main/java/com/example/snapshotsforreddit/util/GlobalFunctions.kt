@@ -89,3 +89,5 @@ fun AppCompatActivity.updateForTheme(theme: String) = when (theme) {
     AppTheme.LIGHT.name  -> delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_NO
     else -> delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
 }
+
+fun Boolean?.isTrue() = this != null && this

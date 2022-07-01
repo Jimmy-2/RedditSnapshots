@@ -10,6 +10,7 @@ import com.example.snapshotsforreddit.network.responses.RedditChildrenData
 import com.example.snapshotsforreddit.util.MonitorTriple
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
@@ -46,72 +47,20 @@ class RedditPageViewModel @Inject constructor(
 //    }
 
 
-    private val isCompactTest2 = MutableStateFlow<Boolean?>(null)
+
 
     private val sortOrderTest2: MutableLiveData<String> = MutableLiveData("Default value")
     val subredditNameTest2: MutableLiveData<String> = MutableLiveData("Default value")
 
 
-//    val redditPagePostsTest = combine(_subredditName.asFlow(),sortOrder.asFlow(), isCompact.asFlow())
-//    { redditPageName, sortOrder, isCompact ->
-//        Triple(redditPageName, sortOrder, isCompact)
-//    }.flatMapLatest { (redditPageName, sortOrder, isCompact) ->
-//        //only executed if redditpage name is not null
-//        redditPageName?.let {
-//            redditPagePostRepository.getRedditPostsPaged("popular", sortOrder ?: "best")
-//        }?: emptyFlow()
-//
-//    }.cachedIn(viewModelScope)
-
-
 
     private val currentRedditPageName = MutableStateFlow<String?>(null)
-    private val sortOrderTest = MutableStateFlow<String?>(null)
-    private val isCompactTest = MutableStateFlow<Boolean?>(null)
-
-
-//    val redditPagePostsTest2  = currentRedditPageName.flatMapLatest { redditPageName ->
-//        redditPageName?.let {
-//            redditPagePostRepository.getRedditPostsPaged(
-//                redditPageName,
-//                "best",
-//                true
-//            )
-//        } ?: emptyFlow()
-//    }.cachedIn(viewModelScope)
-
-    val redditPagePostsTest2  = currentRedditPageName.flatMapLatest { redditPageName ->
-        redditPageName?.let {
-            redditPagePostRepository.getRedditPostsPaged(
-                redditPageName,
-                "best",
-                true
-            )
-        } ?: emptyFlow()
-    }.cachedIn(viewModelScope)
-
-    fun onRedditPageLoad(redditPageName: String) {
-        println("HELLO123 HEY PAGE LOADING")
-        if(currentRedditPageName.value != redditPageName) {
-            currentRedditPageName.value = redditPageName
-            newQueryInProgress = true
-            pendingScrollToTopAfterNewQuery = true
-        }
-
-
-    }
-
-    var refreshInProgress = false
-    var pendingScrollToTopAfterRefresh = false
-
-    var newQueryInProgress = false
-    var pendingScrollToTopAfterNewQuery = false
+    private val sortOrderTest = MutableStateFlow<String?>("best")
+    private val isCompactTest = MutableStateFlow<Boolean?>(false)
 
 
 
-
-//
-//    val redditPagePostsTest2 = combine(currentRedditPageName, sortOrderTest, isCompactTest)
+//    val redditPagePostsTest = combine(currentRedditPageName, sortOrderTest, isCompactTest)
 //    { redditPageName, sortOrder, isCompact ->
 //        Triple(redditPageName, sortOrder, isCompact)
 //    }.flatMapLatest { (redditPageName, sortOrder, isCompact) ->
@@ -123,6 +72,83 @@ class RedditPageViewModel @Inject constructor(
 //                isCompact ?: false
 //            )
 //        } ?: emptyFlow()
+
+//    }
+
+
+
+//    val redditPagePostsTest = currentRedditPageName.combine(sortOrderTest, isCompactTest2 ){ redditPageName, sortOrder, isCompact ->
+//        Triple(redditPageName, sortOrder, isCompact )
+//    }.flatMapLatest { (redditPageName, sortOrder, isCompact) ->
+//        //only executed if redditpage name is not null
+//        redditPageName ?.let {
+//            redditPagePostRepository.getRedditPostsPaged(redditPageName, sortOrder ?: "best", isCompact ?: false)
+//        }?: emptyFlow()
+//
+//    }.cachedIn(viewModelScope)
+
+
+
+    //TODO RIGHT NOW SWITCHING BETWEEN ISCOMPACT SCROLLS PAGES IMPACTED UP TO POSITON 0. FIX THIS
+    //also apollo app does not automatically reload other tabs if you switch ebtween compact or not
+
+
+        val redditPagePostsTest = currentRedditPageName.combine(sortOrderTest ){ redditPageName, sortOrder ->
+        Pair(redditPageName, sortOrder )
+    }.combine(isCompactTest) { nameAndSortPair, isCompact ->
+        Pair(nameAndSortPair, isCompact)
+        }.flatMapLatest { (nameAndSortPair, sortOrder) ->
+        //only executed if redditpage name is not null
+            nameAndSortPair.first ?.let {
+            redditPagePostRepository.getRedditPostsPaged(it, nameAndSortPair.second ?: "best", sortOrder ?: false)
+        }?: emptyFlow()
+
+    }.cachedIn(viewModelScope)
+
+
+
+
+
+
+    val redditPagePostsTest2  = currentRedditPageName.flatMapLatest { redditPageName ->
+        redditPageName?.let {
+            redditPagePostRepository.getRedditPostsPaged(
+                redditPageName,
+                "best",
+                true
+            )
+        } ?: emptyFlow()
+    }.cachedIn(viewModelScope)
+
+    var refreshInProgress = false
+    var pendingScrollToTopAfterRefresh = false
+
+
+    var newSubredditInProgress = false
+    var pendingScrollToTopAfterNewSubreddit = false
+
+    fun onRedditPageLoad(redditPageName: String) {
+        if(currentRedditPageName.value != redditPageName) {
+            currentRedditPageName.value = ""
+
+            currentRedditPageName.value = redditPageName
+
+
+        }
+
+
+    }
+
+    fun onSortOrderSelected(newSortOrder: String) {
+        if (sortOrderTest.value != newSortOrder) {
+            sortOrderTest.value = newSortOrder
+        }
+    }
+
+
+
+//
+
 //
 //
 //
@@ -172,11 +198,6 @@ class RedditPageViewModel @Inject constructor(
         }
     }
 
-    fun onSortOrderSelected(newSortOrder: String) {
-        if (sortOrder.value != newSortOrder) {
-            sortOrder.value = newSortOrder
-        }
-    }
 
     fun onCompactViewClicked(isCompactView: Boolean) = viewModelScope.launch {
         //update isCompactView in datastore on compact button clicked
@@ -185,8 +206,7 @@ class RedditPageViewModel @Inject constructor(
     }
 
     fun checkIsCompact(newVal: Boolean) {
-        if (isCompact.value != newVal) {
-            isCompact.value = newVal
+        if (isCompactTest.value != newVal) {
             isCompactTest.value = newVal
         }
     }

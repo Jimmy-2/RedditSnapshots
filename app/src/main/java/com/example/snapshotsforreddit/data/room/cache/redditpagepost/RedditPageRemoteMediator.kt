@@ -202,31 +202,28 @@ class RedditPageRemoteMediator (
         loadType: LoadType,
         state: PagingState<Int, RedditPagePost>
     ): MediatorResult {
-        try {
-            val loadKey = when (loadType) {
-                LoadType.REFRESH -> null
-                LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
-                LoadType.APPEND -> {
-                    // Query DB for SubredditRemoteKey for the subreddit.
-                    // SubredditRemoteKey is a wrapper object we use to keep track of page keys we
-                    // receive from the Reddit API to fetch the next or previous page.
-                    val remoteKey = redditPagePostDatabase.withTransaction {
-                        redditPageNameRemoteKeyDao.getRemoteKeys("$redditPageName $redditPageSortOrder")
-                    }
+        val loadKey = when (loadType) {
+            LoadType.REFRESH -> null
+            LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
+            LoadType.APPEND -> {
+                // Query DB for SubredditRemoteKey for the subreddit.
+                // SubredditRemoteKey is a wrapper object we use to keep track of page keys we
+                // receive from the Reddit API to fetch the next or previous page.
+                val remoteKey = redditPageNameRemoteKeyDao.getRemoteKeys("$redditPageName $redditPageSortOrder")
 
-                    // We must explicitly check if the page key is null when appending, since the
-                    // Reddit API informs the end of the list by returning null for page key, but
-                    // passing a null key to Reddit API will fetch the initial page.
-                    if (remoteKey.nextPageKey == null) {
-                        return MediatorResult.Success(endOfPaginationReached = true)
-                    }
 
-                    remoteKey.nextPageKey
+                // We must explicitly check if the page key is null when appending, since the
+                // Reddit API informs the end of the list by returning null for page key, but
+                // passing a null key to Reddit API will fetch the initial page.
+                if (remoteKey.nextPageKey == null) {
+                    return MediatorResult.Success(endOfPaginationReached = true)
                 }
-            }
-            println("HELLO123 ${state.config.initialLoadSize}")
-            println("HELLO123 ${state.config.pageSize}")
 
+                remoteKey.nextPageKey
+            }
+        }
+
+        try {
             val responseData = if(redditPageName == "Home Feed") {
                 redditApiService.getHomePosts(
                     User_Agent = "snapshots-for-reddit",
@@ -268,7 +265,7 @@ class RedditPageRemoteMediator (
 
 
 
-                val lastQueryPosition = redditPagePostDao.getLastQueryPosition("$redditPageName $redditPageSortOrder") ?: 1
+                val lastQueryPosition = redditPagePostDao.getLastQueryPosition("$redditPageName $redditPageSortOrder") ?: 0
                 var queryPosition = lastQueryPosition + 1
 
                 val redditPagePostsList = redditChildrenDataList.map { redditChildrenData ->
@@ -375,12 +372,12 @@ class RedditPageRemoteMediator (
                 }
 
 
-                val searchBar = listOf(RedditPagePost(dataKind = "searchBar", name = "searchBar $redditPageName $redditPageSortOrder",redditPageNameAndSortOrder  = "$redditPageName $redditPageSortOrder", redditPageName = redditPageName, redditPageSortOrder = redditPageSortOrder, queryPosition = 0))
+                val searchBar = listOf(RedditPagePost(dataKind = "searchBar", name = "searchBar $redditPageName $redditPageSortOrder",redditPageNameAndSortOrder  = "$redditPageName $redditPageSortOrder", redditPageName = redditPageName, redditPageSortOrder = redditPageSortOrder, queryPosition = -1))
 
 
                 redditPagePostDao.insertRedditPagePosts(searchBar + redditPagePostsList)
                 redditPageNameRemoteKeyDao.insert(RedditPageNameRemoteKey("$redditPageName $redditPageSortOrder", responseData.after))
-                println("HELLO123 ${responseData.after}")
+
             }
 
             return MediatorResult.Success(endOfPaginationReached = redditChildrenDataList.isEmpty())
@@ -394,3 +391,4 @@ class RedditPageRemoteMediator (
 
 
 }
+
