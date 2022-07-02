@@ -14,7 +14,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.example.snapshotsforreddit"
+        applicationId "com.jimmywu.snapshotsforreddit"
         minSdk 24
         targetSdk 32
         versionCode 1
@@ -57,7 +57,7 @@ android {
             }
         }
     }
-    namespace 'com.example.snapshotsforreddit'
+    namespace 'com.jimmywu.snapshotsforreddit'
 }
 
 dependencies {

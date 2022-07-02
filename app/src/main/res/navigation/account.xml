@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/accountOverviewFragment"
-        android:name="com.example.snapshotsforreddit.ui.tabs.account.overview.AccountOverviewFragment"
+        android:name="com.jimmywu.snapshotsforreddit.ui.tabs.account.overview.AccountOverviewFragment"
         android:label="@string/title_account">
         <deepLink
             android:id="@+id/signInRedirectDeepLink"
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/accountHistoryFragment"
-        android:name="com.example.snapshotsforreddit.ui.tabs.account.history.AccountHistoryFragment"
+        android:name="com.jimmywu.snapshotsforreddit.ui.tabs.account.history.AccountHistoryFragment"
         android:label="{historyName}"
         tools:layout="@layout/fragment_account_history" >
         <argument

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/redditPageFragmentRP"
-        android:name="com.example.snapshotsforreddit.ui.common.redditpage.RedditPageFragment"
+        android:name="com.jimmywu.snapshotsforreddit.ui.common.redditpage.RedditPageFragment"
         android:label="" >
         <argument
             android:name="redditPageName"
@@ -30,11 +30,11 @@
     </fragment>
     <dialog
         android:id="@+id/moreOptionsDialogFragmentRP"
-        android:name="com.example.snapshotsforreddit.ui.common.moreoptions.MoreOptionsDialogFragment"
+        android:name="com.jimmywu.snapshotsforreddit.ui.common.moreoptions.MoreOptionsDialogFragment"
         android:label="MoreOptionsDialogFragment" />
     <fragment
         android:id="@+id/searchResultsPostFragmentRP"
-        android:name="com.example.snapshotsforreddit.ui.common.searchresults.posts.SearchResultsPostFragment"
+        android:name="com.jimmywu.snapshotsforreddit.ui.common.searchresults.posts.SearchResultsPostFragment"
         tools:layout="@layout/fragment_search_results_post"
         android:label="fragment_search_results_post">
         <argument

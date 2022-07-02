@@ -6,7 +6,7 @@
     app:startDestination="@id/subscribedFragment">
     <fragment
         android:id="@+id/subscribedFragment"
-        android:name="com.example.snapshotsforreddit.ui.tabs.home.SubscribedFragment"
+        android:name="com.jimmywu.snapshotsforreddit.ui.tabs.home.SubscribedFragment"
         android:label="@string/title_subreddits"
         tools:layout="@layout/fragment_subscribed" >
         <action

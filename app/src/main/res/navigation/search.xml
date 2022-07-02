@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.example.snapshotsforreddit.ui.tabs.search.SearchFragment"
+        android:name="com.jimmywu.snapshotsforreddit.ui.tabs.search.SearchFragment"
         android:label="@string/title_search"
         tools:layout="@layout/fragment_search">
         <action
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchResultsPostFragment2"
-        android:name="com.example.snapshotsforreddit.ui.common.searchresults.posts.SearchResultsPostFragment"
+        android:name="com.jimmywu.snapshotsforreddit.ui.common.searchresults.posts.SearchResultsPostFragment"
         android:label="fragment_search_results_post"
         tools:layout="@layout/fragment_search_results_post" >
         <argument
@@ -41,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/userOverviewFragment"
-        android:name="com.example.snapshotsforreddit.ui.common.otherusers.overview.UserOverviewFragment"
+        android:name="com.jimmywu.snapshotsforreddit.ui.common.otherusers.overview.UserOverviewFragment"
         android:label="fragment_user_overview"
         tools:layout="@layout/fragment_user_overview" >
         <argument
@@ -50,7 +50,7 @@
     </fragment>
     <fragment
         android:id="@+id/redditPageFragment2"
-        android:name="com.example.snapshotsforreddit.ui.common.redditpage.RedditPageFragment"
+        android:name="com.jimmywu.snapshotsforreddit.ui.common.redditpage.RedditPageFragment"
         android:label="RedditPageFragment" >
         <argument
             android:name="redditPageName"
@@ -65,7 +65,7 @@
 
     <fragment
         android:id="@+id/searchResultsSubredditFragment"
-        android:name="com.example.snapshotsforreddit.ui.tabs.search.subreddits.SearchResultsSubredditFragment"
+        android:name="com.jimmywu.snapshotsforreddit.ui.tabs.search.subreddits.SearchResultsSubredditFragment"
         android:label="fragment_search_results_subreddit"
         tools:layout="@layout/fragment_search_results_subreddit" >
         <action
@@ -77,6 +77,6 @@
     </fragment>
     <dialog
         android:id="@+id/userInfoDialogFragment"
-        android:name="com.example.snapshotsforreddit.ui.tabs.account.overview.UserInfoDialogFragment"
+        android:name="com.jimmywu.snapshotsforreddit.ui.tabs.account.overview.UserInfoDialogFragment"
         android:label="UserInfoDialogFragment" />
 </navigation>
