@@ -80,7 +80,6 @@ class PostCompactViewHolderTest(
 
             }
             //Subreddit icon
-
             val iconUrl: String =
                 if (post.sr_community_icon != "" && post.sr_community_icon != null) {
                     post.sr_community_icon.replace(removePart, "")
@@ -93,7 +92,7 @@ class PostCompactViewHolderTest(
                 .load(iconUrl)
                 .centerCrop()
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .error(R.drawable.ic_blank)
+                .error(R.drawable.ic_temp_r)
                 .into(imageviewSubredditIcon)
 
 //                if(subreddit.primary_color != null && subreddit.primary_color != "") {
@@ -138,9 +137,8 @@ class PostCompactViewHolderTest(
                 }
             }
 
-
-            textviewPostItemSubreddit.text =
-                post.subreddit.toString().replaceFirstChar { it.uppercase() }
+//            textviewPostItemSubreddit.text = post.subreddit.toString().replaceFirstChar { it.uppercase() }
+            textviewPostItemSubreddit.text = post.subreddit
             textviewPostAuthor.text = post.author
             textviewPostItemTitle.text = post.title
             textviewPostItemScore.text = getShortenedValue(post.score)

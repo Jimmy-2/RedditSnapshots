@@ -13,18 +13,12 @@ import javax.inject.Inject
 class MainActivityViewModel @Inject constructor(
     private val preferencesDataStoreRepository: PreferencesDataStoreRepository,
     @ApplicationScope private val applicationScope: CoroutineScope
-) :
-    ViewModel() {
+) : ViewModel() {
 
-    fun getSelectedTheme(): String = runBlocking{ preferencesDataStoreRepository.selectedTheme.first() }
+    fun getSelectedTheme(): String =
+        runBlocking { preferencesDataStoreRepository.selectedTheme.first() }
 
     val selectedTheme = preferencesDataStoreRepository.selectedTheme
-
-
-
-
-
-
 
 
 //    val theme: StateFlow<AppTheme> = loadDataSignal.mapLatest {

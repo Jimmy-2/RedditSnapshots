@@ -268,10 +268,21 @@ class RedditPageRemoteMediator (
                 val lastQueryPosition = redditPagePostDao.getLastQueryPosition("$redditPageName $redditPageSortOrder") ?: 0
                 var queryPosition = lastQueryPosition + 1
 
+                val defaultsList = listOf("Home Feed", "All", "Popular")
+
+                var isDefault = false
+
+                for(defaults in defaultsList) {
+                    if(redditPageName.equals(defaults, ignoreCase = true)) {
+                        isDefault = true
+                    }
+                }
+
+
                 val redditPagePostsList = redditChildrenDataList.map { redditChildrenData ->
                     RedditPagePost(
                         redditPageSortOrder = redditPageSortOrder,
-
+                        isDefault = isDefault,
                         isCompact = redditPageIsCompact,
 
                         redditPageNameAndSortOrder = "$redditPageName $redditPageSortOrder",

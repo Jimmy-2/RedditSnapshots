@@ -31,7 +31,17 @@
     <dialog
         android:id="@+id/moreOptionsDialogFragmentRP"
         android:name="com.jimmywu.snapshotsforreddit.ui.common.moreoptions.MoreOptionsDialogFragment"
-        android:label="MoreOptionsDialogFragment" />
+        android:label="MoreOptionsDialogFragment" >
+        <argument
+            android:name="postAuthorUsername"
+            app:argType="string" />
+        <argument
+            android:name="postSubreddit"
+            app:argType="string" />
+        <argument
+            android:name="postNameId"
+            app:argType="string" />
+    </dialog>
     <fragment
         android:id="@+id/searchResultsPostFragmentRP"
         android:name="com.jimmywu.snapshotsforreddit.ui.common.searchresults.posts.SearchResultsPostFragment"

@@ -42,7 +42,7 @@
                         android:paddingEnd="16dp"
                         android:paddingTop="12dp"
                         android:paddingBottom="12dp"
-                        app:layout_constraintBottom_toTopOf="@+id/view_line_posts"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_upvote"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_up_arrow_null"
@@ -60,14 +60,14 @@
 
                         android:textColor="@color/menu_blue"
                         android:textSize="18sp"
-                        app:layout_constraintBottom_toTopOf="@+id/view_line_posts"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_upvote"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/image_upvote_button"
                         app:layout_constraintTop_toTopOf="parent" />
 
 
                     <View
-                        android:id="@+id/view_line_posts"
+                        android:id="@+id/view_line_upvote"
                         android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:background="@color/round_view_borders"
@@ -91,7 +91,7 @@
                         android:paddingEnd="16dp"
                         android:paddingTop="12dp"
                         android:paddingBottom="12dp"
-                        app:layout_constraintBottom_toTopOf="@+id/view_line_history"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_downvote"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_down_arrow_null"
@@ -109,13 +109,13 @@
                         android:text="@string/downvote"
                         android:textColor="@color/menu_blue"
                         android:textSize="18sp"
-                        app:layout_constraintBottom_toTopOf="@+id/view_line_history"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_downvote"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/image_downvote_button"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <View
-                        android:id="@+id/view_line_history"
+                        android:id="@+id/view_line_downvote"
                         android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:background="@color/round_view_borders"
@@ -140,7 +140,7 @@
                         android:paddingEnd="16dp"
                         android:paddingTop="12dp"
                         android:paddingBottom="12dp"
-                        app:layout_constraintBottom_toTopOf="@+id/view_line_saved"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_save"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_save"
@@ -159,13 +159,13 @@
                         android:text="@string/save"
                         android:textColor="@color/menu_blue"
                         android:textSize="18sp"
-                        app:layout_constraintBottom_toTopOf="@+id/view_line_saved"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_save"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/image_save_button"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <View
-                        android:id="@+id/view_line_saved"
+                        android:id="@+id/view_line_save"
                         android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:background="@color/round_view_borders"
@@ -189,7 +189,7 @@
                         android:paddingEnd="16dp"
                         android:paddingTop="12dp"
                         android:paddingBottom="12dp"
-                        app:layout_constraintBottom_toTopOf="@+id/view_line_upvoted"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_reply"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_reply"
@@ -207,13 +207,13 @@
                         android:text="@string/reply"
                         android:textColor="@color/menu_blue"
                         android:textSize="18sp"
-                        app:layout_constraintBottom_toTopOf="@+id/view_line_upvoted"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_reply"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/image_reply_button"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <View
-                        android:id="@+id/view_line_upvoted"
+                        android:id="@+id/view_line_reply"
                         android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:background="@color/round_view_borders"
@@ -237,7 +237,7 @@
                         android:paddingEnd="16dp"
                         android:paddingTop="12dp"
                         android:paddingBottom="12dp"
-                        app:layout_constraintBottom_toTopOf="@+id/view_line_downvoted"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_user"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_user"
@@ -256,13 +256,13 @@
                         android:text="User"
                         android:textColor="@color/menu_blue"
                         android:textSize="18sp"
-                        app:layout_constraintBottom_toTopOf="@+id/view_line_downvoted"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_user"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/image_author_button"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <View
-                        android:id="@+id/view_line_downvoted"
+                        android:id="@+id/view_line_user"
                         android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:background="@color/round_view_borders"
@@ -270,6 +270,56 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/image_author_button" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/button_subreddit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/image_subreddit_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_subreddit"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_temp_r"
+                        app:tint="@color/menu_blue">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/textview_post_subreddit"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:drawablePadding="16dp"
+                        android:gravity="center_vertical"
+                        android:paddingEnd="8dp"
+                        android:text="@string/subreddit"
+                        android:textColor="@color/menu_blue"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_subreddit"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/image_subreddit_button"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/view_line_subreddit"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:background="@color/round_view_borders"
+
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/image_subreddit_button" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -287,7 +337,7 @@
                         android:paddingEnd="16dp"
                         android:paddingTop="12dp"
                         android:paddingBottom="12dp"
-                        app:layout_constraintBottom_toTopOf="@+id/view_line_hidden"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_hide"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_hidden"
@@ -306,13 +356,13 @@
                         android:text="@string/hide"
                         android:textColor="@color/menu_blue"
                         android:textSize="18sp"
-                        app:layout_constraintBottom_toTopOf="@+id/view_line_hidden"
+                        app:layout_constraintBottom_toTopOf="@+id/view_line_hide"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/image_hide_button"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <View
-                        android:id="@+id/view_line_hidden"
+                        android:id="@+id/view_line_hide"
                         android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:background="@color/round_view_borders"

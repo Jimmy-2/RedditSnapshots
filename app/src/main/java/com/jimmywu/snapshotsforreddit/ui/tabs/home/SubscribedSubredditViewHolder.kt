@@ -37,7 +37,7 @@ class SubscribedSubredditViewHolder(val binding: ItemSubscribedBinding, private 
                 .load(iconUrl)
                 .centerCrop()
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .error(R.drawable.ic_blank)
+                .error(R.drawable.ic_temp_r)
                 .into(imageSubredditIcon)
 
 

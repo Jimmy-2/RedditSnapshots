@@ -25,18 +25,21 @@ import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), AccountOverviewAdapter.OnItemClickListener {
+class AccountOverviewFragment : Fragment(R.layout.fragment_account_overview),
+    AccountOverviewAdapter.OnItemClickListener {
     private val viewModel: AccountOverviewViewModel by viewModels()
 
     private var _binding: FragmentAccountOverviewBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var accountOverviewAdapter: AccountOverviewAdapter
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        _binding  = FragmentAccountOverviewBinding.bind(view)
+        _binding = FragmentAccountOverviewBinding.bind(view)
 
-        val accountOverviewAdapter = AccountOverviewAdapter (this)
+        accountOverviewAdapter = AccountOverviewAdapter(this)
 
         //(requireActivity() as AppCompatActivity).supportActionBar?.title = TODO: username
 
@@ -45,9 +48,10 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Acc
                 if (it is AccountOverviewNavigationAction.NavigateToAccountSelector) {
                     AccountLoginDialogFragment.newInstance().show(parentFragmentManager, null)
 
-                }else if(it is AccountOverviewNavigationAction.NavigateToUserInfo) {
-                    if(viewModel.userInfo.value != null && viewModel.infoType.value != null) {
-                        UserInfoDialogFragment.newInstance(viewModel.userInfo.value!!,
+                } else if (it is AccountOverviewNavigationAction.NavigateToUserInfo) {
+                    if (viewModel.userInfo.value != null && viewModel.infoType.value != null) {
+                        UserInfoDialogFragment.newInstance(
+                            viewModel.userInfo.value!!,
                             viewModel.infoType.value!!
                         ).show(parentFragmentManager, null)
                     }
@@ -58,10 +62,11 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Acc
 
         binding.apply {
             recyclerviewAccountOverview.setHasFixedSize(true)
-            recyclerviewAccountOverview.adapter = accountOverviewAdapter.withLoadStateHeaderAndFooter(
-                header = RedditLoadStateAdapter {accountOverviewAdapter.retry()},
-                footer = RedditLoadStateAdapter {accountOverviewAdapter.retry()}
-            )
+            recyclerviewAccountOverview.adapter =
+                accountOverviewAdapter.withLoadStateHeaderAndFooter(
+                    header = RedditLoadStateAdapter { accountOverviewAdapter.retry() },
+                    footer = RedditLoadStateAdapter { accountOverviewAdapter.retry() }
+                )
             refreshAccountOverview.setOnRefreshListener {
                 accountOverviewAdapter.refresh()
                 viewLifecycleOwner.lifecycleScope.launch {
@@ -80,9 +85,9 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Acc
         }
 
         viewModel.authFlow.observe(viewLifecycleOwner) { authFlowValues ->
-            if(authFlowValues.username == "") {
+            if (authFlowValues.username == "") {
                 binding.recyclerviewAccountOverview.visibility = View.GONE
-            }else {
+            } else {
                 //TODO display a log in to check account info dialog
                 binding.recyclerviewAccountOverview.visibility = View.VISIBLE
             }
@@ -102,7 +107,6 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Acc
         }
 
 
-
         //depending on the load state of the adapter (list of items) (error, loading, no results), we will display the necessary view for the user to see
         accountOverviewAdapter.addLoadStateListener { loadState ->
             binding.apply {
@@ -120,7 +124,10 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Acc
 //                )
 
                 progressbarAccountOverview.isVisible = loadState.source.refresh is LoadState.Loading
-                refreshAccountOverview.isRefreshing = loadState.mediator?.refresh is LoadState.Loading
+
+
+                refreshAccountOverview.isRefreshing =
+                    loadState.mediator?.refresh is LoadState.Loading
 
             }
         }
@@ -158,7 +165,7 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Acc
             // Since isCompact value is initialized to null, we know if the value changes, viewmodel has just loaded for the firs time.
             // Mimicking Apollo app behavior where if you change to compact and from compact views in the reddit page screen,
             // you have to refresh the other screens manually to see the changes.
-            if(viewModel._isCompact.value == null) {
+            if (viewModel._isCompact.value == null) {
                 viewModel.checkIsCompact(isChecked)
             }
         }
@@ -167,7 +174,7 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Acc
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         //when statement for each of the menu items
-        return when(item.itemId) {
+        return when (item.itemId) {
             R.id.action_accounts_dialog -> {
                 viewModel.onAccountsClicked()
 //                findNavController().navigate(
@@ -175,11 +182,24 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Acc
 //                )
                 true
             }
+
+            R.id.action_scroll_to_top -> {
+                binding.recyclerviewAccountOverview.scrollToPosition(0)
+                true
+            }
+
+            R.id.action_refresh -> {
+//                binding.recyclerviewAccountOverview.scrollToPosition(0)
+                accountOverviewAdapter.refresh()
+                viewLifecycleOwner.lifecycleScope.launch {
+                    val isChecked = viewModel.preferencesFlow.first().isCompactView
+                    viewModel.checkIsCompact(isChecked)
+                }
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
-
-
 
 
     override fun onDestroyView() {
@@ -193,8 +213,14 @@ class AccountOverviewFragment: Fragment(R.layout.fragment_account_overview), Acc
     }
 
     override fun onHistoryClick(historyType: String?, historyName: String?, userName: String?) {
-        if(historyType != null && historyName != null && userName != null) {
-            findNavController().navigate(AccountOverviewFragmentDirections.actionAccountOverviewFragmentToAccountHistoryFragment(historyType, historyName, userName))
+        if (historyType != null && historyName != null && userName != null) {
+            findNavController().navigate(
+                AccountOverviewFragmentDirections.actionAccountOverviewFragmentToAccountHistoryFragment(
+                    historyType,
+                    historyName,
+                    userName
+                )
+            )
         }
     }
 

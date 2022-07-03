@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/accountOverviewFragment"
         android:name="com.jimmywu.snapshotsforreddit.ui.tabs.account.overview.AccountOverviewFragment"
-        android:label="@string/title_account">
+    >
         <deepLink
             android:id="@+id/signInRedirectDeepLink"
             app:uri="http://www.snapshotstempaddress.com/random_redirect" />

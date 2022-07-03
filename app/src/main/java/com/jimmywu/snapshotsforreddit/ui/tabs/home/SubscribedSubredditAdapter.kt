@@ -76,10 +76,10 @@ class SubscribedSubredditAdapter(
                 navigateToSubreddit("Home Feed")
             }
             binding.buttonSubredditPopular.setOnClickListener {
-                navigateToSubreddit("popular")
+                navigateToSubreddit("Popular")
             }
             binding.buttonSubredditAll.setOnClickListener {
-                navigateToSubreddit("all")
+                navigateToSubreddit("All")
             }
         }
 

@@ -9,10 +9,7 @@ import com.jimmywu.snapshotsforreddit.network.RedditApiRepository
 import com.jimmywu.snapshotsforreddit.network.responses.RedditChildrenData
 import com.jimmywu.snapshotsforreddit.util.MonitorTriple
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -50,6 +47,7 @@ class RedditPageViewModel @Inject constructor(
     val subredditNameTest2: MutableLiveData<String> = MutableLiveData("Default value")
 
     private val currentRedditPageName = MutableStateFlow<String?>(null)
+    val _currentRedditPageName : StateFlow<String?> =currentRedditPageName
     private val sortOrderTest = MutableStateFlow<String?>("best")
     private val isCompactTest = MutableStateFlow<Boolean?>(false)
 
@@ -81,12 +79,7 @@ class RedditPageViewModel @Inject constructor(
 //    }.cachedIn(viewModelScope)
 
 
-
-    //TODO RIGHT NOW SWITCHING BETWEEN ISCOMPACT SCROLLS PAGES IMPACTED UP TO POSITON 0. FIX THIS
-    //also apollo app does not automatically reload other tabs if you switch ebtween compact or not
-
-
-        val redditPagePostsTest = currentRedditPageName.combine(sortOrderTest ){ redditPageName, sortOrder ->
+        val redditPagePostsTest = currentRedditPageName.combine(sortOrderTest){ redditPageName, sortOrder ->
         Pair(redditPageName, sortOrder )
     }.combine(isCompactTest) { nameAndSortPair, isCompact ->
         Pair(nameAndSortPair, isCompact)
@@ -95,6 +88,8 @@ class RedditPageViewModel @Inject constructor(
             nameAndSortPair.first ?.let {
             redditPagePostRepository.getRedditPostsPaged(it, nameAndSortPair.second ?: "best", sortOrder ?: false)
         }?: emptyFlow()
+
+        //add logic to not get new data from api when changing compact views.
     }.cachedIn(viewModelScope)
 
 
@@ -117,11 +112,15 @@ class RedditPageViewModel @Inject constructor(
 
     var refreshingViewsOnCompactChange = false
 
-    fun onRedditPageLoad(redditPageName: String) {
+    fun onRedditPageLoad(redditPageName: String, default: Boolean) {
         if(currentRedditPageName.value != redditPageName) {
             currentRedditPageName.value = ""
             currentRedditPageName.value = redditPageName
+            _subredditName.value = redditPageName
+
         }
+
+
 
 
     }
@@ -200,13 +199,13 @@ class RedditPageViewModel @Inject constructor(
     }
 
     fun changeRedditPage(redditPageName: String, redditPageType: String) {
-        isDefault.value = false
-        if (_subredditName.value != redditPageName) {
-            _subredditName.value = redditPageName
+
+        if (currentRedditPageName.value != redditPageName) {
+            currentRedditPageName.value = redditPageName
         }
-        if (subredditType.value != redditPageType) {
-            subredditType.value = redditPageType
-        }
+//        if (subredditType.value != redditPageType) {
+//            subredditType.value = redditPageType
+//        }
 
     }
 

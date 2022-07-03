@@ -27,13 +27,14 @@ import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class RedditPageFragment : Fragment(R.layout.fragment_reddit_page){
+class RedditPageFragment : Fragment(R.layout.fragment_reddit_page) {
     private val navigationArgs: RedditPageFragmentArgs by navArgs()
     private val viewModel: RedditPageViewModel by viewModels()
 
     private var _binding: FragmentRedditPageBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var redditPageAdapter: RedditPagePagingAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -85,28 +86,50 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page){
 
         val redditPageName = navigationArgs.redditPageName
         val redditPageType = navigationArgs.redditPageType
-        val isDefaults = navigationArgs.isDefaults
+        val isDefault = navigationArgs.isDefaults
         //only load this once
 
-        viewModel.onRedditPageLoad(redditPageName)
+        viewModel.onRedditPageLoad(redditPageName, isDefault)
 
 //        viewModel.loadRedditPage(redditPageName, redditPageType, isDefaults)
 
-        val redditPageAdapter = RedditPagePagingAdapter(
-            onItemClick = { redditPagePost->
+        redditPageAdapter = RedditPagePagingAdapter(
+            onItemClick = { redditPagePost ->
 
             },
-            onVoteClick = {redditPagePost, isUpvote ->
+            onVoteClick = { redditPagePost, isUpvote ->
                 viewModel.onVoteClick(redditPagePost, isUpvote)
             },
-            onMoreClick = {redditPagePost, voteType->
-                findNavController().navigate(RedditPageFragmentDirections.actionRedditPageFragmentRPToMoreOptionsDialogFragmentRP())
+            onMoreClick = { redditPagePost, voteType ->
+                if (redditPagePost.author != null && redditPagePost.subreddit != null) {
+                    findNavController().navigate(
+                        RedditPageFragmentDirections.actionRedditPageFragmentRPToMoreOptionsDialogFragmentRP(
+                            redditPagePost.author, redditPagePost.subreddit, redditPagePost.name
+                        )
+                    )
+                }
+
             },
-            onSubredditClick = {subredditName ->
-                if(subredditName != null) {
-                    findNavController().navigate(RedditPageFragmentDirections.actionRedditPageFragmentRPSelf(subredditName, "r", false))
+            onSubredditClick = { subredditName ->
+                if (subredditName != null) {
+                    findNavController().navigate(
+                        RedditPageFragmentDirections.actionRedditPageFragmentRPSelf(
+                            subredditName,
+                            "r",
+                            false
+                        )
+                    )
 
                 }
+
+            },
+            onSearchSubmit = { redditPagePost, searchQuery ->
+                findNavController().navigate(
+                    RedditPageFragmentDirections.actionRedditPageFragmentRPToSearchResultsPostFragmentRP(
+                        searchQuery!!,
+                        redditPagePost.redditPageName
+                    )
+                )
 
             }
 
@@ -124,13 +147,11 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page){
 
 
 
-            viewLifecycleOwner.lifecycleScope.launchWhenStarted{
+            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                 viewModel.redditPagePostsTest.collectLatest {
-
 //                    textViewInstructions.isVisible = false
                     redditPageAdapter.submitData(it)
                 }
-
 
 
             }
@@ -146,9 +167,6 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page){
 //                        recyclerviewPosts.scrollToPosition(0)
 //                    }
 //            }
-
-
-
 
 
             //                    redditPageAdapter.itemCount,
@@ -175,13 +193,12 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page){
 //                        }
 
 
-
                         //mediator finished refreshing and paging source turns from loading to not loading
                         if (viewModel.pendingScrollToTopAfterRefresh && it.mediator?.refresh is LoadState.NotLoading) {
-                            if(viewModel.refreshingViewsOnCompactChange) {
+                            if (viewModel.refreshingViewsOnCompactChange) {
                                 viewModel.refreshingViewsOnCompactChange = false
                                 viewModel.pendingScrollToTopAfterRefresh = false
-                            }else {
+                            } else {
                                 recyclerviewPosts.scrollToPosition(0)
                                 //check if refresh came from switching to iscompact
                                 viewModel.pendingScrollToTopAfterRefresh = false
@@ -214,6 +231,8 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page){
                             is LoadState.Loading -> {
                                 textviewRedditPageError.isVisible = false
                                 buttonRedditPageRetry.isVisible = false
+
+                                //TODO add this logic to all fragments that can switch between iscompact views
                                 refreshRedditPage.isRefreshing =
                                     viewModel.refreshingViewsOnCompactChange != true
 
@@ -260,11 +279,13 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page){
                     }
             }
 
-            refreshRedditPage.setOnRefreshListener { redditPageAdapter.refresh()
+            refreshRedditPage.setOnRefreshListener {
+                redditPageAdapter.refresh()
 //                recyclerviewPosts.scrollToPosition(0)
             }
 
-            buttonRedditPageRetry.setOnClickListener { redditPageAdapter.retry()
+            buttonRedditPageRetry.setOnClickListener {
+                redditPageAdapter.retry()
 //                recyclerviewPosts.scrollToPosition(0)
             }
         }
@@ -282,9 +303,16 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page){
         //reference to SearchView
         val searchPost = menu.findItem(R.id.action_search_subreddits)
 
-        viewModel.subredditName.observe(viewLifecycleOwner) {
-            searchPost.title = (it + downArrow).replaceFirstChar { it.uppercase() }
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel._currentRedditPageName.collectLatest {
+                searchPost.title = (it + downArrow).replaceFirstChar { it.uppercase() }
+            }
+
         }
+//        viewModel.subredditName.observe(viewLifecycleOwner) {
+////            searchPost.title = (it + downArrow).replaceFirstChar { it.uppercase() }
+//            searchPost.title = it + downArrow
+//        }
 
 
         val searchView = searchPost.actionView as SearchView
@@ -318,7 +346,6 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page){
 
     }
 
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         //when statement for each of the menu items
         return when (item.itemId) {
@@ -332,6 +359,7 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page){
                 viewModel.refreshingViewsOnCompactChange = true
                 return true
             }
+
             //TODO add ischecked to the menu items
             R.id.action_sort_by_best -> {
                 viewModel.onSortOrderSelected("best")
@@ -352,25 +380,25 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page){
             R.id.action_sort_by_top -> {
                 return true
             }
+
+            R.id.action_scroll_to_top -> {
+                binding.recyclerviewPosts.scrollToPosition(0)
+                true
+            }
+
+            R.id.action_refresh -> {
+                redditPageAdapter.refresh()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-//    override fun onSearchSubmit(query: String?, subredditName: String) {
-//        if (query != null && query != "") {
-//            //TODO emit these from viewmodel
-//            findNavController().navigate(
-//                RedditPageFragmentDirections.actionRedditPageFragmentRPToSearchResultsPostFragmentRP(
-//                    query,
-//                    subredditName
-//                )
-//            )
-//        }
-//    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
-        println("HELLO123 DESTROYING")
+
         binding.recyclerviewPosts.adapter = null
 
         _binding = null
@@ -381,28 +409,6 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page){
 //    }
 
 
-    //type will tell us what the user has clicked on item
-    //for example: if user clicked on the upvote button, the type will be 1
-//    override fun onVoteClick(post: RedditChildrenObject, type: Int) {
-//        //pass the post object to the post details screen
-//        when (type) {
-//            -1 -> viewModel.onVoteOnPost(-1, post)
-//            0 -> viewModel.onVoteOnPost(0, post)
-//            1 -> viewModel.onVoteOnPost(1, post)
-//        }
-//    }
-
-
-
-
-//    override fun onVoteClick(post: RedditChildrenData, type: Int) {
-//        //pass the post object to the post details screen
-//        when (type) {
-//            -1 -> viewModel.onVoteOnPost(-1, post)
-//            0 -> viewModel.onVoteOnPost(0, post)
-//            1 -> viewModel.onVoteOnPost(1, post)
-//        }
-//    }
 
 
 

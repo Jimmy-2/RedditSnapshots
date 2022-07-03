@@ -5,20 +5,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jimmywu.snapshotsforreddit.data.room.cache.redditpagepost.RedditPagePost
 import com.jimmywu.snapshotsforreddit.databinding.ItemSearchBarBinding
 
-class SearchBarViewHolderTest  (
+class SearchBarViewHolderTest(
     private val binding: ItemSearchBarBinding,
-//    private val onSearchSubmit: (String?, String) -> Unit
-    ) : RecyclerView.ViewHolder(binding.root) {
-
-    private var post: RedditPagePost? = null
-    private var currentSubreddit: String? = null
+    private val onSearchSubmit: (Int, String) -> Unit
+) : RecyclerView.ViewHolder(binding.root) {
 
     init {
         binding.searchview.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if (currentSubreddit != null) {
-//                    onSearchSubmit(query, currentSubreddit!!)
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    if (query != null && query != "") {
+                        onSearchSubmit(position, query)
+                    }
                 }
+
                 return true
             }
 
@@ -29,12 +30,11 @@ class SearchBarViewHolderTest  (
     }
 
     fun bind(post: RedditPagePost) {
-        this.post = post
-        this.currentSubreddit = post.subreddit
+        val currentSubreddit = post.redditPageName
         binding.apply {
-            if(currentSubreddit == null || currentSubreddit == "" || currentSubreddit == "Home") {
+            if (currentSubreddit == "" || currentSubreddit == "Home") {
                 searchview.queryHint = "Search"
-            }else {
+            } else {
                 searchview.queryHint = "Search r/$currentSubreddit"
             }
 

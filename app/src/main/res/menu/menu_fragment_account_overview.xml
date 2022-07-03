@@ -6,4 +6,15 @@
         android:title="@string/menu_accounts"
         app:showAsAction="always|collapseActionView" />
 
+
+    <item
+        android:id="@+id/action_scroll_to_top"
+        android:title="@string/scroll_to_top"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_refresh"
+        android:title="@string/refresh"
+        app:showAsAction="never" />
+
 </menu>

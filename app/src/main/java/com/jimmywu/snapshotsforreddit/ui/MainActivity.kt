@@ -8,7 +8,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.*
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.jimmywu.snapshotsforreddit.R
 import com.jimmywu.snapshotsforreddit.util.updateForTheme
@@ -17,7 +20,6 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
 
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -34,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
-        NavigationUI.setupActionBarWithNavController(this, navController)
+//        NavigationUI.setupActionBarWithNavController(this, navController)
 
         setupBottomNavMenu(navController)
 
@@ -48,6 +50,12 @@ class MainActivity : AppCompatActivity() {
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
+
+
+//
+//        bottomNavigationBar.setOnItemReselectedListener{ item ->
+//
+//        }
 
         //remove elevation shadow from the action bar
         //supportActionBar?.elevation = 0F

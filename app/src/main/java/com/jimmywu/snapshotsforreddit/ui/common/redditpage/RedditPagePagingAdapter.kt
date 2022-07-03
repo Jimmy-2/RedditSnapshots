@@ -15,6 +15,7 @@ class RedditPagePagingAdapter(
     private val onVoteClick: (RedditPagePost, Boolean?) -> Unit,
     private val onMoreClick: (RedditPagePost, Int) -> Unit,
     private val onSubredditClick: (String?) -> Unit,
+    private val onSearchSubmit: (RedditPagePost, String?) -> Unit,
 ) : PagingDataAdapter<RedditPagePost, RecyclerView.ViewHolder>(POST_COMPARATOR) {
 
 
@@ -28,7 +29,10 @@ class RedditPagePagingAdapter(
 
         return when (viewType) {
             SEARCH -> SearchBarViewHolderTest(
-                ItemSearchBarBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                ItemSearchBarBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+                onSearchSubmit= { position, searchQuery ->
+                    onSearchSubmit(position, searchQuery)
+                }
             )
             POST -> PostViewHolderTest(
                 ItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false),
@@ -167,6 +171,13 @@ class RedditPagePagingAdapter(
         }
     }
 
+    private fun onSearchSubmit(position: Int, searchQuery: String) {
+        val post = getItem(position)
+        if (post != null) {
+            onSearchSubmit(post, searchQuery)
+        }
+    }
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val currentItem = getItem(position)
         if (currentItem != null) {
@@ -206,8 +217,14 @@ class RedditPagePagingAdapter(
             "searchBar" -> SEARCH
             else -> {
                 return when (getItem(position)?.isCompact) {
-                    true -> POST_COMPACT
-                    else -> POST
+                    true -> return when (getItem(position)?.isDefault) {
+                        true -> POST_COMPACT
+                        else -> SUBREDDIT_POST_COMPACT
+                    }
+                    else -> return when (getItem(position)?.isDefault) {
+                        true -> POST
+                        else -> SUBREDDIT_POST
+                    }
                 }
             }
         }

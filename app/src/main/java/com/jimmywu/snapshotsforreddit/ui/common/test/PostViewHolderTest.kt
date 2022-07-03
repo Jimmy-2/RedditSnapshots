@@ -96,7 +96,7 @@ class PostViewHolderTest(
                 .centerCrop()
                 .fitCenter()
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .error(R.drawable.ic_blank)
+                .error(R.drawable.ic_temp_r)
                 .into(imageviewSubredditIcon)
 
 
@@ -131,8 +131,8 @@ class PostViewHolderTest(
             }
 
 
-            textviewPostItemSubreddit.text =
-                post.subreddit.toString().replaceFirstChar { it.uppercase() }
+//            textviewPostItemSubreddit.text = post.subreddit.toString().replaceFirstChar { it.uppercase() }
+            textviewPostItemSubreddit.text = post.subreddit
             textviewPostItemTitle.text = post.title
             textviewPostItemScore.text = getShortenedValue(post.score)
             textviewPostItemCommentCount.text = getShortenedValue(post.num_comments)

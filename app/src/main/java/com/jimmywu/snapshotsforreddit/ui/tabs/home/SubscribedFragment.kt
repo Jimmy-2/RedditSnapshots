@@ -106,6 +106,7 @@ class SubscribedFragment : Fragment(R.layout.fragment_subscribed) {
                     )
 
                 findNavController().navigate(action)
+
             }
         )
 

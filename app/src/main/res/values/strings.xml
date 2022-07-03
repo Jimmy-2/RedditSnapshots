@@ -28,4 +28,8 @@
     <string name="configure_feed_settings">Configure feed settings</string>
     <string name="reddit_settings">REDDIT SETTINGS</string>
     <string name="error_with_loading">Error with loading</string>
+    <string name="refresh">Refresh</string>
+    <string name="compact_view">Compact View</string>
+    <string name="subreddit">Subreddit</string>
+    <string name="scroll_to_top">Scroll To Top</string>
 </resources>
