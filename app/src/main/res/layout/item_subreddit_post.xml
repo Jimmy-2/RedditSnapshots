@@ -57,10 +57,10 @@
             android:layout_marginEnd="4dp"
             android:ellipsize="end"
             android:maxLines="3"
-
             android:paddingTop="8dp"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
+            android:scaleType="fitCenter"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -96,11 +96,12 @@ class SubredditPostViewHolderTest (
                 Glide.with(itemView)
                     .load(imageUrl)
                     .transition(DrawableTransitionOptions.withCrossFade())
-//                    .override(
-//
-//                        post.previewWidth!!,
-//                        post.previewHeight!!
-//                    )
+                    .override(
+                        post.previewWidth!!,
+                        post.previewHeight!!
+                    )
+                    .fitCenter()
+                    .centerCrop()
                     .error(R.drawable.ic_error)
                     .into(imageviewPostItem)
 
