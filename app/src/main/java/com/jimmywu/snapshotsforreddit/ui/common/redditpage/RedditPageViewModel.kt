@@ -113,12 +113,17 @@ class RedditPageViewModel @Inject constructor(
     var refreshingViewsOnCompactChange = false
 
     fun onRedditPageLoad(redditPageName: String, default: Boolean) {
-        if(currentRedditPageName.value != redditPageName) {
+        if(currentRedditPageName.value == null || currentRedditPageName.value == "") {
             currentRedditPageName.value = ""
             currentRedditPageName.value = redditPageName
             _subredditName.value = redditPageName
-
         }
+//        if(currentRedditPageName.value != redditPageName) {
+//            currentRedditPageName.value = ""
+//            currentRedditPageName.value = redditPageName
+//            _subredditName.value = redditPageName
+//
+//        }
 
 
 

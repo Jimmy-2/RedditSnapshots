@@ -30,8 +30,15 @@
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.MaterialAlertDialog</item>
 
 
-
+        <item name="actionOverflowButtonStyle">@style/MyOverflowButtonStyle</item>
 
 <!--        <item name="android:navigationBarColor">@android:color/transparent</item>-->
+
+    </style>
+
+    <style name="Theme.SnapshotsForReddit.NoActionbar">
+        <item name="windowActionBar">false</item>
+        <item name= "windowNoTitle">true</item>
+
     </style>
 </resources>

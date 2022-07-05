@@ -15,7 +15,9 @@
         <activity
             android:name="com.jimmywu.snapshotsforreddit.ui.MainActivity"
             android:windowSoftInputMode="adjustResize"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.SnapshotsForReddit.NoActionbar"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -3,9 +3,6 @@ package com.jimmywu.snapshotsforreddit.ui.tabs.account.overview
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -57,6 +54,15 @@ class AccountOverviewFragment : Fragment(R.layout.fragment_account_overview),
                     }
                 }
             }
+
+            val isChecked = viewModel.preferencesFlow.first().isCompactView
+            // only checks and applies compact/non-compact views to the screen for the first time the viewmodel is created.
+            // Since isCompact value is initialized to null, we know if the value changes, viewmodel has just loaded for the firs time.
+            // Mimicking Apollo app behavior where if you change to compact and from compact views in the reddit page screen,
+            // you have to refresh the other screens manually to see the changes.
+            if (viewModel._isCompact.value == null) {
+                viewModel.checkIsCompact(isChecked)
+            }
         }
 
 
@@ -101,11 +107,11 @@ class AccountOverviewFragment : Fragment(R.layout.fragment_account_overview),
 
         viewModel.accountOverviewItems.observe(viewLifecycleOwner) {
             //connect data to adapter
-            (activity as AppCompatActivity).supportActionBar?.title = viewModel.username.value
+//            (activity as AppCompatActivity).supportActionBar?.title = viewModel.username.value
+            binding.textviewAccountUsername.text = viewModel.username.value
             accountOverviewAdapter.submitData(viewLifecycleOwner.lifecycle, it)
 
         }
-
 
         //depending on the load state of the adapter (list of items) (error, loading, no results), we will display the necessary view for the user to see
         accountOverviewAdapter.addLoadStateListener { loadState ->
@@ -132,9 +138,64 @@ class AccountOverviewFragment : Fragment(R.layout.fragment_account_overview),
             }
         }
 
+        binding.textviewAccounts.apply {
+            setOnClickListener {
+                viewModel.onAccountsClicked()
+            }
+        }
+        binding.toolbar.apply {
+            inflateMenu(R.menu.menu_fragment_account_overview)
 
-        setHasOptionsMenu(true)
+
+
+            setOnMenuItemClickListener { item->
+
+                when (item.itemId) {
+
+                    //TODO BOTTOM SHEET DIALOG FOR OPTIONS SELECTED
+
+//                    R.id.action_accounts_dialog -> {
+//                        viewModel.onAccountsClicked()
+////                findNavController().navigate(
+////                    AccountOverviewFragmentDirections.actionAccountOverviewFragmentToLoginDialogFragment()
+////                )
+//                        true
+//                    }
+
+                    R.id.action_scroll_to_top -> {
+                        binding.recyclerviewAccountOverview.scrollToPosition(0)
+                        true
+                    }
+
+                    R.id.action_refresh -> {
+//                binding.recyclerviewAccountOverview.scrollToPosition(0)
+                        accountOverviewAdapter.refresh()
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            val isChecked = viewModel.preferencesFlow.first().isCompactView
+                            viewModel.checkIsCompact(isChecked)
+                        }
+                        true
+                    }
+                    else -> super.onOptionsItemSelected(item)
+                }
+
+
+
+            }
+
+        }
+
+
+//        setHasOptionsMenu(true)
     }
+
+//    fun updateToolbar() {
+//        isEditing = !isEditing
+//
+//        val saveItem = binding.toolbar.menu.findItem(R.id.action_done)
+//        saveItem.isVisible = isEditing
+//
+//    }
 
 
     override fun onResume() {
@@ -156,50 +217,50 @@ class AccountOverviewFragment : Fragment(R.layout.fragment_account_overview),
     }
 
     //inflate/activate options menu
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_fragment_account_overview, menu)
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        inflater.inflate(R.menu.menu_fragment_account_overview, menu)
+//
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            val isChecked = viewModel.preferencesFlow.first().isCompactView
+//            // only checks and applies compact/non-compact views to the screen for the first time the viewmodel is created.
+//            // Since isCompact value is initialized to null, we know if the value changes, viewmodel has just loaded for the firs time.
+//            // Mimicking Apollo app behavior where if you change to compact and from compact views in the reddit page screen,
+//            // you have to refresh the other screens manually to see the changes.
+//            if (viewModel._isCompact.value == null) {
+//                viewModel.checkIsCompact(isChecked)
+//            }
+//        }
+//
+//    }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            val isChecked = viewModel.preferencesFlow.first().isCompactView
-            // only checks and applies compact/non-compact views to the screen for the first time the viewmodel is created.
-            // Since isCompact value is initialized to null, we know if the value changes, viewmodel has just loaded for the firs time.
-            // Mimicking Apollo app behavior where if you change to compact and from compact views in the reddit page screen,
-            // you have to refresh the other screens manually to see the changes.
-            if (viewModel._isCompact.value == null) {
-                viewModel.checkIsCompact(isChecked)
-            }
-        }
-
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        //when statement for each of the menu items
-        return when (item.itemId) {
-            R.id.action_accounts_dialog -> {
-                viewModel.onAccountsClicked()
-//                findNavController().navigate(
-//                    AccountOverviewFragmentDirections.actionAccountOverviewFragmentToLoginDialogFragment()
-//                )
-                true
-            }
-
-            R.id.action_scroll_to_top -> {
-                binding.recyclerviewAccountOverview.scrollToPosition(0)
-                true
-            }
-
-            R.id.action_refresh -> {
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        //when statement for each of the menu items
+//        return when (item.itemId) {
+//            R.id.action_accounts_dialog -> {
+//                viewModel.onAccountsClicked()
+////                findNavController().navigate(
+////                    AccountOverviewFragmentDirections.actionAccountOverviewFragmentToLoginDialogFragment()
+////                )
+//                true
+//            }
+//
+//            R.id.action_scroll_to_top -> {
 //                binding.recyclerviewAccountOverview.scrollToPosition(0)
-                accountOverviewAdapter.refresh()
-                viewLifecycleOwner.lifecycleScope.launch {
-                    val isChecked = viewModel.preferencesFlow.first().isCompactView
-                    viewModel.checkIsCompact(isChecked)
-                }
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
+//                true
+//            }
+//
+//            R.id.action_refresh -> {
+////                binding.recyclerviewAccountOverview.scrollToPosition(0)
+//                accountOverviewAdapter.refresh()
+//                viewLifecycleOwner.lifecycleScope.launch {
+//                    val isChecked = viewModel.preferencesFlow.first().isCompactView
+//                    viewModel.checkIsCompact(isChecked)
+//                }
+//                true
+//            }
+//            else -> super.onOptionsItemSelected(item)
+//        }
+//    }
 
 
     override fun onDestroyView() {

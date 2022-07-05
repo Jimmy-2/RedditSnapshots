@@ -2,9 +2,6 @@ package com.jimmywu.snapshotsforreddit.ui.common.redditpage
 
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
@@ -290,7 +287,100 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page) {
             }
         }
 
-        setHasOptionsMenu(true)
+        binding.toolbar.apply {
+            inflateMenu(R.menu.menu_fragment_reddit_page)
+            val searchPost = menu.findItem(R.id.action_search_subreddits)
+
+            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+                viewModel._currentRedditPageName.collectLatest {
+                    searchPost.title = (it + downArrow).replaceFirstChar { it.uppercase() }
+                }
+
+            }
+            val searchView = searchPost.actionView as SearchView
+            searchView.queryHint = "Subreddit..."
+            //REFORMAT AND USE VIEW EXTENSIONS
+
+
+
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    if (query != null) {
+                        viewModel.changeRedditPage(query, "r")
+                    }
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    //TODO display a list of subreddits that start with the searched query and update as the user deletes/adds a letter.
+                    //TODO: MAY NOT ADD DUE TO 60 API CALLS PER MIN LIMIT AND THIS CAN EASILY REACH LIMIT
+                    return true
+                }
+            })
+
+
+            setNavigationOnClickListener {
+                findNavController().navigateUp()
+            }
+
+
+
+            viewLifecycleOwner.lifecycleScope.launch {
+                val isChecked = viewModel.preferencesFlow.first().isCompactView
+                menu.findItem(R.id.action_compact).isChecked = isChecked
+                viewModel.checkIsCompact(isChecked)
+
+            }
+
+            setOnMenuItemClickListener { item->
+                when (item.itemId) {
+
+                    //TODO BOTTOM SHEET DIALOG FOR OPTIONS SELECTED
+
+                    R.id.action_compact -> {
+                        val newVal = !item.isChecked
+                        item.isChecked = newVal //set to opposite selected
+                        viewModel.onCompactViewClicked(newVal)
+                        viewModel.refreshingViewsOnCompactChange = true
+                        true
+                    }
+
+                    //TODO add ischecked to the menu items
+                    R.id.action_sort_by_best -> {
+                        viewModel.onSortOrderSelected("best")
+                        true
+                    }
+                    R.id.action_sort_by_hot -> {
+                        viewModel.onSortOrderSelected("hot")
+                        true
+                    }
+                    R.id.action_sort_by_new -> {
+                        viewModel.onSortOrderSelected("new")
+                        true
+                    }
+                    R.id.action_sort_by_rising -> {
+                        viewModel.onSortOrderSelected("rising")
+                        true
+                    }
+                    R.id.action_sort_by_top -> {
+                       true
+                    }
+
+                    R.id.action_scroll_to_top -> {
+                        binding.recyclerviewPosts.scrollToPosition(0)
+                        true
+                    }
+
+                    R.id.action_refresh -> {
+                        redditPageAdapter.refresh()
+                        true
+                    }
+                    else -> super.onOptionsItemSelected(item)
+                }
+            }
+        }
+
+//        setHasOptionsMenu(true)
     }
 
 //    override fun onBottomNavigationFragmentReselected() {
@@ -298,102 +388,102 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page) {
 //    }
 
     //inflate/activate options menu
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_fragment_reddit_page, menu)
-        //reference to SearchView
-        val searchPost = menu.findItem(R.id.action_search_subreddits)
-
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel._currentRedditPageName.collectLatest {
-                searchPost.title = (it + downArrow).replaceFirstChar { it.uppercase() }
-            }
-
-        }
-//        viewModel.subredditName.observe(viewLifecycleOwner) {
-////            searchPost.title = (it + downArrow).replaceFirstChar { it.uppercase() }
-//            searchPost.title = it + downArrow
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        inflater.inflate(R.menu.menu_fragment_reddit_page, menu)
+//        //reference to SearchView
+//        val searchPost = menu.findItem(R.id.action_search_subreddits)
+//
+//        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+//            viewModel._currentRedditPageName.collectLatest {
+//                searchPost.title = (it + downArrow).replaceFirstChar { it.uppercase() }
+//            }
+//
 //        }
-
-
-        val searchView = searchPost.actionView as SearchView
-        searchView.queryHint = "Subreddit..."
-        //REFORMAT AND USE VIEW EXTENSIONS
-
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                if (query != null) {
-                    viewModel.changeRedditPage(query, "r")
-                }
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                //TODO display a list of subreddits that start with the searched query and update as the user deletes/adds a letter.
-                //TODO: MAY NOT ADD DUE TO 60 API CALLS PER MIN LIMIT AND THIS CAN EASILY REACH LIMIT
-                return true
-            }
-        })
-
-
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            val isChecked = viewModel.preferencesFlow.first().isCompactView
-            menu.findItem(R.id.action_compact).isChecked = isChecked
-            viewModel.checkIsCompact(isChecked)
-
-        }
-
-
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        //when statement for each of the menu items
-        return when (item.itemId) {
-
-            //TODO BOTTOM SHEET DIALOG FOR OPTIONS SELECTED
-
-            R.id.action_compact -> {
-                val newVal = !item.isChecked
-                item.isChecked = newVal //set to opposite selected
-                viewModel.onCompactViewClicked(newVal)
-                viewModel.refreshingViewsOnCompactChange = true
-                return true
-            }
-
-            //TODO add ischecked to the menu items
-            R.id.action_sort_by_best -> {
-                viewModel.onSortOrderSelected("best")
-                return true
-            }
-            R.id.action_sort_by_hot -> {
-                viewModel.onSortOrderSelected("hot")
-                return true
-            }
-            R.id.action_sort_by_new -> {
-                viewModel.onSortOrderSelected("new")
-                return true
-            }
-            R.id.action_sort_by_rising -> {
-                viewModel.onSortOrderSelected("rising")
-                return true
-            }
-            R.id.action_sort_by_top -> {
-                return true
-            }
-
-            R.id.action_scroll_to_top -> {
-                binding.recyclerviewPosts.scrollToPosition(0)
-                true
-            }
-
-            R.id.action_refresh -> {
-                redditPageAdapter.refresh()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
+////        viewModel.subredditName.observe(viewLifecycleOwner) {
+//////            searchPost.title = (it + downArrow).replaceFirstChar { it.uppercase() }
+////            searchPost.title = it + downArrow
+////        }
+//
+//
+//        val searchView = searchPost.actionView as SearchView
+//        searchView.queryHint = "Subreddit..."
+//        //REFORMAT AND USE VIEW EXTENSIONS
+//
+//        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+//            override fun onQueryTextSubmit(query: String?): Boolean {
+//                if (query != null) {
+//                    viewModel.changeRedditPage(query, "r")
+//                }
+//                return true
+//            }
+//
+//            override fun onQueryTextChange(newText: String?): Boolean {
+//                //TODO display a list of subreddits that start with the searched query and update as the user deletes/adds a letter.
+//                //TODO: MAY NOT ADD DUE TO 60 API CALLS PER MIN LIMIT AND THIS CAN EASILY REACH LIMIT
+//                return true
+//            }
+//        })
+//
+//
+//
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            val isChecked = viewModel.preferencesFlow.first().isCompactView
+//            menu.findItem(R.id.action_compact).isChecked = isChecked
+//            viewModel.checkIsCompact(isChecked)
+//
+//        }
+//
+//
+//    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        //when statement for each of the menu items
+//        return when (item.itemId) {
+//
+//            //TODO BOTTOM SHEET DIALOG FOR OPTIONS SELECTED
+//
+//            R.id.action_compact -> {
+//                val newVal = !item.isChecked
+//                item.isChecked = newVal //set to opposite selected
+//                viewModel.onCompactViewClicked(newVal)
+//                viewModel.refreshingViewsOnCompactChange = true
+//                return true
+//            }
+//
+//            //TODO add ischecked to the menu items
+//            R.id.action_sort_by_best -> {
+//                viewModel.onSortOrderSelected("best")
+//                return true
+//            }
+//            R.id.action_sort_by_hot -> {
+//                viewModel.onSortOrderSelected("hot")
+//                return true
+//            }
+//            R.id.action_sort_by_new -> {
+//                viewModel.onSortOrderSelected("new")
+//                return true
+//            }
+//            R.id.action_sort_by_rising -> {
+//                viewModel.onSortOrderSelected("rising")
+//                return true
+//            }
+//            R.id.action_sort_by_top -> {
+//                return true
+//            }
+//
+//            R.id.action_scroll_to_top -> {
+//                binding.recyclerviewPosts.scrollToPosition(0)
+//                true
+//            }
+//
+//            R.id.action_refresh -> {
+//                redditPageAdapter.refresh()
+//                true
+//            }
+//            else -> super.onOptionsItemSelected(item)
+//        }
+//    }
+//
 
 
     override fun onDestroyView() {

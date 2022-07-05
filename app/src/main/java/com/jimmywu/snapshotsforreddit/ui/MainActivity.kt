@@ -10,7 +10,6 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.jimmywu.snapshotsforreddit.R
@@ -49,7 +48,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.settingsFragment
             )
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
+
+//        setupActionBarWithNavController(navController, appBarConfiguration)
 
 
 //
