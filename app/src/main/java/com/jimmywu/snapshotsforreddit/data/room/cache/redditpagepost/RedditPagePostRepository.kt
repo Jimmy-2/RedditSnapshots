@@ -6,6 +6,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.jimmywu.snapshotsforreddit.network.services.RedditApiService
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 class RedditPagePostRepository @Inject constructor(
@@ -37,7 +38,13 @@ class RedditPagePostRepository @Inject constructor(
     }
 
 
-    suspend fun updateRedditPagePage(redditPost: RedditPagePost) {
+    suspend fun updateRedditPagePost(redditPost: RedditPagePost) {
         redditPagePostDao.updateRedditPagePost(redditPost)
     }
+
+    suspend fun getRedditPagePost(postName: String, postRedditPageAndSort: String): RedditPagePost {
+        return redditPagePostDao.getRedditPagePost(postName, postRedditPageAndSort).first()
+    }
+
+
 }

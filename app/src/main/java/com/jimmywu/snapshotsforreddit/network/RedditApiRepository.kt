@@ -155,6 +155,10 @@ class RedditApiRepository @Inject constructor(
 
     suspend fun voteOnThing(dir: Int, id: String) = redditApiService.vote(USER_AGENT, dir, id)
 
+    suspend fun saveItem(id: String) = redditApiService.save(USER_AGENT, id)
+
+    suspend fun unsaveItem(id: String) = redditApiService.unsave(USER_AGENT, id)
+
 
     companion object {
         const val count = 25

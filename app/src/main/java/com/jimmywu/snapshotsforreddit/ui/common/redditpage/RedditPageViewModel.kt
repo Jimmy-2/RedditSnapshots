@@ -218,9 +218,9 @@ class RedditPageViewModel @Inject constructor(
 
 
     private fun updatePostAfterClick(voteVal: Int, updatedRedditPost: RedditPagePost, ) = viewModelScope.launch {
-        redditPagePostRepository.updateRedditPagePage(updatedRedditPost)
         try {
             updatedRedditPost.name.let { redditApiRepository.voteOnThing(voteVal, it) }
+            redditPagePostRepository.updateRedditPagePost(updatedRedditPost)
         }
         catch (e: Exception) {
             //TODO show exception to user

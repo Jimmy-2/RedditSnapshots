@@ -99,9 +99,11 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page) {
             },
             onMoreClick = { redditPagePost, voteType ->
                 if (redditPagePost.author != null && redditPagePost.subreddit != null) {
+                    //pass keys to help get the room items later
                     findNavController().navigate(
                         RedditPageFragmentDirections.actionRedditPageFragmentRPToMoreOptionsDialogFragmentRP(
-                            redditPagePost.author, redditPagePost.subreddit, redditPagePost.name
+                            redditPagePost.name, redditPagePost.redditPageNameAndSortOrder,
+                            redditPagePost.saved ?: false, redditPagePost.author, redditPagePost.subreddit, postVoteStatus = redditPagePost.likes.toString()
                         )
                     )
                 }
