@@ -13,7 +13,8 @@ import javax.inject.Provider
 abstract class AccountRoomDatabase: RoomDatabase() {
     abstract fun accountDao(): AccountDao
 
-    //provide a starting account to use (anonymous)
+
+    //provide a starting account to use. decided not to use this
     class Callback @Inject constructor(
 
         private val database: Provider<AccountRoomDatabase>,

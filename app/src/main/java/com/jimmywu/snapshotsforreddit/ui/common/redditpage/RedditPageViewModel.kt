@@ -1,13 +1,16 @@
 package com.jimmywu.snapshotsforreddit.ui.common.redditpage
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.jimmywu.snapshotsforreddit.data.datastore.PreferencesDataStoreRepository
 import com.jimmywu.snapshotsforreddit.data.room.cache.redditpagepost.RedditPagePost
 import com.jimmywu.snapshotsforreddit.data.room.cache.redditpagepost.RedditPagePostRepository
 import com.jimmywu.snapshotsforreddit.network.RedditApiRepository
 import com.jimmywu.snapshotsforreddit.network.responses.RedditChildrenData
-import com.jimmywu.snapshotsforreddit.util.MonitorTriple
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -32,76 +35,62 @@ class RedditPageViewModel @Inject constructor(
     private val isDefault = MutableLiveData<Boolean?>()
 
 
-//    val redditPagePosts = subredditInfo.switchMap {
-//        redditApiRepository.getSubredditPostsList(subredditName.value!!, subredditType.value!!, it.sortOrder, it.isCompactView).cachedIn(viewModelScope)
-//    }
-
-    //if isCompact or sortOrder value changes, we will update the screen
-//    val redditPagePosts = Transformations.switchMap(MonitorTriple(isCompact, sortOrder, subredditName)) {
-//        redditApiRepository.getSubredditPostsList(
-//            it.third!!, subredditType.value!!,
-//            it.second, it.first).cachedIn(viewModelScope)
-//    }
-
     private val sortOrderTest2: MutableLiveData<String> = MutableLiveData("Default value")
     val subredditNameTest2: MutableLiveData<String> = MutableLiveData("Default value")
 
     private val currentRedditPageName = MutableStateFlow<String?>(null)
-    val _currentRedditPageName : StateFlow<String?> =currentRedditPageName
+    val _currentRedditPageName: StateFlow<String?> = currentRedditPageName
     private val sortOrderTest = MutableStateFlow<String?>("best")
     private val isCompactTest = MutableStateFlow<Boolean?>(false)
 
 
-//    val redditPagePostsTest = combine(currentRedditPageName, sortOrderTest, isCompactTest)
-//    { redditPageName, sortOrder, isCompact ->
-//        Triple(redditPageName, sortOrder, isCompact)
-//    }.flatMapLatest { (redditPageName, sortOrder, isCompact) ->
-//        //only executed if redditpage name is not null
+    //no longer updating and refreshing the entire paged list when switching views(compact and non compact).
+    //now the view/layout changes happen dynamically
+    val redditPagePosts: Flow<PagingData<RedditPagePost>> =
+        currentRedditPageName.combine(sortOrderTest) { redditPageName, sortOrder ->
+            Pair(redditPageName, sortOrder)
+        }.flatMapLatest { (redditPageName, sortOrder) ->
+            //only executed if redditPageName is not null, otherwise returns an empty flow
+            redditPageName?.let {
+                redditPagePostRepository.getRedditPostsPaged(
+                    it,
+                    sortOrder ?: "best",)
+            } ?: emptyFlow()
+
+            //add logic to not get new data from api when changing compact views.
+        }.cachedIn(viewModelScope)
+
+
+
+//    val redditPagePostsNotDynamic: Flow<PagingData<RedditPagePost>> =
+//        currentRedditPageName.combine(sortOrderTest) { redditPageName, sortOrder ->
+//            Pair(redditPageName, sortOrder)
+//        }.combine(isCompactTest) { nameAndSortPair, isCompact ->
+//            Pair(nameAndSortPair, isCompact)
+//        }.flatMapLatest { (nameAndSortPair, isCompact) ->
+//            //only executed if redditPageName is not null, otherwise returns an empty flow
+//            nameAndSortPair.first?.let {
+//                redditPagePostRepository.getRedditPostsPaged(
+//                    it,
+//                    nameAndSortPair.second ?: "best",
+//                    isCompact ?: false
+//                )
+//            } ?: emptyFlow()
+//
+//            //add logic to not get new data from api when changing compact views.
+//        }.cachedIn(viewModelScope)
+//
+
+
+//    val redditPagePostsTest2 = currentRedditPageName.flatMapLatest { redditPageName ->
 //        redditPageName?.let {
 //            redditPagePostRepository.getRedditPostsPaged(
 //                redditPageName,
-//                sortOrder ?: "best",
-//                isCompact ?: false
+//                "best",
+//                true
 //            )
 //        } ?: emptyFlow()
-
-//    }
-
-
-//    val redditPagePostsTest = currentRedditPageName.combine(sortOrderTest, isCompactTest2 ){ redditPageName, sortOrder, isCompact ->
-//        Triple(redditPageName, sortOrder, isCompact )
-//    }.flatMapLatest { (redditPageName, sortOrder, isCompact) ->
-//        //only executed if redditpage name is not null
-//        redditPageName ?.let {
-//            redditPagePostRepository.getRedditPostsPaged(redditPageName, sortOrder ?: "best", isCompact ?: false)
-//        }?: emptyFlow()
-//
 //    }.cachedIn(viewModelScope)
-
-
-        val redditPagePostsTest = currentRedditPageName.combine(sortOrderTest){ redditPageName, sortOrder ->
-        Pair(redditPageName, sortOrder )
-    }.combine(isCompactTest) { nameAndSortPair, isCompact ->
-        Pair(nameAndSortPair, isCompact)
-        }.flatMapLatest { (nameAndSortPair, sortOrder) ->
-        //only executed if redditPageName is not null, otherwise returns an empty flow
-            nameAndSortPair.first ?.let {
-            redditPagePostRepository.getRedditPostsPaged(it, nameAndSortPair.second ?: "best", sortOrder ?: false)
-        }?: emptyFlow()
-
-        //add logic to not get new data from api when changing compact views.
-    }.cachedIn(viewModelScope)
-
-
-    val redditPagePostsTest2  = currentRedditPageName.flatMapLatest { redditPageName ->
-        redditPageName?.let {
-            redditPagePostRepository.getRedditPostsPaged(
-                redditPageName,
-                "best",
-                true
-            )
-        } ?: emptyFlow()
-    }.cachedIn(viewModelScope)
 
 
     var refreshInProgress = false
@@ -113,7 +102,7 @@ class RedditPageViewModel @Inject constructor(
     var refreshingViewsOnCompactChange = false
 
     fun onRedditPageLoad(redditPageName: String, default: Boolean) {
-        if(currentRedditPageName.value == null || currentRedditPageName.value == "") {
+        if (currentRedditPageName.value == null || currentRedditPageName.value == "") {
             currentRedditPageName.value = ""
             currentRedditPageName.value = redditPageName
             _subredditName.value = redditPageName
@@ -126,8 +115,6 @@ class RedditPageViewModel @Inject constructor(
 //        }
 
 
-
-
     }
 
     fun onSortOrderSelected(newSortOrder: String) {
@@ -138,44 +125,6 @@ class RedditPageViewModel @Inject constructor(
 
 
 
-//
-
-//
-//
-//
-//    }.cachedIn(viewModelScope)
-
-//
-
-
-//    val redditPagePostsTest2  =
-//        redditPagePostRepository.getRedditPostsPaged(
-//                "ligma",
-//                "best",
-//                true
-//            ).cachedIn(viewModelScope)
-
-
-
-//    val redditPagePostsTest3 = currentRedditPageName.combine(isCompact.asFlow()){ redditPageName, isCompact ->
-//        Pair(redditPageName, isCompact )
-//    }.flatMapLatest { (redditPageName, isCompact) ->
-//        //only executed if redditpage name is not null
-//        redditPageName ?.let {
-//            redditPagePostRepository.getRedditPostsPaged(redditPageName, sortOrder.value ?: "best", isCompact = isCompact)
-//        }?: emptyFlow()
-//
-//    }.cachedIn(viewModelScope)
-
-
-    val redditPagePosts =
-        Transformations.switchMap(MonitorTriple(isCompact, sortOrder, _subredditName)) {
-            redditApiRepository.getSubredditPostsList(
-                it.third!!, subredditType.value!!, isDefault.value,
-                it.second, it.first
-            ).cachedIn(viewModelScope)
-        }
-
     fun onVoteOnPost(typeOfVote: Int, post: RedditChildrenData) = viewModelScope.launch {
         try {
             post.name?.let { redditApiRepository.voteOnThing(typeOfVote, it) }
@@ -183,10 +132,13 @@ class RedditPageViewModel @Inject constructor(
         }
     }
 
-    fun onCompactViewClicked(isCompactView: Boolean) = viewModelScope.launch {
+    fun onCompactViewClicked(isCompact: Boolean) = viewModelScope.launch {
         //update isCompactView in datastore on compact button clicked
-        preferencesDataStoreRepository.updateIsCompactView(isCompactView)
-        checkIsCompact(isCompactView)
+        preferencesDataStoreRepository.updateIsCompactView(isCompact)
+
+//        checkIsCompact(isCompactView)
+
+        redditPagePostRepository.updateCompactView(isCompact)
     }
 
     fun checkIsCompact(newVal: Boolean) {
@@ -217,15 +169,15 @@ class RedditPageViewModel @Inject constructor(
     //caching
 
 
-    private fun updatePostAfterClick(voteVal: Int, updatedRedditPost: RedditPagePost, ) = viewModelScope.launch {
-        try {
-            updatedRedditPost.name.let { redditApiRepository.voteOnThing(voteVal, it) }
-            redditPagePostRepository.updateRedditPagePost(updatedRedditPost)
+    private fun updatePostAfterClick(voteVal: Int, updatedRedditPost: RedditPagePost) =
+        viewModelScope.launch {
+            try {
+                updatedRedditPost.name.let { redditApiRepository.voteOnThing(voteVal, it) }
+                redditPagePostRepository.updateRedditPagePost(updatedRedditPost)
+            } catch (e: Exception) {
+                //TODO show exception to user
+            }
         }
-        catch (e: Exception) {
-            //TODO show exception to user
-        }
-    }
 
     fun onVoteClick(redditPost: RedditPagePost, isUpvote: Boolean?) {
         //0 for upvote clicked, 1 for downvote clicked
@@ -239,13 +191,13 @@ class RedditPageViewModel @Inject constructor(
             false -> {
 
                 val updatedRedditPost = redditPost.copy(likes = false)
-                updatePostAfterClick(-1,updatedRedditPost)
+                updatePostAfterClick(-1, updatedRedditPost)
                 //onClickListener.onVoteClick(post!!, -1)
 
             }
             else -> {
                 val updatedRedditPost = redditPost.copy(likes = null)
-                updatePostAfterClick(0,updatedRedditPost)
+                updatePostAfterClick(0, updatedRedditPost)
             }
         }
     }

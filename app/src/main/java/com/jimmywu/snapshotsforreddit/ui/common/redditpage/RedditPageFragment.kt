@@ -101,7 +101,7 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page) {
                 if (redditPagePost.author != null && redditPagePost.subreddit != null) {
                     //pass keys to help get the room items later
                     findNavController().navigate(
-                        RedditPageFragmentDirections.actionRedditPageFragmentRPToMoreOptionsDialogFragmentRP(
+                        RedditPageFragmentDirections.actionRedditPageFragmentRPToMoreActionsPostDialogFragmentRP(
                             redditPagePost.name, redditPagePost.redditPageNameAndSortOrder,
                             redditPagePost.saved ?: false, redditPagePost.author, redditPagePost.subreddit, postVoteStatus = redditPagePost.likes.toString()
                         )
@@ -147,7 +147,7 @@ class RedditPageFragment : Fragment(R.layout.fragment_reddit_page) {
 
 
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                viewModel.redditPagePostsTest.collectLatest {
+                viewModel.redditPagePosts.collectLatest {
 //                    textViewInstructions.isVisible = false
                     redditPageAdapter.submitData(it)
                 }

@@ -5,7 +5,7 @@
     app:startDestination="@id/inboxFragment">
     <fragment
         android:id="@+id/inboxFragment"
-        android:name="com.jimmywu.snapshotsforreddit.ui.tabs.inbox.InboxFragment"
+        android:name="com.jimmywu.snapshotsforreddit.ui.navigationbartabs.inbox.InboxFragment"
         android:label="@string/title_boxes" >
         <action
             android:id="@+id/action_inboxFragment_to_inboxItemsFragment"
@@ -13,7 +13,7 @@
     </fragment>
     <fragment
         android:id="@+id/inboxItemsFragment"
-        android:name="com.jimmywu.snapshotsforreddit.ui.tabs.inbox.InboxItemsFragment"
+        android:name="com.jimmywu.snapshotsforreddit.ui.navigationbartabs.inbox.InboxItemsFragment"
         android:label="{inboxName}" >
         <argument
             android:name="inboxType"

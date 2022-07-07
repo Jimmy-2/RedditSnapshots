@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.jimmywu.snapshotsforreddit.ui.tabs.search.SearchFragment"
+        android:name="com.jimmywu.snapshotsforreddit.ui.navigationbartabs.search.SearchFragment"
         android:label="@string/title_search"
         tools:layout="@layout/fragment_search">
         <action
@@ -65,7 +65,7 @@
 
     <fragment
         android:id="@+id/searchResultsSubredditFragment"
-        android:name="com.jimmywu.snapshotsforreddit.ui.tabs.search.subreddits.SearchResultsSubredditFragment"
+        android:name="com.jimmywu.snapshotsforreddit.ui.navigationbartabs.search.subreddits.SearchResultsSubredditFragment"
         android:label="fragment_search_results_subreddit"
         tools:layout="@layout/fragment_search_results_subreddit" >
         <action
@@ -77,6 +77,6 @@
     </fragment>
     <dialog
         android:id="@+id/userInfoDialogFragment"
-        android:name="com.jimmywu.snapshotsforreddit.ui.tabs.account.overview.UserInfoDialogFragment"
+        android:name="com.jimmywu.snapshotsforreddit.ui.navigationbartabs.account.overview.UserInfoDialogFragment"
         android:label="UserInfoDialogFragment" />
 </navigation>

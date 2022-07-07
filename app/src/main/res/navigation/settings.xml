@@ -6,7 +6,7 @@
     app:startDestination="@id/settingsFragment">
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.jimmywu.snapshotsforreddit.ui.tabs.settings.SettingsFragment"
+        android:name="com.jimmywu.snapshotsforreddit.ui.navigationbartabs.settings.SettingsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
 </navigation>

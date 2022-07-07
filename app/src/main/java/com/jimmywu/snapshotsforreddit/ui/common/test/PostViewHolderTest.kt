@@ -132,6 +132,7 @@ class PostViewHolderTest(
 
 
 //            textviewPostItemSubreddit.text = post.subreddit.toString().replaceFirstChar { it.uppercase() }
+            textviewPostAuthor.text = "By ${post.author}"
             textviewPostItemSubreddit.text = post.subreddit
             textviewPostItemTitle.text = post.title
             textviewPostItemScore.text = getShortenedValue(post.score)

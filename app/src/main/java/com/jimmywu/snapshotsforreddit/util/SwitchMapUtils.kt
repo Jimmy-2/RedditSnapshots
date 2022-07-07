@@ -24,13 +24,3 @@ class MonitorTriple<A, B, C>(a: LiveData<A>, b: LiveData<B>, c: LiveData<C>) :
     }
 }
 
-//
-//class MonitorTripleStateFlow<A, B, C>(a: StateFlow<A>, b: StateFlow<B>, c: StateFlow<C>) :
-//    MediatorLiveData<Triple<A?, B?, C?>>() {
-//    init {
-//        addSource(a) { aValue: A -> value = Triple(aValue, b.value, c.value) }
-//        addSource(b) { bValue: B -> value = Triple(a.value, bValue, c.value) }
-//        addSource(c) { cValue: C -> value = Triple(a.value, b.value, cValue) }
-//
-//    }
-//}

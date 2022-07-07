@@ -19,8 +19,8 @@
             android:name="isDefaults"
             app:argType="boolean" />
         <action
-            android:id="@+id/action_redditPageFragmentRP_to_moreOptionsDialogFragmentRP"
-            app:destination="@id/moreOptionsDialogFragmentRP" />
+            android:id="@+id/action_redditPageFragmentRP_to_moreActionsPostDialogFragmentRP"
+            app:destination="@id/moreActionsPostDialogFragmentRP" />
         <action
             android:id="@+id/action_redditPageFragmentRP_to_searchResultsPostFragmentRP"
             app:destination="@id/searchResultsPostFragmentRP" />
@@ -29,9 +29,9 @@
             app:destination="@id/redditPageFragmentRP" />
     </fragment>
     <dialog
-        android:id="@+id/moreOptionsDialogFragmentRP"
-        android:name="com.jimmywu.snapshotsforreddit.ui.common.moreoptions.MoreOptionsDialogFragment"
-        android:label="MoreOptionsDialogFragment" >
+        android:id="@+id/moreActionsPostDialogFragmentRP"
+        android:name="com.jimmywu.snapshotsforreddit.ui.common.moreactions.MoreActionsPostDialogFragment"
+        android:label="MoreActionsPostDialogFragment">
         <argument
             android:name="postKeyName"
             app:argType="string" />

@@ -56,7 +56,6 @@ class RedditPagePagingAdapter(
 
             )
             POST_COMPACT -> PostCompactViewHolderTest(
-
                 ItemPostCompactBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
@@ -82,7 +81,6 @@ class RedditPagePagingAdapter(
             )
 
             SUBREDDIT_POST -> SubredditPostViewHolderTest(
-
                 ItemSubredditPostBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
@@ -104,7 +102,6 @@ class RedditPagePagingAdapter(
             )
 
             SUBREDDIT_POST_COMPACT -> SubredditPostCompactViewHolderTest(
-
                 ItemSubredditPostCompactBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
@@ -134,10 +131,8 @@ class RedditPagePagingAdapter(
         val post = getItem(position)
         if (post != null) {
             if (post.likes == true) {
-
                 onVoteClick(post, null)
             } else {
-
                 onVoteClick(post, true)
             }
         }
@@ -147,10 +142,8 @@ class RedditPagePagingAdapter(
         val post: RedditPagePost? = getItem(position)
         if (post != null) {
             if (post.likes == false) {
-
                 onVoteClick(post, null)
             } else {
-
                 onVoteClick(post, false)
             }
 

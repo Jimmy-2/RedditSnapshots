@@ -83,6 +83,7 @@ fun <E> SendChannel<E>.tryOffer(element: E): Boolean = try {
     false
 }
 
+//From iosched github open source
 @SuppressLint("WrongConstant")
 fun AppCompatActivity.updateForTheme(theme: String) = when (theme) {
     AppTheme.DARK.name -> delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_YES
@@ -90,4 +91,3 @@ fun AppCompatActivity.updateForTheme(theme: String) = when (theme) {
     else -> delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
 }
 
-fun Boolean?.isTrue() = this != null && this

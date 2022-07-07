@@ -10,8 +10,8 @@ import com.jimmywu.snapshotsforreddit.R
 import com.jimmywu.snapshotsforreddit.databinding.FragmentUserOverviewBinding
 import com.jimmywu.snapshotsforreddit.network.responses.RedditChildrenData
 import com.jimmywu.snapshotsforreddit.ui.common.loadstate.RedditLoadStateAdapter
-import com.jimmywu.snapshotsforreddit.ui.tabs.account.overview.AccountOverviewAdapter
-import com.jimmywu.snapshotsforreddit.ui.tabs.account.overview.UserInfoDialogFragment
+import com.jimmywu.snapshotsforreddit.ui.navigationbartabs.account.overview.AccountOverviewAdapter
+import com.jimmywu.snapshotsforreddit.ui.navigationbartabs.account.overview.UserInfoDialogFragment
 import com.jimmywu.snapshotsforreddit.util.changeViewOnLoadState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

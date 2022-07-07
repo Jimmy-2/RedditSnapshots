@@ -5,19 +5,24 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
+import com.jimmywu.snapshotsforreddit.data.datastore.PreferencesDataStoreRepository
 import com.jimmywu.snapshotsforreddit.network.services.RedditApiService
+import kotlinx.coroutines.flow.first
 import retrofit2.HttpException
 import java.io.IOException
 
 
 @OptIn(ExperimentalPagingApi::class)
 class RedditPageRemoteMediator (
+    private val preferencesDataStoreRepository : PreferencesDataStoreRepository,
     private val redditPagePostDatabase: RedditPagePostDatabase,
     private val redditApiService: RedditApiService,
     private val redditPageName: String,
     private val redditPageSortOrder: String,
-    private val redditPageIsCompact: Boolean,
 ) : RemoteMediator<Int, RedditPagePost>() {
+
+    val preferencesFlow = preferencesDataStoreRepository.preferencesFlow
+
 
     private val redditPagePostDao: RedditPagePostDao = redditPagePostDatabase.redditPagePostDao()
     private val redditPageNameRemoteKeyDao: RedditPageNameRemoteKeyDao = redditPagePostDatabase.redditPageNameRemoteKeyDao()
@@ -278,12 +283,16 @@ class RedditPageRemoteMediator (
                     }
                 }
 
+                val preferencesFlow = preferencesDataStoreRepository.preferencesFlow
+
+                val isCompact = preferencesFlow.first().isCompactView
+
 
                 val redditPagePostsList = redditChildrenDataList.map { redditChildrenData ->
                     RedditPagePost(
                         redditPageSortOrder = redditPageSortOrder,
                         isDefault = isDefault,
-                        isCompact = redditPageIsCompact,
+                        isCompact = isCompact,
 
                         redditPageNameAndSortOrder = "$redditPageName $redditPageSortOrder",
                         redditPageName = redditPageName,

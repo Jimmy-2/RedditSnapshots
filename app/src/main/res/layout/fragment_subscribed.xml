@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/alt_background_1"
-    tools:context=".ui.tabs.home.SubscribedFragment">
+    tools:context=".ui.navigationbartabs.home.SubscribedFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refresh_subscribed"

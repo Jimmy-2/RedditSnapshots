@@ -21,16 +21,6 @@ class MainActivityViewModel @Inject constructor(
     val selectedTheme = preferencesDataStoreRepository.selectedTheme
 
 
-//    val theme: StateFlow<AppTheme> = loadDataSignal.mapLatest {
-//        getTheme()
-//    }.stateIn(applicationScope, SharingStarted.Eagerly, AppTheme.SYSTEM)
-//
-//
-//    private suspend fun getTheme(): AppTheme {
-//        val selectedTheme: String = preferencesDataStoreRepository.selectedTheme.first()
-//        return themeFromPreferences(selectedTheme) ?: AppTheme.SYSTEM
-//    }
-
 
 }
 

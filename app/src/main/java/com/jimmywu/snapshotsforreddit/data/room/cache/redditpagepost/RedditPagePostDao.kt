@@ -26,8 +26,15 @@ interface RedditPagePostDao {
     @Query("SELECT MAX(queryPosition) FROM reddit_page_posts WHERE redditPageNameAndSortOrder = :redditPageNameAndSortOrder")
     suspend fun getLastQueryPosition(redditPageNameAndSortOrder: String): Int?
 
+
+
 //    @Query("SELECT MAX(position) FROM reddit_page_posts WHERE redditPageName = :redditPageName AND redditPageSortOrder = :sortOrder")
 //    suspend fun getLastPosition(redditPageName: String, sortOrder: String): Int?
+
+    //updates all stored post items and sets their isCompact values to the new value
+    @Query("UPDATE reddit_page_posts SET isCompact = :isCompact")
+    suspend fun updateRedditPageIsCompactLayout(isCompact: Boolean)
+
 
     @Update
     suspend fun updateRedditPagePost(RedditPost: RedditPagePost)
