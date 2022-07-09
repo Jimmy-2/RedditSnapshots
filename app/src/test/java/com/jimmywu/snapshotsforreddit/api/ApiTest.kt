@@ -44,6 +44,12 @@ class ApiTest {
 
 
 
-
+    @Test
+    fun getCommentsTree() {
+        val response = api.getPostComments("aww","vsu6bl").execute()
+        println(response.raw().toString())
+        println(response.body())
+        assertNotNull(response.body())
+    }
 
 }

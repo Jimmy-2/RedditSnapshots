@@ -32,6 +32,7 @@ interface RedditPagePostDao {
 //    suspend fun getLastPosition(redditPageName: String, sortOrder: String): Int?
 
     //updates all stored post items and sets their isCompact values to the new value
+    //will eventually add other kinds of layouts(viewtypes) such as grid layout,etc.
     @Query("UPDATE reddit_page_posts SET isCompact = :isCompact")
     suspend fun updateRedditPageIsCompactLayout(isCompact: Boolean)
 

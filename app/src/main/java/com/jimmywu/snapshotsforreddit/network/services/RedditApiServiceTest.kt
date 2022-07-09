@@ -4,6 +4,8 @@ import com.jimmywu.snapshotsforreddit.network.responses.RedditJsonResponse
 import com.jimmywu.snapshotsforreddit.network.responses.TokenResponse
 import com.jimmywu.snapshotsforreddit.network.responses.account.User
 import com.jimmywu.snapshotsforreddit.network.responses.account.Username
+import com.jimmywu.snapshotsforreddit.network.responses.redditpostdetails.RedditPostCommentsDetail
+import com.jimmywu.snapshotsforreddit.network.responses.redditpostdetails.RepliesAdapter
 import com.jimmywu.snapshotsforreddit.network.responses.subreddit.SubredditJsonResponse
 import com.jimmywu.snapshotsforreddit.network.services.RedditApiServiceTest.Companion.retrofitGetToken
 import com.jimmywu.snapshotsforreddit.network.services.RedditApiServiceTest.Companion.retrofitOAuth
@@ -29,7 +31,8 @@ interface RedditApiServiceTest {
         //test getting json objects from front page first
         private const val TEST_URL = "https://api.reddit.com"
 
-        private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+//        private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+    private val moshi = Moshi.Builder().add(RepliesAdapter()).addLast(KotlinJsonAdapterFactory()).build()
 
 
         val retrofitGetToken = Retrofit.Builder().addConverterFactory(MoshiConverterFactory.create(moshi)).baseUrl(API_URL).build()
@@ -127,6 +130,13 @@ interface RedditApiServiceTest {
         @Query("after") after: String? = null,
         @Query("before") before: String? = null,
     ): Call<SubredditJsonResponse>
+
+
+    @GET("/r/{subreddit}/comments/{id}")
+    fun getPostComments(
+        @Path("subreddit") subreddit: String,
+        @Path("id") id: String,
+    ): Call<List<RedditPostCommentsDetail>>
 
 
 }
